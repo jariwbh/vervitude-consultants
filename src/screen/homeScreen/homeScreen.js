@@ -50,7 +50,7 @@ export default class homeScreen extends Component {
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
                         <View style={{ flexDirection: 'column', marginBottom: 5 }}>
-                            <TouchableOpacity style={{}} onPress={() => { this.props.navigation.navigate('MyProfileScreen') }}>
+                            <TouchableOpacity style={{}} onPress={() => { this.props.navigation.navigate('myProfileScreen') }}>
                                 <Image source={{ uri: 'https://bootdey.com/img/Content/avatar/avatar6.png' }}
                                     style={{ alignItems: 'center', height: 100, width: 100, marginTop: 2, borderRadius: 50 }}
                                 />

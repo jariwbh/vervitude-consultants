@@ -14,4 +14,9 @@ export const styles = StyleSheet.create({
         marginTop: 50,
         marginLeft: 18,
     },
+    profileview: {
+        justifyContent: 'space-around',
+        flexDirection: 'row',
+        marginTop: 5
+    }
 })
