@@ -13,7 +13,7 @@ export default class myProfileScreen extends Component {
                     <Text>hello</Text>
                 </View>
                 <View style={STYLES.styles.cardview}>
-                    <View style={{ justifyContent: 'space-around', flexDirection: 'row', marginTop: 5 }}>
+                    <View style={STYLES.styles.profileview}>
                         <View style={{ marginTop: 20 }}>
                             <Text style={{ fontWeight: 'bold', fontSize: 15 }}>Protima Bannerjee</Text>
                             <Text>#Protima123</Text>
