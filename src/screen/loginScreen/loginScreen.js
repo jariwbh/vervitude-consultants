@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, ImageBackground, SafeAreaView, TouchableOpacity, StatusBar } from 'react-native'
+import { Text, View, ImageBackground, SafeAreaView, TouchableOpacity, Image } from 'react-native'
 import { FORGOTPASSWORDSCREEN, HOMESCREEN, REGISTERSCREEN } from '../../context/screen/screenName';
 import * as STYLES from './styles';
 
@@ -8,10 +8,11 @@ export default class loginScreen extends Component {
         return (
             <SafeAreaView style={STYLES.styles.container}>
                 <ImageBackground
-                    source={require('../../assets/images/background1.png')}
+                    source={require('../../assets/images/background.png')}
                     style={STYLES.styles.backgroundImage}>
+                    <Image source={require('../../assets/images/icon.png')} style={STYLES.styles.imageView} />
                     <View>
-                        <View style={{ marginTop: 150, marginLeft: 50 }}>
+                        <View style={{ marginTop: -20, marginLeft: 50 }}>
                             <Text style={STYLES.styles.textColor}>Too many</Text>
                             <Text style={STYLES.styles.textColor}>answers</Text>
                             <Text style={STYLES.styles.textColor}>on Google?</Text>
@@ -22,19 +23,19 @@ export default class loginScreen extends Component {
                         </View>
                         <View style={STYLES.styles.centeView}>
                             <View style={STYLES.styles.boxView}>
-                                <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
+                                <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 30 }}>
                                     <TouchableOpacity style={STYLES.styles.loginBtn} onPress={() => this.props.navigation.navigate(HOMESCREEN)} >
-                                        <Text style={STYLES.styles.loginbtnText}>Sign In</Text>
+                                        <Text style={STYLES.styles.loginbtnText}>Sign in with Google</Text>
                                     </TouchableOpacity>
                                 </View>
                                 <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
-                                    <TouchableOpacity style={STYLES.styles.loginBtn} onPress={() => this.props.navigation.navigate(HOMESCREEN)} >
-                                        <Text style={STYLES.styles.loginbtnText}>Sign In</Text>
+                                    <TouchableOpacity style={STYLES.styles.loginBtn2} onPress={() => this.props.navigation.navigate(HOMESCREEN)} >
+                                        <Text style={STYLES.styles.loginbtnText2}>Sign in with Email Address</Text>
                                     </TouchableOpacity>
                                 </View>
                                 <View style={{ alignItems: 'flex-end', marginTop: 15 }}>
                                     <TouchableOpacity onPress={() => this.props.navigation.navigate(FORGOTPASSWORDSCREEN)}>
-                                        <Text style={STYLES.styles.forgottext}>Forgot password?</Text>
+                                        <Text style={STYLES.styles.forgottext}>Forgot Password?</Text>
                                     </TouchableOpacity>
                                 </View>
                                 <View style={STYLES.styles.centeView} >
