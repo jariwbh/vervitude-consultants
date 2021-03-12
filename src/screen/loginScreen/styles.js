@@ -3,11 +3,30 @@ const { height, width } = Dimensions.get('window');
 
 export const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#00b3b3'
+        flex: 1
     },
-    cardview: {
-
+    centeView: {
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    textColor: {
+        fontSize: 30,
+        color: '#FFF',
+        fontWeight: 'bold',
+    },
+    backgroundImage: {
+        flex: 1,
+        resizeMode: 'stretch',
+        width: width,
+        height: height + 10,
+    },
+    boxView: {
+        width: width / 2 + 170,
+        height: height - 500,
+        borderRadius: 20,
+        backgroundColor: '#000001',
+        alignItems: 'center',
+        marginTop: height - 700
     },
     inputView: {
         flexDirection: 'row',
@@ -26,33 +45,29 @@ export const styles = StyleSheet.create({
         margin: 10,
         alignItems: "center",
     },
-    TextInput: {
-        fontSize: 15,
-        flex: 1,
-        marginLeft: 5,
-        borderColor: '#FFFFFF'
-    },
     loginBtn: {
         flexDirection: 'row',
-        width: width - 100,
+        width: width - 80,
         backgroundColor: "#FFFFFF",
         borderRadius: 50,
-        height: height / 12,
+        height: height / 15,
         alignItems: "center",
         justifyContent: 'center'
     },
-    loginText: {
+    loginbtnText: {
         color: '#323643',
         fontSize: 20,
         fontWeight: 'bold'
     },
-    baseText: {
-        fontWeight: 'normal',
-        color: '#FFFFFF',
+    forgottext: {
         fontSize: 15,
+        color: '#FFFFFF',
+        textDecorationLine: 'underline'
     },
-    innerText: {
+    createText: {
         color: '#FFFFFF',
         fontSize: 15,
+        marginTop: height - 650,
+        fontWeight: 'bold'
     },
 })
