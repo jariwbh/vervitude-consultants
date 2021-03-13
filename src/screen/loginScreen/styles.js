@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center'
     },
     textColor: {
-        fontSize: 30,
+        fontSize: 35,
         color: '#FFF',
         fontWeight: 'bold',
     },
@@ -18,22 +18,22 @@ export const styles = StyleSheet.create({
         flex: 1,
         resizeMode: 'stretch',
         width: width,
-        height: height + 10,
+        height: height * 1.1
     },
     boxView: {
         width: width / 2 + 170,
-        height: height - 500,
+        height: height - 480,
         borderRadius: 20,
         backgroundColor: '#FFFFFF',
         alignItems: 'center',
-        marginTop: height - 700
+        marginTop: 20
     },
     loginBtn: {
         flexDirection: 'row',
         width: width - 70,
         backgroundColor: "#FFFFFF",
         borderRadius: 50,
-        height: height / 15,
+        height: height - 640,
         alignItems: "center",
         justifyContent: 'center',
         //borderColor: '#7AD2DB',
@@ -50,7 +50,7 @@ export const styles = StyleSheet.create({
         //backgroundColor: "#46A1A9",
         backgroundColor: "#96D3FF",
         borderRadius: 50,
-        height: height / 15,
+        height: height - 640,
         alignItems: "center",
         justifyContent: 'center',
     },
@@ -66,13 +66,13 @@ export const styles = StyleSheet.create({
     createText: {
         color: '#FFFFFF',
         fontSize: 15,
-        marginTop: height - 670,
+        marginTop: height - 650,
         fontWeight: 'bold'
     },
     imageView: {
-        height: 250,
-        width: 250,
-        marginLeft: -15,
-        marginTop: height - 800,
+        height: 240,
+        width: 240,
+        marginLeft: 10,
+        marginTop: height - 760,
     }
 })
