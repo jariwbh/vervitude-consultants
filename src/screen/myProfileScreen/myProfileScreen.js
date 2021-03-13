@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { Text, View, Dimensions, SafeAreaView, Image, TouchableOpacity } from 'react-native'
 import * as STYLES from './styles';
-import EvilIcons from 'react-native-vector-icons/EvilIcons'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
@@ -26,7 +25,7 @@ export default class myProfileScreen extends Component {
                         />
                     </View>
                     <TouchableOpacity style={{ flexDirection: 'row', marginTop: 10 }}>
-                        <EvilIcons name="user" size={24} color='#36D3FF' style={{ marginLeft: 15 }} />
+                        <FontAwesome name="user-circle-o" size={24} color='#36D3FF' style={{ marginLeft: 15 }} />
                         <Text style={{ marginLeft: 20 }}>My Profile</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={{ flexDirection: 'row', marginTop: 10 }}>
@@ -38,7 +37,7 @@ export default class myProfileScreen extends Component {
                         <Text style={{ marginLeft: 20 }}>My conversation</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={{ flexDirection: 'row', marginTop: 10 }}>
-                        <MaterialIcons name="payment" size={24} color='#36D3FF' style={{ marginLeft: 15 }} />
+                        <Ionicons name="card" size={24} color='#36D3FF' style={{ marginLeft: 15 }} />
                         <Text style={{ marginLeft: 20 }}>My Spends</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={{ flexDirection: 'row', marginTop: 10 }}>
@@ -49,24 +48,27 @@ export default class myProfileScreen extends Component {
                         <FontAwesome name="question-circle" size={24} color='#36D3FF' style={{ marginLeft: 15 }} />
                         <Text style={{ marginLeft: 20 }}>Help & Support</Text>
                     </TouchableOpacity>
+                    <View>
+                        <TouchableOpacity style={{ flexDirection: 'row', marginTop: 10 }}>
+                            <Image source={require('../../assets/images/Vector3.png')} style={{ height: 20, width: 20, marginLeft: 15 }} />
+                            {/* <MaterialIcons name="payment" size={24} color='#36D3FF' style={{ marginLeft: 15 }} /> */}
+                            <Text style={{ marginLeft: 20 }}>invite a Consultant</Text>
+                        </TouchableOpacity>
+                    </View>
                     <TouchableOpacity style={{ flexDirection: 'row', marginTop: 10 }}>
-                        <MaterialIcons name="payment" size={24} color='#36D3FF' style={{ marginLeft: 15 }} />
-                        <Text style={{ marginLeft: 20 }}>invite a Consultant</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{ flexDirection: 'row', marginTop: 10 }}>
-                        <MaterialIcons name="payment" size={24} color='#36D3FF' style={{ marginLeft: 15 }} />
+                        <FontAwesome5 name="exclamation-triangle" size={24} color='#36D3FF' style={{ marginLeft: 15 }} />
                         <Text style={{ marginLeft: 20 }}>My Disputes</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={{ flexDirection: 'row', marginTop: 10 }}>
-                        <MaterialIcons name="payment" size={24} color='#808080' style={{ marginLeft: 15 }} />
+                        <Image source={require('../../assets/images/2.png')} style={{ height: 20, width: 20, marginLeft: 15 }} />
                         <Text style={{ marginLeft: 20 }}>Vervitude</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={{ flexDirection: 'row', marginTop: 10 }}>
-                        <AntDesign name="logout" size={24} color='#808080' style={{ marginLeft: 15 }} />
+                        <AntDesign name="logout" size={20} color='#36D3FF' style={{ marginLeft: 15 }} />
                         <Text style={{ marginLeft: 20 }}>Log Out</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={{ marginBottom: 10 }}></View>
+                {/* <View style={{ marginBottom: 10 }}></View> */}
             </SafeAreaView>
         )
     }
