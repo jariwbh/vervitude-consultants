@@ -12,7 +12,7 @@ export default class loginScreen extends Component {
                     style={STYLES.styles.backgroundImage}>
                     <Image source={require('../../assets/images/icon.png')} style={STYLES.styles.imageView} />
                     <View>
-                        <View style={{ marginTop: -20, marginLeft: 50 }}>
+                        <View style={{ marginTop: -25, marginLeft: 50 }}>
                             <Text style={STYLES.styles.textColor}>Too many</Text>
                             <Text style={STYLES.styles.textColor}>answers</Text>
                             <Text style={STYLES.styles.textColor}>on Google?</Text>

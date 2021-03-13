@@ -66,7 +66,7 @@ export const styles = StyleSheet.create({
     createText: {
         color: '#FFFFFF',
         fontSize: 15,
-        marginTop: height - 650,
+        marginTop: height - 640,
         fontWeight: 'bold'
     },
     imageView: {
