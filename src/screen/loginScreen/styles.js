@@ -1,5 +1,7 @@
 import { StyleSheet, Dimensions } from 'react-native';
-const { height, width } = Dimensions.get('window');
+import { heightPercentageToDP as hp, widthPercentageToDP as wp, } from 'react-native-responsive-screen'
+const HEIGHT = Dimensions.get('window').height;
+const WIDTH = Dimensions.get('window').width;
 
 export const styles = StyleSheet.create({
     container: {
@@ -10,33 +12,32 @@ export const styles = StyleSheet.create({
         alignItems: 'center'
     },
     textColor: {
-        fontSize: 35,
-        color: '#FFF',
-        fontWeight: 'bold',
+        fontSize: 30,
+        color: '#FFFFFF',
+        fontWeight: 'bold'
     },
     backgroundImage: {
         flex: 1,
         resizeMode: 'stretch',
-        width: width,
-        height: height * 1.1
+        width: wp('100%'),
+        height: HEIGHT * 1.1
     },
     boxView: {
-        width: width / 2 + 170,
-        height: height - 480,
+        width: (WIDTH / 2) + 170,
+        height: HEIGHT - 480,
         borderRadius: 20,
         backgroundColor: '#FFFFFF',
         alignItems: 'center',
-        marginTop: 20
+        marginTop: 30
     },
     loginBtn: {
         flexDirection: 'row',
-        width: width - 70,
+        width: WIDTH - 70,
         backgroundColor: "#FFFFFF",
         borderRadius: 50,
-        height: height - 640,
+        height: HEIGHT - 635,
         alignItems: "center",
         justifyContent: 'center',
-        //borderColor: '#7AD2DB',
         borderColor: '#96D3FF',
         borderWidth: 2
     },
@@ -46,11 +47,10 @@ export const styles = StyleSheet.create({
     },
     loginBtn2: {
         flexDirection: 'row',
-        width: width - 70,
-        //backgroundColor: "#46A1A9",
+        width: WIDTH - 70,
         backgroundColor: "#96D3FF",
         borderRadius: 50,
-        height: height - 640,
+        height: HEIGHT - 635,
         alignItems: "center",
         justifyContent: 'center',
     },
@@ -66,13 +66,12 @@ export const styles = StyleSheet.create({
     createText: {
         color: '#FFFFFF',
         fontSize: 15,
-        marginTop: height - 640,
+        marginTop: 20,
         fontWeight: 'bold'
     },
     imageView: {
         height: 240,
         width: 240,
-        marginLeft: 10,
-        marginTop: height - 760,
+        marginTop: -60
     }
 })

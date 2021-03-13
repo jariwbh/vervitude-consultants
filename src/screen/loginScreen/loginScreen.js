@@ -38,11 +38,11 @@ export default class loginScreen extends Component {
                                         <Text style={STYLES.styles.forgottext}>Forgot Password?</Text>
                                     </TouchableOpacity>
                                 </View>
-                                <View style={STYLES.styles.centeView} >
-                                    <TouchableOpacity onPress={() => this.props.navigation.navigate(REGISTERSCREEN)} >
-                                        <Text style={STYLES.styles.createText}>Create An account</Text>
-                                    </TouchableOpacity>
-                                </View>
+                            </View>
+                            <View style={STYLES.styles.centeView} >
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate(REGISTERSCREEN)} >
+                                    <Text style={STYLES.styles.createText}>Create An account</Text>
+                                </TouchableOpacity>
                             </View>
                         </View>
                     </View>
