@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Text, View, ImageBackground, SafeAreaView, TouchableOpacity, Image, TextInput, ScrollView, ToastAndroid, StatusBar } from 'react-native'
-import { FORGOTPASSWORDSCREEN, HOMESCREEN, REGISTERSCREEN } from '../../context/screen/screenName';
+import { HOMESCREEN, REGISTERSCREEN } from '../../context/screen/screenName';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp, } from 'react-native-responsive-screen'
 import * as STYLES from './styles';
 import AsyncStorage from '@react-native-community/async-storage';
