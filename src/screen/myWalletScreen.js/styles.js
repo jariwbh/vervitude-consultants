@@ -5,7 +5,7 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp, } from 'react-na
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#00D9CE'
+
     },
     cardview: {
         flex: 1,
@@ -13,6 +13,6 @@ export const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         borderRadius: hp('5%'),
         marginTop: hp('5%'),
-        marginLeft: wp('3.5%')
+        marginLeft: wp('3.5%'),
     },
 })

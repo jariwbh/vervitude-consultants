@@ -6,6 +6,7 @@ import FORGOTPASSWORDSCREEN from "../screen/forgotPasswordScreen/forgotPasswordS
 import REGISTERSCREEN from "../screen/registerScreen/registerScreen";
 import HOMESCREEN from "../screen/homeScreen/homeScreen";
 import MYPROFILESCREEN from '../screen/myProfileScreen/myProfileScreen';
+import MYTRANSFERSSCREEN from '../screen/myWalletScreen.js/myTransfersScreen'
 
 const Stack = createStackNavigator();
 
@@ -18,6 +19,7 @@ const navigationsApp = () => {
                 <Stack.Screen name="registerScreen" component={REGISTERSCREEN} />
                 <Stack.Screen name="homeScreen" component={HOMESCREEN} />
                 <Stack.Screen name="myProfileScreen" component={MYPROFILESCREEN} />
+                <Stack.Screen name="myTransfersScreen" component={MYTRANSFERSSCREEN} />
             </Stack.Navigator>
         </NavigationContainer>
     );

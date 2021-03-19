@@ -1,74 +1,72 @@
 import React, { Component } from 'react'
-import { Text, View, Dimensions, SafeAreaView, Image, TouchableOpacity } from 'react-native'
+import { Text, View, Dimensions, SafeAreaView, Image, TouchableOpacity, ViewBase } from 'react-native'
 import * as STYLES from './styles';
-import AntDesign from 'react-native-vector-icons/AntDesign'
+import { heightPercentageToDP as hp, widthPercentageToDP as wp, } from 'react-native-responsive-screen'
+import EvilIcons from 'react-native-vector-icons/EvilIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+
 
 export default class myProfileScreen extends Component {
     render() {
         return (
             <SafeAreaView style={STYLES.styles.container}>
+                {/* <View style={{ width: 20, height: 20, backgroundColor: 'red', marginLeft: hp('2%'), borderRadius: hp('3%'), marginLeft: hp('14%'), }}>
+                    <Text style={{ color: '#FFFFFF' }}>10</Text>
+                </View> */}
                 <View>
-                    <Text>hello</Text>
-                </View>
-                <View style={STYLES.styles.cardview}>
-                    <View style={STYLES.styles.profileview}>
-                        <View style={{ marginTop: 20 }}>
-                            <Text style={{ fontWeight: 'bold', fontSize: 15 }}>Protima Bannerjee</Text>
-                            <Text>#Protima123</Text>
-                        </View>
-                        <Image source={{ uri: 'https://bootdey.com/img/Content/avatar/avatar6.png' }}
-                            style={{ alignItems: 'center', height: 70, width: 70, marginTop: 2, borderRadius: 50 }}
-                        />
-                    </View>
-                    <TouchableOpacity style={{ flexDirection: 'row', marginTop: 10 }}>
-                        <FontAwesome name="user-circle-o" size={24} color='#36D3FF' style={{ marginLeft: 15 }} />
-                        <Text style={{ marginLeft: 20 }}>My Profile</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{ flexDirection: 'row', marginTop: 10 }}>
-                        <MaterialCommunityIcons name="circle-half-full" size={24} color='#36D3FF' style={{ marginLeft: 15 }} />
-                        <Text style={{ marginLeft: 20 }}>Mode Settings</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{ flexDirection: 'row', marginTop: 10 }}>
-                        <Ionicons name="ios-chatbubble-ellipses" size={24} color='#36D3FF' style={{ marginLeft: 15 }} />
-                        <Text style={{ marginLeft: 20 }}>My conversation</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{ flexDirection: 'row', marginTop: 10 }}>
-                        <Ionicons name="card" size={24} color='#36D3FF' style={{ marginLeft: 15 }} />
-                        <Text style={{ marginLeft: 20 }}>My Spends</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{ flexDirection: 'row', marginTop: 10 }}>
-                        <AntDesign name="heart" size={24} color='#36D3FF' style={{ marginLeft: 15 }} />
-                        <Text style={{ marginLeft: 20 }}>Favorite Topic</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{ flexDirection: 'row', marginTop: 10 }}>
-                        <FontAwesome name="question-circle" size={24} color='#36D3FF' style={{ marginLeft: 15 }} />
-                        <Text style={{ marginLeft: 20 }}>Help & Support</Text>
-                    </TouchableOpacity>
-                    <View>
-                        <TouchableOpacity style={{ flexDirection: 'row', marginTop: 10 }}>
-                            <Image source={require('../../assets/images/Vector3.png')} style={{ height: 20, width: 20, marginLeft: 15 }} />
-                            {/* <MaterialIcons name="payment" size={24} color='#36D3FF' style={{ marginLeft: 15 }} /> */}
-                            <Text style={{ marginLeft: 20 }}>invite a Consultant</Text>
+                    <View style={{ marginTop: hp('3%'), justifyContent: 'space-around', flexDirection: 'row' }}>
+                        <Ionicons name="notifications" size={40} color='#FFFFFF' style={{ marginLeft: hp('2%') }} />
+                        <TouchableOpacity onPress={() => { this.props.navigation.navigate('myTransfersScreen') }}
+                            style={{ width: wp('30%'), backgroundColor: '#FFFFFF', flexDirection: 'row', borderRadius: hp('3%'), alignItems: 'center', justifyContent: 'center' }}>
+                            <Text style={{ color: '#34a853', }}>5324.00</Text>
+                            <View style={{ width: 25, height: 25, backgroundColor: '#34a853', alignItems: 'center', marginLeft: hp('2%'), borderRadius: hp('3%'), justifyContent: 'center' }}>
+                                <FontAwesome name="rupee" size={20} color='#FFFFFF' style={{ marginLeft: hp('0%') }} />
+                            </View>
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={{ flexDirection: 'row', marginTop: 10 }}>
-                        <FontAwesome5 name="exclamation-triangle" size={24} color='#36D3FF' style={{ marginLeft: 15 }} />
-                        <Text style={{ marginLeft: 20 }}>My Disputes</Text>
+                </View>
+                <View style={STYLES.styles.cardview}>
+                    <View style={{ justifyContent: 'space-around', flexDirection: 'row', marginTop: hp('3%') }}>
+                        <View>
+                            <Text style={{ fontWeight: 'bold', fontSize: hp('3%') }}>Ranjan  Pathak</Text>
+                            <Text>#protima123</Text>
+                        </View>
+                        <Image source={require('../../assets/images/profile.png')}
+                            style={{ alignItems: 'center', height: 75, width: 75, marginTop: 2, borderRadius: 50 }}
+                        />
+                    </View>
+                    <TouchableOpacity style={{ flexDirection: 'row', marginTop: hp('5%') }}>
+                        <EvilIcons name="user" size={40} color='#96D3FF' style={{ marginLeft: hp('2%') }} />
+                        <Text style={{ marginLeft: wp('4%'), fontSize: hp('2.5%') }}>My Profile</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{ flexDirection: 'row', marginTop: 10 }}>
-                        <Image source={require('../../assets/images/2.png')} style={{ height: 20, width: 20, marginLeft: 15 }} />
-                        <Text style={{ marginLeft: 20 }}>Vervitude</Text>
+                    <TouchableOpacity style={{ flexDirection: 'row', marginTop: hp('3%') }}>
+                        <Image source={require('../../assets/images/conversation.png')} style={{ height: 30, width: 30, marginLeft: hp('3%') }} />
+                        <Text style={{ marginLeft: wp('4%'), fontSize: hp('2.5%') }}>My conversation</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{ flexDirection: 'row', marginTop: 10 }}>
-                        <AntDesign name="logout" size={20} color='#36D3FF' style={{ marginLeft: 15 }} />
-                        <Text style={{ marginLeft: 20 }}>Log Out</Text>
+                    <TouchableOpacity style={{ flexDirection: 'row', marginTop: hp('3%') }}>
+                        <Image source={require('../../assets/images/Group.png')} style={{ height: 20, width: 29, marginLeft: hp('3%') }} />
+                        <Text style={{ marginLeft: wp('4%'), fontSize: hp('2.5%') }}>My Earnings</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{ flexDirection: 'row', marginTop: hp('3%') }}>
+                        <Image source={require('../../assets/images/categories.png')} style={{ height: 30, width: 30, marginLeft: hp('3%') }} />
+                        <Text style={{ marginLeft: wp('4%'), fontSize: hp('2.5%') }}>My Categories</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={{ flexDirection: 'row', marginTop: hp('3%') }}>
+                        <Image source={require('../../assets/images/Help.png')} style={{ height: 30, width: 30, marginLeft: hp('3%') }} />
+                        <Text style={{ marginLeft: wp('4%'), fontSize: hp('2.5%') }}>Help & Support</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={{ flexDirection: 'row', marginTop: hp('3%') }}>
+                        <Image source={require('../../assets/images/invite.png')} style={{ height: 30, width: 30, marginLeft: hp('3%') }} />
+                        <Text style={{ marginLeft: wp('4%'), fontSize: hp('2.5%') }}>invite a Consultant</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={{ flexDirection: 'row', marginTop: hp('10%') }}>
+                        <Image source={require('../../assets/images/logout.png')} style={{ height: 25, width: 30, marginLeft: hp('3%') }} />
+                        <Text style={{ marginLeft: wp('4%'), fontSize: hp('2.5%') }}>Log Out</Text>
                     </TouchableOpacity>
                 </View>
-                {/* <View style={{ marginBottom: 10 }}></View> */}
             </SafeAreaView>
         )
     }
