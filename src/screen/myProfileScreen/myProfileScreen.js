@@ -5,6 +5,7 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp, } from 'react-na
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import { INVITESCREEN } from '../../context/screen/screenName';
 
 
 export default class myProfileScreen extends Component {
@@ -57,7 +58,7 @@ export default class myProfileScreen extends Component {
                         <Text style={{ marginLeft: wp('4%'), fontSize: hp('2.5%') }}>Help & Support</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={{ flexDirection: 'row', marginTop: hp('3%') }}>
+                    <TouchableOpacity style={{ flexDirection: 'row', marginTop: hp('3%') }} onPress={() => this.props.navigation.navigate(INVITESCREEN)}>
                         <Image source={require('../../assets/images/invite.png')} style={{ height: 30, width: 30, marginLeft: hp('3%') }} />
                         <Text style={{ marginLeft: wp('4%'), fontSize: hp('2.5%') }}>invite a Consultant</Text>
                     </TouchableOpacity>

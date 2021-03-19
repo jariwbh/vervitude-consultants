@@ -77,12 +77,7 @@ export const styles = StyleSheet.create({
     },
     submitbtnText: {
         color: '#FFFFFF',
-        fontSize: 16
-    },
-    forgottext: {
-        fontSize: 15,
-        color: '#000000',
-        textDecorationLine: 'underline'
+        fontSize: hp('2%')
     },
     createText: {
         color: '#FFFFFF',

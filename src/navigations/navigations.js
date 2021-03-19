@@ -7,6 +7,7 @@ import REGISTERSCREEN from "../screen/registerScreen/registerScreen";
 import HOMESCREEN from "../screen/homeScreen/homeScreen";
 import MYPROFILESCREEN from '../screen/myProfileScreen/myProfileScreen';
 import MYTRANSFERSSCREEN from '../screen/myWalletScreen.js/myTransfersScreen'
+import INVITESCREEN from '../screen/inviteConsultant/inviteScreen'
 
 const Stack = createStackNavigator();
 
@@ -20,6 +21,7 @@ const navigationsApp = () => {
                 <Stack.Screen name="homeScreen" component={HOMESCREEN} />
                 <Stack.Screen name="myProfileScreen" component={MYPROFILESCREEN} />
                 <Stack.Screen name="myTransfersScreen" component={MYTRANSFERSSCREEN} />
+                <Stack.Screen name="invitescreen" component={INVITESCREEN} />
             </Stack.Navigator>
         </NavigationContainer>
     );
