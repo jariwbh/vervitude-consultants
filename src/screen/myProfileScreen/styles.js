@@ -8,11 +8,29 @@ export const styles = StyleSheet.create({
         backgroundColor: '#00D9CE'
     },
     cardview: {
-        flex: 1,
-        width: width - 30,
+        width: wp('95%'),
+        height: hp('80%'),
         backgroundColor: '#FFFFFF',
-        borderRadius: hp('5%'),
-        marginTop: hp('5%'),
-        marginLeft: wp('3.5%')
+        borderRadius: hp('3%'),
+        marginTop: hp('3%'),
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
     },
+    centerView: {
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    profileImage: {
+        borderRadius: hp('12%'),
+        alignItems: 'center',
+        backgroundColor: '#FFFFFF',
+        width: hp('13%'),
+        height: hp('13%'),
+        marginTop: hp('1%'),
+    }
 })
