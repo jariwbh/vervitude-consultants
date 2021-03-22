@@ -4,11 +4,12 @@ import * as STYLES from './styles';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp, } from 'react-native-responsive-screen'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import * as SCREEN from '../../context/screen/screenName';
 
 
 
 
-const myTransfersScreen = () => {
+function myTransfersScreen() {
     return (
         <SafeAreaView style={STYLES.styles.container}>
             <View style={{ marginTop: hp('3%'), justifyContent: 'space-around', flexDirection: 'row' }}>
@@ -34,20 +35,29 @@ const myTransfersScreen = () => {
                         <Image source={require('../../assets/images/ant-designup-square-filled.png')} style={{ height: 20, width: 20, marginRight: hp('3%') }} />
                     </View>
                     <Text style={{ fontSize: hp('4%'), color: '#34a853' }}> ₹ 2000.00</Text>
+                    <View style={{ marginTop: hp('2%'), flexDirection: 'row' }}>
+                        <View style={{ flex: 1, height: 1, backgroundColor: 'rgba(0, 0, 0, 0.2)' }}></View>
+                    </View>
                     <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: hp('1%') }}>
                         <Text style={{ fontSize: hp('2%'), marginLeft: hp('2%'), }}>TDS(5%)</Text>
                         <Text style={{ fontSize: hp('2%'), color: '#34a853', marginRight: hp('3%') }}> ₹ 100</Text>
+                    </View>
+                    <View style={{ marginTop: hp('2%'), flexDirection: 'row' }}>
+                        <View style={{ flex: 1, height: 1, backgroundColor: 'rgba(0, 0, 0, 0.2)' }}></View>
                     </View>
                     <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: hp('1%') }}>
                         <Text style={{ fontSize: hp('2%'), marginLeft: hp('2%'), }}>Net Earning</Text>
                         <Text style={{ fontSize: hp('2%'), color: '#34a853', marginRight: hp('3%') }}> ₹ 1900.00</Text>
                     </View>
                     <View style={{ marginTop: hp('2%'), flexDirection: 'row' }}>
-                        <View style={{ flex: 1, height: 1, backgroundColor: 'rgba(0, 0, 0, 0.2)' }}></View>
+                        <View style={{ flex: 1, height: 1, backgroundColor: 'rgba(0, 0, 0, 0.3)' }}></View>
                     </View>
                     <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: hp('1%') }}>
                         <Text style={{ fontSize: hp('2%'), marginLeft: hp('2%'), }}>Bank</Text>
                         <Text style={{ fontSize: hp('2%'), color: '#34a853', marginRight: hp('3%') }}>Kotak Mahindra Bank</Text>
+                    </View>
+                    <View style={{ marginTop: hp('2%'), flexDirection: 'row' }}>
+                        <View style={{ flex: 1, height: 1, backgroundColor: 'rgba(0, 0, 0, 0.2)' }}></View>
                     </View>
                     <View style={{ flexDirection: 'row', marginTop: hp('1%'), marginLeft: hp('2%') }}>
                         <Image source={require('../../assets/images/image1.png')} style={{ height: 40, width: 40, borderRadius: hp('5%') }} />
@@ -58,17 +68,20 @@ const myTransfersScreen = () => {
                     </View>
                 </View>
                 <View style={STYLES.styles.bankview}>
-                    <View style={{ flexDirection: 'row', marginTop: hp('1%'), marginLeft: hp('2%') }}>
-                        <View >
-                            <Image source={require('../../assets/images/image1.png')} style={{ height: 40, width: 40, borderRadius: hp('5%') }} />
-                            <Text style={{ fontSize: hp('2%'), color: '#34a853', marginRight: hp('3%') }}> ₹ 1900.00</Text>
+                    <View >
+                        <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: hp('1%') }}>
+                            <Image source={require('../../assets/images/image1.png')} style={{ height: 40, width: 40, borderRadius: hp('5%'), marginLeft: wp('2%') }} />
+                            <View style={{ flexDirection: 'column', marginLeft: wp('-25%') }}>
+                                <Text style={{ fontSize: hp('2%'), color: '#34a853', marginLeft: hp('2%') }}>Kotak Mahindra Bank</Text>
+                                <Text style={{ fontSize: hp('2%'), color: '#000000', marginLeft: hp('2%') }}>14/02/2021, 2:30PM</Text>
+                            </View>
+                            <Text style={{ fontSize: hp('2%'), color: '#34a853', marginRight: hp('3%') }}> ₹ 15 00.00</Text>
                         </View>
                         <View>
-                            <Text style={{ fontSize: hp('2%'), color: '#34a853', marginLeft: hp('2%') }}>Kotak Mahindra Bank</Text>
-                            <Text style={{ fontSize: hp('2%'), color: '#000000', marginLeft: hp('2%') }}>14/02/2021, 2:30PM</Text>
                         </View>
                     </View>
                 </View>
+                <View style={{ marginBottom: hp('10%') }}></View>
             </ScrollView>
         </SafeAreaView>
     )
