@@ -1,12 +1,11 @@
-import React from 'react'
-import { Text, View, Dimensions, SafeAreaView, Image, TouchableOpacity, ViewBase } from 'react-native'
-import * as STYLES from './styles';
-import { heightPercentageToDP as hp, widthPercentageToDP as wp, } from 'react-native-responsive-screen'
-import EvilIcons from 'react-native-vector-icons/EvilIcons'
-import Ionicons from 'react-native-vector-icons/Ionicons'
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import * as SCREEN from '../../context/screen/screenName';
+import React from 'react';
+import { Text, View, Dimensions, SafeAreaView, Image, TouchableOpacity, ViewBase } from 'react-native';
+import { heightPercentageToDP as hp, widthPercentageToDP as wp, } from 'react-native-responsive-screen';
 import MenuButton from '../../components/MenuButton/MenuButton';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import * as SCREEN from '../../context/screen/screenName';
+import * as STYLES from './styles';
 
 function myProfileScreen(props) {
     return (
@@ -17,13 +16,13 @@ function myProfileScreen(props) {
                         <MenuButton onPress={() => { this.props.navigation.navigate(MYPROFILESCREEN) }} />
                     </View>
                     <TouchableOpacity onPress={() => props.navigation.navigate(SCREEN.NOTIFICATIONSCREEN)}>
-                        <Ionicons name="notifications" size={40} color='#FFFFFF' style={{ marginLeft: hp('2%') }} />
+                        <Ionicons name="notifications" size={40} color='#FFFFFF' style={{ marginLeft: hp('0%') }} />
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style={{ width: wp('30%'), backgroundColor: '#FFFFFF', flexDirection: 'row', borderRadius: hp('3%'), alignItems: 'center', justifyContent: 'center' }}>
-                        <Text style={{ color: '#34a853', }}>5324.00</Text>
+                        style={{ width: wp('30%'), backgroundColor: '#FFFFFF', flexDirection: 'row', borderRadius: hp('3%'), alignItems: 'center', justifyContent: 'center', marginLeft: wp('20%') }}>
+                        <Text style={{ color: '#34a853' }}>5324.00</Text>
                         <View style={{ width: 25, height: 25, backgroundColor: '#34a853', alignItems: 'center', marginLeft: hp('2%'), borderRadius: hp('3%'), justifyContent: 'center' }}>
-                            <FontAwesome name="rupee" size={20} color='#FFFFFF' style={{ marginLeft: hp('0%') }} />
+                            <FontAwesome name="rupee" size={20} color='#FFFFFF' />
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -41,39 +40,38 @@ function myProfileScreen(props) {
                         />
                     </View>
                     <TouchableOpacity onPress={() => props.navigation.navigate(SCREEN.EDITSCREEN)}
-                        style={{ flexDirection: 'row', marginTop: hp('5%') }}>
-                        <EvilIcons name="user" size={40} color='#96D3FF' style={{ marginLeft: hp('2%') }} />
-                        <Text style={{ marginLeft: wp('4%'), fontSize: hp('2.5%') }}>My Profile</Text>
+                        style={{ flexDirection: 'row', marginTop: hp('1%') }}>
+                        <Image source={require('../../assets/images/profileicon.png')} style={{ height: 33, width: 30, marginLeft: hp('3%') }} />
+                        <Text style={{ marginLeft: wp('4%'), color: '#4D4D4D', fontSize: hp('2.5%') }}>My Profile</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{ flexDirection: 'row', marginTop: hp('3%') }}>
+                    <TouchableOpacity style={{ flexDirection: 'row', marginTop: hp('3.5%') }}>
                         <Image source={require('../../assets/images/conversation.png')} style={{ height: 30, width: 30, marginLeft: hp('3%') }} />
-                        <Text style={{ marginLeft: wp('4%'), fontSize: hp('2.5%') }}>My conversation</Text>
+                        <Text style={{ marginLeft: wp('4%'), color: '#4D4D4D', fontSize: hp('2.5%') }}>My conversation</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{ flexDirection: 'row', marginTop: hp('3%') }}
+                    <TouchableOpacity style={{ flexDirection: 'row', marginTop: hp('3.5%') }}
                         onPress={() => props.navigation.navigate(SCREEN.MYEARINGSCREEN)}>
                         <Image source={require('../../assets/images/Group.png')} style={{ height: 20, width: 29, marginLeft: hp('3%') }} />
-                        <Text style={{ marginLeft: wp('4%'), fontSize: hp('2.5%') }}>My Earnings</Text>
+                        <Text style={{ marginLeft: wp('4%'), color: '#4D4D4D', fontSize: hp('2.5%') }}>My Earnings</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{ flexDirection: 'row', marginTop: hp('3%') }}>
+                    <TouchableOpacity style={{ flexDirection: 'row', marginTop: hp('3.5%') }}>
                         <Image source={require('../../assets/images/categories.png')} style={{ height: 30, width: 30, marginLeft: hp('3%') }} />
-                        <Text style={{ marginLeft: wp('4%'), fontSize: hp('2.5%') }}>My Categories</Text>
+                        <Text style={{ marginLeft: wp('4%'), color: '#4D4D4D', fontSize: hp('2.5%') }}>My Categories</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{ flexDirection: 'row', marginTop: hp('3%') }}>
+                    <TouchableOpacity style={{ flexDirection: 'row', marginTop: hp('3.5%') }}>
                         <Image source={require('../../assets/images/Help.png')} style={{ height: 30, width: 30, marginLeft: hp('3%') }} />
-                        <Text style={{ marginLeft: wp('4%'), fontSize: hp('2.5%') }}>Help & Support</Text>
+                        <Text style={{ marginLeft: wp('4%'), color: '#4D4D4D', fontSize: hp('2.5%') }}>Help & Support</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{ flexDirection: 'row', marginTop: hp('3%') }} onPress={() => props.navigation.navigate(SCREEN.INVITESCREEN)}>
+                    <TouchableOpacity style={{ flexDirection: 'row', marginTop: hp('3.5%') }} onPress={() => props.navigation.navigate(SCREEN.INVITESCREEN)}>
                         <Image source={require('../../assets/images/invite.png')} style={{ height: 30, width: 30, marginLeft: hp('3%') }} />
-                        <Text style={{ marginLeft: wp('4%'), fontSize: hp('2.5%') }}>invite a Consultant</Text>
+                        <Text style={{ marginLeft: wp('4%'), color: '#4D4D4D', fontSize: hp('2.5%') }}>invite a Consultant</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={{ flexDirection: 'row', marginTop: hp('10%') }} onPress={() => props.navigation.navigate(SCREEN.LOGINSCREEN)}>
+                    <TouchableOpacity style={{ flexDirection: 'row', marginTop: hp('12%') }} onPress={() => props.navigation.navigate(SCREEN.LOGINSCREEN)}>
                         <Image source={require('../../assets/images/logout.png')} style={{ height: 25, width: 30, marginLeft: hp('3%') }} />
-                        <Text style={{ marginLeft: wp('4%'), fontSize: hp('2.5%') }}>Log Out</Text>
+                        <Text style={{ marginLeft: wp('4%'), color: '#4D4D4D', fontSize: hp('2.5%') }}>Log Out</Text>
                     </TouchableOpacity>
                 </View>
             </View>
         </SafeAreaView>
-
     )
 }
 

@@ -1,5 +1,4 @@
 import { StyleSheet, Dimensions } from 'react-native';
-const { height, width } = Dimensions.get('window');
 import { heightPercentageToDP as hp, widthPercentageToDP as wp, } from 'react-native-responsive-screen'
 
 export const styles = StyleSheet.create({
@@ -31,6 +30,6 @@ export const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         width: hp('13%'),
         height: hp('13%'),
-        marginTop: hp('1%'),
+        marginTop: hp('-1%')
     }
 })

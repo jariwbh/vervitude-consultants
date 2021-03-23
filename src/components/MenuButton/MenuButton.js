@@ -6,8 +6,8 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-nat
 export default function MenuButton(props) {
     return (
         <TouchableOpacity style={styles.categoryIcon} onPress={props.onPress} >
-            <Image source={require('../../assets/images/2.png')}
-                style={{ alignItems: 'center', height: 50, width: 50, marginTop: 2, borderRadius: 50 }}
+            <Image source={require('../../assets/images/menuicon.png')}
+                style={{ alignItems: 'center', height: 50, width: 60 }}
             />
         </TouchableOpacity>
     );
@@ -15,11 +15,9 @@ export default function MenuButton(props) {
 
 const styles = StyleSheet.create({
     categoryIcon: {
-        width: wp("7%"),
-        height: wp("7%"),
-        borderRadius: hp('6%'),
-        marginLeft: wp('5%'),
-        alignItems: 'center',
+        marginLeft: wp('-5%'),
+        flexDirection: 'row',
+        alignItems: "center",
         justifyContent: 'center'
     },
 });
