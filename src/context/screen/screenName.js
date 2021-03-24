@@ -11,3 +11,4 @@ export const BANKINFOSCREEN = 'bankInfoScreen'
 export const MYTRANSFERSSCREEN = "myTransfersScreen"
 export const NOTIFICATIONSCREEN = "notificationScreen"
 export const SELECTCATEGORYSCREEN = "selectCategoryScreen"
+export const MAINSCREEN = "MainScreen"

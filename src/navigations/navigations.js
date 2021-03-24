@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { TouchableOpacity, StyleSheet, View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LOGINSCREEN from "../screen/loginScreen/loginScreen";
@@ -15,9 +16,14 @@ import DOCUMENTSCREEN from '../screen/myProfileScreen/documentScreen'
 import EDITSCREEN from '../screen/myProfileScreen/editScreen'
 import SELECTCATEGORYSCREEN from '../screen/selectCategoryScreen/selectCategoryScreen'
 
+import MenuButton from '../components/MenuButton/MenuButton';
+import ChatMenu from '../components/ChatMenu/ChatMenu';
+import SwitchButton from '../components/SwittchButton/SwitchButton';
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
+import * as SCREEN from '../context/screen/screenName'
 const Stack = createStackNavigator();
 
-const navigationsApp = () => {
+const navigationsApp = (props) => {
     return (
         <NavigationContainer>
             <Stack.Navigator headerMode="none" initialRouteName={LOGINSCREEN}>
@@ -34,8 +40,26 @@ const navigationsApp = () => {
                 <Stack.Screen name="notificationScreen" component={NOTIFICATIONSCREEN} />
                 <Stack.Screen name="myEaringScreen" component={MYEARINGSCREEN} />
                 <Stack.Screen name="selectCategoryScreen" component={SELECTCATEGORYSCREEN} />
+                <Stack.Screen name="MainScreen" component={MainNavigation} />
             </Stack.Navigator>
         </NavigationContainer>
+    );
+};
+
+const HomeStack = createStackNavigator();
+function MainNavigation({ navigation }) {
+    return (
+        <HomeStack.Navigator headerMode='none' initialRouteName='homeScreen'>
+            <HomeStack.Screen name="homeScreen" component={HOMESCREEN} />
+            <HomeStack.Screen name="myProfileScreen" component={MYPROFILESCREEN} />
+            <HomeStack.Screen name="myTransfersScreen" component={MYTRANSFERSSCREEN} />
+            <HomeStack.Screen name="invitescreen" component={INVITESCREEN} />
+            <HomeStack.Screen name="editScreen" component={EDITSCREEN} />
+            <HomeStack.Screen name="documentScreen" component={DOCUMENTSCREEN} />
+            <HomeStack.Screen name="bankInfoScreen" component={BANKINFOSCREEN} />
+            <HomeStack.Screen name="notificationScreen" component={NOTIFICATIONSCREEN} />
+            <HomeStack.Screen name="myEaringScreen" component={MYEARINGSCREEN} />
+        </HomeStack.Navigator>
     );
 };
 

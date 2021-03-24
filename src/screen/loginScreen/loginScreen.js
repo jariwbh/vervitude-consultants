@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { Text, View, ImageBackground, SafeAreaView, TouchableOpacity, Image, TextInput, ScrollView, ToastAndroid, StatusBar } from 'react-native'
-import { HOMESCREEN, REGISTERSCREEN } from '../../context/screen/screenName';
+import { Text, View, ImageBackground, SafeAreaView, TouchableOpacity, Image, TextInput, ScrollView, ToastAndroid, StatusBar, BackHandler } from 'react-native'
+import { MAINSCREEN, REGISTERSCREEN } from '../../context/screen/screenName';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp, } from 'react-native-responsive-screen'
 import * as STYLES from './styles';
 import AsyncStorage from '@react-native-community/async-storage';
 import { AUTHUSER } from '../../context/actions/type'
+import Loader from '../../components/loader';
 
 export default class loginScreen extends Component {
     constructor(props) {
@@ -20,6 +21,26 @@ export default class loginScreen extends Component {
         this.setPassword = this.setPassword.bind(this);
         this.onPressSubmit = this.onPressSubmit.bind(this);
         this.secondTextInputRef = React.createRef();
+        this._unsubscribeSiFocus = this.props.navigation.addListener('focus', e => {
+            BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+        });
+
+        this._unsubscribeSiBlur = this.props.navigation.addListener('blur', e => {
+            BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton,
+            );
+        });
+    }
+
+    componentWillUnmount() {
+        this._unsubscribeSiFocus();
+        this._unsubscribeSiBlur();
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+    }
+
+    //mobile back press to call
+    handleBackButton = () => {
+        BackHandler.exitApp()
+        return true;
     }
 
     setEmail(email) {
@@ -42,7 +63,7 @@ export default class loginScreen extends Component {
             usererror: null,
             password: null,
             passworderror: null,
-            loading: false,
+            loading: false
         });
     }
 
@@ -65,12 +86,12 @@ export default class loginScreen extends Component {
         setTimeout(() => {
             this.setState({ loading: false })
             ToastAndroid.show("SignIn Success!", ToastAndroid.LONG);
-            this.props.navigation.navigate(HOMESCREEN);
-        }, 3000);
-
+            this.props.navigation.navigate(MAINSCREEN);
+        }, 1000);
     }
 
     render() {
+        const { loading } = this.state;
         return (
             <SafeAreaView style={STYLES.styles.container}>
                 <StatusBar backgroundColor="#80caff" hidden barStyle="light-content" />
@@ -130,6 +151,7 @@ export default class loginScreen extends Component {
                         </View>
                     </View>
                 </ScrollView>
+                {loading ? <Loader /> : null}
             </SafeAreaView>
         )
     }
