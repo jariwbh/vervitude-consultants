@@ -5,7 +5,7 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-nat
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
-const notificationScreen = () => {
+const notificationScreen = (props) => {
     return (
         <SafeAreaView style={styles.container}>
             <View style={{ marginTop: hp('5%') }}>
@@ -55,7 +55,7 @@ const notificationScreen = () => {
     )
 }
 
-export default notificationScreen
+export default notificationScreen;
 
 const styles = StyleSheet.create({
     container: {
