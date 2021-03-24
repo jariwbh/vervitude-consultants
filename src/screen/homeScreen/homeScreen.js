@@ -41,11 +41,13 @@ export default class homeScreen extends Component {
         return (
             <SafeAreaView style={STYLES.styles.container}>
                 <ScrollView showsVerticalScrollIndicator={false}>
-                    <View style={{ flexDirection: 'row', marginTop: hp('2%') }}>
-                        <View style={{ marginRight: hp('3%') }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: "center", justifyContent: 'center', marginTop: hp('2%') }}>
+                        <View style={{ marginLeft: hp('8%') }}>
                             <MenuButton onPress={() => { this.props.navigation.navigate(MYPROFILESCREEN) }} />
                         </View>
-                        <SwitchButton />
+                        <View style={{ marginLeft: hp('3%') }}>
+                            <SwitchButton />
+                        </View>
                         <View style={{ marginLeft: hp('25%') }}>
                             <ChatMenu onPress={() => { }} />
                         </View>
@@ -112,7 +114,7 @@ export default class homeScreen extends Component {
                                     <View style={{ backgroundColor: '#00D9CE', width: 20, height: 20, marginLeft: hp('-5%'), marginTop: hp('0.5%'), marginRight: hp('3%'), alignItems: 'center', justifyContent: 'center', borderRadius: wp('15%') }}>
                                         <Text style={{ fontSize: hp('2.5%'), color: '#FFFFFF' }}>2</Text>
                                     </View>
-                                    <Text style={{ fontSize: hp('2.5%'), color: '#555555' }}>Ranjan</Text>
+                                    <Text style={{ fontSize: hp('2.5%'), color: '#555555' }}>George</Text>
                                 </View>
                                 <Text style={{ fontSize: hp('2.5%'), color: '#00D9CE' }}>+105%</Text>
                                 <Text style={{ fontSize: hp('2.5%'), color: '#34A853' }}>₹ 30k+</Text>
@@ -126,7 +128,7 @@ export default class homeScreen extends Component {
                                     <View style={{ backgroundColor: '#00D9CE', width: 20, height: 20, marginLeft: hp('-5%'), marginTop: hp('0.5%'), marginRight: hp('3%'), alignItems: 'center', justifyContent: 'center', borderRadius: wp('15%') }}>
                                         <Text style={{ fontSize: hp('2.5%'), color: '#FFFFFF' }}>3</Text>
                                     </View>
-                                    <Text style={{ fontSize: hp('2.5%'), color: '#555555' }}>Jay</Text>
+                                    <Text style={{ fontSize: hp('2.5%'), color: '#555555' }}>George</Text>
                                 </View>
                                 <Text style={{ fontSize: hp('2.5%'), color: '#00D9CE' }}>+105%</Text>
                                 <Text style={{ fontSize: hp('2.5%'), color: '#34A853' }}>₹ 30k+</Text>
@@ -140,7 +142,7 @@ export default class homeScreen extends Component {
                                     <View style={{ backgroundColor: '#00D9CE', width: 20, height: 20, marginLeft: hp('-5%'), marginTop: hp('0.5%'), marginRight: hp('3%'), alignItems: 'center', justifyContent: 'center', borderRadius: wp('15%') }}>
                                         <Text style={{ fontSize: hp('2.5%'), color: '#FFFFFF' }}>4</Text>
                                     </View>
-                                    <Text style={{ fontSize: hp('2.5%'), color: '#555555' }}>Prachin</Text>
+                                    <Text style={{ fontSize: hp('2.5%'), color: '#555555' }}>George</Text>
                                 </View>
                                 <Text style={{ fontSize: hp('2.5%'), color: '#00D9CE' }}>+105%</Text>
                                 <Text style={{ fontSize: hp('2.5%'), color: '#34A853' }}>₹ 30k+</Text>
@@ -154,7 +156,7 @@ export default class homeScreen extends Component {
                                     <View style={{ backgroundColor: '#00D9CE', width: 20, height: 20, marginLeft: hp('-5%'), marginTop: hp('0.5%'), marginRight: hp('3%'), alignItems: 'center', justifyContent: 'center', borderRadius: wp('15%') }}>
                                         <Text style={{ fontSize: hp('2.5%'), color: '#FFFFFF' }}>5</Text>
                                     </View>
-                                    <Text style={{ fontSize: hp('2.5%'), color: '#555555' }}>Ruby</Text>
+                                    <Text style={{ fontSize: hp('2.5%'), color: '#555555' }}>George</Text>
                                 </View>
                                 <Text style={{ fontSize: hp('2.5%'), color: '#00D9CE' }}>+105%</Text>
                                 <Text style={{ fontSize: hp('2.5%'), color: '#34A853' }}>₹ 30k+</Text>
@@ -168,7 +170,7 @@ export default class homeScreen extends Component {
                                     <View style={{ backgroundColor: '#00D9CE', width: 20, height: 20, marginLeft: hp('-5%'), marginTop: hp('0.5%'), marginRight: hp('3%'), alignItems: 'center', justifyContent: 'center', borderRadius: wp('15%') }}>
                                         <Text style={{ fontSize: hp('2.5%'), color: '#FFFFFF' }}>6</Text>
                                     </View>
-                                    <Text style={{ fontSize: hp('2.5%'), color: '#555555' }}>Steve</Text>
+                                    <Text style={{ fontSize: hp('2.5%'), color: '#555555' }}>George</Text>
                                 </View>
                                 <Text style={{ fontSize: hp('2.5%'), color: '#00D9CE' }}>+105%</Text>
                                 <Text style={{ fontSize: hp('2.5%'), color: '#34A853' }}>₹ 30k+</Text>
