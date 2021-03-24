@@ -178,7 +178,8 @@ export default function editScreen(props) {
                             <TouchableOpacity>
                                 <AntDesign name="closecircleo" size={24} color='#00000' style={{ marginLeft: hp('-7%') }} />
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ color: '#888888', width: 80, height: 80, borderWidth: wp('0.1%'), alignItems: 'center', justifyContent: 'center', borderRadius: wp('15%') }}>
+                            <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.SELECTCATEGORYSCREEN) }}
+                                style={{ color: '#888888', width: 80, height: 80, borderWidth: wp('0.1%'), alignItems: 'center', justifyContent: 'center', borderRadius: wp('15%') }}>
                                 <Image source={require('../../assets/images/clarityaddline.png')} style={{
                                     width: 30, height: 30, borderRadius: hp('7%'),
                                 }} />

@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#00D9CE",
     },
     notificationview: {
-        height: hp('15                                       %'),
+        height: hp('15%'),
         width: wp('90%'),
         backgroundColor: '#FFFFFF',
         marginTop: hp('5%'),

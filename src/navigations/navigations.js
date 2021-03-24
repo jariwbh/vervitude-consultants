@@ -13,6 +13,7 @@ import NOTIFICATIONSCREEN from '../screen/notificationScreen/notificationScreen'
 import BANKINFOSCREEN from '../screen/myProfileScreen/bankInfoScreen'
 import DOCUMENTSCREEN from '../screen/myProfileScreen/documentScreen'
 import EDITSCREEN from '../screen/myProfileScreen/editScreen'
+import SELECTCATEGORYSCREEN from '../screen/selectCategoryScreen/selectCategoryScreen'
 
 const Stack = createStackNavigator();
 
@@ -32,6 +33,7 @@ const navigationsApp = () => {
                 <Stack.Screen name="bankInfoScreen" component={BANKINFOSCREEN} />
                 <Stack.Screen name="notificationScreen" component={NOTIFICATIONSCREEN} />
                 <Stack.Screen name="myEaringScreen" component={MYEARINGSCREEN} />
+                <Stack.Screen name="selectCategoryScreen" component={SELECTCATEGORYSCREEN} />
             </Stack.Navigator>
         </NavigationContainer>
     );
