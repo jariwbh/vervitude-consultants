@@ -7,7 +7,7 @@ export default function ChatMenu(props) {
     return (
         <TouchableOpacity style={styles.categoryIcon} onPress={props.onPress} >
             <Image source={require('../../assets/images/chaticon.png')}
-                style={{ alignItems: 'center', height: 25, width: 26, }}
+                style={{ alignItems: 'center', height: 25, width: 27, }}
             />
         </TouchableOpacity>
     );

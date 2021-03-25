@@ -31,7 +31,7 @@ const navigationsApp = (props) => {
 };
 
 const HomeStack = createStackNavigator();
-function MainNavigation({ navigation }) {
+function MainNavigation() {
     return (
         <HomeStack.Navigator headerMode='none' initialRouteName='homeScreen'>
             <HomeStack.Screen name="homeScreen" component={HOMESCREEN} />
