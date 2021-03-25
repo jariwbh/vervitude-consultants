@@ -1,35 +1,33 @@
-import { StyleSheet, Dimensions } from 'react-native';
-const { height, width } = Dimensions.get('window');
+import { StyleSheet } from 'react-native';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp, } from 'react-native-responsive-screen'
 
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: "#EEEEEE"
     },
     abalanceview: {
-        height: height / 4,
-        width: width - 30,
+        height: hp('25%'),
+        width: wp('95%'),
         backgroundColor: '#FFFFFF',
+        marginTop: hp('3%'),
         borderRadius: hp('3%'),
-        marginTop: hp('5%'),
-        marginLeft: wp('3.5%'),
+        alignItems: 'center',
         justifyContent: 'center',
         shadowOpacity: 0.5,
-        shadowRadius: 1,
-        elevation: 2,
+        shadowRadius: 3,
         shadowOffset: {
             height: 0,
             width: 0,
         },
-        alignItems: 'center',
+        elevation: 3
     },
     gamountview: {
-        height: height / 2.5,
-        width: width - 30,
+        height: hp('40%'),
+        width: wp('95%'),
         backgroundColor: '#FFFFFF',
         borderRadius: hp('3%'),
-        marginTop: hp('5%'),
-        marginLeft: wp('3.5%'),
+        marginTop: hp('3%'),
         shadowOpacity: 0.5,
         shadowRadius: 1,
         elevation: 2,
@@ -39,12 +37,11 @@ export const styles = StyleSheet.create({
         },
     },
     bankview: {
-        height: height / 9,
-        width: width - 30,
+        height: hp('10%'),
+        width: wp('95%'),
         backgroundColor: '#FFFFFF',
         borderRadius: hp('3%'),
-        marginTop: hp('5%'),
-        marginLeft: wp('3.5%'),
+        marginTop: hp('3%'),
         shadowOpacity: 0.5,
         shadowRadius: 1,
         elevation: 2,
@@ -53,7 +50,5 @@ export const styles = StyleSheet.create({
             width: 0,
         },
         justifyContent: 'center',
-
-    },
-
+    }
 })

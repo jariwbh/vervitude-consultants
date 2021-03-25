@@ -11,7 +11,7 @@ const bankInfoScreen = (props) => {
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: hp('5%') }}>
                     <AntDesign name="arrowleft" size={24} color='#FFFFFF' style={{ marginLeft: hp('2%') }} />
-                    <TouchableOpacity
+                    <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.MYPROFILESCREEN) }}
                         style={styles.submitbtn}>
                         <Text style={{ fontSize: hp('2%'), color: '#00D9CE' }}>Save</Text>
                     </TouchableOpacity>

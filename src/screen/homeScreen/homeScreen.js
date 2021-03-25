@@ -41,7 +41,7 @@ export default class homeScreen extends Component {
         return (
             <SafeAreaView style={STYLES.styles.container}>
                 <ScrollView showsVerticalScrollIndicator={false}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: "center", justifyContent: 'center', marginTop: hp('2%') }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: "center", justifyContent: 'center', marginTop: hp('5%') }}>
                         <View style={{ marginLeft: hp('8%') }}>
                             <MenuButton onPress={() => { this.props.navigation.navigate(MYPROFILESCREEN) }} />
                         </View>

@@ -32,7 +32,7 @@ export const styles = StyleSheet.create({
         },
         borderRadius: 20,
         backgroundColor: '#FFFFFF',
-        marginTop: hp('15%')
+        marginTop: hp('5%')
     },
     submitBtn: {
         flexDirection: 'row',
@@ -54,17 +54,10 @@ export const styles = StyleSheet.create({
     inputView: {
         flexDirection: 'row',
         backgroundColor: "#F4F4F4",
-        //shadowOpacity: 0.5,
-        //shadowRadius: 1,
-        // shadowOffset: {
-        //    height: 0,
-        //    width: 0,
-        //},
-        //elevation: 2,
         borderWidth: wp('0.1%'),
         borderColor: '#000000',
         width: wp('80%'),
-        height: hp('5%'),
+        height: hp('6%'),
         marginLeft: hp('3%'),
         borderRadius: hp('0.5%'),
         marginBottom: hp('3%')

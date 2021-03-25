@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, Image, StyleSheet, SafeAreaView, TouchableOpacity, TextInput, ScrollView } from 'react-native'
-import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as SCREEN from '../../context/screen/screenName';
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -12,7 +12,7 @@ export default function editScreen(props) {
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: hp('5%') }}>
                     <AntDesign name="arrowleft" size={24} color='#FFFFFF' style={{ marginLeft: hp('2%') }} />
-                    <TouchableOpacity
+                    <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.DOCUMENTSCREEN) }}
                         style={styles.submitbtn}>
                         <Text style={{ fontSize: hp('2%'), color: '#00D9CE' }}>Submit</Text>
                     </TouchableOpacity>
@@ -184,8 +184,7 @@ export default function editScreen(props) {
                                 <AntDesign name="closecircleo" size={24} color='#000000' />
                             </TouchableOpacity>
 
-                            <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.SELECTCATEGORYSCREEN) }}
-                                style={styles.brandstyle}>
+                            <TouchableOpacity style={styles.brandstyle}>
                                 <AntDesign name="plus" size={30} color='#000000' style={{ width: 30, height: 30, borderRadius: hp('7%') }} />
                             </TouchableOpacity>
                         </View>

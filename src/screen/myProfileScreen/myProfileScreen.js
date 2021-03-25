@@ -12,7 +12,7 @@ function myProfileScreen(props) {
         <SafeAreaView style={STYLES.styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View>
-                    <View style={{ marginTop: hp('2%'), justifyContent: 'space-around', flexDirection: 'row' }} >
+                    <View style={{ marginTop: hp('5%'), justifyContent: 'space-around', flexDirection: 'row' }} >
                         <View style={{ marginRight: hp('2%') }}>
                             <MenuButton onPress={() => { props.navigation.navigate(SCREEN.HOMESCREEN) }} />
                         </View>
@@ -54,7 +54,8 @@ function myProfileScreen(props) {
                             <Image source={require('../../assets/images/Group.png')} style={{ height: 20, width: 29, marginLeft: hp('3%') }} />
                             <Text style={{ marginLeft: wp('4%'), color: '#4D4D4D', fontSize: hp('2.5%') }}>My Earnings</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{ flexDirection: 'row', marginTop: hp('3.5%') }}>
+                        <TouchableOpacity style={{ flexDirection: 'row', marginTop: hp('3.5%') }}
+                            onPress={() => props.navigation.navigate(SCREEN.SELECTCATEGORYSCREEN)}>
                             <Image source={require('../../assets/images/categories.png')} style={{ height: 30, width: 30, marginLeft: hp('3%') }} />
                             <Text style={{ marginLeft: wp('4%'), color: '#4D4D4D', fontSize: hp('2.5%') }}>My Categories</Text>
                         </TouchableOpacity>

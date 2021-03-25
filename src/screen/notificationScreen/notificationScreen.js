@@ -1,56 +1,57 @@
-import React from 'react'
-import { View, Text, StyleSheet, SafeAreaView } from 'react-native'
+import React from 'react';
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import Ionicons from 'react-native-vector-icons/Ionicons'
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const notificationScreen = (props) => {
     return (
         <SafeAreaView style={styles.container}>
-            <View style={{ marginTop: hp('5%') }}>
-                <View style={{ flexDirection: 'row', }}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+                <View style={{ justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', marginTop: hp('5%') }}>
                     <AntDesign name="arrowleft" size={24} color='#FFFFFF' style={{ marginLeft: hp('2%') }} />
+                    <Ionicons name="notifications" size={30} color='#FFFFFF' style={{ marginLeft: hp('-15%') }} />
+                    <TouchableOpacity
+                        style={styles.submitbtn}>
+                        <Text style={{ fontSize: hp('2%'), color: '#00D9CE' }}>Clear</Text>
+                    </TouchableOpacity>
                 </View>
-                <View style={{ justifyContent: "space-around", flexDirection: 'row', marginTop: hp('-3.5%') }}>
-                    <Ionicons name="notifications" size={24} color='#FFFFFF' style={{}} />
-                    <View style={{ width: wp('20%'), backgroundColor: '#FFFFFF', borderRadius: hp('2%'), alignItems: 'center', justifyContent: 'center' }}>
-                        <Text>Clear</Text>
-                    </View>
-                </View>
-            </View>
-            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                <View style={styles.notificationview}>
-                    <View style={{ alignItems: 'flex-end', justifyContent: 'flex-end', marginTop: hp('1%'), }}>
-                        <Text style={{ fontSize: hp('2%'), marginRight: hp('3%') }}>Just now</Text>
-                    </View>
-                    <View style={{ flexDirection: 'row', flex: 1, marginLeft: hp('2%'), alignItems: 'center' }}>
-                        <View style={{ width: 25, height: 25, backgroundColor: '#cccccc', borderRadius: hp('5%'), justifyContent: 'center', alignItems: 'center' }}>
-                            <FontAwesome name="rupee" size={15} color='green' style={{ marginLeft: hp('0%') }} />
+
+                <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: hp('1%') }}>
+                    <View style={styles.notificationview}>
+                        <View style={{ alignItems: 'flex-end', justifyContent: 'flex-end', marginTop: hp('1%') }}>
+                            <Text style={{ fontSize: hp('1.8%'), marginRight: hp('3%'), color: '#999999' }}>Just now</Text>
                         </View>
-                        <View style={{ flex: 1, marginLeft: hp('2%') }}>
-                            <Text style={{ color: '#F67742' }} >#Transaction</Text>
-                            <Text>Your Feb transaction have been completed please check your account</Text>
-                        </View>
-                    </View>
-                </View>
-            </View>
-            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                <View style={styles.notificationview}>
-                    <View style={{ alignItems: 'flex-end', justifyContent: 'flex-end', marginTop: hp('1%'), }}>
-                        <Text style={{ fontSize: hp('2%'), marginRight: hp('3%') }}>Yesterday</Text>
-                    </View>
-                    <View style={{ flexDirection: 'row', flex: 1, marginLeft: hp('2%'), alignItems: 'center' }}>
-                        <View style={{ width: 25, height: 25, backgroundColor: '#cccccc', borderRadius: hp('5%'), justifyContent: 'center', alignItems: 'center' }}>
-                            <FontAwesome name="rupee" size={15} color='green' style={{ marginLeft: hp('0%') }} />
-                        </View>
-                        <View style={{ flex: 1, marginLeft: hp('2%') }}>
-                            <Text style={{ color: '#F67742' }} >#Transaction</Text>
-                            <Text>Your jan transaction have been completed please check your account</Text>
+                        <View style={{ flexDirection: 'row', flex: 1, marginTop: hp('-5%'), marginLeft: hp('2%'), alignItems: 'center' }}>
+                            <View style={{ width: 40, height: 40, backgroundColor: '#EEEEEE', borderRadius: hp('5%'), justifyContent: 'center', alignItems: 'center' }}>
+                                <FontAwesome name="rupee" size={25} color='green' />
+                            </View>
+                            <View style={{ flex: 1, marginLeft: hp('2%') }}>
+                                <Text style={{ color: '#F67742' }} >#Transaction</Text>
+                                <Text style={{ fontSize: hp('2.5%'), color: '#000000' }}>Your Feb transaction have been completed please check your account</Text>
+                            </View>
                         </View>
                     </View>
                 </View>
-            </View>
+
+                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    <View style={styles.notificationview}>
+                        <View style={{ alignItems: 'flex-end', justifyContent: 'flex-end', marginTop: hp('1%') }}>
+                            <Text style={{ fontSize: hp('1.8%'), marginRight: hp('3%'), color: '#999999' }}>Yesterday</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row', flex: 1, marginTop: hp('-5%'), marginLeft: hp('2%'), alignItems: 'center' }}>
+                            <View style={{ width: 40, height: 40, backgroundColor: '#EEEEEE', borderRadius: hp('5%'), justifyContent: 'center', alignItems: 'center' }}>
+                                <FontAwesome name="rupee" size={25} color='green' />
+                            </View>
+                            <View style={{ flex: 1, marginLeft: hp('2%') }}>
+                                <Text style={{ color: '#F67742' }} >#Transaction</Text>
+                                <Text style={{ fontSize: hp('2.5%'), color: '#000000' }}>Your jan transaction have been completed please check your account</Text>
+                            </View>
+                        </View>
+                    </View>
+                </View>
+            </ScrollView>
         </SafeAreaView>
     )
 }
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
         height: hp('15%'),
         width: wp('90%'),
         backgroundColor: '#FFFFFF',
-        marginTop: hp('5%'),
+        marginTop: hp('2%'),
         borderRadius: hp('3%'),
         shadowOpacity: 0.5,
         shadowRadius: 3,
@@ -76,4 +77,23 @@ const styles = StyleSheet.create({
         },
         elevation: 4,
     },
+    submitbtn: {
+        flexDirection: 'row',
+        marginRight: hp('2%'),
+        width: wp('25%'),
+        height: hp('4%'),
+        backgroundColor: '#FFFFFF',
+        borderRadius: hp('5%'),
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginLeft: hp('2%'),
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
+    }
 })
