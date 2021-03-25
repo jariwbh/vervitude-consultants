@@ -8,6 +8,7 @@ import MenuButton from '../../components/MenuButton/MenuButton'
 import SwitchButton from '../../components/SwittchButton/SwitchButton'
 import ChatMenu from '../../components/ChatMenu/ChatMenu'
 import { MYPROFILESCREEN } from '../../context/screen/screenName'
+import { CHATHISTORYSCREEN } from '../../context/screen/screenName'
 
 export default class homeScreen extends Component {
     constructor(props) {
@@ -49,7 +50,7 @@ export default class homeScreen extends Component {
                             <SwitchButton />
                         </View>
                         <View style={{ marginLeft: hp('25%') }}>
-                            <ChatMenu onPress={() => { }} />
+                            <ChatMenu onPress={() => { this.props.navigation.navigate(CHATHISTORYSCREEN) }} />
                         </View>
                     </View>
                     <View style={{ marginTop: hp('3%') }}></View>

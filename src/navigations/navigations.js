@@ -14,6 +14,7 @@ import BANKINFOSCREEN from '../screen/myProfileScreen/bankInfoScreen';
 import DOCUMENTSCREEN from '../screen/myProfileScreen/documentScreen';
 import EDITSCREEN from '../screen/myProfileScreen/editScreen';
 import SELECTCATEGORYSCREEN from '../screen/selectCategoryScreen/selectCategoryScreen';
+import CHATHISTORYSCREEN from '../screen/chatHistoryScreen/chatHistoryScreen'
 const Stack = createStackNavigator();
 
 const navigationsApp = (props) => {
@@ -43,6 +44,7 @@ function MainNavigation({ navigation }) {
             <HomeStack.Screen name="notificationScreen" component={NOTIFICATIONSCREEN} />
             <HomeStack.Screen name="myEaringScreen" component={MYEARINGSCREEN} />
             <HomeStack.Screen name="selectCategoryScreen" component={SELECTCATEGORYSCREEN} />
+            <HomeStack.Screen name="chatHistoryScreen" component={CHATHISTORYSCREEN} />
         </HomeStack.Navigator>
     );
 };
