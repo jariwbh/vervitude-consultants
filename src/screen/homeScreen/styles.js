@@ -97,7 +97,7 @@ export const styles = StyleSheet.create({
     cardViewChart: {
         borderRadius: wp('5%'),
         marginTop: hp('2%'),
-        flexDirection: 'row',
+        flexDirection: 'column',
         width: wp('95%'),
         height: hp('40%'),
         backgroundColor: '#FFFFFF',

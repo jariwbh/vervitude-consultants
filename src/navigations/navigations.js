@@ -14,7 +14,9 @@ import BANKINFOSCREEN from '../screen/myProfileScreen/bankInfoScreen';
 import DOCUMENTSCREEN from '../screen/myProfileScreen/documentScreen';
 import EDITSCREEN from '../screen/myProfileScreen/editScreen';
 import SELECTCATEGORYSCREEN from '../screen/selectCategoryScreen/selectCategoryScreen';
-import CHATHISTORYSCREEN from '../screen/chatHistoryScreen/chatHistoryScreen'
+import CHATHISTORYSCREEN from '../screen/chatHistoryScreen/chatHistoryScreen';
+import RUBYCHATSCREEN from '../screen/chatHistoryScreen/rubychatScreen';
+
 const Stack = createStackNavigator();
 
 const navigationsApp = (props) => {
@@ -45,6 +47,7 @@ function MainNavigation() {
             <HomeStack.Screen name="myEaringScreen" component={MYEARINGSCREEN} />
             <HomeStack.Screen name="selectCategoryScreen" component={SELECTCATEGORYSCREEN} />
             <HomeStack.Screen name="chatHistoryScreen" component={CHATHISTORYSCREEN} />
+            <HomeStack.Screen name="rubychatScreen" component={RUBYCHATSCREEN} />
         </HomeStack.Navigator>
     );
 };

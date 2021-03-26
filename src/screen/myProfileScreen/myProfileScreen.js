@@ -45,7 +45,8 @@ function myProfileScreen(props) {
                             <Image source={require('../../assets/images/profileicon.png')} style={{ height: 33, width: 30, marginLeft: hp('3%') }} />
                             <Text style={{ marginLeft: wp('4%'), color: '#4D4D4D', fontSize: hp('2.5%') }}>My Profile</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={{ flexDirection: 'row', marginTop: hp('3.5%') }}>
+                        <TouchableOpacity onPress={() => props.navigation.navigate(SCREEN.CHATHISTORYSCREEN)}
+                            style={{ flexDirection: 'row', marginTop: hp('3.5%') }}>
                             <Image source={require('../../assets/images/conversation.png')} style={{ height: 30, width: 30, marginLeft: hp('3%') }} />
                             <Text style={{ marginLeft: wp('4%'), color: '#4D4D4D', fontSize: hp('2.5%') }}>My conversation</Text>
                         </TouchableOpacity>

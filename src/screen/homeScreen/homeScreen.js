@@ -1,14 +1,41 @@
-import React, { Component } from 'react'
-import { Text, View, SafeAreaView, Dimensions, Image, TouchableOpacity, TextInput, ScrollView, BackHandler } from 'react-native'
-import Octicons from 'react-native-vector-icons/Octicons'
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import { heightPercentageToDP as hp, widthPercentageToDP as wp, } from 'react-native-responsive-screen'
+import React, { Component } from 'react';
+import { Text, View, SafeAreaView, Dimensions, Image, TouchableOpacity, TextInput, ScrollView, BackHandler } from 'react-native';
+import Octicons from 'react-native-vector-icons/Octicons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { heightPercentageToDP as hp, widthPercentageToDP as wp, } from 'react-native-responsive-screen';
 import * as STYLES from './styles';
-import MenuButton from '../../components/MenuButton/MenuButton'
-import SwitchButton from '../../components/SwittchButton/SwitchButton'
-import ChatMenu from '../../components/ChatMenu/ChatMenu'
-import { MYPROFILESCREEN } from '../../context/screen/screenName'
-import { CHATHISTORYSCREEN } from '../../context/screen/screenName'
+import MenuButton from '../../components/MenuButton/MenuButton';
+import SwitchButton from '../../components/SwittchButton/SwitchButton';
+import ChatMenu from '../../components/ChatMenu/ChatMenu';
+import { MYPROFILESCREEN } from '../../context/screen/screenName';
+import { CHATHISTORYSCREEN } from '../../context/screen/screenName';
+import { BarChart, StackedBarChart } from "react-native-chart-kit";
+const screenWidth = Dimensions.get("window").width;
+
+const data = {
+    labels: ["Mon", "Tue", "Wed", "Thu", "Sat", "Sun"],
+    data: [
+        [60, 60],
+        [30, 30],
+        [50, 60],
+        [20, 80],
+        [80, 30],
+        [50, 30]
+    ],
+    barColors: ["#C4C4C4", "#00D9CE"],
+    fontSize: 20
+};
+
+const chartConfig = {
+    backgroundGradientFrom: "#FFFFFF",
+    backgroundGradientFromOpacity: 0,
+    backgroundGradientTo: "#FFFFFF",
+    backgroundGradientToOpacity: 0.5,
+    color: (opacity = 1) => `rgba(0, 217, 206, ${opacity})`,
+    strokeWidth: 1, // optional, default 3
+    barPercentage: 1,
+    useShadowColorFromDataset: false, // optional
+};
 
 export default class homeScreen extends Component {
     constructor(props) {
@@ -86,11 +113,23 @@ export default class homeScreen extends Component {
                     <View style={STYLES.styles.centeView}>
                         <View style={STYLES.styles.cardViewChart}>
                             <Text style={{ fontSize: hp('3%'), flex: 1, color: '#34A853', marginTop: hp('2%'), marginLeft: wp('5%') }}>₹ 5000.20</Text>
+                            <View style={{ marginLeft: wp('-10%') }}>
+                                <StackedBarChart
+                                    style={{ fontSize: 16 }}
+                                    data={data}
+                                    width={screenWidth}
+                                    height={220}
+                                    chartConfig={chartConfig}
+                                    showLegend={false}
+                                    withVerticalLabels={true}
+                                    withHorizontalLabels={false}
+                                />
+                            </View>
                         </View>
 
                         <View style={STYLES.styles.cardViewlastHistory}>
                             <View>
-                                <Text style={{ marginTop: hp('1%'), marginLeft: wp('10%'), fontWeight: 'bold', fontSize: hp('2.5%'), color: '#555555' }}>Top Earners Of the Week</Text>
+                                <Text style={{ marginTop: hp('2%'), marginLeft: wp('10%'), fontWeight: 'bold', fontSize: hp('2.5%'), color: '#555555' }}>Top Earners Of the Week</Text>
                             </View>
 
                             <View style={{ marginTop: hp('2%'), flexDirection: 'row' }}>

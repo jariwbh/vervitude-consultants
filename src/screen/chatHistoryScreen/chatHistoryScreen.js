@@ -1,10 +1,10 @@
 import React from 'react'
-import { View, Text, SafeAreaView, StyleSheet, ScrollView, TouchableOpacity, Image, ScrollViewBase } from 'react-native'
+import { View, Text, SafeAreaView, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native'
 import { heightPercentageToDP as hp, widthPercentageToDP as wp, } from 'react-native-responsive-screen'
 import * as SCREEN from '../../context/screen/screenName';
 import ChatMenu from '../../components/ChatMenu/ChatMenu'
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import BackButton from '../../components/BackButton/BackButton'
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 function chatHistoryScreen(props) {
     return (
@@ -14,7 +14,7 @@ function chatHistoryScreen(props) {
                     <TouchableOpacity style={styles.categoryIcon} onPress={() => { }} >
                         <AntDesign name="arrowleft" size={24} color="#00D9CE" />
                     </TouchableOpacity>
-                    <View style={{ marginTop: hp('0 %'), justifyContent: 'center', alignItems: 'center', marginLeft: hp('40%') }}>
+                    <View style={{ marginTop: hp('0%'), justifyContent: 'center', alignItems: 'center', marginLeft: hp('40%') }}>
                         <Image source={require('../../assets/images/chat.png')} style={{ width: 50, height: 25 }} />
                         <Text style={{ fontSize: hp('2%'), color: '#00D9CE', position: 'absolute' }}>20K</Text>
                     </View>
@@ -26,9 +26,8 @@ function chatHistoryScreen(props) {
                     <View style={{ flex: 1, height: 1, backgroundColor: '#BEBEBE', marginLeft: hp('-6%'), marginRight: hp('2%') }} />
                 </View>
 
-
                 <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: hp('2%') }}>
-                    <TouchableOpacity onPress={() => { }} style={styles.chatview}>
+                    <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.RUBYCHATSCREEN) }} style={styles.chatview}>
                         <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: hp('1%') }}>
                             <Text style={{ color: '#00D9CE', marginLeft: hp('2%'), fontSize: hp('1.5%') }}>New</Text>
                             <Text style={{ color: '#999999', fontSize: hp('1.5%'), marginRight: hp('2%') }}>2:30 PM</Text>
@@ -36,6 +35,7 @@ function chatHistoryScreen(props) {
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <Image source={require('../../assets/images/profile.png')}
                                 style={{ marginTop: hp('-0%'), width: 70, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
+                            <FontAwesome name="circle" size={21} color="#EEEEEE" style={{ marginLeft: wp('-35%') }} />
                             <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('-15%') }}>
                                 <Text style={{ fontSize: hp('3.5%'), fontWeight: 'bold', color: '#000000' }}>Ruby</Text>
                                 <Text style={{ fontSize: hp('2.5%'), color: '#34A853' }}>+ ₹ 20.00</Text>
@@ -48,12 +48,13 @@ function chatHistoryScreen(props) {
                 </View>
 
                 <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: hp('2%') }}>
-                    <TouchableOpacity onPress={() => { }} style={styles.chatview}>
+                    <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.RUBYCHATSCREEN) }} style={styles.chatview}>
                         <View style={{ justifyContent: 'flex-end', flexDirection: 'row', marginTop: hp('1%') }}>
                             <Text style={{ color: '#999999', fontSize: hp('1.5%'), marginRight: hp('2%') }}>2:30 PM</Text>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-                            <Image source={require('../../assets/images/profile.png')} style={{ marginTop: hp('-0%'), width: 70, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
+                            <Image source={require('../../assets/images/profile.png')} style={{ marginTop: hp('0%'), width: 70, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
+                            <FontAwesome name="circle" size={21} color="#5EA2FC" style={{ marginLeft: wp('-4%') }} />
                             <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('5%') }}>
                                 <Text style={{ fontSize: hp('3.5%'), fontWeight: 'bold', color: '#000000' }}>Maria</Text>
                                 <Text style={{ fontSize: hp('2.5%'), color: '#34A853' }}>+ ₹ 0.00</Text>
@@ -69,15 +70,16 @@ function chatHistoryScreen(props) {
 
 
                 <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: hp('2%') }}>
-                    <TouchableOpacity onPress={() => { }} style={styles.chatview}>
+                    <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.RUBYCHATSCREEN) }} style={styles.chatview}>
                         <View style={{ justifyContent: 'flex-end', flexDirection: 'row', marginTop: hp('1%') }}>
                             <Text style={{ color: '#999999', fontSize: hp('1.5%'), marginRight: hp('2%') }}>2:30 PM</Text>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <Image source={require('../../assets/images/profile.png')}
                                 style={{ marginTop: hp('-0%'), width: 70, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
+                            <FontAwesome name="circle" size={21} color="#5EA2FC" style={{ marginLeft: wp('-35%') }} />
                             <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('-15%') }}>
-                                <Text style={{ fontSize: hp('3.5%'), fontWeight: 'bold', color: '#000000' }}>Michele</Text>
+                                <Text style={{ fontSize: hp('3.5%'), fontWeight: 'bold', color: '#000000' }}>Maya</Text>
                                 <Text style={{ fontSize: hp('2.5%'), color: '#34A853' }}>+ ₹ 20.00</Text>
                             </View>
                             <View style={{ marginRight: hp('3%'), width: 30, height: 30, marginTop: hp('2%'), alignItems: 'center', justifyContent: 'center', borderRadius: hp('7%'), backgroundColor: '#0F74C8' }}>
@@ -88,12 +90,13 @@ function chatHistoryScreen(props) {
                 </View>
 
                 <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: hp('2%') }}>
-                    <TouchableOpacity onPress={() => { }} style={styles.chatview}>
+                    <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.RUBYCHATSCREEN) }} style={styles.chatview}>
                         <View style={{ justifyContent: 'flex-end', flexDirection: 'row', marginTop: hp('1%') }}>
                             <Text style={{ color: '#999999', fontSize: hp('1.5%'), marginRight: hp('2%') }}>2:30 PM</Text>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
                             <Image source={require('../../assets/images/profile.png')} style={{ marginTop: hp('-0%'), width: 70, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
+                            <FontAwesome name="circle" size={21} color="#5EA2FC" style={{ marginLeft: wp('-4%') }} />
                             <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('5%') }}>
                                 <Text style={{ fontSize: hp('3.5%'), fontWeight: 'bold', color: '#000000' }}>Maria</Text>
                                 <Text style={{ fontSize: hp('2.5%'), color: '#34A853' }}>+ ₹ 20.00</Text>
@@ -103,13 +106,14 @@ function chatHistoryScreen(props) {
                 </View>
 
                 <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: hp('2%') }}>
-                    <TouchableOpacity onPress={() => { }} style={styles.chatview}>
+                    <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.RUBYCHATSCREEN) }} style={styles.chatview}>
                         <View style={{ justifyContent: 'flex-end', flexDirection: 'row', marginTop: hp('1%') }}>
                             <Text style={{ color: '#999999', fontSize: hp('1.5%'), marginRight: hp('2%') }}>2:30 PM</Text>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <Image source={require('../../assets/images/profile.png')}
                                 style={{ marginTop: hp('-0%'), width: 70, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
+                            <FontAwesome name="circle" size={21} color="#5EA2FC" style={{ marginLeft: wp('-35%') }} />
                             <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('-15%') }}>
                                 <Text style={{ fontSize: hp('3.5%'), fontWeight: 'bold', color: '#000000' }}>Rajan</Text>
                                 <Text style={{ fontSize: hp('2.5%'), color: '#34A853' }}>+ ₹ 20.00</Text>
@@ -127,12 +131,13 @@ function chatHistoryScreen(props) {
                 </View>
 
                 <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: hp('2%') }}>
-                    <TouchableOpacity onPress={() => { }} style={styles.chatview}>
+                    <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.RUBYCHATSCREEN) }} style={styles.chatview}>
                         <View style={{ justifyContent: 'flex-end', flexDirection: 'row', marginTop: hp('1%') }}>
                             <Text style={{ color: '#999999', fontSize: hp('1.5%'), marginRight: hp('2%') }}>2:30 PM</Text>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
                             <Image source={require('../../assets/images/profile.png')} style={{ marginTop: hp('-0%'), width: 70, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
+                            <FontAwesome name="circle" size={21} color="#EEEEEE" style={{ marginLeft: wp('-4%') }} />
                             <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('5%') }}>
                                 <Text style={{ fontSize: hp('3.5%'), fontWeight: 'bold', color: '#000000' }}>Maria</Text>
                                 <Text style={{ fontSize: hp('2.5%'), color: '#34A853' }}>+ ₹ 20.00</Text>
@@ -142,13 +147,14 @@ function chatHistoryScreen(props) {
                 </View>
 
                 <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: hp('2%') }}>
-                    <TouchableOpacity onPress={() => { }} style={styles.chatview}>
+                    <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.RUBYCHATSCREEN) }} style={styles.chatview}>
                         <View style={{ justifyContent: 'flex-end', flexDirection: 'row', marginTop: hp('1%') }}>
                             <Text style={{ color: '#999999', fontSize: hp('1.5%'), marginRight: hp('2%') }}>2:30 PM</Text>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <Image source={require('../../assets/images/profile.png')}
                                 style={{ marginTop: hp('-0%'), width: 70, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
+                            <FontAwesome name="circle" size={21} color="#5EA2FC" style={{ marginLeft: wp('-35%') }} />
                             <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('-15%') }}>
                                 <Text style={{ fontSize: hp('3.5%'), fontWeight: 'bold', color: '#000000' }}>Ruby</Text>
                                 <Text style={{ fontSize: hp('2.5%'), color: '#34A853' }}>+ ₹ 20.00</Text>
@@ -161,12 +167,13 @@ function chatHistoryScreen(props) {
                 </View>
 
                 <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: hp('2%') }}>
-                    <TouchableOpacity onPress={() => { }} style={styles.chatview}>
+                    <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.RUBYCHATSCREEN) }} style={styles.chatview}>
                         <View style={{ justifyContent: 'flex-end', flexDirection: 'row', marginTop: hp('1%') }}>
                             <Text style={{ color: '#999999', fontSize: hp('1.5%'), marginRight: hp('2%') }}>2:30 PM</Text>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
                             <Image source={require('../../assets/images/profile.png')} style={{ marginTop: hp('-0%'), width: 70, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
+                            <FontAwesome name="circle" size={21} color="#5EA2FC" style={{ marginLeft: wp('-4%') }} />
                             <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('5%') }}>
                                 <Text style={{ fontSize: hp('3.5%'), fontWeight: 'bold', color: '#000000' }}>Maria</Text>
                                 <Text style={{ fontSize: hp('2.5%'), color: '#34A853' }}>+ ₹ 20.00</Text>
@@ -174,7 +181,6 @@ function chatHistoryScreen(props) {
                         </View>
                     </TouchableOpacity>
                 </View>
-
                 <View style={{ marginBottom: hp('10%') }}></View>
             </ScrollView>
         </SafeAreaView>
@@ -191,8 +197,7 @@ const styles = StyleSheet.create({
     chatview: {
         width: wp('90%'),
         backgroundColor: '#FFFFFF',
-        marginTop: hp('0%'),
-        borderRadius: hp('3%'),
+        borderRadius: hp('1%'),
         height: hp('15%'),
         shadowOpacity: 0.5,
         shadowRadius: 3,
@@ -200,8 +205,7 @@ const styles = StyleSheet.create({
             height: 0,
             width: 0,
         },
-        elevation: 4,
-
+        elevation: 1
     },
     categoryIcon: {
         width: wp("7%"),
@@ -210,6 +214,5 @@ const styles = StyleSheet.create({
         marginLeft: wp('5%'),
         alignItems: 'center',
         justifyContent: 'center'
-
     },
 })
