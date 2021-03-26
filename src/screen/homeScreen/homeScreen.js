@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import { Text, View, SafeAreaView, Dimensions, Image, TouchableOpacity, TextInput, ScrollView, BackHandler } from 'react-native';
+import { Text, View, SafeAreaView, Dimensions, TouchableOpacity, ScrollView, BackHandler, Modal, Switch } from 'react-native';
 import Octicons from 'react-native-vector-icons/Octicons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp, } from 'react-native-responsive-screen';
 import * as STYLES from './styles';
 import MenuButton from '../../components/MenuButton/MenuButton';
-import SwitchButton from '../../components/SwittchButton/SwitchButton';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import ChatMenu from '../../components/ChatMenu/ChatMenu';
 import { MYPROFILESCREEN } from '../../context/screen/screenName';
 import { CHATHISTORYSCREEN } from '../../context/screen/screenName';
-import { BarChart, StackedBarChart } from "react-native-chart-kit";
+import { StackedBarChart } from "react-native-chart-kit";
 const screenWidth = Dimensions.get("window").width;
 
 const data = {
@@ -42,7 +41,12 @@ export default class homeScreen extends Component {
         super(props);
         this.state = {
             loading: false,
+            filterModalVisible: false,
+            onlineModalVisible: false,
+            toggleSwitchAll: false,
+            online: false
         };
+
         this._unsubscribeSiFocus = this.props.navigation.addListener('focus', e => {
             BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
         });
@@ -65,7 +69,35 @@ export default class homeScreen extends Component {
         return true;
     }
 
+    setFilterModalVisible = (visible) => {
+        this.setState({ filterModalVisible: visible });
+    }
+
+    setOnlineModalVisible = (visible) => {
+        this.setState({ onlineModalVisible: visible });
+    }
+
+    toggleSwitchAll = (toggle) => {
+        if (toggle == true) {
+            this.setState({ toggleSwitchAll: false });
+        }
+
+        if (toggle == false) {
+            this.setState({ toggleSwitchAll: true });
+        }
+    }
+
+    setOnlineUser = (online) => {
+        if (online == false) {
+            this.setState({ online: true });
+            this.setOnlineModalVisible(true);
+            return;
+        }
+        if (online == true) return this.setState({ online: false });
+    }
+
     render() {
+        const { filterModalVisible, onlineModalVisible, toggleSwitchAll, online } = this.state;
         return (
             <SafeAreaView style={STYLES.styles.container}>
                 <ScrollView showsVerticalScrollIndicator={false}>
@@ -73,15 +105,28 @@ export default class homeScreen extends Component {
                         <View style={{ marginLeft: hp('8%') }}>
                             <MenuButton onPress={() => { this.props.navigation.navigate(MYPROFILESCREEN) }} />
                         </View>
-                        <View style={{ marginLeft: hp('3%') }}>
-                            <SwitchButton />
-                        </View>
+                        {online == true ?
+                            <View style={{ marginLeft: hp('3%') }}>
+                                <TouchableOpacity style={STYLES.styles.onlineswitchBtn} onPress={() => { this.setOnlineUser(true) }} >
+                                    <Text style={STYLES.styles.onlineswitchBtnText}>Online</Text>
+                                    <AntDesign name="setting" size={24} color="#00D9CD" />
+                                </TouchableOpacity>
+                            </View>
+                            :
+                            <View style={{ marginLeft: hp('3%') }}>
+                                <TouchableOpacity style={STYLES.styles.oflineswitchBtn} onPress={() => { this.setOnlineUser(false) }} >
+                                    <AntDesign name="setting" size={24} color="#000000" />
+                                    <Text style={STYLES.styles.oflineswitchBtnText}>Ofline</Text>
+                                </TouchableOpacity>
+                            </View>
+                        }
+
                         <View style={{ marginLeft: hp('25%') }}>
                             <ChatMenu onPress={() => { this.props.navigation.navigate(CHATHISTORYSCREEN) }} />
                         </View>
                     </View>
                     <View style={{ marginTop: hp('3%') }}></View>
-                    <TouchableOpacity style={STYLES.styles.filterBtn} onPress={() => { }} >
+                    <TouchableOpacity style={STYLES.styles.filterBtn} onPress={() => this.setFilterModalVisible(true)} >
                         <Octicons size={20} name="settings" color="#FFFFFF" style={{ marginRight: wp('2%') }} />
                         <Text style={STYLES.styles.filterBtnText}>Filter Reports</Text>
                     </TouchableOpacity>
@@ -218,6 +263,140 @@ export default class homeScreen extends Component {
                         </View>
                     </View>
                 </ScrollView>
+
+                {/* Filer model Pop */}
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={filterModalVisible}
+                    onRequestClose={() => { this.setFilterModalVisible(!filterModalVisible) }}
+                >
+
+                    <View style={STYLES.styles.centeView}>
+                        <View style={STYLES.styles.modalView}>
+                            <Text style={{ padding: hp('2%'), textAlign: 'center', color: '#000000' }}>All</Text>
+                            <View style={{ flexDirection: 'row' }}>
+                                <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
+                            </View>
+
+                            <Text style={{ padding: hp('2%'), textAlign: 'center', color: '#000000' }}>Yearly</Text>
+                            <View style={{ flexDirection: 'row' }}>
+                                <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
+                            </View>
+
+                            <Text style={{ padding: hp('2%'), textAlign: 'center', color: '#000000' }}>Weekly</Text>
+                            <View style={{ flexDirection: 'row' }}>
+                                <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
+                            </View>
+
+                            <Text style={{ padding: hp('2%'), textAlign: 'center', color: '#00D9CE' }}>Montly</Text>
+                            <View style={{ flexDirection: 'row' }}>
+                                <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
+                            </View>
+
+                            <Text style={{ padding: hp('2%'), textAlign: 'center', color: '#000000' }}>Today</Text>
+                            <View style={{ flexDirection: 'row' }}>
+                                <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
+                            </View>
+                        </View>
+
+                        <View style={{ marginTop: hp('2%'), flexDirection: 'row' }}>
+                            <TouchableOpacity onPress={() => { this.setFilterModalVisible(!filterModalVisible) }}
+                                style={STYLES.styles.savebtn}>
+                                <Text style={{ fontSize: hp('2%'), color: '#FFFFFF' }}>Save</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => { this.setFilterModalVisible(!filterModalVisible) }}
+                                style={STYLES.styles.cancelbtn}>
+                                <Text style={{ fontSize: hp('2%'), color: '#000000' }}>Cancel</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
+
+                {/* Online consultants Model Pop */}
+                <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={onlineModalVisible}
+                    onRequestClose={() => { this.setOnlineModalVisible(!onlineModalVisible) }}
+                >
+
+                    <View style={STYLES.styles.centeView}>
+                        <View style={STYLES.styles.modalView}>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', padding: hp('2%'), }}>
+                                <Text style={{ textAlign: 'center', color: '#000000' }}>All</Text>
+                                <Switch
+                                    style={{ marginLeft: wp('50%') }}
+                                    trackColor={{ false: "#C4C4C4", true: "#0F74C8" }}
+                                    onValueChange={() => this.toggleSwitchAll(toggleSwitchAll)}
+                                    value={toggleSwitchAll} />
+                            </View>
+                            <View style={{ flexDirection: 'row' }}>
+                                <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
+                            </View>
+
+                            <View style={{ flexDirection: 'row', alignItems: 'center', padding: hp('2%'), }}>
+                                <Text style={{ textAlign: 'center', color: '#000000' }}>Design</Text>
+                                <Switch
+                                    style={{ marginLeft: wp('45%') }}
+                                    trackColor={{ false: "#C4C4C4", true: "#0F74C8" }}
+                                    onValueChange={() => this.toggleSwitchAll(toggleSwitchAll)}
+                                    value={toggleSwitchAll} />
+                            </View>
+                            <View style={{ flexDirection: 'row' }}>
+                                <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
+                            </View>
+
+                            <View style={{ flexDirection: 'row', alignItems: 'center', padding: hp('2%'), }}>
+                                <Text style={{ textAlign: 'center', color: '#000000' }}>Marketing & Advertising</Text>
+                                <Switch
+                                    style={{ marginLeft: wp('20%') }}
+                                    trackColor={{ false: "#C4C4C4", true: "#0F74C8" }}
+                                    onValueChange={() => this.toggleSwitchAll(toggleSwitchAll)}
+                                    value={toggleSwitchAll} />
+                            </View>
+                            <View style={{ flexDirection: 'row' }}>
+                                <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
+                            </View>
+
+                            <View style={{ flexDirection: 'row', alignItems: 'center', padding: hp('2%'), }}>
+                                <Text style={{ textAlign: 'center', color: '#000000' }}>Technology</Text>
+                                <Switch
+                                    style={{ marginLeft: wp('40%') }}
+                                    trackColor={{ false: "#C4C4C4", true: "#0F74C8" }}
+                                    onValueChange={() => this.toggleSwitchAll(toggleSwitchAll)}
+                                    value={toggleSwitchAll} />
+                            </View>
+                            <View style={{ flexDirection: 'row' }}>
+                                <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
+                            </View>
+
+                            <View style={{ flexDirection: 'row', alignItems: 'center', padding: hp('2%'), }}>
+                                <Text style={{ textAlign: 'center', color: '#000000' }}>Business & Strategy</Text>
+                                <Switch
+                                    style={{ marginLeft: wp('27%') }}
+                                    trackColor={{ false: "#C4C4C4", true: "#0F74C8" }}
+                                    onValueChange={() => this.toggleSwitchAll(toggleSwitchAll)}
+                                    value={toggleSwitchAll} />
+                            </View>
+                            <View style={{ flexDirection: 'row' }}>
+                                <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
+                            </View>
+                        </View>
+
+                        <View style={{ marginTop: hp('2%'), flexDirection: 'row' }}>
+                            <TouchableOpacity onPress={() => { this.setOnlineModalVisible(!onlineModalVisible) }}
+                                style={STYLES.styles.savebtn}>
+                                <Text style={{ fontSize: hp('2%'), color: '#FFFFFF' }}>Save</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => { this.setOnlineModalVisible(!onlineModalVisible) }}
+                                style={STYLES.styles.cancelbtn}>
+                                <Text style={{ fontSize: hp('2%'), color: '#000000' }}>Cancel</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
+
             </SafeAreaView>
         )
     }
