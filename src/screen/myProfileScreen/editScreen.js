@@ -24,7 +24,7 @@ export default function editScreen(props) {
                     <View style={styles.profileview}>
                         <View>
                             <Image source={require('../../assets/images/profile.png')}
-                                style={{ marginTop: hp('-5%'), width: 95, height: 100, borderRadius: hp('7%'), marginLeft: hp('22%') }} />
+                                style={{ marginTop: hp('-5%'), width: 100, height: 100, borderRadius: hp('8%'), marginLeft: hp('22%') }} />
                             <TouchableOpacity>
                                 <Feather name="camera" size={24} color='#FFFFFF' style={{ marginLeft: hp('27%'), marginTop: hp('-10%') }} />
                             </TouchableOpacity>

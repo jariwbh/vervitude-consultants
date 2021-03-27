@@ -14,7 +14,7 @@ const rubychatScreen = (props) => {
                         <AntDesign name="arrowleft" size={24} color="#5AC8FA" />
                     </TouchableOpacity>
 
-                    <Image source={require('../../assets/images/profile.png')}
+                    <Image source={require('../../assets/images/user4.png')}
                         style={{ width: 50, height: 52, borderRadius: hp('7%'), marginLeft: hp('1%') }} />
                     <FontAwesome name="circle" size={15} color="#5AC8FA" style={{ marginLeft: wp('-4%'), marginTop: wp('-10%') }} />
                     <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'column', marginLeft: hp('2%') }}>
@@ -22,7 +22,7 @@ const rubychatScreen = (props) => {
                         <Text style={{ fontSize: hp('1.5%'), color: '#000000' }}>Online</Text>
                     </View>
 
-                    <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('20%') }}>
+                    <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('18%'), marginRight: wp('1%') }}>
                         <Image source={require('../../assets/images/chat.png')} style={{ width: 50, height: 25 }} />
                         <Text style={{ fontSize: hp('2%'), color: '#5AC8FA', position: 'absolute' }}>20K</Text>
                     </View>

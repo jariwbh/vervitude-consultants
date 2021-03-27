@@ -58,7 +58,7 @@ export default class myProfileScreen extends Component {
                                     <Text style={{ fontWeight: 'bold', fontSize: hp('3%') }}>Ranjan  Pathak</Text>
                                     <Text>#protima123</Text>
                                 </View>
-                                <Image source={require('../../assets/images/profile.png')}
+                                <Image source={require('../../assets/images/user3.png')}
                                     style={STYLES.styles.profileImage}
                                 />
                             </View>
@@ -72,9 +72,9 @@ export default class myProfileScreen extends Component {
                                 <Image source={require('../../assets/images/conversation.png')} style={{ height: 30, width: 30, marginLeft: hp('3%') }} />
                                 <Text style={{ marginLeft: wp('4%'), color: '#4D4D4D', fontSize: hp('2.5%') }}>My conversations</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ flexDirection: 'row', marginTop: hp('3.5%') }}
+                            <TouchableOpacity style={{ flexDirection: 'row', marginTop: hp('3.5%'), marginBottom: hp('1%') }}
                                 onPress={() => this.props.navigation.navigate(SCREEN.MYEARINGSCREEN)}>
-                                <Image source={require('../../assets/images/Group.png')} style={{ height: 20, width: 29, marginLeft: hp('3%') }} />
+                                <Image source={require('../../assets/images/Group.png')} style={{ height: 20, width: 30, marginLeft: hp('3%') }} />
                                 <Text style={{ marginLeft: wp('4%'), color: '#4D4D4D', fontSize: hp('2.5%') }}>My Earnings</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={{ flexDirection: 'row', marginTop: hp('3.5%') }}

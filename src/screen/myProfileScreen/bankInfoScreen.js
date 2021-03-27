@@ -23,7 +23,7 @@ const bankInfoScreen = (props) => {
                     <View style={styles.profileview}>
                         <View>
                             <Image source={require('../../assets/images/profile.png')} style={{
-                                marginTop: hp('-5%'), width: 95, height: 100, borderRadius: hp('7%'), marginLeft: hp('21%'),
+                                marginTop: hp('-5%'), width: 100, height: 100, borderRadius: hp('8%'), marginLeft: hp('21%'),
                             }} />
                             <TouchableOpacity>
                                 <Feather name="camera" size={24} color='#FFFFFF' style={{ marginLeft: hp('26%'), marginTop: hp('-8%') }} />

@@ -61,7 +61,7 @@ export default class registerScreen extends Component {
             this.setState({ loading: false })
             ToastAndroid.show("SignUp Success!", ToastAndroid.LONG);
             this.props.navigation.navigate(LOGINSCREEN);
-        }, 3000);
+        }, 1000);
 
     }
 

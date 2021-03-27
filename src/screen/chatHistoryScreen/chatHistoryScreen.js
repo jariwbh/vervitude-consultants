@@ -14,11 +14,11 @@ function chatHistoryScreen(props) {
                     <TouchableOpacity style={styles.categoryIcon} onPress={() => { props.navigation.navigate(SCREEN.HOMESCREEN) }} >
                         <AntDesign name="arrowleft" size={24} color="#5AC8FA" />
                     </TouchableOpacity>
-                    <View style={{ marginTop: hp('0%'), justifyContent: 'center', alignItems: 'center', marginLeft: hp('38%') }}>
+                    <View style={{ marginTop: hp('0%'), justifyContent: 'center', alignItems: 'center', marginLeft: wp('60%'), marginRight: wp('1%') }}>
                         <Image source={require('../../assets/images/chat.png')} style={{ width: 50, height: 25 }} />
                         <Text style={{ fontSize: hp('2%'), color: '#5AC8FA', position: 'absolute' }}>20K</Text>
                     </View>
-                    <ChatMenu onPress={() => { }} />
+                    <ChatMenu />
                 </View>
 
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: hp('2%'), }}>
@@ -33,8 +33,8 @@ function chatHistoryScreen(props) {
                             <Text style={{ color: '#999999', fontSize: hp('1.5%'), marginRight: hp('2%') }}>2:30 PM</Text>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Image source={require('../../assets/images/profile.png')}
-                                style={{ marginTop: hp('-0%'), width: 70, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
+                            <Image source={require('../../assets/images/user4.png')}
+                                style={{ width: 72, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
                             <FontAwesome name="circle" size={21} color="#EEEEEE" style={{ marginLeft: wp('-35%') }} />
                             <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('-15%') }}>
                                 <Text style={{ fontSize: hp('3.5%'), fontWeight: 'bold', color: '#000000' }}>Ruby</Text>
@@ -53,7 +53,7 @@ function chatHistoryScreen(props) {
                             <Text style={{ color: '#999999', fontSize: hp('1.5%'), marginRight: hp('2%') }}>2:30 PM</Text>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-                            <Image source={require('../../assets/images/profile.png')} style={{ marginTop: hp('0%'), width: 70, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
+                            <Image source={require('../../assets/images/user2.png')} style={{ marginTop: hp('0%'), width: 72, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
                             <FontAwesome name="circle" size={21} color="#5AC8FA" style={{ marginLeft: wp('-4%') }} />
                             <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('5%') }}>
                                 <Text style={{ fontSize: hp('3.5%'), fontWeight: 'bold', color: '#000000' }}>Maria</Text>
@@ -75,8 +75,8 @@ function chatHistoryScreen(props) {
                             <Text style={{ color: '#999999', fontSize: hp('1.5%'), marginRight: hp('2%') }}>2:30 PM</Text>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Image source={require('../../assets/images/profile.png')}
-                                style={{ marginTop: hp('-0%'), width: 70, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
+                            <Image source={require('../../assets/images/user1.png')}
+                                style={{ marginTop: hp('-0%'), width: 72, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
                             <FontAwesome name="circle" size={21} color="#5AC8FA" style={{ marginLeft: wp('-35%') }} />
                             <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('-15%') }}>
                                 <Text style={{ fontSize: hp('3.5%'), fontWeight: 'bold', color: '#000000' }}>Maya</Text>
@@ -95,7 +95,7 @@ function chatHistoryScreen(props) {
                             <Text style={{ color: '#999999', fontSize: hp('1.5%'), marginRight: hp('2%') }}>2:30 PM</Text>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-                            <Image source={require('../../assets/images/profile.png')} style={{ marginTop: hp('-0%'), width: 70, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
+                            <Image source={require('../../assets/images/user2.png')} style={{ marginTop: hp('-0%'), width: 72, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
                             <FontAwesome name="circle" size={21} color="#5AC8FA" style={{ marginLeft: wp('-4%') }} />
                             <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('5%') }}>
                                 <Text style={{ fontSize: hp('3.5%'), fontWeight: 'bold', color: '#000000' }}>Maria</Text>
@@ -111,8 +111,8 @@ function chatHistoryScreen(props) {
                             <Text style={{ color: '#999999', fontSize: hp('1.5%'), marginRight: hp('2%') }}>2:30 PM</Text>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Image source={require('../../assets/images/profile.png')}
-                                style={{ marginTop: hp('-0%'), width: 70, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
+                            <Image source={require('../../assets/images/user3.png')}
+                                style={{ marginTop: hp('-0%'), width: 72, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
                             <FontAwesome name="circle" size={21} color="#5AC8FA" style={{ marginLeft: wp('-35%') }} />
                             <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('-15%') }}>
                                 <Text style={{ fontSize: hp('3.5%'), fontWeight: 'bold', color: '#000000' }}>Rajan</Text>
@@ -136,7 +136,7 @@ function chatHistoryScreen(props) {
                             <Text style={{ color: '#999999', fontSize: hp('1.5%'), marginRight: hp('2%') }}>2:30 PM</Text>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-                            <Image source={require('../../assets/images/profile.png')} style={{ marginTop: hp('-0%'), width: 70, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
+                            <Image source={require('../../assets/images/user4.png')} style={{ marginTop: hp('-0%'), width: 72, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
                             <FontAwesome name="circle" size={21} color="#EEEEEE" style={{ marginLeft: wp('-4%') }} />
                             <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('5%') }}>
                                 <Text style={{ fontSize: hp('3.5%'), fontWeight: 'bold', color: '#000000' }}>Maria</Text>
@@ -152,8 +152,8 @@ function chatHistoryScreen(props) {
                             <Text style={{ color: '#999999', fontSize: hp('1.5%'), marginRight: hp('2%') }}>2:30 PM</Text>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Image source={require('../../assets/images/profile.png')}
-                                style={{ marginTop: hp('-0%'), width: 70, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
+                            <Image source={require('../../assets/images/user2.png')}
+                                style={{ marginTop: hp('-0%'), width: 72, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
                             <FontAwesome name="circle" size={21} color="#5AC8FA" style={{ marginLeft: wp('-35%') }} />
                             <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('-15%') }}>
                                 <Text style={{ fontSize: hp('3.5%'), fontWeight: 'bold', color: '#000000' }}>Ruby</Text>
@@ -172,7 +172,7 @@ function chatHistoryScreen(props) {
                             <Text style={{ color: '#999999', fontSize: hp('1.5%'), marginRight: hp('2%') }}>2:30 PM</Text>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-                            <Image source={require('../../assets/images/profile.png')} style={{ marginTop: hp('-0%'), width: 70, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
+                            <Image source={require('../../assets/images/user3.png')} style={{ marginTop: hp('-0%'), width: 72, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
                             <FontAwesome name="circle" size={21} color="#5AC8FA" style={{ marginLeft: wp('-4%') }} />
                             <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('5%') }}>
                                 <Text style={{ fontSize: hp('3.5%'), fontWeight: 'bold', color: '#000000' }}>Maria</Text>
@@ -198,14 +198,14 @@ const styles = StyleSheet.create({
         width: wp('90%'),
         backgroundColor: '#FFFFFF',
         borderRadius: hp('1%'),
-        height: hp('15%'),
+        height: hp('16%'),
         shadowOpacity: 0.5,
         shadowRadius: 3,
         shadowOffset: {
             height: 0,
             width: 0,
         },
-        elevation: 1
+        elevation: 1,
     },
     categoryIcon: {
         width: wp("7%"),
