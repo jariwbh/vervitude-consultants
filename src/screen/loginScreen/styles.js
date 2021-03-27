@@ -4,7 +4,7 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp, } from 'react-na
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#96D3FF'
+        backgroundColor: '#5AC8FA'
     },
     imageView: {
         marginLeft: ('18%'),
@@ -29,7 +29,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: "#fff",
         borderRadius: wp('10%'),
-        borderColor: '#00D9CD',
+        borderColor: '#5AC8FA',
         width: wp('80%'),
         height: hp('6%'),
         margin: hp('1%'),
@@ -69,7 +69,7 @@ export const styles = StyleSheet.create({
     submitBtn: {
         flexDirection: 'row',
         width: wp('50%'),
-        backgroundColor: "#00D9CD",
+        backgroundColor: "#5AC8FA",
         borderRadius: 50,
         height: hp('6%'),
         alignItems: "center",
@@ -86,8 +86,9 @@ export const styles = StyleSheet.create({
         fontWeight: '900'
     },
     supportText: {
-        color: '#222222',
+        color: '#4E4E4E',
         fontSize: hp('2%'),
-        textDecorationLine: 'underline'
+        textDecorationLine: 'underline',
+        fontWeight: 'bold'
     },
 })

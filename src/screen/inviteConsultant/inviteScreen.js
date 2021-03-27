@@ -1,21 +1,22 @@
 import React from 'react'
 import { Text, View, ImageBackground, SafeAreaView, TouchableOpacity, Image, TextInput, ScrollView, ToastAndroid, StatusBar } from 'react-native'
-import { MYPROFILESCREEN } from '../../context/screen/screenName';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp, } from 'react-native-responsive-screen'
 import * as STYLES from './styles';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import * as SCREEN from '../../context/screen/screenName';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const inviteScreen = (props) => {
     function onPressSubmit() {
         ToastAndroid.show('User invited!', ToastAndroid.SHORT);
-        props.navigation.replace(MYPROFILESCREEN);
+        props.navigation.replace(SCREEN.MYPROFILESCREEN);
     }
 
     return (
         <SafeAreaView style={STYLES.styles.container}>
             <View style={{ justifyContent: 'flex-start', marginLeft: wp('3%'), marginTop: hp('5%') }}>
-                <AntDesign name="arrowleft" color="#00D9CE" size={24} />
+                <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.MYPROFILESCREEN) }}>
+                    <AntDesign name="arrowleft" color="#5AC8FA" size={24} />
+                </TouchableOpacity>
             </View>
             <View style={STYLES.styles.centeView}>
                 <View style={STYLES.styles.boxView}>
@@ -53,7 +54,6 @@ const inviteScreen = (props) => {
                                 placeholderTextColor="#404040"
                             />
                         </View>
-
 
                     </View>
                     <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: hp('2%') }}>

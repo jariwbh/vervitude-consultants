@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'column',
         width: wp('46%'),
         height: hp('15%'),
-        backgroundColor: '#34A853',
+        backgroundColor: '#04DE71',
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: wp('2%')
@@ -34,7 +34,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'column',
         width: wp('46%'),
         height: hp('15%'),
-        backgroundColor: '#96D3FF',
+        backgroundColor: '#00D9CE',
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: wp('2%')
@@ -43,7 +43,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'column',
         width: wp('46%'),
         height: hp('15%'),
-        backgroundColor: '#FFD46B',
+        backgroundColor: '#FFE620',
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: wp('2%')
@@ -68,7 +68,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         width: wp('40%'),
         height: hp('7%'),
-        backgroundColor: "#00D9CD",
+        backgroundColor: "#5AC8FA",
         borderRadius: wp('4%'),
         alignItems: "center",
         justifyContent: 'center',
@@ -133,7 +133,7 @@ export const styles = StyleSheet.create({
         marginRight: hp('10%'),
         width: wp('30%'),
         height: hp('5%'),
-        backgroundColor: '#00D9CE',
+        backgroundColor: '#5AC8FA',
         borderRadius: hp('5%'),
         alignItems: 'center',
         justifyContent: 'center',
@@ -150,7 +150,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         width: wp('30%'),
         height: hp('5%'),
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#EEEEEE',
         borderRadius: hp('5%'),
         alignItems: 'center',
         justifyContent: 'center',
@@ -173,7 +173,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     onlineswitchBtnText: {
-        color: '#00D9CD',
+        color: '#5AC8FA',
         fontSize: hp('2%'),
         marginRight: wp('2%')
     },

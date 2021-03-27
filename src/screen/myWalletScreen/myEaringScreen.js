@@ -10,12 +10,14 @@ function myEaringScreen(props) {
     <SafeAreaView style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={{ justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row', marginTop: hp('5%') }}>
-          <AntDesign name="arrowleft" color="#00D9CE" size={24} />
+          <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.MYPROFILESCREEN) }}>
+            <AntDesign name="arrowleft" color="#5AC8FA" size={24} />
+          </TouchableOpacity>
           <TouchableOpacity
-            style={{ height: hp('6%'), width: wp('35%'), backgroundColor: '#34A853', flexDirection: 'row', borderRadius: hp('3%'), alignItems: 'center', justifyContent: 'center', marginLeft: wp('40%') }}>
+            style={{ height: hp('7%'), width: wp('35%'), backgroundColor: '#04DE71', flexDirection: 'row', borderRadius: hp('5%'), alignItems: 'center', justifyContent: 'center', marginLeft: wp('40%') }}>
             <Text style={{ fontSize: hp('2.8%'), color: '#FFFFFF' }}>5324.00</Text>
             <View style={{ width: 25, height: 25, backgroundColor: '#FFFFFF', alignItems: 'center', marginLeft: hp('2%'), borderRadius: hp('3%'), justifyContent: 'center' }}>
-              <FontAwesome name="rupee" size={20} color='#34A853' />
+              <FontAwesome name="rupee" size={20} color='#04DE71' />
             </View>
           </TouchableOpacity>
         </View>
@@ -23,7 +25,7 @@ function myEaringScreen(props) {
         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
           <View style={styles.balanceview}>
             <Text style={{ fontSize: hp('2%'), color: '#999999' }}>Unpaid Balance</Text>
-            <Text style={{ fontSize: hp('4%'), color: '#34A853', fontWeight: 'bold' }} > ₹ 5000.00</Text>
+            <Text style={{ fontSize: hp('4%'), color: '#04DE71', fontWeight: 'bold' }} > ₹ 5000.00</Text>
           </View>
 
           <View style={styles.bankview}>
@@ -34,7 +36,7 @@ function myEaringScreen(props) {
                 <Text style={{ fontSize: hp('2%'), color: '#000000', marginLeft: hp('2%') }}>Kotak Mahindra Bank</Text>
                 <Text style={{ fontSize: hp('2%'), color: '#999999', marginLeft: hp('2%') }}>14/02/2021, 2:30PM</Text>
               </View>
-              <Text style={{ fontSize: hp('2%'), color: '#34a853', marginTop: hp('1%'), marginRight: hp('3%') }}> ₹ 2000.00</Text>
+              <Text style={{ fontSize: hp('2%'), color: '#04DE71', marginTop: hp('1%'), marginRight: hp('3%') }}> ₹ 2000.00</Text>
             </TouchableOpacity>
             <View>
             </View>
@@ -48,12 +50,13 @@ function myEaringScreen(props) {
                 <Text style={{ fontSize: hp('2%'), color: '#000000', marginLeft: hp('2%') }}>Kotak Mahindra Bank</Text>
                 <Text style={{ fontSize: hp('2%'), color: '#999999', marginLeft: hp('2%') }}>14/02/2021, 2:30PM</Text>
               </View>
-              <Text style={{ fontSize: hp('2%'), color: '#34a853', marginTop: hp('1%'), marginRight: hp('3%') }}> ₹ 2000.00</Text>
+              <Text style={{ fontSize: hp('2%'), color: '#04DE71', marginTop: hp('1%'), marginRight: hp('3%') }}> ₹ 2000.00</Text>
             </TouchableOpacity>
             <View>
             </View>
           </View>
         </View>
+        <View style={{ marginTop: hp('2%') }}></View>
       </ScrollView>
     </SafeAreaView>
   )

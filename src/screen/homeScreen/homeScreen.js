@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { Text, View, SafeAreaView, Dimensions, TouchableOpacity, ScrollView, BackHandler, Modal, Switch } from 'react-native';
-import Octicons from 'react-native-vector-icons/Octicons';
+import { Text, View, SafeAreaView, Dimensions, TouchableOpacity, ScrollView, BackHandler, Modal, Switch, Image } from 'react-native';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp, } from 'react-native-responsive-screen';
 import * as STYLES from './styles';
 import MenuButton from '../../components/MenuButton/MenuButton';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import ChatMenu from '../../components/ChatMenu/ChatMenu';
 import { MYPROFILESCREEN } from '../../context/screen/screenName';
 import { CHATHISTORYSCREEN } from '../../context/screen/screenName';
@@ -21,16 +19,15 @@ const data = {
         [80, 30],
         [50, 30]
     ],
-    barColors: ["#C4C4C4", "#00D9CE"],
-    fontSize: 20
+    barColors: ["#C4C4C4", "#5AC8FA"]
 };
 
 const chartConfig = {
     backgroundGradientFrom: "#FFFFFF",
     backgroundGradientFromOpacity: 0,
     backgroundGradientTo: "#FFFFFF",
-    backgroundGradientToOpacity: 0.5,
-    color: (opacity = 1) => `rgba(0, 217, 206, ${opacity})`,
+    backgroundGradientToOpacity: 0.1,
+    color: (opacity = 1) => `rgba(92, 92, 92, ${opacity})`,
     strokeWidth: 1, // optional, default 3
     barPercentage: 1,
     useShadowColorFromDataset: false, // optional
@@ -109,14 +106,16 @@ export default class homeScreen extends Component {
                             <View style={{ marginLeft: hp('3%') }}>
                                 <TouchableOpacity style={STYLES.styles.onlineswitchBtn} onPress={() => { this.setOnlineUser(true) }} >
                                     <Text style={STYLES.styles.onlineswitchBtnText}>Online</Text>
-                                    <AntDesign name="setting" size={24} color="#00D9CD" />
+                                    <Image source={require('../../assets/images/settingicon.png')}
+                                        style={{ marginRight: wp('-3%'), alignItems: 'center', height: 25, width: 25 }} />
                                 </TouchableOpacity>
                             </View>
                             :
                             <View style={{ marginLeft: hp('3%') }}>
                                 <TouchableOpacity style={STYLES.styles.oflineswitchBtn} onPress={() => { this.setOnlineUser(false) }} >
-                                    <AntDesign name="setting" size={24} color="#000000" />
-                                    <Text style={STYLES.styles.oflineswitchBtnText}>Ofline</Text>
+                                    <Image source={require('../../assets/images/offlineicon.png')}
+                                        style={{ alignItems: 'center', height: 25, width: 25 }} />
+                                    <Text style={STYLES.styles.oflineswitchBtnText}>Offline</Text>
                                 </TouchableOpacity>
                             </View>
                         }
@@ -127,7 +126,8 @@ export default class homeScreen extends Component {
                     </View>
                     <View style={{ marginTop: hp('3%') }}></View>
                     <TouchableOpacity style={STYLES.styles.filterBtn} onPress={() => this.setFilterModalVisible(true)} >
-                        <Octicons size={20} name="settings" color="#FFFFFF" style={{ marginRight: wp('2%') }} />
+                        <Image source={require('../../assets/images/filtericon.png')}
+                            style={{ marginRight: wp('2%'), alignItems: 'center', height: 15, width: 15, }} />
                         <Text style={STYLES.styles.filterBtnText}>Filter Reports</Text>
                     </TouchableOpacity>
                     <View style={{ justifyContent: 'space-around', flexDirection: 'row', marginTop: 10 }}>
@@ -157,7 +157,7 @@ export default class homeScreen extends Component {
                     </View>
                     <View style={STYLES.styles.centeView}>
                         <View style={STYLES.styles.cardViewChart}>
-                            <Text style={{ fontSize: hp('3%'), flex: 1, color: '#34A853', marginTop: hp('2%'), marginLeft: wp('5%') }}>₹ 5000.20</Text>
+                            <Text style={{ fontSize: hp('3%'), flex: 1, color: '#04DE71', marginTop: hp('2%'), marginLeft: wp('5%') }}>₹ 5000.20</Text>
                             <View style={{ marginLeft: wp('-10%') }}>
                                 <StackedBarChart
                                     style={{ fontSize: 16 }}
@@ -182,13 +182,13 @@ export default class homeScreen extends Component {
                             </View>
                             <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', marginLeft: hp('2%'), marginTop: hp('1%') }}>
                                 <View style={{ flexDirection: 'row' }}>
-                                    <View style={{ backgroundColor: '#00D9CE', width: 20, height: 20, marginLeft: hp('-5%'), marginTop: hp('0.5%'), marginRight: hp('3%'), alignItems: 'center', justifyContent: 'center', borderRadius: wp('15%') }}>
+                                    <View style={{ backgroundColor: '#5AC8FA', width: 20, height: 20, marginLeft: hp('-5%'), marginTop: hp('0.5%'), marginRight: hp('3%'), alignItems: 'center', justifyContent: 'center', borderRadius: wp('15%') }}>
                                         <Text style={{ fontSize: hp('2.5%'), color: '#FFFFFF' }}>1</Text>
                                     </View>
                                     <Text style={{ fontSize: hp('2.5%'), color: '#555555' }}>George</Text>
                                 </View>
-                                <Text style={{ fontSize: hp('2.5%'), color: '#00D9CE' }}>+105%</Text>
-                                <Text style={{ fontSize: hp('2.5%'), color: '#34A853' }}>₹ 30k+</Text>
+                                <Text style={{ fontSize: hp('2.5%'), color: '#5AC8FA' }}>+105%</Text>
+                                <Text style={{ fontSize: hp('2.5%'), color: '#04DE71' }}>₹ 30k+</Text>
                             </View>
 
                             <View style={{ marginTop: hp('2%'), flexDirection: 'row' }}>
@@ -196,13 +196,13 @@ export default class homeScreen extends Component {
                             </View>
                             <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', marginLeft: hp('2%'), marginTop: hp('1%') }}>
                                 <View style={{ flexDirection: 'row' }}>
-                                    <View style={{ backgroundColor: '#00D9CE', width: 20, height: 20, marginLeft: hp('-5%'), marginTop: hp('0.5%'), marginRight: hp('3%'), alignItems: 'center', justifyContent: 'center', borderRadius: wp('15%') }}>
+                                    <View style={{ backgroundColor: '#5AC8FA', width: 20, height: 20, marginLeft: hp('-5%'), marginTop: hp('0.5%'), marginRight: hp('3%'), alignItems: 'center', justifyContent: 'center', borderRadius: wp('15%') }}>
                                         <Text style={{ fontSize: hp('2.5%'), color: '#FFFFFF' }}>2</Text>
                                     </View>
                                     <Text style={{ fontSize: hp('2.5%'), color: '#555555' }}>George</Text>
                                 </View>
-                                <Text style={{ fontSize: hp('2.5%'), color: '#00D9CE' }}>+105%</Text>
-                                <Text style={{ fontSize: hp('2.5%'), color: '#34A853' }}>₹ 30k+</Text>
+                                <Text style={{ fontSize: hp('2.5%'), color: '#5AC8FA' }}>+105%</Text>
+                                <Text style={{ fontSize: hp('2.5%'), color: '#04DE71' }}>₹ 30k+</Text>
                             </View>
 
                             <View style={{ marginTop: hp('2%'), flexDirection: 'row' }}>
@@ -210,13 +210,13 @@ export default class homeScreen extends Component {
                             </View>
                             <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', marginLeft: hp('2%'), marginTop: hp('1%') }}>
                                 <View style={{ flexDirection: 'row' }}>
-                                    <View style={{ backgroundColor: '#00D9CE', width: 20, height: 20, marginLeft: hp('-5%'), marginTop: hp('0.5%'), marginRight: hp('3%'), alignItems: 'center', justifyContent: 'center', borderRadius: wp('15%') }}>
+                                    <View style={{ backgroundColor: '#5AC8FA', width: 20, height: 20, marginLeft: hp('-5%'), marginTop: hp('0.5%'), marginRight: hp('3%'), alignItems: 'center', justifyContent: 'center', borderRadius: wp('15%') }}>
                                         <Text style={{ fontSize: hp('2.5%'), color: '#FFFFFF' }}>3</Text>
                                     </View>
                                     <Text style={{ fontSize: hp('2.5%'), color: '#555555' }}>George</Text>
                                 </View>
-                                <Text style={{ fontSize: hp('2.5%'), color: '#00D9CE' }}>+105%</Text>
-                                <Text style={{ fontSize: hp('2.5%'), color: '#34A853' }}>₹ 30k+</Text>
+                                <Text style={{ fontSize: hp('2.5%'), color: '#5AC8FA' }}>+105%</Text>
+                                <Text style={{ fontSize: hp('2.5%'), color: '#04DE71' }}>₹ 30k+</Text>
                             </View>
 
                             <View style={{ marginTop: hp('2%'), flexDirection: 'row' }}>
@@ -224,13 +224,13 @@ export default class homeScreen extends Component {
                             </View>
                             <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', marginLeft: hp('2%'), marginTop: hp('1%') }}>
                                 <View style={{ flexDirection: 'row' }}>
-                                    <View style={{ backgroundColor: '#00D9CE', width: 20, height: 20, marginLeft: hp('-5%'), marginTop: hp('0.5%'), marginRight: hp('3%'), alignItems: 'center', justifyContent: 'center', borderRadius: wp('15%') }}>
+                                    <View style={{ backgroundColor: '#5AC8FA', width: 20, height: 20, marginLeft: hp('-5%'), marginTop: hp('0.5%'), marginRight: hp('3%'), alignItems: 'center', justifyContent: 'center', borderRadius: wp('15%') }}>
                                         <Text style={{ fontSize: hp('2.5%'), color: '#FFFFFF' }}>4</Text>
                                     </View>
                                     <Text style={{ fontSize: hp('2.5%'), color: '#555555' }}>George</Text>
                                 </View>
-                                <Text style={{ fontSize: hp('2.5%'), color: '#00D9CE' }}>+105%</Text>
-                                <Text style={{ fontSize: hp('2.5%'), color: '#34A853' }}>₹ 30k+</Text>
+                                <Text style={{ fontSize: hp('2.5%'), color: '#5AC8FA' }}>+105%</Text>
+                                <Text style={{ fontSize: hp('2.5%'), color: '#04DE71' }}>₹ 30k+</Text>
                             </View>
 
                             <View style={{ marginTop: hp('2%'), flexDirection: 'row' }}>
@@ -238,13 +238,13 @@ export default class homeScreen extends Component {
                             </View>
                             <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', marginLeft: hp('2%'), marginTop: hp('1%') }}>
                                 <View style={{ flexDirection: 'row' }}>
-                                    <View style={{ backgroundColor: '#00D9CE', width: 20, height: 20, marginLeft: hp('-5%'), marginTop: hp('0.5%'), marginRight: hp('3%'), alignItems: 'center', justifyContent: 'center', borderRadius: wp('15%') }}>
+                                    <View style={{ backgroundColor: '#5AC8FA', width: 20, height: 20, marginLeft: hp('-5%'), marginTop: hp('0.5%'), marginRight: hp('3%'), alignItems: 'center', justifyContent: 'center', borderRadius: wp('15%') }}>
                                         <Text style={{ fontSize: hp('2.5%'), color: '#FFFFFF' }}>5</Text>
                                     </View>
                                     <Text style={{ fontSize: hp('2.5%'), color: '#555555' }}>George</Text>
                                 </View>
-                                <Text style={{ fontSize: hp('2.5%'), color: '#00D9CE' }}>+105%</Text>
-                                <Text style={{ fontSize: hp('2.5%'), color: '#34A853' }}>₹ 30k+</Text>
+                                <Text style={{ fontSize: hp('2.5%'), color: '#5AC8FA' }}>+105%</Text>
+                                <Text style={{ fontSize: hp('2.5%'), color: '#04DE71' }}>₹ 30k+</Text>
                             </View>
 
                             <View style={{ marginTop: hp('2%'), flexDirection: 'row' }}>
@@ -252,19 +252,19 @@ export default class homeScreen extends Component {
                             </View>
                             <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', marginLeft: hp('2%'), marginTop: hp('1%') }}>
                                 <View style={{ flexDirection: 'row' }}>
-                                    <View style={{ backgroundColor: '#00D9CE', width: 20, height: 20, marginLeft: hp('-5%'), marginTop: hp('0.5%'), marginRight: hp('3%'), alignItems: 'center', justifyContent: 'center', borderRadius: wp('15%') }}>
+                                    <View style={{ backgroundColor: '#5AC8FA', width: 20, height: 20, marginLeft: hp('-5%'), marginTop: hp('0.5%'), marginRight: hp('3%'), alignItems: 'center', justifyContent: 'center', borderRadius: wp('15%') }}>
                                         <Text style={{ fontSize: hp('2.5%'), color: '#FFFFFF' }}>6</Text>
                                     </View>
                                     <Text style={{ fontSize: hp('2.5%'), color: '#555555' }}>George</Text>
                                 </View>
-                                <Text style={{ fontSize: hp('2.5%'), color: '#00D9CE' }}>+105%</Text>
-                                <Text style={{ fontSize: hp('2.5%'), color: '#34A853' }}>₹ 30k+</Text>
+                                <Text style={{ fontSize: hp('2.5%'), color: '#5AC8FA' }}>+105%</Text>
+                                <Text style={{ fontSize: hp('2.5%'), color: '#04DE71' }}>₹ 30k+</Text>
                             </View>
                         </View>
                     </View>
                 </ScrollView>
 
-                {/* Filer model Pop */}
+                {/* Filter model Pop */}
                 <Modal
                     animationType="slide"
                     transparent={true}
@@ -289,7 +289,7 @@ export default class homeScreen extends Component {
                                 <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
                             </View>
 
-                            <Text style={{ padding: hp('2%'), textAlign: 'center', color: '#00D9CE' }}>Montly</Text>
+                            <Text style={{ padding: hp('2%'), textAlign: 'center', color: '#5AC8FA' }}>Montly</Text>
                             <View style={{ flexDirection: 'row' }}>
                                 <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
                             </View>

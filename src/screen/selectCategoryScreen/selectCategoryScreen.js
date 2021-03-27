@@ -9,31 +9,33 @@ function selectCategoryScreen(props) {
         <SafeAreaView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: hp('5%') }}>
-                    <AntDesign name="arrowleft" size={24} color='#00D9CE' style={{ marginLeft: hp('2%') }} />
-                    <TouchableOpacity
+                    <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.MYPROFILESCREEN) }}>
+                        <AntDesign name="arrowleft" color="#5AC8FA" size={24} style={{ marginLeft: hp('3%') }} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.MYPROFILESCREEN) }}
                         style={styles.submitbtn}>
-                        <Text style={{ fontSize: hp('2%'), color: '#00D9CE' }}>Submit</Text>
+                        <Text style={{ fontSize: hp('2%'), color: '#5AC8FA' }}>Submit</Text>
                     </TouchableOpacity>
                 </View>
-                <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: hp('3%') }}>
+                <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: hp('5%') }}>
                     <View style={styles.graficview}>
                         <Text style={{ fontSize: hp('3%'), marginLeft: hp('5%') }}>Graphic Design</Text>
                         <TouchableOpacity>
-                            <AntDesign name="closecircleo" size={24} color='#00000' style={{ marginLeft: hp('0%'), marginRight: hp('2%') }} />
+                            <AntDesign name="closecircleo" size={24} color='#000000' style={{ marginLeft: hp('0%'), marginRight: hp('2%') }} />
                         </TouchableOpacity>
                     </View>
 
                     <View style={styles.uxview}>
                         <Text style={{ fontSize: hp('3%'), marginLeft: hp('5%') }}>UX Design</Text>
                         <TouchableOpacity>
-                            <AntDesign name="closecircleo" size={24} color='#00000' style={{ marginLeft: hp('0%'), marginRight: hp('2%') }} />
+                            <AntDesign name="closecircleo" size={24} color='#000000' style={{ marginLeft: hp('0%'), marginRight: hp('2%') }} />
                         </TouchableOpacity>
                     </View>
 
                     <View style={styles.interiorview}>
                         <Text style={{ fontSize: hp('3%'), marginLeft: hp('5%') }}>Interior Design</Text>
                         <TouchableOpacity>
-                            <AntDesign name="closecircleo" size={24} color='#00000' style={{ marginLeft: hp('0%'), marginRight: hp('2%') }} />
+                            <AntDesign name="closecircleo" size={24} color='#000000' style={{ marginLeft: hp('0%'), marginRight: hp('2%') }} />
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -181,7 +183,7 @@ const styles = StyleSheet.create({
 
         width: wp('90%'),
         height: hp('10%'),
-        backgroundColor: '#34A853',
+        backgroundColor: '#04DE71',
         borderRadius: hp('3%'),
         alignItems: 'center',
         justifyContent: 'space-between'
@@ -190,7 +192,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: wp('90%'),
         height: hp('10%'),
-        backgroundColor: '#FFD46B',
+        backgroundColor: '#FFE620',
         borderRadius: hp('3%'),
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -205,7 +207,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
         marginTop: hp('2%')
-
     },
     category: {
         width: wp('15%'),
@@ -225,7 +226,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: wp('90%'),
         height: hp('10%'),
-        backgroundColor: '#00D9CE',
+        backgroundColor: '#5AC8FA',
         borderRadius: hp('3%'),
         alignItems: 'center',
         justifyContent: 'center'
@@ -240,7 +241,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginLeft: hp('2%'),
-        shadowColor: "#000",
+        shadowColor: "#000000",
         shadowOffset: {
             width: 0,
             height: 2,

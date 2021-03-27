@@ -37,7 +37,7 @@ export const styles = StyleSheet.create({
     submitBtn: {
         flexDirection: 'row',
         width: wp('40%'),
-        backgroundColor: "#00D9CD",
+        backgroundColor: "#5AC8FA",
         borderRadius: 50,
         height: hp('5%'),
         alignItems: "center",
@@ -68,5 +68,4 @@ export const styles = StyleSheet.create({
         backgroundColor: '#F4F4F4',
         marginLeft: hp('1%')
     }
-
 })

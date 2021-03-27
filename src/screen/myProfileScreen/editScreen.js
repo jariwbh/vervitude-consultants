@@ -11,10 +11,13 @@ export default function editScreen(props) {
         <SafeAreaView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: hp('5%') }}>
-                    <AntDesign name="arrowleft" size={24} color='#FFFFFF' style={{ marginLeft: hp('2%') }} />
+                    <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.MYPROFILESCREEN) }}>
+                        <AntDesign name="arrowleft" size={24} color='#FFFFFF' style={{ marginLeft: hp('2%') }} />
+                    </TouchableOpacity>
+
                     <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.DOCUMENTSCREEN) }}
                         style={styles.submitbtn}>
-                        <Text style={{ fontSize: hp('2%'), color: '#00D9CE' }}>Submit</Text>
+                        <Text style={{ fontSize: hp('2%'), color: '#5AC8FA' }}>Submit</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
@@ -196,7 +199,7 @@ export default function editScreen(props) {
                         </View>
 
                         <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: hp('3%') }}>
-                            <TouchableOpacity style={styles.generalinfitext}>
+                            <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.BANKINFOSCREEN) }} style={styles.generalinfitext}>
                                 <Text style={{ fontSize: hp('2.5%'), textAlign: 'center', color: '#FFFFFF' }}>Banking Information</Text>
                             </TouchableOpacity>
                         </View>
@@ -212,7 +215,7 @@ export default function editScreen(props) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#00D9CE",
+        backgroundColor: "#5AC8FA",
     },
     profileview: {
         width: wp('95%'),
@@ -291,7 +294,7 @@ const styles = StyleSheet.create({
         height: hp('5%'),
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#00D9CE',
+        backgroundColor: '#5AC8FA',
         borderRadius: hp('3%'),
         shadowColor: "#000000",
         shadowOffset: {

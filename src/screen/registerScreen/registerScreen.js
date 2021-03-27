@@ -3,7 +3,7 @@ import { Text, View, ImageBackground, SafeAreaView, TouchableOpacity, Image, Tex
 import { LOGINSCREEN } from '../../context/screen/screenName';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp, } from 'react-native-responsive-screen'
 import * as STYLES from './styles';
-
+import Loader from '../../components/loader';
 
 export default class registerScreen extends Component {
     constructor(props) {
@@ -66,6 +66,7 @@ export default class registerScreen extends Component {
     }
 
     render() {
+        const { loading } = this.state;
         return (
             <SafeAreaView style={STYLES.styles.container}>
                 <StatusBar backgroundColor="#80caff" hidden barStyle="light-content" />
@@ -129,6 +130,7 @@ export default class registerScreen extends Component {
                         </View>
                     </View>
                 </ScrollView>
+                {loading ? <Loader /> : null}
             </SafeAreaView>
         )
     }
