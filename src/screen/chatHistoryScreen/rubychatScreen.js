@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, SafeAreaView, StyleSheet, ScrollView, TouchableOpacity, Image, TextInput } from 'react-native';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp, } from 'react-native-responsive-screen';
 import * as SCREEN from '../../context/screen/screenName';
-import ChatMenu from '../../components/ChatMenu/ChatMenu';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
@@ -10,24 +9,29 @@ const rubychatScreen = (props) => {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
-                <View style={{ justifyContent: 'space-between', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', marginTop: hp('5%') }}>
+                <View style={{ justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', marginTop: hp('5%') }}>
                     <TouchableOpacity style={styles.chatIcon} onPress={() => { props.navigation.navigate(SCREEN.CHATHISTORYSCREEN) }} >
                         <AntDesign name="arrowleft" size={24} color="#5AC8FA" />
                     </TouchableOpacity>
 
                     <Image source={require('../../assets/images/profile.png')}
-                        style={{ width: 50, height: 50, borderRadius: hp('7%'), marginLeft: hp('1%') }} />
+                        style={{ width: 50, height: 52, borderRadius: hp('7%'), marginLeft: hp('1%') }} />
                     <FontAwesome name="circle" size={15} color="#5AC8FA" style={{ marginLeft: wp('-4%'), marginTop: wp('-10%') }} />
                     <View style={{ justifyContent: 'center', alignItems: 'center', flexDirection: 'column', marginLeft: hp('2%') }}>
-                        <Text style={{ fontSize: hp('2.5%'), color: '#5AC8FA' }}>Ruby</Text>
+                        <Text style={{ fontSize: hp('3%'), color: '#5AC8FA' }}>Ruby</Text>
                         <Text style={{ fontSize: hp('1.5%'), color: '#000000' }}>Online</Text>
                     </View>
 
-                    <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('25%') }}>
+                    <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('20%') }}>
                         <Image source={require('../../assets/images/chat.png')} style={{ width: 50, height: 25 }} />
                         <Text style={{ fontSize: hp('2%'), color: '#5AC8FA', position: 'absolute' }}>20K</Text>
                     </View>
-                    <ChatMenu onPress={() => { props.navigation.navigate(SCREEN.CHATHISTORYSCREEN) }} />
+                    <TouchableOpacity style={styles.categoryIcon} onPress={() => { props.navigation.navigate(SCREEN.CHATHISTORYSCREEN) }} >
+                        <Image source={require('../../assets/images/chaticon.png')}
+                            style={{ alignItems: 'center', height: 25, width: 28 }}
+                        />
+                    </TouchableOpacity>
+
                 </View>
 
                 <View style={styles.chatview}>
@@ -49,7 +53,6 @@ const rubychatScreen = (props) => {
                         </View>
                     </View>
                 </View>
-
                 <View style={{ marginBottom: hp('10%') }}></View>
             </ScrollView>
         </SafeAreaView>
@@ -81,7 +84,7 @@ const styles = StyleSheet.create({
         width: wp("7%"),
         height: wp("7%"),
         borderRadius: hp('6%'),
-        marginLeft: wp('10%'),
+        marginLeft: wp('5%'),
         alignItems: 'center',
         justifyContent: 'center'
     },
@@ -106,5 +109,12 @@ const styles = StyleSheet.create({
         fontSize: hp('2.5%'),
         flex: 1,
         marginLeft: wp('4%')
-    }
+    },
+    categoryIcon: {
+        width: wp("7%"),
+        height: wp("7%"),
+        marginRight: wp('10%'),
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
 })

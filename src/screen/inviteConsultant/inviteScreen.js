@@ -13,7 +13,7 @@ const inviteScreen = (props) => {
 
     return (
         <SafeAreaView style={STYLES.styles.container}>
-            <View style={{ justifyContent: 'flex-start', marginLeft: wp('3%'), marginTop: hp('5%') }}>
+            <View style={{ justifyContent: 'flex-start', marginLeft: wp('5%'), marginTop: hp('5%') }}>
                 <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.MYPROFILESCREEN) }}>
                     <AntDesign name="arrowleft" color="#5AC8FA" size={24} />
                 </TouchableOpacity>

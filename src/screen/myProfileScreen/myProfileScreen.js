@@ -90,7 +90,7 @@ export default class myProfileScreen extends Component {
                                 <Image source={require('../../assets/images/invite.png')} style={{ height: 30, width: 30, marginLeft: hp('3%') }} />
                                 <Text style={{ marginLeft: wp('4%'), color: '#4D4D4D', fontSize: hp('2.5%') }}>Invite a Consultant</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ flexDirection: 'row', marginTop: hp('12%') }} onPress={() => this.props.navigation.navigate(SCREEN.LOGINSCREEN)}>
+                            <TouchableOpacity style={{ flexDirection: 'row', marginTop: hp('15%') }} onPress={() => this.props.navigation.navigate(SCREEN.LOGINSCREEN)}>
                                 <Image source={require('../../assets/images/logout.png')} style={{ height: 25, width: 30, marginLeft: hp('3%') }} />
                                 <Text style={{ marginLeft: wp('4%'), color: '#4D4D4D', fontSize: hp('2.5%') }}>LogOut</Text>
                             </TouchableOpacity>

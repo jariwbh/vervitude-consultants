@@ -114,7 +114,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center'
     },
     modalView: {
-        marginTop: hp('50%'),
+        marginTop: hp('40%'),
         width: wp('80%'),
         borderRadius: 20,
         backgroundColor: "white",

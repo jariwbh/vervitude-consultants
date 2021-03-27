@@ -14,7 +14,7 @@ function chatHistoryScreen(props) {
                     <TouchableOpacity style={styles.categoryIcon} onPress={() => { props.navigation.navigate(SCREEN.HOMESCREEN) }} >
                         <AntDesign name="arrowleft" size={24} color="#5AC8FA" />
                     </TouchableOpacity>
-                    <View style={{ marginTop: hp('0%'), justifyContent: 'center', alignItems: 'center', marginLeft: hp('40%') }}>
+                    <View style={{ marginTop: hp('0%'), justifyContent: 'center', alignItems: 'center', marginLeft: hp('38%') }}>
                         <Image source={require('../../assets/images/chat.png')} style={{ width: 50, height: 25 }} />
                         <Text style={{ fontSize: hp('2%'), color: '#5AC8FA', position: 'absolute' }}>20K</Text>
                     </View>

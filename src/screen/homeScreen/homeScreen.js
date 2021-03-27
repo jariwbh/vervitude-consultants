@@ -99,7 +99,7 @@ export default class homeScreen extends Component {
             <SafeAreaView style={STYLES.styles.container}>
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: "center", justifyContent: 'center', marginTop: hp('5%') }}>
-                        <View style={{ marginLeft: hp('8%') }}>
+                        <View style={{ marginLeft: hp('6%') }}>
                             <MenuButton onPress={() => { this.props.navigation.navigate(MYPROFILESCREEN) }} />
                         </View>
                         {online == true ?
@@ -120,7 +120,7 @@ export default class homeScreen extends Component {
                             </View>
                         }
 
-                        <View style={{ marginLeft: hp('25%') }}>
+                        <View style={{ marginLeft: hp('23%') }}>
                             <ChatMenu onPress={() => { this.props.navigation.navigate(CHATHISTORYSCREEN) }} />
                         </View>
                     </View>

@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
     },
     cardview: {
         width: wp('95%'),
-        height: hp('80%'),
+        height: hp('85%'),
         backgroundColor: '#FFFFFF',
         borderRadius: hp('3%'),
         marginTop: hp('3%'),
@@ -25,7 +25,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center'
     },
     modalView: {
-        marginTop: hp('50%'),
+        marginTop: hp('40%'),
         height: hp('35%'),
         width: wp('80%'),
         borderRadius: 20,
@@ -41,7 +41,7 @@ export const styles = StyleSheet.create({
         elevation: 5
     },
     msgModalView: {
-        marginTop: hp('50%'),
+        marginTop: hp('40%'),
         height: hp('25%'),
         width: wp('80%'),
         borderRadius: 20,
