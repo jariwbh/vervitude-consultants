@@ -22,11 +22,11 @@ export default function editScreen(props) {
                 </View>
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                     <View style={styles.profileview}>
-                        <View>
+                        <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                             <Image source={require('../../assets/images/profile.png')}
-                                style={{ marginTop: hp('-5%'), width: 100, height: 100, borderRadius: hp('8%'), marginLeft: hp('22%') }} />
+                                style={{ marginTop: hp('-5%'), width: 100, height: 100, borderRadius: hp('12%'), marginLeft: wp('0%') }} />
                             <TouchableOpacity>
-                                <Feather name="camera" size={24} color='#FFFFFF' style={{ marginLeft: hp('27%'), marginTop: hp('-10%') }} />
+                                <Feather name="camera" size={24} color='#FFFFFF' style={{ marginTop: hp('-10%') }} />
                             </TouchableOpacity>
                         </View>
                         <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: hp('5%'), marginBottom: hp('2%') }}>
@@ -148,47 +148,47 @@ export default function editScreen(props) {
 
                         <View style={{ justifyContent: 'space-around', flexDirection: 'row', marginTop: hp('2%'), }}>
                             <TouchableOpacity style={styles.brandstyle}>
-                                <Image source={require('../../assets/images/A.png')} style={{
-                                    width: 30, height: 30, borderRadius: hp('0%'),
+                                <Image source={require('../../assets/images/a.png')} style={{
+                                    width: 80, height: 80, borderRadius: hp('15%'), borderColor: '#AAAAAA', borderWidth: hp('0.3%')
                                 }} />
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ marginLeft: hp('-10%') }}>
+                            <TouchableOpacity style={{ marginLeft: hp('-11%') }}>
                                 <AntDesign name="closecircleo" size={24} color='#000000' />
                             </TouchableOpacity>
 
                             <TouchableOpacity style={styles.brandstyle}>
-                                <Image source={require('../../assets/images/B.png')} style={{ width: 30, height: 30, borderRadius: hp('7%') }} />
+                                <Image source={require('../../assets/images/b.png')} style={{ width: 80, height: 80, borderRadius: hp('15%'), borderColor: '#AAAAAA', borderWidth: hp('0.3%') }} />
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ marginLeft: hp('-10%') }}>
+                            <TouchableOpacity style={{ marginLeft: hp('-11%') }}>
                                 <AntDesign name="closecircleo" size={24} color='#000000' />
                             </TouchableOpacity>
 
                             <TouchableOpacity style={styles.brandstyle}>
-                                <Image source={require('../../assets/images/c.png')} style={{ width: 30, height: 30, borderRadius: hp('7%') }} />
+                                <Image source={require('../../assets/images/c.png')} style={{ width: 80, height: 80, borderRadius: hp('15%'), borderColor: '#AAAAAA', borderWidth: hp('0.3%') }} />
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ marginLeft: hp('-10%') }}>
+                            <TouchableOpacity style={{ marginLeft: hp('-11%') }}>
                                 <AntDesign name="closecircleo" size={20} color='#000000' />
                             </TouchableOpacity>
                         </View>
                         <View style={{ justifyContent: 'space-around', flexDirection: 'row', marginTop: hp('2%'), }}>
                             <TouchableOpacity style={styles.brandstyle}>
-                                <Image source={require('../../assets/images/D.png')} style={{
-                                    width: 30, height: 30, borderRadius: hp('0%')
+                                <Image source={require('../../assets/images/d.png')} style={{
+                                    width: 80, height: 80, borderRadius: hp('15%'), borderColor: '#AAAAAA', borderWidth: hp('0.3%')
                                 }} />
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ marginLeft: hp('-10%') }}>
+                            <TouchableOpacity style={{ marginLeft: hp('-11%') }}>
                                 <AntDesign name="closecircleo" size={24} color='#000000' />
                             </TouchableOpacity>
 
                             <TouchableOpacity style={styles.brandstyle}>
-                                <Image source={require('../../assets/images/E.png')} style={{ width: 30, height: 30, borderRadius: hp('0%') }} />
+                                <Image source={require('../../assets/images/e.png')} style={{ width: 80, height: 80, borderRadius: hp('15%'), borderColor: '#AAAAAA', borderWidth: hp('0.3%') }} />
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ marginLeft: hp('-10%') }} >
+                            <TouchableOpacity style={{ marginLeft: hp('-11%') }} >
                                 <AntDesign name="closecircleo" size={24} color='#000000' />
                             </TouchableOpacity>
 
                             <TouchableOpacity style={styles.brandstyle}>
-                                <AntDesign name="plus" size={30} color='#000000' style={{ width: 30, height: 30, borderRadius: hp('7%') }} />
+                                <Image source={require('../../assets/images/PLUS.png')} style={{ width: 80, height: 80, borderRadius: hp('15%'), borderColor: '#AAAAAA', borderWidth: hp('0.3%') }} />
                             </TouchableOpacity>
                         </View>
 
@@ -305,21 +305,21 @@ const styles = StyleSheet.create({
         shadowRadius: 2,
         elevation: 0,
     },
-    brandstyle: {
-        color: '#888888',
-        width: 80,
-        height: 80,
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: wp('15%'),
-        shadowColor: "#000000",
-        shadowOpacity: 0.5,
-        shadowRadius: 3,
-        shadowOffset: {
-            height: 0,
-            width: 0,
-        },
-        elevation: 2
-    }
+    // brandstyle: {
+    //     color: '#888888',
+    //     width: 80,
+    //     height: 80,
+    //     alignItems: 'center',
+    //     justifyContent: 'center',
+    //     borderRadius: wp('15%'),
+    //     shadowColor: "#000000",
+    //     shadowOpacity: 0.5,
+    //     shadowRadius: 3,
+    //     shadowOffset: {
+    //         height: 0,
+    //         width: 0,
+    //     },
+    //     elevation: 2
+    // }
 })
 
