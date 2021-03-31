@@ -72,12 +72,12 @@ export default class myProfileScreen extends Component {
                                 <Image source={require('../../assets/images/conversation.png')} style={{ height: 30, width: 30, marginLeft: hp('3%') }} />
                                 <Text style={{ marginLeft: wp('4%'), color: '#4D4D4D', fontSize: hp('2.5%') }}>My conversations</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ flexDirection: 'row', marginTop: hp('3.5%'), marginBottom: hp('1%') }}
+                            <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginTop: hp('4%'), marginBottom: hp('1%') }}
                                 onPress={() => this.props.navigation.navigate(SCREEN.MYEARINGSCREEN)}>
                                 <Image source={require('../../assets/images/Group.png')} style={{ height: 20, width: 30, marginLeft: hp('3%') }} />
                                 <Text style={{ marginLeft: wp('4%'), color: '#4D4D4D', fontSize: hp('2.5%') }}>My Earnings</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ flexDirection: 'row', marginTop: hp('3.5%') }}
+                            <TouchableOpacity style={{ flexDirection: 'row', marginTop: hp('3.2%') }}
                                 onPress={() => this.props.navigation.navigate(SCREEN.SELECTCATEGORYSCREEN)}>
                                 <Image source={require('../../assets/images/categories.png')} style={{ height: 30, width: 30, marginLeft: hp('3%') }} />
                                 <Text style={{ marginLeft: wp('4%'), color: '#4D4D4D', fontSize: hp('2.5%') }}>My Categories</Text>

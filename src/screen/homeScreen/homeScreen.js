@@ -99,11 +99,11 @@ export default class homeScreen extends Component {
             <SafeAreaView style={STYLES.styles.container}>
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: "center", justifyContent: 'center', marginTop: hp('5%') }}>
-                        <View style={{ marginLeft: hp('6%') }}>
+                        <View style={{ marginRight: hp('0%') }}>
                             <MenuButton onPress={() => { this.props.navigation.navigate(MYPROFILESCREEN) }} />
                         </View>
                         {online == true ?
-                            <View style={{ marginLeft: hp('3%') }}>
+                            <View style={{ marginLeft: hp('5%') }}>
                                 <TouchableOpacity style={STYLES.styles.onlineswitchBtn} onPress={() => { this.setOnlineUser(true) }} >
                                     <Text style={STYLES.styles.onlineswitchBtnText}>Online</Text>
                                     <Image source={require('../../assets/images/settingicon.png')}
@@ -111,7 +111,7 @@ export default class homeScreen extends Component {
                                 </TouchableOpacity>
                             </View>
                             :
-                            <View style={{ marginLeft: hp('3%') }}>
+                            <View style={{ marginLeft: hp('5%') }}>
                                 <TouchableOpacity style={STYLES.styles.oflineswitchBtn} onPress={() => { this.setOnlineUser(false) }} >
                                     <Image source={require('../../assets/images/offlineicon.png')}
                                         style={{ alignItems: 'center', height: 25, width: 25 }} />
@@ -119,8 +119,7 @@ export default class homeScreen extends Component {
                                 </TouchableOpacity>
                             </View>
                         }
-
-                        <View style={{ marginLeft: hp('23%') }}>
+                        <View style={{ marginLeft: hp('18%') }}>
                             <ChatMenu onPress={() => { this.props.navigation.navigate(CHATHISTORYSCREEN) }} />
                         </View>
                     </View>

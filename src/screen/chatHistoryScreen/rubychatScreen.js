@@ -4,6 +4,7 @@ import { heightPercentageToDP as hp, widthPercentageToDP as wp, } from 'react-na
 import * as SCREEN from '../../context/screen/screenName';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import ChatMenu from '../../components/ChatMenu/ChatMenu';
 
 const rubychatScreen = (props) => {
     return (
@@ -22,15 +23,11 @@ const rubychatScreen = (props) => {
                         <Text style={{ fontSize: hp('1.5%'), color: '#000000' }}>Online</Text>
                     </View>
 
-                    <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('18%'), marginRight: wp('1%') }}>
+                    <View style={{ marginTop: hp('0%'), justifyContent: 'center', alignItems: 'center', marginLeft: wp('25%'), marginRight: wp('1%') }}>
                         <Image source={require('../../assets/images/chat.png')} style={{ width: 50, height: 25 }} />
                         <Text style={{ fontSize: hp('2%'), color: '#5AC8FA', position: 'absolute' }}>20K</Text>
                     </View>
-                    <TouchableOpacity style={styles.categoryIcon} onPress={() => { props.navigation.navigate(SCREEN.CHATHISTORYSCREEN) }} >
-                        <Image source={require('../../assets/images/chaticon.png')}
-                            style={{ alignItems: 'center', height: 25, width: 28 }}
-                        />
-                    </TouchableOpacity>
+                    <ChatMenu />
 
                 </View>
 
