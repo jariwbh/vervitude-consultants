@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     categoryIcon: {
         width: wp("7%"),
         height: wp("7%"),
-        marginRight: wp('10%'),
+        marginRight: wp('5%'),
         alignItems: 'center',
         justifyContent: 'center'
     },
