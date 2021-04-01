@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, Modal, ImageBackground, SafeAreaView, TouchableOpacity, Image, TextInput, ScrollView, ToastAndroid, StatusBar, BackHandler } from 'react-native'
+import { Text, View, Modal, ImageBackground, SafeAreaView, TouchableOpacity, Image, TextInput, ScrollView, ToastAndroid, StatusBar, BackHandler ,Platform} from 'react-native'
 import { MAINSCREEN, REGISTERSCREEN } from '../../context/screen/screenName';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp, } from 'react-native-responsive-screen'
 import * as STYLES from './styles';
@@ -100,7 +100,11 @@ export default class loginScreen extends Component {
         this.setState({ loading: true });
         setTimeout(() => {
             this.setState({ loading: false })
-            ToastAndroid.show("SignIn Success!", ToastAndroid.LONG);
+            if (Platform.OS === 'android') {                
+                ToastAndroid.show("SignIn Success!", ToastAndroid.LONG);
+              } else {
+                alert("SignIn Success!");
+              }
             this.props.navigation.navigate(MAINSCREEN);
         }, 1000);
     }

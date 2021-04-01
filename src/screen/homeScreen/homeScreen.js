@@ -338,7 +338,7 @@ export default class homeScreen extends Component {
                                 <Text style={{ textAlign: 'center', color: '#000000' }}>Design</Text>
                                 <Switch
                                     style={{ marginLeft: wp('45%') }}
-                                    trackColor={{ false: "#C4C4C4", true: "#0F74C8" }}
+                                    trackColor={{ false: "#C4C4C4", true: "#00D9CE" }}
                                     onValueChange={() => this.toggleSwitchAll(toggleSwitchAll)}
                                     value={toggleSwitchAll} />
                             </View>
@@ -350,7 +350,7 @@ export default class homeScreen extends Component {
                                 <Text style={{ textAlign: 'center', color: '#000000' }}>Marketing & Advertising</Text>
                                 <Switch
                                     style={{ marginLeft: wp('20%') }}
-                                    trackColor={{ false: "#C4C4C4", true: "#0F74C8" }}
+                                    trackColor={{ false: "#C4C4C4", true: "#00D9CE" }}
                                     onValueChange={() => this.toggleSwitchAll(toggleSwitchAll)}
                                     value={toggleSwitchAll} />
                             </View>
@@ -362,7 +362,7 @@ export default class homeScreen extends Component {
                                 <Text style={{ textAlign: 'center', color: '#000000' }}>Technology</Text>
                                 <Switch
                                     style={{ marginLeft: wp('40%') }}
-                                    trackColor={{ false: "#C4C4C4", true: "#0F74C8" }}
+                                    trackColor={{ false: "#C4C4C4", true: "#00D9CE" }}
                                     onValueChange={() => this.toggleSwitchAll(toggleSwitchAll)}
                                     value={toggleSwitchAll} />
                             </View>
@@ -374,7 +374,7 @@ export default class homeScreen extends Component {
                                 <Text style={{ textAlign: 'center', color: '#000000' }}>Business & Strategy</Text>
                                 <Switch
                                     style={{ marginLeft: wp('27%') }}
-                                    trackColor={{ false: "#C4C4C4", true: "#0F74C8" }}
+                                    trackColor={{ false: "#C4C4C4", true: "#00D9CE" }}
                                     onValueChange={() => this.toggleSwitchAll(toggleSwitchAll)}
                                     value={toggleSwitchAll} />
                             </View>

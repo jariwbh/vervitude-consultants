@@ -36,7 +36,7 @@ function chatHistoryScreen(props) {
                             <Image source={require('../../assets/images/user4.png')}
                                 style={{ width: 72, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
                             <FontAwesome name="circle" size={21} color="#EEEEEE" style={{ marginLeft: wp('-35%') }} />
-                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('-15%') }}>
+                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('0%') }}>
                                 <Text style={{ fontSize: hp('3.5%'), fontWeight: 'bold', color: '#000000' }}>Ruby</Text>
                                 <Text style={{ fontSize: hp('2.5%'), color: '#04DE71' }}>+ ₹ 20.00</Text>
                             </View>
@@ -78,7 +78,7 @@ function chatHistoryScreen(props) {
                             <Image source={require('../../assets/images/user1.png')}
                                 style={{ marginTop: hp('-0%'), width: 72, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
                             <FontAwesome name="circle" size={21} color="#5AC8FA" style={{ marginLeft: wp('-35%') }} />
-                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('-15%') }}>
+                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('0%') }}>
                                 <Text style={{ fontSize: hp('3.5%'), fontWeight: 'bold', color: '#000000' }}>Maya</Text>
                                 <Text style={{ fontSize: hp('2.5%'), color: '#04DE71' }}>+ ₹ 20.00</Text>
                             </View>
@@ -114,7 +114,7 @@ function chatHistoryScreen(props) {
                             <Image source={require('../../assets/images/user3.png')}
                                 style={{ marginTop: hp('-0%'), width: 72, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
                             <FontAwesome name="circle" size={21} color="#5AC8FA" style={{ marginLeft: wp('-35%') }} />
-                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('-15%') }}>
+                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('0%') }}>
                                 <Text style={{ fontSize: hp('3.5%'), fontWeight: 'bold', color: '#000000' }}>Rajan</Text>
                                 <Text style={{ fontSize: hp('2.5%'), color: '#04DE71' }}>+ ₹ 20.00</Text>
                             </View>
@@ -155,7 +155,7 @@ function chatHistoryScreen(props) {
                             <Image source={require('../../assets/images/user2.png')}
                                 style={{ marginTop: hp('-0%'), width: 72, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
                             <FontAwesome name="circle" size={21} color="#5AC8FA" style={{ marginLeft: wp('-35%') }} />
-                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('-15%') }}>
+                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('0%') }}>
                                 <Text style={{ fontSize: hp('3.5%'), fontWeight: 'bold', color: '#000000' }}>Ruby</Text>
                                 <Text style={{ fontSize: hp('2.5%'), color: '#04DE71' }}>+ ₹ 20.00</Text>
                             </View>

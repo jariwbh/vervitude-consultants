@@ -7,7 +7,11 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const inviteScreen = (props) => {
     function onPressSubmit() {
-        ToastAndroid.show('User invited!', ToastAndroid.SHORT);
+        if (Platform.OS === 'android') {                
+            ToastAndroid.show("User invited!", ToastAndroid.SHORT);
+          } else {
+            alert("User invited!");
+          }        
         props.navigation.replace(SCREEN.MYPROFILESCREEN);
     }
 
