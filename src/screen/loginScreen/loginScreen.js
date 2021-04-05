@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
-import { Text, View, Modal, ImageBackground, SafeAreaView, TouchableOpacity, Image, TextInput, ScrollView, ToastAndroid, StatusBar, BackHandler ,Platform} from 'react-native'
+import { Text, View, Modal, ImageBackground, SafeAreaView, TouchableOpacity, Image, TextInput, ScrollView, ToastAndroid, StatusBar, BackHandler, Platform } from 'react-native';
+import { heightPercentageToDP as hp, widthPercentageToDP as wp, } from 'react-native-responsive-screen';
 import { MAINSCREEN, REGISTERSCREEN } from '../../context/screen/screenName';
-import { heightPercentageToDP as hp, widthPercentageToDP as wp, } from 'react-native-responsive-screen'
-import * as STYLES from './styles';
+import LoginService from '../../services/LoginService/LoginService';
 import AsyncStorage from '@react-native-community/async-storage';
-import { AUTHUSER } from '../../context/actions/type'
+import { AUTHUSER } from '../../context/actions/type';
+import axiosConfig from '../../helpers/axiosConfig';
 import Loader from '../../components/loader';
+import * as STYLES from './styles';
 
 export default class loginScreen extends Component {
     constructor(props) {
@@ -28,8 +30,7 @@ export default class loginScreen extends Component {
         });
 
         this._unsubscribeSiBlur = this.props.navigation.addListener('blur', e => {
-            BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton,
-            );
+            BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
         });
     }
 
@@ -58,6 +59,7 @@ export default class loginScreen extends Component {
         return true;
     }
 
+    //check email validation
     setEmail(email) {
         if (!email || email <= 0) {
             return this.setState({ usererror: 'User Name cannot be empty' });
@@ -65,6 +67,7 @@ export default class loginScreen extends Component {
         return this.setState({ username: email, usererror: null });
     }
 
+    //check password validation
     setPassword(password) {
         if (!password || password.length <= 0) {
             return this.setState({ passworderror: 'Password cannot be empty' });
@@ -72,6 +75,7 @@ export default class loginScreen extends Component {
         return this.setState({ password: password, passworderror: null });
     }
 
+    //clear Field up data
     resetScreen() {
         this.setState({
             username: null,
@@ -82,35 +86,69 @@ export default class loginScreen extends Component {
         });
     }
 
+    //add local storage Records
     authenticateUser = (user) => (
         AsyncStorage.setItem(AUTHUSER, JSON.stringify(user))
     )
 
-    onPressSubmit = async () => {
+    //SIGN IN BUTTON ONPRESS TO PROCESS
+    onPressSubmit = () => {
         const { username, password } = this.state;
-        // if (!username || !password) {
-        //     this.setEmail(username);
-        //     this.setPassword(password);
-        //     return;
-        // }
+        if (!username || !password) {
+            this.setEmail(username);
+            this.setPassword(password);
+            return;
+        }
         const body = {
             username: username,
             password: password
         }
         this.setState({ loading: true });
-        setTimeout(() => {
-            this.setState({ loading: false })
-            if (Platform.OS === 'android') {                
-                ToastAndroid.show("SignIn Success!", ToastAndroid.LONG);
-              } else {
-                alert("SignIn Success!");
-              }
-            this.props.navigation.navigate(MAINSCREEN);
-        }, 1000);
+        try {
+            LoginService(body)
+                .then(response => {
+                    console.log('response', response);
+                    if (response.data.type && response.data.type == 'Error') {
+                        this.setState({ loading: false })
+                        if (Platform.OS === 'android') {
+                            ToastAndroid.show("Username and Password Invalid!", ToastAndroid.LONG)
+                        } else {
+                            alert("Username and Password Invalid!");
+                        }
+                        this.resetScreen();
+                        return
+                    }
+
+                    if (response.data != null && response.data != 'undefind' && response.status == 200) {
+                        let token = response.data.user._id;
+                        //set header auth user key
+                        axiosConfig(token);
+                        this.authenticateUser(response.data.user);
+                        this.setState({ loading: false })
+                        if (Platform.OS === 'android') {
+                            ToastAndroid.show("SignIn Success!", ToastAndroid.LONG);
+                        } else {
+                            alert("SignIn Success!");
+                        }
+                        this.props.navigation.navigate(MAINSCREEN);
+                        return
+                    }
+                })
+        }
+        catch (error) {
+            console.log('error', error);
+            this.setState({ loading: false });
+            this.resetScreen();
+            if (Platform.OS === 'android') {
+                ToastAndroid.show("Username and Password Invalid!", ToastAndroid.LONG);
+            } else {
+                alert("Username and Password Invalid!");
+            }
+        };
     }
 
     render() {
-        const { loading, showModalVisible, showMessageModalVisible } = this.state;
+        const { loading, showModalVisible, showMessageModalVisible, usererror, passworderror } = this.state;
         return (
             <SafeAreaView style={STYLES.styles.container}>
                 <StatusBar backgroundColor="#80caff" hidden barStyle="light-content" />
@@ -132,22 +170,31 @@ export default class loginScreen extends Component {
                         <View style={STYLES.styles.centeView}>
                             <View style={STYLES.styles.boxView}>
                                 <View style={{ marginTop: hp('2%') }}>
-                                    <View style={STYLES.styles.inputView}>
+                                    <View style={usererror == null ? STYLES.styles.inputView : STYLES.styles.inputViewError}>
                                         <TextInput
                                             style={STYLES.styles.TextInput}
                                             placeholder="Email Address"
                                             type='clear'
                                             returnKeyType="next"
+                                            defaultValue={this.state.username}
                                             placeholderTextColor="#000000"
+                                            blurOnSubmit={false}
+                                            onSubmitEditing={() => { this.secondTextInputRef.current.focus() }}
+                                            onChangeText={(email) => this.setEmail(email)}
                                         />
                                     </View>
-                                    <View style={STYLES.styles.inputView}>
+                                    <View style={passworderror == null ? STYLES.styles.inputView : STYLES.styles.inputViewError}>
                                         <TextInput
                                             style={STYLES.styles.TextInput}
                                             placeholder="Password"
                                             type='clear'
-                                            returnKeyType="next"
+                                            defaultValue={this.state.password}
                                             placeholderTextColor="#000000"
+                                            secureTextEntry={true}
+                                            returnKeyType="done"
+                                            ref={this.secondTextInputRef}
+                                            onSubmitEditing={() => this.onPressSubmit()}
+                                            onChangeText={(password) => this.setPassword(password)}
                                         />
                                     </View>
                                 </View>
@@ -169,8 +216,9 @@ export default class loginScreen extends Component {
                             </TouchableOpacity>
                         </View>
                     </View>
+                    <View style={{ marginBottom: hp('25%') }}></View>
                 </ScrollView>
-                {loading ? <Loader /> : null}
+                { loading ? <Loader /> : null}
                 {/* Help & Support model Pop */}
                 <Modal
                     animationType="slide"

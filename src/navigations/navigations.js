@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LOGINSCREEN from "../screen/loginScreen/loginScreen";
@@ -16,10 +16,12 @@ import EDITSCREEN from '../screen/myProfileScreen/editScreen';
 import SELECTCATEGORYSCREEN from '../screen/selectCategoryScreen/selectCategoryScreen';
 import CHATHISTORYSCREEN from '../screen/chatHistoryScreen/chatHistoryScreen';
 import RUBYCHATSCREEN from '../screen/chatHistoryScreen/rubychatScreen';
-
+// import axiosConfig from '../helpers/axiosConfig';
+// import AsyncStorage from '@react-native-community/async-storage';
+// import * as SCREEN from '../context/screen/screenName'
 const Stack = createStackNavigator();
 
-const navigationsApp = (props) => {
+const navigationsApp = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator headerMode="none" initialRouteName={LOGINSCREEN}>

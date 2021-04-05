@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import { Text, View, SafeAreaView, Image, TouchableOpacity, ScrollView, Modal, TextInput } from 'react-native';
+import { Text, View, SafeAreaView, Image, TouchableOpacity, ScrollView, Modal, TextInput, ToastAndroid, Platform } from 'react-native';
 import { heightPercentageToDP as hp, widthPercentageToDP as wp, } from 'react-native-responsive-screen';
 import MenuButton from '../../components/ProfileMenuButton/ProfileMenuButton';
+import AsyncStorage from '@react-native-community/async-storage';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import * as SCREENNAME from '../../context/screen/screenName'
 import * as SCREEN from '../../context/screen/screenName';
+import { AUTHUSER } from '../../context/actions/type'
 import * as STYLES from './styles';
 
 export default class myProfileScreen extends Component {
@@ -26,6 +29,17 @@ export default class myProfileScreen extends Component {
 
     showMessageModalVisible = (visible) => {
         this.setState({ showMessageModalVisible: visible });
+    }
+
+    //LogOut Button click to call 
+    onPressLogout() {
+        AsyncStorage.removeItem(AUTHUSER);
+        if (Platform.OS === 'android') {
+            ToastAndroid.show("Log Out Success!", ToastAndroid.SHORT);
+        } else {
+            alert("Log Out Success!");
+        }
+        this.props.navigation.replace(SCREENNAME.LOGINSCREEN);
     }
 
     render() {
@@ -90,7 +104,7 @@ export default class myProfileScreen extends Component {
                                 <Image source={require('../../assets/images/invite.png')} style={{ height: 30, width: 30, marginLeft: hp('3%') }} />
                                 <Text style={{ marginLeft: wp('4%'), color: '#4D4D4D', fontSize: hp('2.5%') }}>Invite a Consultant</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ flexDirection: 'row', marginTop: hp('15%') }} onPress={() => this.props.navigation.navigate(SCREEN.LOGINSCREEN)}>
+                            <TouchableOpacity style={{ flexDirection: 'row', marginTop: hp('15%') }} onPress={() => this.onPressLogout()}>
                                 <Image source={require('../../assets/images/logout.png')} style={{ height: 25, width: 30, marginLeft: hp('3%') }} />
                                 <Text style={{ marginLeft: wp('4%'), color: '#4D4D4D', fontSize: hp('2.5%') }}>LogOut</Text>
                             </TouchableOpacity>

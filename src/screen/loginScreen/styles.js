@@ -35,6 +35,16 @@ export const styles = StyleSheet.create({
         margin: hp('1%'),
         borderWidth: hp('0.2%')
     },
+    inputViewError: {
+        flexDirection: 'row',
+        backgroundColor: "#fff",
+        borderRadius: wp('10%'),
+        borderColor: 'red',
+        width: wp('80%'),
+        height: hp('6%'),
+        margin: hp('1%'),
+        borderWidth: hp('0.2%')
+    },
     TextInput: {
         flex: 1,
         fontSize: hp('2%'),
