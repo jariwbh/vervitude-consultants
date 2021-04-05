@@ -104,11 +104,22 @@ export default class loginScreen extends Component {
             password: password
         }
         this.setState({ loading: true });
+
+        setTimeout(() => {
+            this.setState({ loading: false });
+            if (Platform.OS === 'android') {
+                ToastAndroid.show("Username and Password Invalid!", ToastAndroid.LONG)
+            } else {
+                alert("Username and Password Invalid!");
+            }
+            this.resetScreen();
+            return;
+        }, 6000);
+
         try {
             LoginService(body)
                 .then(response => {
-                    console.log('response', response);
-                    if (response.data.type && response.data.type == 'Error') {
+                    if (response.data.type && response.data.type == 'Error' && response.status == 500) {
                         this.setState({ loading: false })
                         if (Platform.OS === 'android') {
                             ToastAndroid.show("Username and Password Invalid!", ToastAndroid.LONG)
@@ -116,7 +127,7 @@ export default class loginScreen extends Component {
                             alert("Username and Password Invalid!");
                         }
                         this.resetScreen();
-                        return
+                        return;
                     }
 
                     if (response.data != null && response.data != 'undefind' && response.status == 200) {
@@ -131,7 +142,7 @@ export default class loginScreen extends Component {
                             alert("SignIn Success!");
                         }
                         this.props.navigation.navigate(MAINSCREEN);
-                        return
+                        return;
                     }
                 })
         }
