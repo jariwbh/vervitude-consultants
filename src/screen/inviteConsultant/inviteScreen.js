@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, ImageBackground, SafeAreaView, TouchableOpacity, Image, TextInput, ScrollView, ToastAndroid, StatusBar } from 'react-native'
+import { Text, View, ImageBackground, SafeAreaView, TouchableOpacity, Image, TextInput, ScrollView, Platform, ToastAndroid, StatusBar } from 'react-native'
 import { heightPercentageToDP as hp, widthPercentageToDP as wp, } from 'react-native-responsive-screen'
 import * as STYLES from './styles';
 import * as SCREEN from '../../context/screen/screenName';
@@ -7,11 +7,11 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const inviteScreen = (props) => {
     function onPressSubmit() {
-        if (Platform.OS === 'android') {                
+        if (Platform.OS === 'android') {
             ToastAndroid.show("User invited!", ToastAndroid.SHORT);
-          } else {
+        } else {
             alert("User invited!");
-          }        
+        }
         props.navigation.replace(SCREEN.MYPROFILESCREEN);
     }
 

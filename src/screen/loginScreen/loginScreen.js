@@ -221,7 +221,7 @@ export default class loginScreen extends Component {
                             </View>
                         </View>
                         <View style={STYLES.styles.centeView} >
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate(REGISTERSCREEN)} >
+                            <TouchableOpacity onPress={() => { this.props.navigation.navigate(REGISTERSCREEN), this.resetScreen() }} >
                                 <Text style={STYLES.styles.createText}>Create An account</Text>
                             </TouchableOpacity>
                         </View>

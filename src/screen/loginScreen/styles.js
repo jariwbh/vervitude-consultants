@@ -92,7 +92,7 @@ export const styles = StyleSheet.create({
     },
     createText: {
         color: '#FFFFFF',
-        fontSize: 18,
+        fontSize: 16,
         marginTop: 15,
         fontWeight: '900'
     },

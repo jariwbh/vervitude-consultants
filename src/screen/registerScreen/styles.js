@@ -1,5 +1,6 @@
 import { StyleSheet, Dimensions } from 'react-native';
-import { heightPercentageToDP as hp, widthPercentageToDP as wp, } from 'react-native-responsive-screen'
+const HEIGHT = Dimensions.get('window').height;
+const WIDTH = Dimensions.get('window').width;
 
 export const styles = StyleSheet.create({
     container: {
@@ -7,37 +8,47 @@ export const styles = StyleSheet.create({
         backgroundColor: '#5AC8FA'
     },
     imageView: {
-        marginLeft: ('18%'),
-        marginTop: ('55%'),
-        height: hp('30%'),
-        width: wp('50%')
+        marginLeft: 70,
+        marginTop: 200,
+        height: 200,
+        width: 200,
     },
     backgroundImage: {
-        marginTop: hp('-10'),
-        height: hp('55%'),
-        width: wp('100%')
+        marginTop: -70,
+        height: HEIGHT / 2 + 40,
+        width: WIDTH
     },
     circle: {
-        height: hp('50%'),
-        width: hp('50%'),
-        borderRadius: hp('50%'),
+        height: 350,
+        width: 350,
+        borderRadius: 200,
         backgroundColor: "#FFFFFF",
-        marginTop: hp('-35'),
-        marginLeft: wp('-10')
+        marginTop: -250,
+        marginLeft: -50
     },
     inputView: {
         flexDirection: 'row',
         backgroundColor: "#fff",
-        borderRadius: wp('10%'),
+        borderRadius: 20,
         borderColor: '#5AC8FA',
-        width: wp('80%'),
-        height: hp('6%'),
-        margin: hp('1%'),
-        borderWidth: hp('0.2%')
+        width: WIDTH - 80,
+        height: 45,
+        margin: 5,
+        borderWidth: 1
+    },
+    inputViewError: {
+        flexDirection: 'row',
+        backgroundColor: "#fff",
+        borderRadius: 20,
+        borderColor: '#ff0000',
+        width: WIDTH - 80,
+        height: 45,
+        margin: 5,
+        borderWidth: 1
     },
     TextInput: {
         flex: 1,
-        fontSize: hp('2%'),
+        fontSize: 14,
         textAlign: 'center',
         fontWeight: 'bold'
     },
@@ -46,14 +57,14 @@ export const styles = StyleSheet.create({
         alignItems: 'center'
     },
     textColor: {
-        fontSize: hp('5%'),
+        fontSize: 36,
         color: '#FFFFFF',
         fontWeight: 'bold',
-        marginLeft: wp('15%')
+        marginLeft: 80
     },
     boxView: {
-        height: hp('36%'),
-        width: wp('95%'),
+        height: 250,
+        width: WIDTH - 20,
         shadowOpacity: 0.5,
         shadowRadius: 1,
         elevation: 4,
@@ -64,30 +75,30 @@ export const styles = StyleSheet.create({
         borderRadius: 20,
         backgroundColor: '#FFFFFF',
         alignItems: 'center',
-        marginTop: hp('5%')
+        marginTop: 20
     },
     submitBtn: {
         flexDirection: 'row',
-        width: wp('50%'),
+        width: WIDTH / 2,
         backgroundColor: "#5AC8FA",
         borderRadius: 50,
-        height: hp('6%'),
+        height: 40,
         alignItems: "center",
         justifyContent: 'center'
     },
     submitbtnText: {
         color: '#FFFFFF',
-        fontSize: 16
+        fontSize: 14
     },
     loginText: {
         color: '#FFFFFF',
-        fontSize: hp('2%'),
-        marginTop: hp('2%'),
+        fontSize: 16,
+        marginTop: 15,
         fontWeight: '900'
     },
     supportText: {
         color: '#222222',
-        fontSize: hp('2%'),
+        fontSize: 14,
         textDecorationLine: 'underline'
     },
 })
