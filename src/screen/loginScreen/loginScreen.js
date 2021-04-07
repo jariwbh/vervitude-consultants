@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Text, View, Modal, ImageBackground, SafeAreaView, TouchableOpacity, Image, TextInput, ScrollView, ToastAndroid, StatusBar, BackHandler, Platform } from 'react-native';
-import { heightPercentageToDP as hp, widthPercentageToDP as wp, } from 'react-native-responsive-screen';
 import { MAINSCREEN, REGISTERSCREEN } from '../../context/screen/screenName';
 import LoginService from '../../services/LoginService/LoginService';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -171,16 +170,16 @@ export default class loginScreen extends Component {
                         source={require('../../assets/images/3.png')}
                         style={STYLES.styles.backgroundImage}></ImageBackground>
                     <View>
-                        <View style={{ marginTop: hp('-28%') }}>
+                        <View style={{ marginTop: -200 }}>
                             <Text style={STYLES.styles.textColor}>Help, People</Text>
                             <Text style={STYLES.styles.textColor}>Find answers</Text>
                         </View>
-                        <View style={{ marginTop: hp('1%') }}>
+                        <View style={{ marginTop: 5 }}>
                             <Text style={STYLES.styles.textColor}>Be an Expert</Text>
                         </View>
                         <View style={STYLES.styles.centeView}>
                             <View style={STYLES.styles.boxView}>
-                                <View style={{ marginTop: hp('2%') }}>
+                                <View style={{ marginTop: 15 }}>
                                     <View style={usererror == null ? STYLES.styles.inputView : STYLES.styles.inputViewError}>
                                         <TextInput
                                             style={STYLES.styles.TextInput}
@@ -214,7 +213,7 @@ export default class loginScreen extends Component {
                                         <Text style={STYLES.styles.supportText}>Support</Text>
                                     </TouchableOpacity>
                                 </View>
-                                <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: hp('2%') }}>
+                                <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
                                     <TouchableOpacity style={STYLES.styles.submitBtn} onPress={() => this.onPressSubmit()} >
                                         <Text style={STYLES.styles.submitbtnText}>Submit</Text>
                                     </TouchableOpacity>
@@ -227,7 +226,6 @@ export default class loginScreen extends Component {
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <View style={{ marginBottom: hp('25%') }}></View>
                 </ScrollView>
                 { loading ? <Loader /> : null}
                 {/* Help & Support model Pop */}
@@ -237,10 +235,9 @@ export default class loginScreen extends Component {
                     visible={showModalVisible}
                     onRequestClose={() => { this.showModalVisible(!showModalVisible) }}
                 >
-
                     <View style={STYLES.styles.centerView}>
                         <View style={STYLES.styles.modalView}>
-                            <View style={{ marginTop: hp('5%') }}></View>
+                            <View style={{ marginTop: 20 }}></View>
                             <View style={STYLES.styles.modelInputView}>
                                 <TextInput
                                     style={STYLES.styles.modelTextInput}
@@ -263,21 +260,19 @@ export default class loginScreen extends Component {
                                     multiline={true}
                                 />
                             </View>
-
                         </View>
-                        <View style={{ marginTop: hp('2%'), flexDirection: 'row' }}>
+                        <View style={{ marginTop: 15, flexDirection: 'row' }}>
                             <TouchableOpacity onPress={() => { this.showModalVisibleSubmit(!showModalVisible) }}
                                 style={STYLES.styles.savebtn}>
-                                <Text style={{ fontSize: hp('2%'), color: '#FFFFFF' }}>Submit</Text>
+                                <Text style={{ fontSize: 14, color: '#FFFFFF' }}>Submit</Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => { this.showModalVisible(!showModalVisible) }}
                                 style={STYLES.styles.cancelbtn}>
-                                <Text style={{ fontSize: hp('2%'), color: '#000000' }}>Cancel</Text>
+                                <Text style={{ fontSize: 14, color: '#000000' }}>Cancel</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
                 </Modal>
-
                 {/* message model Pop */}
                 <Modal
                     animationType="slide"
@@ -287,15 +282,15 @@ export default class loginScreen extends Component {
                 >
                     <View style={STYLES.styles.centerView}>
                         <View style={STYLES.styles.msgModalView}>
-                            <Image source={require('../../assets/images/smileicon.png')} style={{ marginTop: hp('2%'), height: 40, width: 40 }} />
-                            <Text style={{ marginTop: hp('2%'), fontSize: hp('2%') }}>Sorry to hear about the issue</Text>
-                            <Text style={{ fontSize: hp('2%') }}>Your quiry has been Submit</Text>
-                            <Text style={{ marginTop: hp('2%'), fontSize: hp('2%') }}>You will hear from us very soon</Text>
+                            <Image source={require('../../assets/images/smileicon.png')} style={{ marginTop: 15, height: 40, width: 40 }} />
+                            <Text style={{ marginTop: 15, fontSize: 14 }}>Sorry to hear about the issue</Text>
+                            <Text style={{ fontSize: 14 }}>Your quiry has been Submit</Text>
+                            <Text style={{ marginTop: 15, fontSize: 14 }}>You will hear from us very soon</Text>
                         </View>
-                        <View style={{ justifyContent: 'center', flexDirection: 'row', marginTop: hp('2%') }}>
+                        <View style={{ justifyContent: 'center', flexDirection: 'row', marginTop: 15 }}>
                             <TouchableOpacity onPress={() => { this.showMessageModalVisible(!showMessageModalVisible) }}
                                 style={STYLES.styles.cancelbtn}>
-                                <Text style={{ fontSize: hp('2%'), color: '#000000' }}>Ok</Text>
+                                <Text style={{ fontSize: 14, color: '#000000' }}>Ok</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

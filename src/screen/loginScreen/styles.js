@@ -1,5 +1,6 @@
 import { StyleSheet, Dimensions } from 'react-native';
-import { heightPercentageToDP as hp, widthPercentageToDP as wp, } from 'react-native-responsive-screen'
+const HEIGHT = Dimensions.get('window').height;
+const WIDTH = Dimensions.get('window').width;
 
 export const styles = StyleSheet.create({
     container: {
@@ -7,47 +8,47 @@ export const styles = StyleSheet.create({
         backgroundColor: '#5AC8FA'
     },
     imageView: {
-        marginLeft: ('18%'),
-        marginTop: ('55%'),
-        height: hp('30%'),
-        width: wp('50%')
+        marginLeft: 70,
+        marginTop: 200,
+        height: 200,
+        width: 200,
     },
     backgroundImage: {
-        marginTop: hp('-10'),
-        height: hp('55%'),
-        width: wp('100%')
+        marginTop: -70,
+        height: HEIGHT / 2 + 40,
+        width: WIDTH
     },
     circle: {
-        height: hp('50%'),
-        width: hp('50%'),
-        borderRadius: hp('50%'),
+        height: 350,
+        width: 350,
+        borderRadius: 200,
         backgroundColor: "#FFFFFF",
-        marginTop: hp('-35'),
-        marginLeft: wp('-10')
+        marginTop: -250,
+        marginLeft: -50
     },
     inputView: {
         flexDirection: 'row',
         backgroundColor: "#fff",
-        borderRadius: wp('10%'),
+        borderRadius: 20,
         borderColor: '#5AC8FA',
-        width: wp('80%'),
-        height: hp('6%'),
-        margin: hp('1%'),
-        borderWidth: hp('0.2%')
+        width: WIDTH - 80,
+        height: 45,
+        margin: 5,
+        borderWidth: 1
     },
     inputViewError: {
         flexDirection: 'row',
         backgroundColor: "#fff",
-        borderRadius: wp('10%'),
-        borderColor: 'red',
-        width: wp('80%'),
-        height: hp('6%'),
-        margin: hp('1%'),
-        borderWidth: hp('0.2%')
+        borderRadius: 20,
+        borderColor: '#ff0000',
+        width: WIDTH - 80,
+        height: 45,
+        margin: 5,
+        borderWidth: 1
     },
     TextInput: {
         flex: 1,
-        fontSize: hp('2%'),
+        fontSize: 14,
         textAlign: 'center',
         fontWeight: 'bold'
     },
@@ -56,14 +57,14 @@ export const styles = StyleSheet.create({
         alignItems: 'center'
     },
     textColor: {
-        fontSize: hp('5%'),
+        fontSize: 36,
         color: '#FFFFFF',
         fontWeight: 'bold',
-        marginLeft: wp('15%')
+        marginLeft: 80
     },
     boxView: {
-        height: hp('31%'),
-        width: wp('95%'),
+        height: 220,
+        width: WIDTH - 20,
         shadowOpacity: 0.5,
         shadowRadius: 1,
         elevation: 4,
@@ -74,41 +75,41 @@ export const styles = StyleSheet.create({
         borderRadius: 20,
         backgroundColor: '#FFFFFF',
         alignItems: 'center',
-        marginTop: hp('5%')
+        marginTop: 40
     },
     submitBtn: {
         flexDirection: 'row',
-        width: wp('50%'),
+        width: WIDTH / 2,
         backgroundColor: "#5AC8FA",
         borderRadius: 50,
-        height: hp('6%'),
+        height: 40,
         alignItems: "center",
         justifyContent: 'center'
     },
     submitbtnText: {
         color: '#FFFFFF',
-        fontSize: hp('2%')
+        fontSize: 14
     },
     createText: {
         color: '#FFFFFF',
-        fontSize: hp('2.5%'),
-        marginTop: hp('2%'),
+        fontSize: 18,
+        marginTop: 15,
         fontWeight: '900'
     },
     supportText: {
         color: '#4E4E4E',
-        fontSize: hp('2%'),
+        fontSize: 14,
         textDecorationLine: 'underline',
         fontWeight: 'bold'
     },
     modalView: {
-        marginTop: hp('50%'),
-        height: hp('35%'),
-        width: wp('80%'),
+        marginTop: HEIGHT / 2,
+        height: HEIGHT / 2 - 140,
+        width: WIDTH - 90,
         borderRadius: 20,
         backgroundColor: "white",
         alignItems: "center",
-        shadowColor: "#000",
+        shadowColor: "#000000",
         shadowOffset: {
             width: 0,
             height: 2
@@ -118,13 +119,13 @@ export const styles = StyleSheet.create({
         elevation: 5
     },
     msgModalView: {
-        marginTop: hp('50%'),
-        height: hp('25%'),
-        width: wp('80%'),
+        marginTop: HEIGHT / 2,
+        height: HEIGHT / 2 - 140,
+        width: WIDTH - 90,
         borderRadius: 20,
         backgroundColor: "white",
         alignItems: "center",
-        shadowColor: "#000",
+        shadowColor: "#000000",
         shadowOffset: {
             width: 0,
             height: 2
@@ -132,16 +133,17 @@ export const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5
-    }, savebtn: {
+    },
+    savebtn: {
         flexDirection: 'row',
-        marginRight: hp('10%'),
-        width: wp('30%'),
-        height: hp('5%'),
+        marginRight: 50,
+        width: 140,
+        height: 40,
         backgroundColor: '#5AC8FA',
-        borderRadius: hp('5%'),
+        borderRadius: 20,
         alignItems: 'center',
         justifyContent: 'center',
-        shadowColor: "#000",
+        shadowColor: "#000000",
         shadowOffset: {
             width: 0,
             height: 2,
@@ -152,13 +154,13 @@ export const styles = StyleSheet.create({
     },
     cancelbtn: {
         flexDirection: 'row',
-        width: wp('30%'),
-        height: hp('5%'),
+        width: 140,
+        height: 40,
         backgroundColor: '#EEEEEE',
-        borderRadius: hp('5%'),
+        borderRadius: 20,
         alignItems: 'center',
         justifyContent: 'center',
-        shadowColor: "#000",
+        shadowColor: "#000000",
         shadowOffset: {
             width: 0,
             height: 2,
@@ -170,33 +172,33 @@ export const styles = StyleSheet.create({
     modelInputView: {
         flexDirection: 'row',
         backgroundColor: "#F4F4F4",
-        borderWidth: wp('0.1%'),
+        borderWidth: 0.5,
         borderColor: '#000000',
-        width: wp('70%'),
-        height: hp('6%'),
-        borderRadius: hp('0.5%'),
-        marginBottom: hp('3%')
+        width: WIDTH - 120,
+        height: 40,
+        borderRadius: 5,
+        marginBottom: 20
     },
     modelTextInput: {
-        fontSize: hp('2%'),
+        fontSize: 14,
         flex: 1,
         backgroundColor: '#F4F4F4',
-        marginLeft: hp('1%')
+        marginLeft: 5
     },
     modelTextAreainputView: {
         flexDirection: 'row',
         backgroundColor: "#F4F4F4",
-        borderWidth: wp('0.1%'),
+        borderWidth: 0.5,
         borderColor: '#000000',
-        width: wp('70%'),
-        height: hp('15%'),
-        borderRadius: hp('0.5%')
+        width: WIDTH - 120,
+        height: 100,
+        borderRadius: 5
     },
     modelTextareaInput: {
-        fontSize: hp('2%'),
+        fontSize: 14,
         flex: 1,
         backgroundColor: '#F4F4F4',
-        marginLeft: hp('1%'),
+        marginLeft: 5,
     },
     centerView: {
         justifyContent: 'center',
