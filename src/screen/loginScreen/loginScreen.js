@@ -91,7 +91,7 @@ export default class loginScreen extends Component {
     )
 
     //SIGN IN BUTTON ONPRESS TO PROCESS
-    onPressSubmit = () => {
+    onPressSubmit = async () => {
         const { username, password } = this.state;
         if (!username || !password) {
             this.setEmail(username);
@@ -116,19 +116,8 @@ export default class loginScreen extends Component {
         // }, 6000);
 
         try {
-            LoginService(body)
+            await LoginService(body)
                 .then(response => {
-                    if (response.data.type && response.data.type == 'Error' && response.status == 500) {
-                        this.setState({ loading: false })
-                        if (Platform.OS === 'android') {
-                            ToastAndroid.show("Username and Password Invalid!", ToastAndroid.LONG)
-                        } else {
-                            alert("Username and Password Invalid!");
-                        }
-                        this.resetScreen();
-                        return;
-                    }
-
                     if (response.data != null && response.data != 'undefind' && response.status == 200) {
                         let token = response.data.user._id;
                         //set header auth user key
@@ -144,9 +133,7 @@ export default class loginScreen extends Component {
                         return;
                     }
                 })
-        }
-        catch (error) {
-            console.log('error', error);
+        } catch (e) {
             this.setState({ loading: false });
             this.resetScreen();
             if (Platform.OS === 'android') {
