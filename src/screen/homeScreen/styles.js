@@ -1,89 +1,85 @@
 import { StyleSheet, Dimensions } from 'react-native';
-import { heightPercentageToDP as hp, widthPercentageToDP as wp, } from 'react-native-responsive-screen'
+const HEIGHT = Dimensions.get("window").height;
+const WIDTH = Dimensions.get("window").width;
 
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#EEEEEE",
     },
-    statInput: {
-        fontSize: 15,
-        flex: 1,
-        marginLeft: 2,
-        alignItems: "center",
-    },
     box1: {
         flexDirection: 'column',
-        width: wp('46%'),
-        height: hp('15%'),
+        width: WIDTH / 2 - 20,
+        height: 120,
         backgroundColor: '#04DE71',
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: wp('2%')
+        borderRadius: 10
     },
     box2: {
         flexDirection: 'column',
-        width: wp('46%'),
-        height: hp('15%'),
+        width: WIDTH / 2 - 20,
+        height: 120,
         backgroundColor: '#0F74C8',
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: wp('2%')
+        borderRadius: 10
     },
     box3: {
         flexDirection: 'column',
-        width: wp('46%'),
-        height: hp('15%'),
+        width: WIDTH / 2 - 20,
+        height: 120,
         backgroundColor: '#00D9CE',
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: wp('2%')
+        borderRadius: 10
     },
     box4: {
         flexDirection: 'column',
-        width: wp('46%'),
-        height: hp('15%'),
+        width: WIDTH / 2 - 20,
+        height: 120,
         backgroundColor: '#FFE620',
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: wp('2%')
+        borderRadius: 10
     },
     boxtext: {
-        fontSize: hp('4%'),
+        fontSize: 26,
         textAlign: 'center',
         marginLeft: 2,
         color: '#FFFFFF'
     },
     boxtextsecond: {
-        fontSize: hp('2.5%'),
+        fontSize: 16,
         textAlign: 'center',
         color: '#FFFFFF'
     },
     boxuppertext: {
-        fontSize: hp('1.8%'),
+        fontSize: 12,
         color: '#FFFFFF',
-        marginLeft: wp('15%')
+        marginLeft: 60
     },
     filterBtn: {
+        marginTop: 15,
         flexDirection: 'row',
-        width: wp('40%'),
-        height: hp('7%'),
+        width: WIDTH / 2 - 60,
+        height: 40,
         backgroundColor: "#5AC8FA",
-        borderRadius: wp('4%'),
+        borderRadius: 14,
         alignItems: "center",
-        justifyContent: 'center',
-        marginLeft: wp('2%')
+        justifyContent: 'space-evenly',
+        marginLeft: 10
     },
     filterBtnText: {
         color: '#FFFFFF',
-        fontSize: hp('2.5%')
+        fontSize: 16
     },
     cardViewlastHistory: {
         flexDirection: 'column',
-        borderRadius: wp('5%'),
-        marginTop: hp('2%'),
-        width: wp('95%'),
-        height: hp('60%'),
+        borderRadius: 30,
+        marginTop: 15,
+        width: WIDTH - 20,
+        height: 600,
         backgroundColor: '#FFFFFF',
         shadowOffset: {
             width: 0,
@@ -92,14 +88,13 @@ export const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
-        marginBottom: hp('5%')
     },
     cardViewChart: {
-        borderRadius: wp('5%'),
-        marginTop: hp('2%'),
+        borderRadius: 30,
+        marginTop: 15,
         flexDirection: 'column',
-        width: wp('95%'),
-        height: hp('40%'),
+        width: WIDTH - 20,
+        height: 280,
         backgroundColor: '#FFFFFF',
         shadowOffset: {
             width: 0,
@@ -114,8 +109,8 @@ export const styles = StyleSheet.create({
         alignItems: 'center'
     },
     modalView: {
-        marginTop: hp('40%'),
-        width: wp('80%'),
+        marginTop: HEIGHT / 2.5,
+        width: WIDTH - 90,
         borderRadius: 20,
         backgroundColor: "white",
         alignItems: "center",
@@ -130,11 +125,11 @@ export const styles = StyleSheet.create({
     },
     savebtn: {
         flexDirection: 'row',
-        marginRight: hp('10%'),
-        width: wp('30%'),
-        height: hp('5%'),
+        marginRight: 50,
+        width: 140,
+        height: 40,
         backgroundColor: '#5AC8FA',
-        borderRadius: hp('5%'),
+        borderRadius: 20,
         alignItems: 'center',
         justifyContent: 'center',
         shadowColor: "#000",
@@ -148,10 +143,10 @@ export const styles = StyleSheet.create({
     },
     cancelbtn: {
         flexDirection: 'row',
-        width: wp('30%'),
-        height: hp('5%'),
+        width: 140,
+        height: 40,
         backgroundColor: '#EEEEEE',
-        borderRadius: hp('5%'),
+        borderRadius: 20,
         alignItems: 'center',
         justifyContent: 'center',
         shadowColor: "#000",
@@ -165,30 +160,30 @@ export const styles = StyleSheet.create({
     },
     onlineswitchBtn: {
         flexDirection: 'row',
-        width: wp('30%'),
+        width: WIDTH / 2 - 80,
         backgroundColor: "#FFFFFF",
         borderRadius: 50,
-        height: hp('5%'),
+        height: 40,
         alignItems: "center",
-        justifyContent: 'center'
+        justifyContent: 'space-evenly'
     },
     onlineswitchBtnText: {
         color: '#5AC8FA',
-        fontSize: hp('2%'),
-        marginRight: wp('2%')
+        fontSize: 14,
+        marginLeft: 15
     },
     oflineswitchBtn: {
         flexDirection: 'row',
-        width: wp('30%'),
+        width: WIDTH / 2 - 80,
         backgroundColor: "#FFFFFF",
         borderRadius: 50,
-        height: hp('5%'),
+        height: 40,
         alignItems: "center",
         justifyContent: 'center'
     },
     oflineswitchBtnText: {
         color: '#000000',
-        fontSize: hp('2%'),
-        marginLeft: wp('2%')
+        fontSize: 14,
+        marginLeft: 15
     }
 })

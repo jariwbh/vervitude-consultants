@@ -1,7 +1,5 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, Image } from 'react-native';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
 
 export default function ChatMenu(props) {
     return (
@@ -15,9 +13,7 @@ export default function ChatMenu(props) {
 
 const styles = StyleSheet.create({
     categoryIcon: {
-        width: wp("7%"),
-        height: wp("7%"),
-        marginRight: wp('5%'),
+        marginRight: 20,
         alignItems: 'center',
         justifyContent: 'center'
     },

@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import { Text, View, SafeAreaView, Dimensions, TouchableOpacity, ScrollView, BackHandler, Modal, Switch, Image } from 'react-native';
-import { heightPercentageToDP as hp, widthPercentageToDP as wp, } from 'react-native-responsive-screen';
-import * as STYLES from './styles';
+import { MYPROFILESCREEN, CHATHISTORYSCREEN } from '../../context/screen/screenName';
 import MenuButton from '../../components/MenuButton/MenuButton';
 import ChatMenu from '../../components/ChatMenu/ChatMenu';
-import { MYPROFILESCREEN } from '../../context/screen/screenName';
-import { CHATHISTORYSCREEN } from '../../context/screen/screenName';
 import { StackedBarChart } from "react-native-chart-kit";
+import * as STYLES from './styles';
 const screenWidth = Dimensions.get("window").width;
 
 const data = {
@@ -98,20 +96,20 @@ export default class homeScreen extends Component {
         return (
             <SafeAreaView style={STYLES.styles.container}>
                 <ScrollView showsVerticalScrollIndicator={false}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: "center", justifyContent: 'center', marginTop: hp('5%') }}>
-                        <View style={{ marginRight: hp('0%') }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: "center", marginTop: 30 }}>
+                        <View style={{ justifyContent: 'flex-start' }}>
                             <MenuButton onPress={() => { this.props.navigation.navigate(MYPROFILESCREEN) }} />
                         </View>
                         {online == true ?
-                            <View style={{ marginLeft: hp('5%') }}>
+                            <View style={{ marginLeft: -150 }}>
                                 <TouchableOpacity style={STYLES.styles.onlineswitchBtn} onPress={() => { this.setOnlineUser(true) }} >
                                     <Text style={STYLES.styles.onlineswitchBtnText}>Online</Text>
                                     <Image source={require('../../assets/images/settingicon.png')}
-                                        style={{ marginRight: wp('-3%'), alignItems: 'center', height: 25, width: 25 }} />
+                                        style={{ alignItems: 'center', height: 25, width: 25 }} />
                                 </TouchableOpacity>
                             </View>
                             :
-                            <View style={{ marginLeft: hp('5%') }}>
+                            <View style={{ marginLeft: -150 }}>
                                 <TouchableOpacity style={STYLES.styles.oflineswitchBtn} onPress={() => { this.setOnlineUser(false) }} >
                                     <Image source={require('../../assets/images/offlineicon.png')}
                                         style={{ alignItems: 'center', height: 25, width: 25 }} />
@@ -119,16 +117,17 @@ export default class homeScreen extends Component {
                                 </TouchableOpacity>
                             </View>
                         }
-                        <View style={{ marginLeft: hp('18%') }}>
+                        <View style={{ justifyContent: 'flex-end' }}>
                             <ChatMenu onPress={() => { this.props.navigation.navigate(CHATHISTORYSCREEN) }} />
                         </View>
                     </View>
-                    <View style={{ marginTop: hp('3%') }}></View>
+
                     <TouchableOpacity style={STYLES.styles.filterBtn} onPress={() => this.setFilterModalVisible(true)} >
                         <Image source={require('../../assets/images/filtericon.png')}
-                            style={{ marginRight: wp('2%'), alignItems: 'center', height: 15, width: 15, }} />
+                            style={{ alignItems: 'center', height: 15, width: 15 }} />
                         <Text style={STYLES.styles.filterBtnText}>Filter Reports</Text>
                     </TouchableOpacity>
+
                     <View style={{ justifyContent: 'space-around', flexDirection: 'row', marginTop: 10 }}>
                         <View style={STYLES.styles.box1}>
                             <Text style={STYLES.styles.boxtext}>₹ 20K</Text>
@@ -154,10 +153,11 @@ export default class homeScreen extends Component {
                             <Text style={STYLES.styles.boxtextsecond}>Total Rating</Text>
                         </View>
                     </View>
+
                     <View style={STYLES.styles.centeView}>
                         <View style={STYLES.styles.cardViewChart}>
-                            <Text style={{ fontSize: hp('3%'), flex: 1, color: '#04DE71', marginTop: hp('2%'), marginLeft: wp('5%') }}>₹ 5000.20</Text>
-                            <View style={{ marginLeft: wp('-10%') }}>
+                            <Text style={{ fontSize: 20, flex: 1, color: '#04DE71', marginTop: 15, marginLeft: 20 }}>₹ 5000.20</Text>
+                            <View style={{ marginLeft: -40 }}>
                                 <StackedBarChart
                                     style={{ fontSize: 16 }}
                                     data={data}
@@ -173,96 +173,153 @@ export default class homeScreen extends Component {
 
                         <View style={STYLES.styles.cardViewlastHistory}>
                             <View>
-                                <Text style={{ marginTop: hp('2%'), marginLeft: wp('10%'), fontWeight: 'bold', fontSize: hp('2.5%'), color: '#555555' }}>Top Earners Of the Week</Text>
+                                <Text style={{ marginTop: 20, marginLeft: 40, fontWeight: 'bold', fontSize: 16, color: '#555555' }}>Top Earners Of the Week</Text>
                             </View>
 
-                            <View style={{ marginTop: hp('2%'), flexDirection: 'row' }}>
+                            <View style={{ marginTop: 15, flexDirection: 'row' }}>
                                 <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
                             </View>
-                            <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', marginLeft: hp('2%'), marginTop: hp('1%') }}>
+                            <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center', marginLeft: 15, marginTop: 15 }}>
                                 <View style={{ flexDirection: 'row' }}>
-                                    <View style={{ backgroundColor: '#5AC8FA', width: 20, height: 20, marginLeft: hp('-5%'), marginTop: hp('0.5%'), marginRight: hp('3%'), alignItems: 'center', justifyContent: 'center', borderRadius: wp('15%') }}>
-                                        <Text style={{ fontSize: hp('2.5%'), color: '#FFFFFF' }}>1</Text>
+                                    <View style={{ backgroundColor: '#5AC8FA', width: 22, height: 22, marginLeft: -40, marginRight: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 20 }}>
+                                        <Text style={{ fontSize: 14, color: '#FFFFFF' }}>1</Text>
                                     </View>
-                                    <Text style={{ fontSize: hp('2.5%'), color: '#555555' }}>George</Text>
+                                    <Text style={{ fontSize: 16, color: '#555555' }}>George</Text>
                                 </View>
-                                <Text style={{ fontSize: hp('2.5%'), color: '#5AC8FA' }}>+105%</Text>
-                                <Text style={{ fontSize: hp('2.5%'), color: '#04DE71' }}>₹ 30k+</Text>
+                                <Text style={{ fontSize: 16, color: '#5AC8FA' }}>+105%</Text>
+                                <Text style={{ fontSize: 16, color: '#04DE71' }}>₹ 30k+</Text>
                             </View>
 
-                            <View style={{ marginTop: hp('2%'), flexDirection: 'row' }}>
+                            <View style={{ marginTop: 15, flexDirection: 'row' }}>
                                 <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
                             </View>
-                            <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', marginLeft: hp('2%'), marginTop: hp('1%') }}>
+                            <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center', marginLeft: 15, marginTop: 15 }}>
                                 <View style={{ flexDirection: 'row' }}>
-                                    <View style={{ backgroundColor: '#5AC8FA', width: 20, height: 20, marginLeft: hp('-5%'), marginTop: hp('0.5%'), marginRight: hp('3%'), alignItems: 'center', justifyContent: 'center', borderRadius: wp('15%') }}>
-                                        <Text style={{ fontSize: hp('2.5%'), color: '#FFFFFF' }}>2</Text>
+                                    <View style={{ backgroundColor: '#5AC8FA', width: 22, height: 22, marginLeft: -40, marginRight: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 20 }}>
+                                        <Text style={{ fontSize: 14, color: '#FFFFFF' }}>2</Text>
                                     </View>
-                                    <Text style={{ fontSize: hp('2.5%'), color: '#555555' }}>George</Text>
+                                    <Text style={{ fontSize: 16, color: '#555555' }}>George</Text>
                                 </View>
-                                <Text style={{ fontSize: hp('2.5%'), color: '#5AC8FA' }}>+105%</Text>
-                                <Text style={{ fontSize: hp('2.5%'), color: '#04DE71' }}>₹ 30k+</Text>
+                                <Text style={{ fontSize: 16, color: '#5AC8FA' }}>+105%</Text>
+                                <Text style={{ fontSize: 16, color: '#04DE71' }}>₹ 30k+</Text>
                             </View>
 
-                            <View style={{ marginTop: hp('2%'), flexDirection: 'row' }}>
+                            <View style={{ marginTop: 15, flexDirection: 'row' }}>
                                 <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
                             </View>
-                            <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', marginLeft: hp('2%'), marginTop: hp('1%') }}>
+                            <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center', marginLeft: 15, marginTop: 15 }}>
                                 <View style={{ flexDirection: 'row' }}>
-                                    <View style={{ backgroundColor: '#5AC8FA', width: 20, height: 20, marginLeft: hp('-5%'), marginTop: hp('0.5%'), marginRight: hp('3%'), alignItems: 'center', justifyContent: 'center', borderRadius: wp('15%') }}>
-                                        <Text style={{ fontSize: hp('2.5%'), color: '#FFFFFF' }}>3</Text>
+                                    <View style={{ backgroundColor: '#5AC8FA', width: 22, height: 22, marginLeft: -40, marginRight: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 20 }}>
+                                        <Text style={{ fontSize: 14, color: '#FFFFFF' }}>3</Text>
                                     </View>
-                                    <Text style={{ fontSize: hp('2.5%'), color: '#555555' }}>George</Text>
+                                    <Text style={{ fontSize: 16, color: '#555555' }}>George</Text>
                                 </View>
-                                <Text style={{ fontSize: hp('2.5%'), color: '#5AC8FA' }}>+105%</Text>
-                                <Text style={{ fontSize: hp('2.5%'), color: '#04DE71' }}>₹ 30k+</Text>
+                                <Text style={{ fontSize: 16, color: '#5AC8FA' }}>+105%</Text>
+                                <Text style={{ fontSize: 16, color: '#04DE71' }}>₹ 30k+</Text>
                             </View>
 
-                            <View style={{ marginTop: hp('2%'), flexDirection: 'row' }}>
+                            <View style={{ marginTop: 15, flexDirection: 'row' }}>
                                 <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
                             </View>
-                            <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', marginLeft: hp('2%'), marginTop: hp('1%') }}>
+                            <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center', marginLeft: 15, marginTop: 15 }}>
                                 <View style={{ flexDirection: 'row' }}>
-                                    <View style={{ backgroundColor: '#5AC8FA', width: 20, height: 20, marginLeft: hp('-5%'), marginTop: hp('0.5%'), marginRight: hp('3%'), alignItems: 'center', justifyContent: 'center', borderRadius: wp('15%') }}>
-                                        <Text style={{ fontSize: hp('2.5%'), color: '#FFFFFF' }}>4</Text>
+                                    <View style={{ backgroundColor: '#5AC8FA', width: 22, height: 22, marginLeft: -40, marginRight: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 20 }}>
+                                        <Text style={{ fontSize: 14, color: '#FFFFFF' }}>4</Text>
                                     </View>
-                                    <Text style={{ fontSize: hp('2.5%'), color: '#555555' }}>George</Text>
+                                    <Text style={{ fontSize: 16, color: '#555555' }}>George</Text>
                                 </View>
-                                <Text style={{ fontSize: hp('2.5%'), color: '#5AC8FA' }}>+105%</Text>
-                                <Text style={{ fontSize: hp('2.5%'), color: '#04DE71' }}>₹ 30k+</Text>
+                                <Text style={{ fontSize: 16, color: '#5AC8FA' }}>+105%</Text>
+                                <Text style={{ fontSize: 16, color: '#04DE71' }}>₹ 30k+</Text>
                             </View>
 
-                            <View style={{ marginTop: hp('2%'), flexDirection: 'row' }}>
+                            <View style={{ marginTop: 15, flexDirection: 'row' }}>
                                 <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
                             </View>
-                            <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', marginLeft: hp('2%'), marginTop: hp('1%') }}>
+                            <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center', marginLeft: 15, marginTop: 15 }}>
                                 <View style={{ flexDirection: 'row' }}>
-                                    <View style={{ backgroundColor: '#5AC8FA', width: 20, height: 20, marginLeft: hp('-5%'), marginTop: hp('0.5%'), marginRight: hp('3%'), alignItems: 'center', justifyContent: 'center', borderRadius: wp('15%') }}>
-                                        <Text style={{ fontSize: hp('2.5%'), color: '#FFFFFF' }}>5</Text>
+                                    <View style={{ backgroundColor: '#5AC8FA', width: 22, height: 22, marginLeft: -40, marginRight: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 20 }}>
+                                        <Text style={{ fontSize: 14, color: '#FFFFFF' }}>5</Text>
                                     </View>
-                                    <Text style={{ fontSize: hp('2.5%'), color: '#555555' }}>George</Text>
+                                    <Text style={{ fontSize: 16, color: '#555555' }}>George</Text>
                                 </View>
-                                <Text style={{ fontSize: hp('2.5%'), color: '#5AC8FA' }}>+105%</Text>
-                                <Text style={{ fontSize: hp('2.5%'), color: '#04DE71' }}>₹ 30k+</Text>
+                                <Text style={{ fontSize: 16, color: '#5AC8FA' }}>+105%</Text>
+                                <Text style={{ fontSize: 16, color: '#04DE71' }}>₹ 30k+</Text>
                             </View>
 
-                            <View style={{ marginTop: hp('2%'), flexDirection: 'row' }}>
+                            <View style={{ marginTop: 15, flexDirection: 'row' }}>
                                 <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
                             </View>
-                            <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', marginLeft: hp('2%'), marginTop: hp('1%') }}>
+                            <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center', marginLeft: 15, marginTop: 15 }}>
                                 <View style={{ flexDirection: 'row' }}>
-                                    <View style={{ backgroundColor: '#5AC8FA', width: 20, height: 20, marginLeft: hp('-5%'), marginTop: hp('0.5%'), marginRight: hp('3%'), alignItems: 'center', justifyContent: 'center', borderRadius: wp('15%') }}>
-                                        <Text style={{ fontSize: hp('2.5%'), color: '#FFFFFF' }}>6</Text>
+                                    <View style={{ backgroundColor: '#5AC8FA', width: 22, height: 22, marginLeft: -40, marginRight: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 20 }}>
+                                        <Text style={{ fontSize: 14, color: '#FFFFFF' }}>6</Text>
                                     </View>
-                                    <Text style={{ fontSize: hp('2.5%'), color: '#555555' }}>George</Text>
+                                    <Text style={{ fontSize: 16, color: '#555555' }}>George</Text>
                                 </View>
-                                <Text style={{ fontSize: hp('2.5%'), color: '#5AC8FA' }}>+105%</Text>
-                                <Text style={{ fontSize: hp('2.5%'), color: '#04DE71' }}>₹ 30k+</Text>
+                                <Text style={{ fontSize: 16, color: '#5AC8FA' }}>+105%</Text>
+                                <Text style={{ fontSize: 16, color: '#04DE71' }}>₹ 30k+</Text>
                             </View>
+
+                            <View style={{ marginTop: 15, flexDirection: 'row' }}>
+                                <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
+                            </View>
+                            <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center', marginLeft: 15, marginTop: 15 }}>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <View style={{ backgroundColor: '#5AC8FA', width: 22, height: 22, marginLeft: -40, marginRight: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 20 }}>
+                                        <Text style={{ fontSize: 14, color: '#FFFFFF' }}>7</Text>
+                                    </View>
+                                    <Text style={{ fontSize: 16, color: '#555555' }}>George</Text>
+                                </View>
+                                <Text style={{ fontSize: 16, color: '#5AC8FA' }}>+105%</Text>
+                                <Text style={{ fontSize: 16, color: '#04DE71' }}>₹ 30k+</Text>
+                            </View>
+
+                            <View style={{ marginTop: 15, flexDirection: 'row' }}>
+                                <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
+                            </View>
+                            <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center', marginLeft: 15, marginTop: 15 }}>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <View style={{ backgroundColor: '#5AC8FA', width: 22, height: 22, marginLeft: -40, marginRight: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 20 }}>
+                                        <Text style={{ fontSize: 14, color: '#FFFFFF' }}>8</Text>
+                                    </View>
+                                    <Text style={{ fontSize: 16, color: '#555555' }}>George</Text>
+                                </View>
+                                <Text style={{ fontSize: 16, color: '#5AC8FA' }}>+105%</Text>
+                                <Text style={{ fontSize: 16, color: '#04DE71' }}>₹ 30k+</Text>
+                            </View>
+
+                            <View style={{ marginTop: 15, flexDirection: 'row' }}>
+                                <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
+                            </View>
+                            <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center', marginLeft: 15, marginTop: 15 }}>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <View style={{ backgroundColor: '#5AC8FA', width: 22, height: 22, marginLeft: -40, marginRight: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 20 }}>
+                                        <Text style={{ fontSize: 14, color: '#FFFFFF' }}>9</Text>
+                                    </View>
+                                    <Text style={{ fontSize: 16, color: '#555555' }}>George</Text>
+                                </View>
+                                <Text style={{ fontSize: 16, color: '#5AC8FA' }}>+105%</Text>
+                                <Text style={{ fontSize: 16, color: '#04DE71' }}>₹ 30k+</Text>
+                            </View>
+
+                            <View style={{ marginTop: 15, flexDirection: 'row' }}>
+                                <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
+                            </View>
+                            <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center', marginLeft: 15, marginTop: 15 }}>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <View style={{ backgroundColor: '#5AC8FA', width: 22, height: 22, marginLeft: -40, marginRight: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 20 }}>
+                                        <Text style={{ fontSize: 14, color: '#FFFFFF' }}>10</Text>
+                                    </View>
+                                    <Text style={{ fontSize: 16, color: '#555555' }}>George</Text>
+                                </View>
+                                <Text style={{ fontSize: 16, color: '#5AC8FA' }}>+105%</Text>
+                                <Text style={{ fontSize: 16, color: '#04DE71' }}>₹ 30k+</Text>
+                            </View>
+
                         </View>
                     </View>
+                    <View style={{ marginBottom: 50 }} />
                 </ScrollView>
-
                 {/* Filter model Pop */}
                 <Modal
                     animationType="slide"
@@ -270,43 +327,42 @@ export default class homeScreen extends Component {
                     visible={filterModalVisible}
                     onRequestClose={() => { this.setFilterModalVisible(!filterModalVisible) }}
                 >
-
                     <View style={STYLES.styles.centeView}>
                         <View style={STYLES.styles.modalView}>
-                            <Text style={{ padding: hp('2%'), textAlign: 'center', color: '#000000' }}>All</Text>
+                            <Text style={{ padding: 15, textAlign: 'center', color: '#000000', fontSize: 14 }}>All</Text>
                             <View style={{ flexDirection: 'row' }}>
                                 <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
                             </View>
 
-                            <Text style={{ padding: hp('2%'), textAlign: 'center', color: '#000000' }}>Yearly</Text>
+                            <Text style={{ padding: 15, textAlign: 'center', color: '#000000', fontSize: 14 }}>Yearly</Text>
                             <View style={{ flexDirection: 'row' }}>
                                 <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
                             </View>
 
-                            <Text style={{ padding: hp('2%'), textAlign: 'center', color: '#000000' }}>Weekly</Text>
+                            <Text style={{ padding: 15, textAlign: 'center', color: '#000000', fontSize: 14 }}>Weekly</Text>
                             <View style={{ flexDirection: 'row' }}>
                                 <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
                             </View>
 
-                            <Text style={{ padding: hp('2%'), textAlign: 'center', color: '#5AC8FA' }}>Montly</Text>
+                            <Text style={{ padding: 15, textAlign: 'center', color: '#5AC8FA', fontSize: 14 }}>Montly</Text>
                             <View style={{ flexDirection: 'row' }}>
                                 <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
                             </View>
 
-                            <Text style={{ padding: hp('2%'), textAlign: 'center', color: '#000000' }}>Today</Text>
+                            <Text style={{ padding: 15, textAlign: 'center', color: '#000000', fontSize: 14 }}>Today</Text>
                             <View style={{ flexDirection: 'row' }}>
                                 <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
                             </View>
                         </View>
 
-                        <View style={{ marginTop: hp('2%'), flexDirection: 'row' }}>
+                        <View style={{ marginTop: 15, flexDirection: 'row' }}>
                             <TouchableOpacity onPress={() => { this.setFilterModalVisible(!filterModalVisible) }}
                                 style={STYLES.styles.savebtn}>
-                                <Text style={{ fontSize: hp('2%'), color: '#FFFFFF' }}>Save</Text>
+                                <Text style={{ fontSize: 14, color: '#FFFFFF' }}>Save</Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => { this.setFilterModalVisible(!filterModalVisible) }}
                                 style={STYLES.styles.cancelbtn}>
-                                <Text style={{ fontSize: hp('2%'), color: '#000000' }}>Cancel</Text>
+                                <Text style={{ fontSize: 14, color: '#000000' }}>Cancel</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -319,13 +375,12 @@ export default class homeScreen extends Component {
                     visible={onlineModalVisible}
                     onRequestClose={() => { this.setOnlineModalVisible(!onlineModalVisible) }}
                 >
-
                     <View style={STYLES.styles.centeView}>
                         <View style={STYLES.styles.modalView}>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', padding: hp('2%'), }}>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', padding: 15 }}>
                                 <Text style={{ textAlign: 'center', color: '#000000' }}>All</Text>
                                 <Switch
-                                    style={{ marginLeft: wp('50%') }}
+                                    style={{ marginLeft: 210 }}
                                     trackColor={{ false: "#C4C4C4", true: "#0F74C8" }}
                                     onValueChange={() => this.toggleSwitchAll(toggleSwitchAll)}
                                     value={toggleSwitchAll} />
@@ -334,10 +389,10 @@ export default class homeScreen extends Component {
                                 <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
                             </View>
 
-                            <View style={{ flexDirection: 'row', alignItems: 'center', padding: hp('2%'), }}>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', padding: 15 }}>
                                 <Text style={{ textAlign: 'center', color: '#000000' }}>Design</Text>
                                 <Switch
-                                    style={{ marginLeft: wp('45%') }}
+                                    style={{ marginLeft: 190 }}
                                     trackColor={{ false: "#C4C4C4", true: "#00D9CE" }}
                                     onValueChange={() => this.toggleSwitchAll(toggleSwitchAll)}
                                     value={toggleSwitchAll} />
@@ -346,10 +401,10 @@ export default class homeScreen extends Component {
                                 <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
                             </View>
 
-                            <View style={{ flexDirection: 'row', alignItems: 'center', padding: hp('2%'), }}>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', padding: 15 }}>
                                 <Text style={{ textAlign: 'center', color: '#000000' }}>Marketing & Advertising</Text>
                                 <Switch
-                                    style={{ marginLeft: wp('20%') }}
+                                    style={{ marginLeft: 85 }}
                                     trackColor={{ false: "#C4C4C4", true: "#00D9CE" }}
                                     onValueChange={() => this.toggleSwitchAll(toggleSwitchAll)}
                                     value={toggleSwitchAll} />
@@ -358,10 +413,10 @@ export default class homeScreen extends Component {
                                 <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
                             </View>
 
-                            <View style={{ flexDirection: 'row', alignItems: 'center', padding: hp('2%'), }}>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', padding: 15 }}>
                                 <Text style={{ textAlign: 'center', color: '#000000' }}>Technology</Text>
                                 <Switch
-                                    style={{ marginLeft: wp('40%') }}
+                                    style={{ marginLeft: 160 }}
                                     trackColor={{ false: "#C4C4C4", true: "#00D9CE" }}
                                     onValueChange={() => this.toggleSwitchAll(toggleSwitchAll)}
                                     value={toggleSwitchAll} />
@@ -370,10 +425,10 @@ export default class homeScreen extends Component {
                                 <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
                             </View>
 
-                            <View style={{ flexDirection: 'row', alignItems: 'center', padding: hp('2%'), }}>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', padding: 15 }}>
                                 <Text style={{ textAlign: 'center', color: '#000000' }}>Business & Strategy</Text>
                                 <Switch
-                                    style={{ marginLeft: wp('27%') }}
+                                    style={{ marginLeft: 110 }}
                                     trackColor={{ false: "#C4C4C4", true: "#00D9CE" }}
                                     onValueChange={() => this.toggleSwitchAll(toggleSwitchAll)}
                                     value={toggleSwitchAll} />
@@ -383,19 +438,18 @@ export default class homeScreen extends Component {
                             </View>
                         </View>
 
-                        <View style={{ marginTop: hp('2%'), flexDirection: 'row' }}>
+                        <View style={{ marginTop: 15, flexDirection: 'row' }}>
                             <TouchableOpacity onPress={() => { this.setOnlineModalVisible(!onlineModalVisible) }}
                                 style={STYLES.styles.savebtn}>
-                                <Text style={{ fontSize: hp('2%'), color: '#FFFFFF' }}>Save</Text>
+                                <Text style={{ fontSize: 14, color: '#FFFFFF' }}>Save</Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => { this.setOnlineModalVisible(!onlineModalVisible) }}
                                 style={STYLES.styles.cancelbtn}>
-                                <Text style={{ fontSize: hp('2%'), color: '#000000' }}>Cancel</Text>
+                                <Text style={{ fontSize: 14, color: '#000000' }}>Cancel</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
                 </Modal>
-
             </SafeAreaView>
         )
     }
