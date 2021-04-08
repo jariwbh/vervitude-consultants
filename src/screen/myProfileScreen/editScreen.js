@@ -148,7 +148,7 @@ export default function editScreen(props) {
 
                         <View style={{ justifyContent: 'space-around', flexDirection: 'row', marginTop: hp('2%'), }}>
                             <TouchableOpacity style={styles.brandstyle}>
-                                <Image source={require('../../assets/images/a.png')} style={{
+                                <Image source={require('../../assets/images/A.png')} style={{
                                     width: 80, height: 80, borderRadius: hp('15%'), borderColor: '#AAAAAA', borderWidth: hp('0.3%')
                                 }} />
                             </TouchableOpacity>
@@ -157,7 +157,7 @@ export default function editScreen(props) {
                             </TouchableOpacity>
 
                             <TouchableOpacity style={styles.brandstyle}>
-                                <Image source={require('../../assets/images/b.png')} style={{ width: 80, height: 80, borderRadius: hp('15%'), borderColor: '#AAAAAA', borderWidth: hp('0.3%') }} />
+                                <Image source={require('../../assets/images/B.png')} style={{ width: 80, height: 80, borderRadius: hp('15%'), borderColor: '#AAAAAA', borderWidth: hp('0.3%') }} />
                             </TouchableOpacity>
                             <TouchableOpacity style={{ marginLeft: hp('-10%') }}>
                                 <AntDesign name="closecircleo" size={20} color='#000000' style={{ backgroundColor: '#ffffff', borderRadius: hp('10%') }} />
@@ -172,7 +172,7 @@ export default function editScreen(props) {
                         </View>
                         <View style={{ justifyContent: 'space-around', flexDirection: 'row', marginTop: hp('2%'), }}>
                             <TouchableOpacity style={styles.brandstyle}>
-                                <Image source={require('../../assets/images/d.png')} style={{
+                                <Image source={require('../../assets/images/D.png')} style={{
                                     width: 80, height: 80, borderRadius: hp('15%'), borderColor: '#AAAAAA', borderWidth: hp('0.3%')
                                 }} />
                             </TouchableOpacity>
@@ -181,7 +181,7 @@ export default function editScreen(props) {
                             </TouchableOpacity>
 
                             <TouchableOpacity style={styles.brandstyle}>
-                                <Image source={require('../../assets/images/e.png')} style={{ width: 80, height: 80, borderRadius: hp('15%'), borderColor: '#AAAAAA', borderWidth: hp('0.3%') }} />
+                                <Image source={require('../../assets/images/E.png')} style={{ width: 80, height: 80, borderRadius: hp('15%'), borderColor: '#AAAAAA', borderWidth: hp('0.3%') }} />
                             </TouchableOpacity>
                             <TouchableOpacity style={{ marginLeft: hp('-10%') }} >
                                 <AntDesign name="closecircleo" size={20} color='#000000' style={{ backgroundColor: '#ffffff', borderRadius: hp('10%') }} />
