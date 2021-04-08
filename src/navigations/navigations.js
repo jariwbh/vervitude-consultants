@@ -1,30 +1,29 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import LOGINSCREEN from "../screen/loginScreen/loginScreen";
 import FORGOTPASSWORDSCREEN from "../screen/forgotPasswordScreen/forgotPasswordScreen";
-import REGISTERSCREEN from "../screen/registerScreen/registerScreen";
-import HOMESCREEN from "../screen/homeScreen/homeScreen";
-import MYPROFILESCREEN from '../screen/myProfileScreen/myProfileScreen';
-import MYTRANSFERSSCREEN from '../screen/myWalletScreen/myTransfersScreen';
-import INVITESCREEN from '../screen/inviteConsultant/inviteScreen';
-import MYEARINGSCREEN from '../screen/myWalletScreen/myEaringScreen';
+import SELECTCATEGORYSCREEN from '../screen/selectCategoryScreen/selectCategoryScreen';
 import NOTIFICATIONSCREEN from '../screen/notificationScreen/notificationScreen';
+import CHATHISTORYSCREEN from '../screen/chatHistoryScreen/chatHistoryScreen';
+import MYTRANSFERSSCREEN from '../screen/myWalletScreen/myTransfersScreen';
+import MYPROFILESCREEN from '../screen/myProfileScreen/myProfileScreen';
+import RUBYCHATSCREEN from '../screen/chatHistoryScreen/rubychatScreen';
 import BANKINFOSCREEN from '../screen/myProfileScreen/bankInfoScreen';
 import DOCUMENTSCREEN from '../screen/myProfileScreen/documentScreen';
+import REGISTERSCREEN from "../screen/registerScreen/registerScreen";
+import MYEARINGSCREEN from '../screen/myWalletScreen/myEaringScreen';
+import INVITESCREEN from '../screen/inviteConsultant/inviteScreen';
+import SPLASHSCREEN from '../screen/SplashScreen/splashScreen';
 import EDITSCREEN from '../screen/myProfileScreen/editScreen';
-import SELECTCATEGORYSCREEN from '../screen/selectCategoryScreen/selectCategoryScreen';
-import CHATHISTORYSCREEN from '../screen/chatHistoryScreen/chatHistoryScreen';
-import RUBYCHATSCREEN from '../screen/chatHistoryScreen/rubychatScreen';
-// import axiosConfig from '../helpers/axiosConfig';
-// import AsyncStorage from '@react-native-community/async-storage';
-// import * as SCREEN from '../context/screen/screenName'
-const Stack = createStackNavigator();
+import LOGINSCREEN from "../screen/loginScreen/loginScreen";
+import HOMESCREEN from "../screen/homeScreen/homeScreen";
 
+const Stack = createStackNavigator();
 const navigationsApp = () => {
     return (
         <NavigationContainer>
-            <Stack.Navigator headerMode="none" initialRouteName={LOGINSCREEN}>
+            <Stack.Navigator headerMode="none" initialRouteName={SPLASHSCREEN}>
+                <Stack.Screen name="splashScreen" component={SPLASHSCREEN} />
                 <Stack.Screen name="loginScreen" component={LOGINSCREEN} />
                 <Stack.Screen name="forgotPasswordScreen" component={FORGOTPASSWORDSCREEN} />
                 <Stack.Screen name="registerScreen" component={REGISTERSCREEN} />
