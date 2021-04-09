@@ -20,9 +20,9 @@ const notificationScreen = (props) => {
                     </TouchableOpacity>
                 </View>
 
-                <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center', marginTop: hp('1%') }}>
+                <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center', marginTop: 5 }}>
                     <View style={styles.notificationview}>
-                        <View style={{ alignItems: 'flex-end', justifyContent: 'flex-end', marginTop: hp('1%') }}>
+                        <View style={{ alignItems: 'flex-end', justifyContent: 'flex-end', marginTop: 5 }}>
                             <Text style={{ fontSize: hp('1.8%'), marginRight: hp('3%'), color: '#999999' }}>Just now</Text>
                         </View>
                         <View style={{ flexDirection: 'row', flex: 1, marginTop: hp('-5%'), marginLeft: hp('2%'), alignItems: 'center' }}>

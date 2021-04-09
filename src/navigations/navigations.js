@@ -1,7 +1,6 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import FORGOTPASSWORDSCREEN from "../screen/forgotPasswordScreen/forgotPasswordScreen";
 import SELECTCATEGORYSCREEN from '../screen/selectCategoryScreen/selectCategoryScreen';
 import NOTIFICATIONSCREEN from '../screen/notificationScreen/notificationScreen';
 import CHATHISTORYSCREEN from '../screen/chatHistoryScreen/chatHistoryScreen';
@@ -25,7 +24,6 @@ const navigationsApp = () => {
             <Stack.Navigator headerMode="none" initialRouteName={SPLASHSCREEN}>
                 <Stack.Screen name="splashScreen" component={SPLASHSCREEN} />
                 <Stack.Screen name="loginScreen" component={LOGINSCREEN} />
-                <Stack.Screen name="forgotPasswordScreen" component={FORGOTPASSWORDSCREEN} />
                 <Stack.Screen name="registerScreen" component={REGISTERSCREEN} />
                 <Stack.Screen name="MainScreen" component={MainNavigation} />
             </Stack.Navigator>
