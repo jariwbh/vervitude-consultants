@@ -413,7 +413,7 @@ const homeScreen = (props) => {
                             style={STYLES.styles.savebtn}>
                             <Text style={{ fontSize: 14, color: '#FFFFFF' }}>Save</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { setOnlineModalVisible(!onlineModalVisible) }}
+                        <TouchableOpacity onPress={() => { setOnlineModalVisible(!onlineModalVisible), setOnlineUser(false) }}
                             style={STYLES.styles.cancelbtn}>
                             <Text style={{ fontSize: 14, color: '#000000' }}>Cancel</Text>
                         </TouchableOpacity>

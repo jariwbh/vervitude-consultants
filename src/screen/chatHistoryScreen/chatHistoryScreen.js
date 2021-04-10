@@ -1,7 +1,5 @@
 import React from 'react';
 import { View, Text, SafeAreaView, Dimensions, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
-import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as SCREEN from '../../context/screen/screenName';
 import ChatMenu from '../../components/ChatMenu/ChatMenu';
