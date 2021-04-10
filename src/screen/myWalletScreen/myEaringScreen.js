@@ -1,103 +1,67 @@
 import React from 'react'
-import { View, Text, Image, SafeAreaView, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
-import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen'
+import { View, Text, Image, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as SCREEN from '../../context/screen/screenName';
+import * as STYLE from './styles'
 
 function myEaringScreen(props) {
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={STYLE.Wallatestyles.container}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={{ justifyContent: 'space-around', alignItems: 'center', flexDirection: 'row', marginTop: hp('5%') }}>
-          <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.MYPROFILESCREEN) }}>
-            <AntDesign name="arrowleft" color="#5AC8FA" size={24} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{ height: hp('7%'), width: wp('35%'), backgroundColor: '#04DE71', flexDirection: 'row', borderRadius: hp('5%'), alignItems: 'center', justifyContent: 'center', marginLeft: wp('40%') }}>
-            <Text style={{ fontSize: hp('2.8%'), color: '#FFFFFF' }}>5324.00</Text>
-            <View style={{ width: 25, height: 25, backgroundColor: '#FFFFFF', alignItems: 'center', marginLeft: hp('2%'), borderRadius: hp('3%'), justifyContent: 'center' }}>
-              <FontAwesome name="rupee" size={20} color='#04DE71' />
-            </View>
-          </TouchableOpacity>
+        <View style={{ justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', marginTop: 30 }}>
+          <View style={{ justifyContent: 'flex-start' }}>
+            <TouchableOpacity onPress={() => props.navigation.goBack(null)}>
+              <AntDesign name="arrowleft" color="#5AC8FA" size={24} style={{ marginLeft: 15 }} />
+            </TouchableOpacity>
+          </View>
+
+          <View style={{ justifyContent: 'flex-end' }}>
+            <TouchableOpacity
+              style={STYLE.Wallatestyles.wallatwbtn}>
+              <Text style={{ fontSize: 16, color: '#FFFFFF' }}>5324.00</Text>
+              <View style={{ width: 24, height: 24, backgroundColor: '#FFFFFF', alignItems: 'center', borderRadius: 100, justifyContent: 'center' }}>
+                <FontAwesome name="rupee" size={15} color='#04DE71' />
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
 
         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-          <View style={styles.balanceview}>
-            <Text style={{ fontSize: hp('2%'), color: '#999999' }}>Unpaid Balance</Text>
-            <Text style={{ fontSize: hp('4%'), color: '#04DE71', fontWeight: 'bold' }} > ₹ 5000.00</Text>
+          <View style={STYLE.Wallatestyles.balanceview}>
+            <Text style={{ fontSize: 14, color: '#999999' }}>Unpaid Balance</Text>
+            <Text style={{ fontSize: 26, color: '#04DE71', fontWeight: 'bold' }} > ₹ 5000.00</Text>
           </View>
 
-          <View style={styles.bankview}>
+          <View style={STYLE.Wallatestyles.bankview}>
             <TouchableOpacity onPress={() => props.navigation.navigate(SCREEN.MYTRANSFERSSCREEN)}
-              style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: hp('1%') }}>
-              <Image source={require('../../assets/images/image1.png')} style={{ height: 40, width: 40, borderRadius: hp('5%'), marginLeft: wp('2%') }} />
-              <View style={{ flexDirection: 'column', marginLeft: wp('-25%') }}>
-                <Text style={{ fontSize: hp('2%'), color: '#000000', marginLeft: hp('2%') }}>Kotak Mahindra Bank</Text>
-                <Text style={{ fontSize: hp('2%'), color: '#999999', marginLeft: hp('2%') }}>14/02/2021, 2:30PM</Text>
+              style={{ justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' }}>
+              <Image source={require('../../assets/images/image1.png')} style={{ height: 50, width: 50, borderRadius: 100, marginLeft: 10 }} />
+              <View style={{ flexDirection: 'column', marginLeft: -80 }}>
+                <Text style={{ fontSize: 14, color: '#000000', marginLeft: 15 }}>Kotak Mahindra Bank</Text>
+                <Text style={{ fontSize: 14, color: '#999999', marginLeft: 15 }}>14/02/2021, 2:30PM</Text>
               </View>
-              <Text style={{ fontSize: hp('2%'), color: '#04DE71', marginTop: hp('1%'), marginRight: hp('3%') }}> ₹ 2000.00</Text>
+              <Text style={{ fontSize: 14, color: '#04DE71', marginTop: 5, marginRight: 30 }}> ₹ 1500.00</Text>
             </TouchableOpacity>
-            <View>
-            </View>
           </View>
 
-          <View style={styles.bankview}>
+          <View style={STYLE.Wallatestyles.bankview}>
             <TouchableOpacity onPress={() => props.navigation.navigate(SCREEN.MYTRANSFERSSCREEN)}
-              style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: hp('1%') }}>
-              <Image source={require('../../assets/images/image1.png')} style={{ height: 40, width: 40, borderRadius: hp('5%'), marginLeft: wp('2%') }} />
-              <View style={{ flexDirection: 'column', marginLeft: wp('-25%') }}>
-                <Text style={{ fontSize: hp('2%'), color: '#000000', marginLeft: hp('2%') }}>Kotak Mahindra Bank</Text>
-                <Text style={{ fontSize: hp('2%'), color: '#999999', marginLeft: hp('2%') }}>14/02/2021, 2:30PM</Text>
+              style={{ justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' }}>
+              <Image source={require('../../assets/images/image1.png')} style={{ height: 50, width: 50, borderRadius: 100, marginLeft: 10 }} />
+              <View style={{ flexDirection: 'column', marginLeft: -80 }}>
+                <Text style={{ fontSize: 14, color: '#000000', marginLeft: 15 }}>Kotak Mahindra Bank</Text>
+                <Text style={{ fontSize: 14, color: '#999999', marginLeft: 15 }}>14/02/2021, 2:30PM</Text>
               </View>
-              <Text style={{ fontSize: hp('2%'), color: '#04DE71', marginTop: hp('1%'), marginRight: hp('3%') }}> ₹ 2000.00</Text>
+              <Text style={{ fontSize: 14, color: '#04DE71', marginTop: 5, marginRight: 30 }}> ₹ 1500.00</Text>
             </TouchableOpacity>
-            <View>
-            </View>
           </View>
+
         </View>
-        <View style={{ marginTop: hp('2%') }}></View>
+        <View style={{ marginBottom: 50 }}></View>
       </ScrollView>
     </SafeAreaView>
   )
 }
 
 export default myEaringScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#EEEEEE"
-  },
-  balanceview: {
-    height: hp('25%'),
-    width: wp('95%'),
-    backgroundColor: '#FFFFFF',
-    marginTop: hp('3%'),
-    borderRadius: hp('3%'),
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowOpacity: 0.5,
-    shadowRadius: 3,
-    shadowOffset: {
-      height: 0,
-      width: 0,
-    },
-    elevation: 3
-  },
-  bankview: {
-    height: hp('10%'),
-    width: wp('95%'),
-    backgroundColor: '#FFFFFF',
-    marginTop: hp('2%'),
-    borderRadius: hp('3%'),
-    justifyContent: 'center',
-    shadowOpacity: 0.5,
-    shadowRadius: 3,
-    shadowOffset: {
-      height: 0,
-      width: 0,
-    },
-    elevation: 2,
-  }
-})

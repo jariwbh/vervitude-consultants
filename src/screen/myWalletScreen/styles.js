@@ -1,17 +1,18 @@
-import { StyleSheet } from 'react-native';
-import { heightPercentageToDP as hp, widthPercentageToDP as wp, } from 'react-native-responsive-screen'
+import { StyleSheet, Dimensions } from 'react-native';
+const HEIGHT = Dimensions.get('window').height;
+const WIDTH = Dimensions.get('window').width;
 
-export const styles = StyleSheet.create({
+export const Transferstyles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#EEEEEE"
     },
     abalanceview: {
-        height: hp('25%'),
-        width: wp('95%'),
+        height: 180,
+        width: WIDTH - 20,
         backgroundColor: '#FFFFFF',
-        marginTop: hp('3%'),
-        borderRadius: hp('3%'),
+        marginTop: 20,
+        borderRadius: 20,
         alignItems: 'center',
         justifyContent: 'center',
         shadowOpacity: 0.5,
@@ -23,11 +24,11 @@ export const styles = StyleSheet.create({
         elevation: 3
     },
     gamountview: {
-        height: hp('40%'),
-        width: wp('95%'),
+        height: 280,
+        width: WIDTH - 20,
         backgroundColor: '#FFFFFF',
-        borderRadius: hp('3%'),
-        marginTop: hp('3%'),
+        borderRadius: 20,
+        marginTop: 20,
         shadowOpacity: 0.5,
         shadowRadius: 1,
         elevation: 2,
@@ -37,11 +38,11 @@ export const styles = StyleSheet.create({
         },
     },
     bankview: {
-        height: hp('10%'),
-        width: wp('95%'),
+        height: 70,
+        width: WIDTH - 20,
         backgroundColor: '#FFFFFF',
-        borderRadius: hp('3%'),
-        marginTop: hp('3%'),
+        borderRadius: 20,
+        marginTop: 20,
         shadowOpacity: 0.5,
         shadowRadius: 1,
         elevation: 2,
@@ -49,6 +50,66 @@ export const styles = StyleSheet.create({
             height: 0,
             width: 0,
         },
+        justifyContent: 'center'
+    },
+    wallatwbtn: {
+        flexDirection: 'row',
+        marginRight: 15,
+        height: 40,
+        width: 140,
+        backgroundColor: '#04DE71',
+        flexDirection: 'row',
+        borderRadius: 100,
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+    }
+})
+
+export const Wallatestyles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: "#EEEEEE"
+    },
+    balanceview: {
+        height: 180,
+        width: WIDTH - 20,
+        backgroundColor: '#FFFFFF',
+        marginTop: 20,
+        borderRadius: 20,
+        alignItems: 'center',
         justifyContent: 'center',
+        shadowOpacity: 0.5,
+        shadowRadius: 3,
+        shadowOffset: {
+            height: 0,
+            width: 0,
+        },
+        elevation: 3
+    },
+    bankview: {
+        height: 70,
+        width: WIDTH - 20,
+        backgroundColor: '#FFFFFF',
+        borderRadius: 20,
+        marginTop: 20,
+        shadowOpacity: 0.5,
+        shadowRadius: 1,
+        elevation: 2,
+        shadowOffset: {
+            height: 0,
+            width: 0,
+        },
+        justifyContent: 'center'
+    },
+    wallatwbtn: {
+        flexDirection: 'row',
+        marginRight: 15,
+        height: 40,
+        width: 140,
+        backgroundColor: '#04DE71',
+        flexDirection: 'row',
+        borderRadius: 100,
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
     }
 })

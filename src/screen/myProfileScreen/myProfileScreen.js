@@ -71,7 +71,7 @@ const myProfileScreen = (props) => {
                         <View style={{ justifyContent: 'space-around', flexDirection: 'row', marginTop: 20 }}>
                             <View >
                                 <Text style={{ fontWeight: 'bold', fontSize: 20 }}>{userDetails ? userDetails.fullname : null}</Text>
-                                <Text>#{userDetails ? userDetails.property.primaryemail : null}</Text>
+                                <Text>#{userDetails ? userDetails.property.usertag && userDetails.property.usertag : null}</Text>
                             </View>
                             <View style={STYLES.styles.profileImageView}>
                                 <Image source={{ uri: userDetails ? userDetails.profileimage ? userDetails.profileimage : "https://res.cloudinary.com/dnogrvbs2/image/upload/v1613538969/profile1_xspwoy.png" : null }}
