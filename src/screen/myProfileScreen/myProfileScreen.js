@@ -115,7 +115,7 @@ const myProfileScreen = (props) => {
 
                         <TouchableOpacity style={{ flexDirection: 'row', marginTop: 100 }} onPress={() => onPressLogout()}>
                             <Image source={require('../../assets/images/logout.png')} style={{ height: 25, width: 30, marginLeft: 20 }} />
-                            <Text style={{ marginLeft: 20, color: '#4D4D4D', fontSize: 16 }}>LogOut</Text>
+                            <Text style={{ marginLeft: 20, color: '#4D4D4D', fontSize: 16 }}>Logout</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
