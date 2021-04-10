@@ -27,7 +27,7 @@ const documentScreen = (props) => {
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                     <View style={STYLE.Documentstyles.profileview}>
                         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                            <Image source={require('../../assets/images/profile.png')}
+                            <Image source={require('../../assets/images/user2.png')}
                                 style={{ marginTop: -50, width: 100, height: 100, borderRadius: 100 }} />
                             <TouchableOpacity style={{ marginTop: -60 }}>
                                 <Feather name="camera" size={24} color='#FFFFFF' />

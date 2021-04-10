@@ -63,7 +63,7 @@ function myTransfersScreen(props) {
                             </View>
 
                             <View style={{ flexDirection: 'row', marginTop: 20, alignItems: 'center' }}>
-                                <Image source={require('../../assets/images/image1.png')} style={{ height: 50, width: 50, borderRadius: 100 }} />
+                                <Image source={require('../../assets/images/image1.png')} style={{ height: 45, width: 45, borderRadius: 100 }} />
                                 <View>
                                     <Text style={{ fontSize: 14, color: '#000000', marginLeft: 15 }}>Kotak Mahindra Bank</Text>
                                     <Text style={{ fontSize: 12, color: '#999999', marginLeft: 15 }}>14/02/2021, 2:30PM</Text>
@@ -74,15 +74,24 @@ function myTransfersScreen(props) {
 
                     <View style={STYLES.Transferstyles.bankview}>
                         <TouchableOpacity onPress={() => props.navigation.navigate(SCREEN.MYTRANSFERSSCREEN)}
-                            style={{ justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' }}>
-                            <Image source={require('../../assets/images/image1.png')} style={{ height: 50, width: 50, borderRadius: 100, marginLeft: 10 }} />
-                            <View style={{ flexDirection: 'column', marginLeft: -80 }}>
+                            style={{ justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
+
+                            <View style={{ justifyContent: 'flex-start' }}>
+                                <Image source={require('../../assets/images/image1.png')} style={{ height: 45, width: 45, borderRadius: 100, marginLeft: 10 }} />
+                            </View>
+
+                            <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginLeft: -50 }}>
                                 <Text style={{ fontSize: 14, color: '#000000', marginLeft: 15 }}>Kotak Mahindra Bank</Text>
                                 <Text style={{ fontSize: 14, color: '#999999', marginLeft: 15 }}>14/02/2021, 2:30PM</Text>
                             </View>
-                            <Text style={{ fontSize: 14, color: '#04DE71', marginTop: 5, marginRight: 30 }}> ₹ 1500.00</Text>
+
+                            <View style={{ justifyContent: 'flex-end' }}>
+                                <Text style={{ fontSize: 14, color: '#04DE71', marginTop: 5, marginRight: 30 }}> ₹ 1500.00</Text>
+                            </View>
+
                         </TouchableOpacity>
                     </View>
+
 
                 </View>
                 <View style={{ marginBottom: 50 }}></View>

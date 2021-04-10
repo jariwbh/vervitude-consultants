@@ -87,64 +87,64 @@ const rubychatScreen = ({ navigation }) => {
 
 	return (
 		<SafeAreaView style={styles.container}>
-			<ScrollView showsVerticalScrollIndicator={false}>
-				<View
-					style={{
-						justifyContent: 'space-between',
-						alignItems: 'center',
-						flexDirection: 'row',
-						marginTop: 30
-					}}
-				>
-					<View style={{ justifyContent: 'flex-start' }}>
-						<TouchableOpacity
-							style={styles.chatIcon}
-							onPress={() => {
-								navigation.goBack(null);
-							}}
-						>
-							<AntDesign name="arrowleft" size={24} color="#5AC8FA" />
-						</TouchableOpacity>
-					</View>
 
-					<Image
-						source={require('../../assets/images/user4.png')}
-						style={{ width: 50, height: 52, borderRadius: 100, marginLeft: 5 }}
-					/>
-					<FontAwesome
-						name="circle"
-						size={15}
-						color="#5AC8FA"
-						style={{ marginLeft: -20, marginTop: -40 }}
-					/>
-					<View
-						style={{
-							justifyContent: 'center',
-							alignItems: 'center',
-							flexDirection: 'column',
-							marginLeft: 15
+			<View
+				style={{
+					justifyContent: 'space-between',
+					alignItems: 'center',
+					flexDirection: 'row',
+					marginTop: 30
+				}}
+			>
+				<View style={{ justifyContent: 'flex-start' }}>
+					<TouchableOpacity
+						style={styles.chatIcon}
+						onPress={() => {
+							navigation.goBack(null);
 						}}
 					>
-						<Text style={{ fontSize: 20, color: '#5AC8FA' }}>Ruby</Text>
-						<Text style={{ fontSize: 10, color: '#000000' }}>Online</Text>
-					</View>
-
-					<View
-						style={{
-							justifyContent: 'center',
-							alignItems: 'center',
-							marginLeft: 100,
-							marginRight: 0
-						}}
-					>
-						<Image source={require('../../assets/images/chat.png')} style={{ width: 45, height: 22 }} />
-						<Text style={{ fontSize: 12, color: '#5AC8FA', position: 'absolute' }}>20K</Text>
-					</View>
-					<View style={{ justifyContent: 'flex-end' }}>
-						<ChatMenu />
-					</View>
+						<AntDesign name="arrowleft" size={24} color="#5AC8FA" />
+					</TouchableOpacity>
 				</View>
 
+				<Image
+					source={require('../../assets/images/user4.png')}
+					style={{ width: 50, height: 52, borderRadius: 100, marginLeft: 5 }}
+				/>
+				<FontAwesome
+					name="circle"
+					size={15}
+					color="#5AC8FA"
+					style={{ marginLeft: -20, marginTop: -40 }}
+				/>
+				<View
+					style={{
+						justifyContent: 'center',
+						alignItems: 'center',
+						flexDirection: 'column',
+						marginLeft: 15
+					}}
+				>
+					<Text style={{ fontSize: 20, color: '#5AC8FA' }}>Ruby</Text>
+					<Text style={{ fontSize: 10, color: '#000000' }}>Online</Text>
+				</View>
+
+				<View
+					style={{
+						justifyContent: 'center',
+						alignItems: 'center',
+						marginLeft: 100,
+						marginRight: 0
+					}}
+				>
+					<Image source={require('../../assets/images/chat.png')} style={{ width: 45, height: 22 }} />
+					<Text style={{ fontSize: 12, color: '#5AC8FA', position: 'absolute' }}>20K</Text>
+				</View>
+				<View style={{ justifyContent: 'flex-end' }}>
+					<ChatMenu />
+				</View>
+			</View>
+			<ScrollView showsVerticalScrollIndicator={false}>
 				<View style={styles.chatview}>
 					<GiftedChat
 						user={{ _id: sender }}
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
 		width: WIDTH,
 		backgroundColor: '#FFFFFF',
 		borderRadius: 30,
-		height: HEIGHT / 2 + 240,
+		height: HEIGHT / 1.5 + 100,
 		shadowOpacity: 0.5,
 		shadowRadius: 1,
 		shadowOffset: {

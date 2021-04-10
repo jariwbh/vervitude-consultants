@@ -103,8 +103,8 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     modalView: {
-        marginTop: HEIGHT / 2,
-        height: HEIGHT / 2 - 140,
+        marginTop: HEIGHT / 2 - 100,
+        height: 200,
         width: WIDTH - 90,
         borderRadius: 20,
         backgroundColor: "white",
@@ -119,8 +119,8 @@ export const styles = StyleSheet.create({
         elevation: 5
     },
     msgModalView: {
-        marginTop: HEIGHT / 2,
-        height: HEIGHT / 2 - 140,
+        marginTop: HEIGHT / 2 - 100,
+        height: 200,
         width: WIDTH - 90,
         borderRadius: 20,
         backgroundColor: "white",
@@ -137,8 +137,8 @@ export const styles = StyleSheet.create({
     savebtn: {
         flexDirection: 'row',
         marginRight: 50,
-        width: 140,
-        height: 40,
+        width: 100,
+        height: 35,
         backgroundColor: '#5AC8FA',
         borderRadius: 20,
         alignItems: 'center',
@@ -154,8 +154,8 @@ export const styles = StyleSheet.create({
     },
     cancelbtn: {
         flexDirection: 'row',
-        width: 140,
-        height: 40,
+        width: 100,
+        height: 35,
         backgroundColor: '#EEEEEE',
         borderRadius: 20,
         alignItems: 'center',

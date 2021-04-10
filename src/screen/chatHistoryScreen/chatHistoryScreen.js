@@ -28,7 +28,7 @@ function chatHistoryScreen(props) {
                 </View>
 
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 15 }}>
-                    <Text style={{ width: WIDTH - 300, fontSize: 12, marginLeft: 20, marginRight: 20, color: '#5F5F5F' }}>MARKETING</Text>
+                    <Text style={{ width: WIDTH / 2 - 100, fontSize: 12, marginLeft: 20, marginRight: 0, color: '#5F5F5F' }}>MARKETING</Text>
                     <View style={{ flex: 1, height: 1, backgroundColor: '#BEBEBE', marginLeft: -50, marginRight: 15 }} />
                 </View>
 
@@ -38,18 +38,25 @@ function chatHistoryScreen(props) {
                             <Text style={{ color: '#5AC8FA', marginLeft: 15, fontSize: 10 }}>New</Text>
                             <Text style={{ color: '#999999', fontSize: 12, marginRight: 15 }}>2:30 PM</Text>
                         </View>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: -5 }}>
+
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-start', marginTop: -5 }}>
                             <Image source={require('../../assets/images/user4.png')}
                                 style={{ width: 70, height: 70, borderRadius: 100, marginLeft: 25 }} />
-                            <View style={{ marginLeft: -160, height: 15, width: 15, backgroundColor: '#EEEEEE', borderColor: '#000000', borderRadius: 100, borderWidth: 1 }}></View>
-                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: -100 }}>
+                            <View style={{ marginLeft: -20, height: 15, width: 15, backgroundColor: '#EEEEEE', borderColor: '#000000', borderRadius: 100, borderWidth: 1 }}></View>
+                        </View>
+
+                        <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: -60 }}>
+                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: 0 }}>
                                 <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#000000' }}>Ruby</Text>
                                 <Text style={{ fontSize: 14, color: '#04DE71' }}>+ ₹ 20.00</Text>
                             </View>
+                        </View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: -60 }}>
                             <View style={{ marginRight: 25, width: 30, height: 30, marginTop: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 100, backgroundColor: '#0F74C8' }}>
                                 <Text style={{ color: '#FFFFFF' }}>5</Text>
                             </View>
                         </View>
+
                     </TouchableOpacity>
                 </View>
 
@@ -61,10 +68,13 @@ function chatHistoryScreen(props) {
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-start', marginTop: -5 }}>
                             <Image source={require('../../assets/images/user1.png')}
                                 style={{ width: 70, height: 70, borderRadius: 100, marginLeft: 25 }} />
-                            <View style={{ marginLeft: -15, height: 15, width: 15, backgroundColor: '#5AC8FA', borderRadius: 100 }}></View>
-                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: 50 }}>
-                                <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#000000' }}>Maria</Text>
-                                <Text style={{ fontSize: 14, color: '#04DE71' }}>+ ₹ 0.00</Text>
+                            <View style={{ marginLeft: -20, height: 15, width: 15, borderRadius: 100, backgroundColor: '#5AC8FA', borderRadius: 100 }}></View>
+                        </View>
+
+                        <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: -60 }}>
+                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: 0 }}>
+                                <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#000000' }}>Mariya</Text>
+                                <Text style={{ fontSize: 14, color: '#04DE71' }}>+ ₹ 20.00</Text>
                             </View>
                         </View>
                     </TouchableOpacity>
@@ -77,21 +87,29 @@ function chatHistoryScreen(props) {
 
                 <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
                     <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.RUBYCHATSCREEN) }} style={styles.chatview}>
-                        <View style={{ justifyContent: 'flex-end', flexDirection: 'row', marginTop: 5 }}>
+                        <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 5 }}>
+                            <Text style={{ color: '#5AC8FA', marginLeft: 15, fontSize: 10 }}>New</Text>
                             <Text style={{ color: '#999999', fontSize: 12, marginRight: 15 }}>2:30 PM</Text>
                         </View>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: -5 }}>
+
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-start', marginTop: -5 }}>
                             <Image source={require('../../assets/images/user4.png')}
                                 style={{ width: 70, height: 70, borderRadius: 100, marginLeft: 25 }} />
-                            <View style={{ marginLeft: -150, height: 15, width: 15, backgroundColor: '#5AC8FA', borderRadius: 100 }}></View>
-                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: -90 }}>
-                                <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#000000' }}>Maya</Text>
+                            <View style={{ marginLeft: -20, height: 15, width: 15, borderRadius: 100, backgroundColor: '#5AC8FA', borderRadius: 100 }}></View>
+                        </View>
+
+                        <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: -60 }}>
+                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: 0 }}>
+                                <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#000000' }}>Michale</Text>
                                 <Text style={{ fontSize: 14, color: '#04DE71' }}>+ ₹ 20.00</Text>
                             </View>
+                        </View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: -60 }}>
                             <View style={{ marginRight: 25, width: 30, height: 30, marginTop: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 100, backgroundColor: '#0F74C8' }}>
                                 <Text style={{ color: '#FFFFFF' }}>5</Text>
                             </View>
                         </View>
+
                     </TouchableOpacity>
                 </View>
 
@@ -103,10 +121,13 @@ function chatHistoryScreen(props) {
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-start', marginTop: -5 }}>
                             <Image source={require('../../assets/images/user2.png')}
                                 style={{ width: 70, height: 70, borderRadius: 100, marginLeft: 25 }} />
-                            <View style={{ marginLeft: -15, height: 15, width: 15, backgroundColor: '#5AC8FA', borderRadius: 100 }}></View>
-                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: 50 }}>
-                                <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#000000' }}>Maria</Text>
-                                <Text style={{ fontSize: 14, color: '#04DE71' }}>+ ₹ 0.00</Text>
+                            <View style={{ marginLeft: -20, height: 15, width: 15, borderRadius: 100, backgroundColor: '#5AC8FA', borderRadius: 100 }}></View>
+                        </View>
+
+                        <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: -60 }}>
+                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: 0 }}>
+                                <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#000000' }}>Mariya</Text>
+                                <Text style={{ fontSize: 14, color: '#04DE71' }}>+ ₹ 20.00</Text>
                             </View>
                         </View>
                     </TouchableOpacity>
@@ -114,21 +135,29 @@ function chatHistoryScreen(props) {
 
                 <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
                     <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.RUBYCHATSCREEN) }} style={styles.chatview}>
-                        <View style={{ justifyContent: 'flex-end', flexDirection: 'row', marginTop: 5 }}>
+                        <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 5 }}>
+                            <Text style={{ color: '#5AC8FA', marginLeft: 15, fontSize: 10 }}>New</Text>
                             <Text style={{ color: '#999999', fontSize: 12, marginRight: 15 }}>2:30 PM</Text>
                         </View>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: -5 }}>
+
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-start', marginTop: -5 }}>
                             <Image source={require('../../assets/images/user3.png')}
                                 style={{ width: 70, height: 70, borderRadius: 100, marginLeft: 25 }} />
-                            <View style={{ marginLeft: -150, height: 15, width: 15, backgroundColor: '#5AC8FA', borderRadius: 100 }}></View>
-                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: -90 }}>
+                            <View style={{ marginLeft: -20, height: 15, width: 15, borderRadius: 100, backgroundColor: '#5AC8FA', borderRadius: 100 }}></View>
+                        </View>
+
+                        <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: -60 }}>
+                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: 0 }}>
                                 <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#000000' }}>Rajan</Text>
                                 <Text style={{ fontSize: 14, color: '#04DE71' }}>+ ₹ 20.00</Text>
                             </View>
+                        </View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: -60 }}>
                             <View style={{ marginRight: 25, width: 30, height: 30, marginTop: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 100, backgroundColor: '#0F74C8' }}>
                                 <Text style={{ color: '#FFFFFF' }}>5</Text>
                             </View>
                         </View>
+
                     </TouchableOpacity>
                 </View>
 
@@ -143,12 +172,15 @@ function chatHistoryScreen(props) {
                             <Text style={{ color: '#999999', fontSize: 12, marginRight: 15 }}>2:30 PM</Text>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-start', marginTop: -5 }}>
-                            <Image source={require('../../assets/images/user2.png')}
+                            <Image source={require('../../assets/images/user1.png')}
                                 style={{ width: 70, height: 70, borderRadius: 100, marginLeft: 25 }} />
-                            <View style={{ marginLeft: -15, height: 15, width: 15, backgroundColor: '#5AC8FA', borderRadius: 100 }}></View>
-                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: 50 }}>
-                                <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#000000' }}>Maria</Text>
-                                <Text style={{ fontSize: 14, color: '#04DE71' }}>+ ₹ 0.00</Text>
+                            <View style={{ marginLeft: -20, height: 15, width: 15, borderRadius: 100, backgroundColor: '#5AC8FA', borderRadius: 100 }}></View>
+                        </View>
+
+                        <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: -60 }}>
+                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: 0 }}>
+                                <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#000000' }}>Mariya</Text>
+                                <Text style={{ fontSize: 14, color: '#04DE71' }}>+ ₹ 20.00</Text>
                             </View>
                         </View>
                     </TouchableOpacity>
@@ -156,23 +188,32 @@ function chatHistoryScreen(props) {
 
                 <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
                     <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.RUBYCHATSCREEN) }} style={styles.chatview}>
-                        <View style={{ justifyContent: 'flex-end', flexDirection: 'row', marginTop: 5 }}>
+                        <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 5 }}>
+                            <Text style={{ color: '#5AC8FA', marginLeft: 15, fontSize: 10 }}>New</Text>
                             <Text style={{ color: '#999999', fontSize: 12, marginRight: 15 }}>2:30 PM</Text>
                         </View>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: -5 }}>
+
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-start', marginTop: -5 }}>
                             <Image source={require('../../assets/images/user3.png')}
                                 style={{ width: 70, height: 70, borderRadius: 100, marginLeft: 25 }} />
-                            <View style={{ marginLeft: -150, height: 15, width: 15, backgroundColor: '#5AC8FA', borderRadius: 100 }}></View>
-                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: -90 }}>
+                            <View style={{ marginLeft: -20, height: 15, width: 15, borderRadius: 100, backgroundColor: '#5AC8FA', borderRadius: 100 }}></View>
+                        </View>
+
+                        <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: -60 }}>
+                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: 0 }}>
                                 <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#000000' }}>Rajan</Text>
                                 <Text style={{ fontSize: 14, color: '#04DE71' }}>+ ₹ 20.00</Text>
                             </View>
+                        </View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: -60 }}>
                             <View style={{ marginRight: 25, width: 30, height: 30, marginTop: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 100, backgroundColor: '#0F74C8' }}>
                                 <Text style={{ color: '#FFFFFF' }}>5</Text>
                             </View>
                         </View>
+
                     </TouchableOpacity>
                 </View>
+
 
                 <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
                     <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.RUBYCHATSCREEN) }} style={styles.chatview}>
@@ -182,10 +223,13 @@ function chatHistoryScreen(props) {
                         <View style={{ flexDirection: 'row', justifyContent: 'flex-start', marginTop: -5 }}>
                             <Image source={require('../../assets/images/user2.png')}
                                 style={{ width: 70, height: 70, borderRadius: 100, marginLeft: 25 }} />
-                            <View style={{ marginLeft: -15, height: 15, width: 15, backgroundColor: '#5AC8FA', borderRadius: 100 }}></View>
-                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: 50 }}>
-                                <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#000000' }}>Maria</Text>
-                                <Text style={{ fontSize: 14, color: '#04DE71' }}>+ ₹ 0.00</Text>
+                            <View style={{ marginLeft: -20, height: 15, width: 15, borderRadius: 100, backgroundColor: '#5AC8FA', borderRadius: 100 }}></View>
+                        </View>
+
+                        <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: -60 }}>
+                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: 0 }}>
+                                <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#000000' }}>Mariya</Text>
+                                <Text style={{ fontSize: 14, color: '#04DE71' }}>+ ₹ 20.00</Text>
                             </View>
                         </View>
                     </TouchableOpacity>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, SafeAreaView, Image, TouchableOpacity, ScrollView, Modal, TextInput, ToastAndroid, Platform } from 'react-native';
+import { Text, View, Dimensions, SafeAreaView, Image, TouchableOpacity, ScrollView, Modal, TextInput, ToastAndroid, Platform } from 'react-native';
 import MenuButton from '../../components/ProfileMenuButton/ProfileMenuButton';
 import AsyncStorage from '@react-native-community/async-storage';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -7,6 +7,7 @@ import * as SCREENNAME from '../../context/screen/screenName'
 import * as SCREEN from '../../context/screen/screenName';
 import { AUTHUSER } from '../../context/actions/type'
 import * as STYLES from './styles';
+const WIDTH = Dimensions.get("window").width;
 
 const myProfileScreen = (props) => {
     //const [loading, setloading] = useState(false);
@@ -49,7 +50,7 @@ const myProfileScreen = (props) => {
                         <MenuButton onPress={() => { props.navigation.navigate(SCREEN.HOMESCREEN) }} />
                     </View>
 
-                    <View style={{ marginLeft: -150 }}>
+                    <View style={{ marginLeft: -80, justifyContent: 'space-between', alignItems: 'center' }}>
                         <TouchableOpacity onPress={() => props.navigation.navigate(SCREEN.NOTIFICATIONSCREEN)}>
                             <Image source={require('../../assets/images/notificationicon.png')} style={{ height: 25, width: 20 }} />
                         </TouchableOpacity>

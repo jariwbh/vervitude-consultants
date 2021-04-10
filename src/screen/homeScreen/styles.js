@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
     box1: {
         flexDirection: 'column',
         width: WIDTH / 2 - 20,
-        height: 120,
+        height: 110,
         backgroundColor: '#04DE71',
         alignItems: 'center',
         justifyContent: 'center',
@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
     box2: {
         flexDirection: 'column',
         width: WIDTH / 2 - 20,
-        height: 120,
+        height: 110,
         backgroundColor: '#0F74C8',
         alignItems: 'center',
         justifyContent: 'center',
@@ -28,7 +28,7 @@ export const styles = StyleSheet.create({
     box3: {
         flexDirection: 'column',
         width: WIDTH / 2 - 20,
-        height: 120,
+        height: 110,
         backgroundColor: '#00D9CE',
         alignItems: 'center',
         justifyContent: 'center',
@@ -37,7 +37,7 @@ export const styles = StyleSheet.create({
     box4: {
         flexDirection: 'column',
         width: WIDTH / 2 - 20,
-        height: 120,
+        height: 110,
         backgroundColor: '#FFE620',
         alignItems: 'center',
         justifyContent: 'center',
@@ -62,7 +62,7 @@ export const styles = StyleSheet.create({
     filterBtn: {
         marginTop: 15,
         flexDirection: 'row',
-        width: WIDTH / 2 - 60,
+        width: WIDTH / 2 - 40,
         height: 40,
         backgroundColor: "#5AC8FA",
         borderRadius: 14,
@@ -109,8 +109,25 @@ export const styles = StyleSheet.create({
         alignItems: 'center'
     },
     modalView: {
-        marginTop: HEIGHT / 2.5,
+        marginTop: HEIGHT / 2 - 100,
+        height: 200,
         width: WIDTH - 90,
+        borderRadius: 20,
+        backgroundColor: "white",
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
+    },
+    modalViewOnline: {
+        marginTop: HEIGHT / 2 - 100,
+        width: WIDTH - 50,
+        marginTop: HEIGHT / 2.5,
         borderRadius: 20,
         backgroundColor: "white",
         alignItems: "center",
@@ -126,8 +143,8 @@ export const styles = StyleSheet.create({
     savebtn: {
         flexDirection: 'row',
         marginRight: 50,
-        width: 140,
-        height: 40,
+        width: 100,
+        height: 35,
         backgroundColor: '#5AC8FA',
         borderRadius: 20,
         alignItems: 'center',
@@ -143,8 +160,8 @@ export const styles = StyleSheet.create({
     },
     cancelbtn: {
         flexDirection: 'row',
-        width: 140,
-        height: 40,
+        width: 100,
+        height: 35,
         backgroundColor: '#EEEEEE',
         borderRadius: 20,
         alignItems: 'center',

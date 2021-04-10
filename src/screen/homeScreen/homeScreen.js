@@ -71,18 +71,18 @@ const homeScreen = (props) => {
                         <MenuButton onPress={() => { props.navigation.navigate(MYPROFILESCREEN) }} />
                     </View>
                     {online == true ?
-                        <View style={{ marginLeft: -150 }}>
+                        <View style={{ marginLeft: screenWidth / 2 - 280 }}>
                             <TouchableOpacity style={STYLES.styles.onlineswitchBtn} onPress={() => { setOnline(true) }} >
                                 <Text style={STYLES.styles.onlineswitchBtnText}>Online</Text>
                                 <Image source={require('../../assets/images/settingicon.png')}
-                                    style={{ alignItems: 'center', height: 25, width: 25 }} />
+                                    style={{ alignItems: 'center', height: 22, width: 22 }} />
                             </TouchableOpacity>
                         </View>
                         :
-                        <View style={{ marginLeft: -150 }}>
+                        <View style={{ marginLeft: screenWidth / 2 - 280 }}>
                             <TouchableOpacity style={STYLES.styles.oflineswitchBtn} onPress={() => { setOnline(false) }} >
                                 <Image source={require('../../assets/images/offlineicon.png')}
-                                    style={{ alignItems: 'center', height: 25, width: 25 }} />
+                                    style={{ alignItems: 'center', height: 22, width: 22 }} />
                                 <Text style={STYLES.styles.oflineswitchBtnText}>Offline</Text>
                             </TouchableOpacity>
                         </View>
@@ -346,7 +346,7 @@ const homeScreen = (props) => {
                 onRequestClose={() => { setOnlineModalVisible(!onlineModalVisible) }}
             >
                 <View style={STYLES.styles.centeView}>
-                    <View style={STYLES.styles.modalView}>
+                    <View style={STYLES.styles.modalViewOnline}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', padding: 15 }}>
                             <Text style={{ textAlign: 'center', color: '#000000' }}>All</Text>
                             <Switch
