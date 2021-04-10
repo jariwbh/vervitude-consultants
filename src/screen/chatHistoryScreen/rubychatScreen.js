@@ -1,10 +1,11 @@
 import React, { useEffect, useCallback, useState } from 'react';
-import { View, Text, SafeAreaView, StyleSheet, ScrollView, TouchableOpacity, Image, TextInput } from 'react-native';
-import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
+import { View, Text, Dimensions, SafeAreaView, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
 import * as SCREEN from '../../context/screen/screenName';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import ChatMenu from '../../components/ChatMenu/ChatMenu';
+const HEIGHT = Dimensions.get("window").height;
+const WIDTH = Dimensions.get("window").width;
 //
 import AsyncStorage from '@react-native-community/async-storage';
 import { AUTHUSER } from '../../context/actions/type';
@@ -14,9 +15,9 @@ import { renderDay, renderBubble, renderInputToolbar } from './customChatProps';
 import firestore from '@react-native-firebase/firestore';
 //
 const rubychatScreen = ({ navigation }) => {
-	const [ chatId, setchatId ] = useState(null);
-	const [ sender, setsender ] = useState(null);
-	const [ messages, setMessages ] = useState([]);
+	const [chatId, setchatId] = useState(null);
+	const [sender, setsender] = useState(null);
+	const [messages, setMessages] = useState([]);
 
 	// Chat Module - Auto Initiate //
 	useEffect(
@@ -24,7 +25,7 @@ const rubychatScreen = ({ navigation }) => {
 			AsyncStorage.getItem(AUTHUSER).then((res) => {
 				let sender = JSON.parse(res)._id;
 				setsender(sender);
-				newChat(sender, '605845dcac1539438768c833').then((id) => { 
+				newChat(sender, '605845dcac1539438768c833').then((id) => {
 					setchatId(id);
 					let getMessages = firestore()
 						.collection('chat')
@@ -38,17 +39,17 @@ const rubychatScreen = ({ navigation }) => {
 				});
 			});
 		},
-		[ navigation ]
+		[navigation]
 	);
 
 	const newChat = async (sender, item) => {
 		let getChatId = firestore().collection('chat');
-		let snap = await getChatId.where('member', 'in', [ [ sender, item ] ]).get();
+		let snap = await getChatId.where('member', 'in', [[sender, item]]).get();
 		if (snap.empty) {
-			let snap2 = await getChatId.where('member', 'in', [ [ item, sender ] ]).get();
+			let snap2 = await getChatId.where('member', 'in', [[item, sender]]).get();
 			if (snap2.empty) {
 				let ref = await getChatId.add({
-					member: [ sender, item ],
+					member: [sender, item],
 					createdAt: '',
 					previewMessage: ''
 				});
@@ -92,53 +93,56 @@ const rubychatScreen = ({ navigation }) => {
 						justifyContent: 'space-between',
 						alignItems: 'center',
 						flexDirection: 'row',
-						marginTop: hp('5%')
+						marginTop: 30
 					}}
 				>
-					<TouchableOpacity
-						style={styles.chatIcon}
-						onPress={() => {
-							navigation.navigate(SCREEN.CHATHISTORYSCREEN);
-						}}
-					>
-						<AntDesign name="arrowleft" size={24} color="#5AC8FA" />
-					</TouchableOpacity>
+					<View style={{ justifyContent: 'flex-start' }}>
+						<TouchableOpacity
+							style={styles.chatIcon}
+							onPress={() => {
+								navigation.goBack(null);
+							}}
+						>
+							<AntDesign name="arrowleft" size={24} color="#5AC8FA" />
+						</TouchableOpacity>
+					</View>
 
 					<Image
 						source={require('../../assets/images/user4.png')}
-						style={{ width: 50, height: 52, borderRadius: hp('7%'), marginLeft: hp('1%') }}
+						style={{ width: 50, height: 52, borderRadius: 100, marginLeft: 5 }}
 					/>
 					<FontAwesome
 						name="circle"
 						size={15}
 						color="#5AC8FA"
-						style={{ marginLeft: wp('-4%'), marginTop: wp('-10%') }}
+						style={{ marginLeft: -20, marginTop: -40 }}
 					/>
 					<View
 						style={{
 							justifyContent: 'center',
 							alignItems: 'center',
 							flexDirection: 'column',
-							marginLeft: hp('2%')
+							marginLeft: 15
 						}}
 					>
-						<Text style={{ fontSize: hp('3%'), color: '#5AC8FA' }}>Ruby</Text>
-						<Text style={{ fontSize: hp('1.5%'), color: '#000000' }}>Online</Text>
+						<Text style={{ fontSize: 20, color: '#5AC8FA' }}>Ruby</Text>
+						<Text style={{ fontSize: 10, color: '#000000' }}>Online</Text>
 					</View>
 
 					<View
 						style={{
-							marginTop: hp('0%'),
 							justifyContent: 'center',
 							alignItems: 'center',
-							marginLeft: wp('25%'),
-							marginRight: wp('1%')
+							marginLeft: 100,
+							marginRight: 0
 						}}
 					>
-						<Image source={require('../../assets/images/chat.png')} style={{ width: 50, height: 25 }} />
-						<Text style={{ fontSize: hp('2%'), color: '#5AC8FA', position: 'absolute' }}>20K</Text>
+						<Image source={require('../../assets/images/chat.png')} style={{ width: 45, height: 22 }} />
+						<Text style={{ fontSize: 12, color: '#5AC8FA', position: 'absolute' }}>20K</Text>
 					</View>
-					<ChatMenu />
+					<View style={{ justifyContent: 'flex-end' }}>
+						<ChatMenu />
+					</View>
 				</View>
 
 				<View style={styles.chatview}>
@@ -155,7 +159,7 @@ const rubychatScreen = ({ navigation }) => {
 						renderInputToolbar={renderInputToolbar}
 					/>
 				</View>
-				<View style={{ marginBottom: hp('10%') }} />
+				<View style={{ marginBottom: 10 }} />
 			</ScrollView>
 		</SafeAreaView>
 	);
@@ -169,11 +173,11 @@ const styles = StyleSheet.create({
 		backgroundColor: '#EEEEEE'
 	},
 	chatview: {
-		marginTop: hp('3%'),
-		width: wp('100%'),
+		marginTop: 20,
+		width: WIDTH,
 		backgroundColor: '#FFFFFF',
-		borderRadius: hp('5%'),
-		height: hp('80%'),
+		borderRadius: 30,
+		height: HEIGHT / 2 + 240,
 		shadowOpacity: 0.5,
 		shadowRadius: 1,
 		shadowOffset: {
@@ -183,40 +187,11 @@ const styles = StyleSheet.create({
 		elevation: 3
 	},
 	chatIcon: {
-		width: wp('7%'),
-		height: wp('7%'),
-		borderRadius: hp('6%'),
-		marginLeft: wp('5%'),
+		width: 40,
+		height: 40,
+		borderRadius: 100,
+		marginLeft: 20,
 		alignItems: 'center',
 		justifyContent: 'center'
 	},
-	inputview: {
-		flexDirection: 'row',
-		backgroundColor: '#fff',
-		borderColor: '#737373',
-		shadowOpacity: 0.5,
-		shadowRadius: 2,
-		shadowOffset: {
-			height: 0,
-			width: 0
-		},
-		elevation: 2,
-		width: wp('90%'),
-		height: hp('8%'),
-		borderRadius: hp('2%'),
-		alignItems: 'center',
-		justifyContent: 'center'
-	},
-	inputtext: {
-		fontSize: hp('2.5%'),
-		flex: 1,
-		marginLeft: wp('4%')
-	},
-	categoryIcon: {
-		width: wp('7%'),
-		height: wp('7%'),
-		marginRight: wp('10%'),
-		alignItems: 'center',
-		justifyContent: 'center'
-	}
 });

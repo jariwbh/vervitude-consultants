@@ -1,187 +1,198 @@
-import React from 'react'
-import { View, Text, SafeAreaView, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native'
-import { heightPercentageToDP as hp, widthPercentageToDP as wp, } from 'react-native-responsive-screen'
-import * as SCREEN from '../../context/screen/screenName';
-import ChatMenu from '../../components/ChatMenu/ChatMenu'
-import AntDesign from 'react-native-vector-icons/AntDesign';
+import React from 'react';
+import { View, Text, SafeAreaView, Dimensions, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
+import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import * as SCREEN from '../../context/screen/screenName';
+import ChatMenu from '../../components/ChatMenu/ChatMenu';
+const HEIGHT = Dimensions.get("window").height;
+const WIDTH = Dimensions.get("window").width;
 
 function chatHistoryScreen(props) {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
-                <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: hp('5%') }}>
-                    <TouchableOpacity style={styles.categoryIcon} onPress={() => { props.navigation.navigate(SCREEN.HOMESCREEN) }} >
-                        <AntDesign name="arrowleft" size={24} color="#5AC8FA" />
-                    </TouchableOpacity>
-                    <View style={{ marginTop: hp('0%'), justifyContent: 'center', alignItems: 'center', marginLeft: wp('60%'), marginRight: wp('1%') }}>
-                        <Image source={require('../../assets/images/chat.png')} style={{ width: 50, height: 25 }} />
-                        <Text style={{ fontSize: hp('2%'), color: '#5AC8FA', position: 'absolute' }}>20K</Text>
+                <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 30 }}>
+
+                    <View style={{ justifyContent: 'flex-start' }}>
+                        <TouchableOpacity style={styles.categoryIcon} onPress={() => { props.navigation.navigate(SCREEN.HOMESCREEN) }} >
+                            <AntDesign name="arrowleft" size={24} color="#5AC8FA" />
+                        </TouchableOpacity>
                     </View>
-                    <ChatMenu />
-                </View>
 
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: hp('2%'), }}>
-                    <Text style={{ width: wp('25%'), fontSize: hp('2%'), marginLeft: hp('2%'), marginRight: hp('2%'), color: '#5F5F5F' }}>Marketing</Text>
-                    <View style={{ flex: 1, height: 1, backgroundColor: '#BEBEBE', marginLeft: hp('-6%'), marginRight: hp('2%') }} />
-                </View>
-
-                <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: hp('2%') }}>
-                    <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.RUBYCHATSCREEN) }} style={styles.chatview}>
-                        <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: hp('1%') }}>
-                            <Text style={{ color: '#5AC8FA', marginLeft: hp('2%'), fontSize: hp('1.5%') }}>New</Text>
-                            <Text style={{ color: '#999999', fontSize: hp('1.5%'), marginRight: hp('2%') }}>2:30 PM</Text>
+                    <View style={{ justifyContent: 'flex-end', flexDirection: 'row' }}>
+                        <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: 0, marginRight: 5 }}>
+                            <Image source={require('../../assets/images/chat.png')} style={{ width: 45, height: 22 }} />
+                            <Text style={{ fontSize: 12, color: '#5AC8FA', position: 'absolute' }}>20K</Text>
                         </View>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <ChatMenu />
+                    </View>
+                </View>
+
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 15 }}>
+                    <Text style={{ width: WIDTH - 300, fontSize: 12, marginLeft: 20, marginRight: 20, color: '#5F5F5F' }}>MARKETING</Text>
+                    <View style={{ flex: 1, height: 1, backgroundColor: '#BEBEBE', marginLeft: -50, marginRight: 15 }} />
+                </View>
+
+                <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
+                    <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.RUBYCHATSCREEN) }} style={styles.chatview}>
+                        <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 5 }}>
+                            <Text style={{ color: '#5AC8FA', marginLeft: 15, fontSize: 10 }}>New</Text>
+                            <Text style={{ color: '#999999', fontSize: 12, marginRight: 15 }}>2:30 PM</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: -5 }}>
                             <Image source={require('../../assets/images/user4.png')}
-                                style={{ width: 72, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
-                            <FontAwesome name="circle" size={21} color="#EEEEEE" style={{ marginLeft: wp('-35%') }} />
-                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('0%') }}>
-                                <Text style={{ fontSize: hp('3.5%'), fontWeight: 'bold', color: '#000000' }}>Ruby</Text>
-                                <Text style={{ fontSize: hp('2.5%'), color: '#04DE71' }}>+ ₹ 20.00</Text>
+                                style={{ width: 70, height: 70, borderRadius: 100, marginLeft: 25 }} />
+                            <View style={{ marginLeft: -160, height: 15, width: 15, backgroundColor: '#EEEEEE', borderColor: '#000000', borderRadius: 100, borderWidth: 1 }}></View>
+                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: -100 }}>
+                                <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#000000' }}>Ruby</Text>
+                                <Text style={{ fontSize: 14, color: '#04DE71' }}>+ ₹ 20.00</Text>
                             </View>
-                            <View style={{ marginRight: hp('3%'), width: 30, height: 30, marginTop: hp('2%'), alignItems: 'center', justifyContent: 'center', borderRadius: hp('7%'), backgroundColor: '#0F74C8' }}>
+                            <View style={{ marginRight: 25, width: 30, height: 30, marginTop: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 100, backgroundColor: '#0F74C8' }}>
                                 <Text style={{ color: '#FFFFFF' }}>5</Text>
                             </View>
                         </View>
                     </TouchableOpacity>
                 </View>
 
-                <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: hp('2%') }}>
+                <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
                     <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.RUBYCHATSCREEN) }} style={styles.chatview}>
-                        <View style={{ justifyContent: 'flex-end', flexDirection: 'row', marginTop: hp('1%') }}>
-                            <Text style={{ color: '#999999', fontSize: hp('1.5%'), marginRight: hp('2%') }}>2:30 PM</Text>
+                        <View style={{ justifyContent: 'flex-end', flexDirection: 'row', marginTop: 5 }}>
+                            <Text style={{ color: '#999999', fontSize: 12, marginRight: 15 }}>2:30 PM</Text>
                         </View>
-                        <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-                            <Image source={require('../../assets/images/user2.png')} style={{ marginTop: hp('0%'), width: 72, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
-                            <FontAwesome name="circle" size={21} color="#5AC8FA" style={{ marginLeft: wp('-4%') }} />
-                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('5%') }}>
-                                <Text style={{ fontSize: hp('3.5%'), fontWeight: 'bold', color: '#000000' }}>Maria</Text>
-                                <Text style={{ fontSize: hp('2.5%'), color: '#04DE71' }}>+ ₹ 0.00</Text>
-                            </View>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: hp('2%'), }}>
-                    <Text style={{ width: wp('25%'), fontSize: hp('2%'), marginLeft: hp('2%'), marginRight: hp('2%'), color: '#5F5F5F' }}>DESIGN</Text>
-                    <View style={{ flex: 1, height: 1, backgroundColor: '#BEBEBE', marginLeft: hp('-6%'), marginRight: hp('2%') }} />
-                </View>
-
-
-                <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: hp('2%') }}>
-                    <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.RUBYCHATSCREEN) }} style={styles.chatview}>
-                        <View style={{ justifyContent: 'flex-end', flexDirection: 'row', marginTop: hp('1%') }}>
-                            <Text style={{ color: '#999999', fontSize: hp('1.5%'), marginRight: hp('2%') }}>2:30 PM</Text>
-                        </View>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-start', marginTop: -5 }}>
                             <Image source={require('../../assets/images/user1.png')}
-                                style={{ marginTop: hp('-0%'), width: 72, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
-                            <FontAwesome name="circle" size={21} color="#5AC8FA" style={{ marginLeft: wp('-35%') }} />
-                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('0%') }}>
-                                <Text style={{ fontSize: hp('3.5%'), fontWeight: 'bold', color: '#000000' }}>Maya</Text>
-                                <Text style={{ fontSize: hp('2.5%'), color: '#04DE71' }}>+ ₹ 20.00</Text>
+                                style={{ width: 70, height: 70, borderRadius: 100, marginLeft: 25 }} />
+                            <View style={{ marginLeft: -15, height: 15, width: 15, backgroundColor: '#5AC8FA', borderRadius: 100 }}></View>
+                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: 50 }}>
+                                <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#000000' }}>Maria</Text>
+                                <Text style={{ fontSize: 14, color: '#04DE71' }}>+ ₹ 0.00</Text>
                             </View>
-                            <View style={{ marginRight: hp('3%'), width: 30, height: 30, marginTop: hp('2%'), alignItems: 'center', justifyContent: 'center', borderRadius: hp('7%'), backgroundColor: '#0F74C8' }}>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 15 }}>
+                    <Text style={{ width: WIDTH - 320, fontSize: 12, marginLeft: 20, marginRight: 20, color: '#5F5F5F' }}>DESIGN</Text>
+                    <View style={{ flex: 1, height: 1, backgroundColor: '#BEBEBE', marginLeft: -50, marginRight: 15 }} />
+                </View>
+
+                <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
+                    <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.RUBYCHATSCREEN) }} style={styles.chatview}>
+                        <View style={{ justifyContent: 'flex-end', flexDirection: 'row', marginTop: 5 }}>
+                            <Text style={{ color: '#999999', fontSize: 12, marginRight: 15 }}>2:30 PM</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: -5 }}>
+                            <Image source={require('../../assets/images/user4.png')}
+                                style={{ width: 70, height: 70, borderRadius: 100, marginLeft: 25 }} />
+                            <View style={{ marginLeft: -150, height: 15, width: 15, backgroundColor: '#5AC8FA', borderRadius: 100 }}></View>
+                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: -90 }}>
+                                <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#000000' }}>Maya</Text>
+                                <Text style={{ fontSize: 14, color: '#04DE71' }}>+ ₹ 20.00</Text>
+                            </View>
+                            <View style={{ marginRight: 25, width: 30, height: 30, marginTop: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 100, backgroundColor: '#0F74C8' }}>
                                 <Text style={{ color: '#FFFFFF' }}>5</Text>
                             </View>
                         </View>
                     </TouchableOpacity>
                 </View>
 
-                <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: hp('2%') }}>
+                <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
                     <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.RUBYCHATSCREEN) }} style={styles.chatview}>
-                        <View style={{ justifyContent: 'flex-end', flexDirection: 'row', marginTop: hp('1%') }}>
-                            <Text style={{ color: '#999999', fontSize: hp('1.5%'), marginRight: hp('2%') }}>2:30 PM</Text>
+                        <View style={{ justifyContent: 'flex-end', flexDirection: 'row', marginTop: 5 }}>
+                            <Text style={{ color: '#999999', fontSize: 12, marginRight: 15 }}>2:30 PM</Text>
                         </View>
-                        <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-                            <Image source={require('../../assets/images/user2.png')} style={{ marginTop: hp('-0%'), width: 72, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
-                            <FontAwesome name="circle" size={21} color="#5AC8FA" style={{ marginLeft: wp('-4%') }} />
-                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('5%') }}>
-                                <Text style={{ fontSize: hp('3.5%'), fontWeight: 'bold', color: '#000000' }}>Maria</Text>
-                                <Text style={{ fontSize: hp('2.5%'), color: '#04DE71' }}>+ ₹ 20.00</Text>
-                            </View>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-
-                <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: hp('2%') }}>
-                    <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.RUBYCHATSCREEN) }} style={styles.chatview}>
-                        <View style={{ justifyContent: 'flex-end', flexDirection: 'row', marginTop: hp('1%') }}>
-                            <Text style={{ color: '#999999', fontSize: hp('1.5%'), marginRight: hp('2%') }}>2:30 PM</Text>
-                        </View>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Image source={require('../../assets/images/user3.png')}
-                                style={{ marginTop: hp('-0%'), width: 72, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
-                            <FontAwesome name="circle" size={21} color="#5AC8FA" style={{ marginLeft: wp('-35%') }} />
-                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('0%') }}>
-                                <Text style={{ fontSize: hp('3.5%'), fontWeight: 'bold', color: '#000000' }}>Rajan</Text>
-                                <Text style={{ fontSize: hp('2.5%'), color: '#04DE71' }}>+ ₹ 20.00</Text>
-                            </View>
-                            <View style={{ marginRight: hp('3%'), width: 30, height: 30, marginTop: hp('2%'), alignItems: 'center', justifyContent: 'center', borderRadius: hp('7%'), backgroundColor: '#0F74C8' }}>
-                                <Text style={{ color: '#FFFFFF' }}>5</Text>
-                            </View>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: hp('2%'), }}>
-                    <Text style={{ width: wp('60%'), fontSize: hp('2%'), marginLeft: hp('2%'), color: '#5F5F5F' }}>BUSINESS CONSULTING</Text>
-                    <View style={{ flex: 1, height: 1, backgroundColor: '#BEBEBE', marginLeft: hp('-12%'), marginRight: hp('2%') }} />
-                </View>
-
-                <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: hp('2%') }}>
-                    <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.RUBYCHATSCREEN) }} style={styles.chatview}>
-                        <View style={{ justifyContent: 'flex-end', flexDirection: 'row', marginTop: hp('1%') }}>
-                            <Text style={{ color: '#999999', fontSize: hp('1.5%'), marginRight: hp('2%') }}>2:30 PM</Text>
-                        </View>
-                        <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-                            <Image source={require('../../assets/images/user4.png')} style={{ marginTop: hp('-0%'), width: 72, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
-                            <FontAwesome name="circle" size={21} color="#EEEEEE" style={{ marginLeft: wp('-4%') }} />
-                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('5%') }}>
-                                <Text style={{ fontSize: hp('3.5%'), fontWeight: 'bold', color: '#000000' }}>Maria</Text>
-                                <Text style={{ fontSize: hp('2.5%'), color: '#04DE71' }}>+ ₹ 20.00</Text>
-                            </View>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-
-                <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: hp('2%') }}>
-                    <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.RUBYCHATSCREEN) }} style={styles.chatview}>
-                        <View style={{ justifyContent: 'flex-end', flexDirection: 'row', marginTop: hp('1%') }}>
-                            <Text style={{ color: '#999999', fontSize: hp('1.5%'), marginRight: hp('2%') }}>2:30 PM</Text>
-                        </View>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-start', marginTop: -5 }}>
                             <Image source={require('../../assets/images/user2.png')}
-                                style={{ marginTop: hp('-0%'), width: 72, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
-                            <FontAwesome name="circle" size={21} color="#5AC8FA" style={{ marginLeft: wp('-35%') }} />
-                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('0%') }}>
-                                <Text style={{ fontSize: hp('3.5%'), fontWeight: 'bold', color: '#000000' }}>Ruby</Text>
-                                <Text style={{ fontSize: hp('2.5%'), color: '#04DE71' }}>+ ₹ 20.00</Text>
+                                style={{ width: 70, height: 70, borderRadius: 100, marginLeft: 25 }} />
+                            <View style={{ marginLeft: -15, height: 15, width: 15, backgroundColor: '#5AC8FA', borderRadius: 100 }}></View>
+                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: 50 }}>
+                                <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#000000' }}>Maria</Text>
+                                <Text style={{ fontSize: 14, color: '#04DE71' }}>+ ₹ 0.00</Text>
                             </View>
-                            <View style={{ marginRight: hp('3%'), width: 30, height: 30, marginTop: hp('2%'), alignItems: 'center', justifyContent: 'center', borderRadius: hp('7%'), backgroundColor: '#0F74C8' }}>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+
+                <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
+                    <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.RUBYCHATSCREEN) }} style={styles.chatview}>
+                        <View style={{ justifyContent: 'flex-end', flexDirection: 'row', marginTop: 5 }}>
+                            <Text style={{ color: '#999999', fontSize: 12, marginRight: 15 }}>2:30 PM</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: -5 }}>
+                            <Image source={require('../../assets/images/user3.png')}
+                                style={{ width: 70, height: 70, borderRadius: 100, marginLeft: 25 }} />
+                            <View style={{ marginLeft: -150, height: 15, width: 15, backgroundColor: '#5AC8FA', borderRadius: 100 }}></View>
+                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: -90 }}>
+                                <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#000000' }}>Rajan</Text>
+                                <Text style={{ fontSize: 14, color: '#04DE71' }}>+ ₹ 20.00</Text>
+                            </View>
+                            <View style={{ marginRight: 25, width: 30, height: 30, marginTop: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 100, backgroundColor: '#0F74C8' }}>
                                 <Text style={{ color: '#FFFFFF' }}>5</Text>
                             </View>
                         </View>
                     </TouchableOpacity>
                 </View>
 
-                <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: hp('2%') }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 15 }}>
+                    <Text style={{ width: WIDTH - 240, fontSize: 12, marginLeft: 20, marginRight: 20, color: '#5F5F5F' }}>BUSINESS CONSULTING</Text>
+                    <View style={{ flex: 1, height: 1, backgroundColor: '#BEBEBE', marginLeft: -50, marginRight: 15 }} />
+                </View>
+
+                <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
                     <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.RUBYCHATSCREEN) }} style={styles.chatview}>
-                        <View style={{ justifyContent: 'flex-end', flexDirection: 'row', marginTop: hp('1%') }}>
-                            <Text style={{ color: '#999999', fontSize: hp('1.5%'), marginRight: hp('2%') }}>2:30 PM</Text>
+                        <View style={{ justifyContent: 'flex-end', flexDirection: 'row', marginTop: 5 }}>
+                            <Text style={{ color: '#999999', fontSize: 12, marginRight: 15 }}>2:30 PM</Text>
                         </View>
-                        <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-                            <Image source={require('../../assets/images/user3.png')} style={{ marginTop: hp('-0%'), width: 72, height: 70, borderRadius: hp('7%'), marginLeft: hp('3%'), }} />
-                            <FontAwesome name="circle" size={21} color="#5AC8FA" style={{ marginLeft: wp('-4%') }} />
-                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: hp('5%') }}>
-                                <Text style={{ fontSize: hp('3.5%'), fontWeight: 'bold', color: '#000000' }}>Maria</Text>
-                                <Text style={{ fontSize: hp('2.5%'), color: '#04DE71' }}>+ ₹ 20.00</Text>
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-start', marginTop: -5 }}>
+                            <Image source={require('../../assets/images/user2.png')}
+                                style={{ width: 70, height: 70, borderRadius: 100, marginLeft: 25 }} />
+                            <View style={{ marginLeft: -15, height: 15, width: 15, backgroundColor: '#5AC8FA', borderRadius: 100 }}></View>
+                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: 50 }}>
+                                <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#000000' }}>Maria</Text>
+                                <Text style={{ fontSize: 14, color: '#04DE71' }}>+ ₹ 0.00</Text>
                             </View>
                         </View>
                     </TouchableOpacity>
                 </View>
-                <View style={{ marginBottom: hp('10%') }}></View>
+
+                <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
+                    <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.RUBYCHATSCREEN) }} style={styles.chatview}>
+                        <View style={{ justifyContent: 'flex-end', flexDirection: 'row', marginTop: 5 }}>
+                            <Text style={{ color: '#999999', fontSize: 12, marginRight: 15 }}>2:30 PM</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: -5 }}>
+                            <Image source={require('../../assets/images/user3.png')}
+                                style={{ width: 70, height: 70, borderRadius: 100, marginLeft: 25 }} />
+                            <View style={{ marginLeft: -150, height: 15, width: 15, backgroundColor: '#5AC8FA', borderRadius: 100 }}></View>
+                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: -90 }}>
+                                <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#000000' }}>Rajan</Text>
+                                <Text style={{ fontSize: 14, color: '#04DE71' }}>+ ₹ 20.00</Text>
+                            </View>
+                            <View style={{ marginRight: 25, width: 30, height: 30, marginTop: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 100, backgroundColor: '#0F74C8' }}>
+                                <Text style={{ color: '#FFFFFF' }}>5</Text>
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+
+                <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
+                    <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.RUBYCHATSCREEN) }} style={styles.chatview}>
+                        <View style={{ justifyContent: 'flex-end', flexDirection: 'row', marginTop: 5 }}>
+                            <Text style={{ color: '#999999', fontSize: 12, marginRight: 15 }}>2:30 PM</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-start', marginTop: -5 }}>
+                            <Image source={require('../../assets/images/user2.png')}
+                                style={{ width: 70, height: 70, borderRadius: 100, marginLeft: 25 }} />
+                            <View style={{ marginLeft: -15, height: 15, width: 15, backgroundColor: '#5AC8FA', borderRadius: 100 }}></View>
+                            <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: 50 }}>
+                                <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#000000' }}>Maria</Text>
+                                <Text style={{ fontSize: 14, color: '#04DE71' }}>+ ₹ 0.00</Text>
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+                <View style={{ marginBottom: 40 }}></View>
             </ScrollView>
         </SafeAreaView>
     )
@@ -195,10 +206,10 @@ const styles = StyleSheet.create({
         backgroundColor: "#EEEEEE"
     },
     chatview: {
-        width: wp('90%'),
+        width: WIDTH - 20,
         backgroundColor: '#FFFFFF',
-        borderRadius: hp('1%'),
-        height: hp('16%'),
+        borderRadius: 10,
+        height: 100,
         shadowOpacity: 0.5,
         shadowRadius: 3,
         shadowOffset: {
@@ -208,10 +219,7 @@ const styles = StyleSheet.create({
         elevation: 1,
     },
     categoryIcon: {
-        width: wp("7%"),
-        height: wp("7%"),
-        borderRadius: hp('6%'),
-        marginLeft: wp('5%'),
+        marginLeft: 20,
         alignItems: 'center',
         justifyContent: 'center'
     },
