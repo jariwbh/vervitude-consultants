@@ -5,7 +5,7 @@ const WIDTH = Dimensions.get('window').width;
 export const Transferstyles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#EEEEEE"
+        backgroundColor: '#EEEEEE'
     },
     abalanceview: {
         height: 180,
@@ -68,7 +68,7 @@ export const Transferstyles = StyleSheet.create({
 export const Wallatestyles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#EEEEEE"
+        backgroundColor: '#EEEEEE'
     },
     balanceview: {
         height: 180,

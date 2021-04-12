@@ -3,12 +3,12 @@ import { Text, View, SafeAreaView, Dimensions, TouchableOpacity, ScrollView, Bac
 import { MYPROFILESCREEN, CHATHISTORYSCREEN } from '../../context/screen/screenName';
 import MenuButton from '../../components/MenuButton/MenuButton';
 import ChatMenu from '../../components/ChatMenu/ChatMenu';
-import { StackedBarChart } from "react-native-chart-kit";
-const screenWidth = Dimensions.get("window").width;
+import { StackedBarChart } from 'react-native-chart-kit';
+const screenWidth = Dimensions.get('window').width;
 import * as STYLES from './styles';
 
 const data = {
-    labels: ["Mon", "Tue", "Wed", "Thu", "Sat", "Sun"],
+    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Sat', 'Sun'],
     data: [
         [60, 60],
         [30, 30],
@@ -17,13 +17,13 @@ const data = {
         [80, 30],
         [50, 30]
     ],
-    barColors: ["#C4C4C4", "#5AC8FA"]
+    barColors: ['#C4C4C4', '#5AC8FA']
 };
 
 const chartConfig = {
-    backgroundGradientFrom: "#FFFFFF",
+    backgroundGradientFrom: '#FFFFFF',
     backgroundGradientFromOpacity: 0,
-    backgroundGradientTo: "#FFFFFF",
+    backgroundGradientTo: '#FFFFFF',
     backgroundGradientToOpacity: 0.1,
     color: (opacity = 1) => `rgba(92, 92, 92, ${opacity})`,
     strokeWidth: 1, // optional, default 3
@@ -66,7 +66,7 @@ const homeScreen = (props) => {
     return (
         <SafeAreaView style={STYLES.styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: "center", marginTop: 30 }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 30 }}>
                     <View style={{ justifyContent: 'flex-start' }}>
                         <MenuButton onPress={() => { props.navigation.navigate(MYPROFILESCREEN) }} />
                     </View>
@@ -292,7 +292,7 @@ const homeScreen = (props) => {
             </ScrollView>
             {/* Filter model Pop */}
             <Modal
-                animationType="slide"
+                animationType='slide'
                 transparent={true}
                 visible={filterModalVisible}
                 onRequestClose={() => { setFilterModalVisible(!filterModalVisible) }}
@@ -340,7 +340,7 @@ const homeScreen = (props) => {
 
             {/* Online consultants Model Pop */}
             <Modal
-                animationType="slide"
+                animationType='slide'
                 transparent={true}
                 visible={onlineModalVisible}
                 onRequestClose={() => { setOnlineModalVisible(!onlineModalVisible) }}
@@ -351,7 +351,7 @@ const homeScreen = (props) => {
                             <Text style={{ textAlign: 'center', color: '#000000' }}>All</Text>
                             <Switch
                                 style={{ marginLeft: 210 }}
-                                trackColor={{ false: "#C4C4C4", true: "#0F74C8" }}
+                                trackColor={{ false: '#C4C4C4', true: '#0F74C8' }}
                                 onValueChange={() => settoggleSwitchAll(toggleSwitchAll == false ? true : false)}
                                 value={toggleSwitchAll} />
                         </View>
@@ -363,7 +363,7 @@ const homeScreen = (props) => {
                             <Text style={{ textAlign: 'center', color: '#000000' }}>Design</Text>
                             <Switch
                                 style={{ marginLeft: 190 }}
-                                trackColor={{ false: "#C4C4C4", true: "#00D9CE" }}
+                                trackColor={{ false: '#C4C4C4', true: '#00D9CE' }}
                                 onValueChange={() => settoggleSwitchAll(toggleSwitchAll == false ? true : false)}
                                 value={toggleSwitchAll} />
                         </View>
@@ -375,7 +375,7 @@ const homeScreen = (props) => {
                             <Text style={{ textAlign: 'center', color: '#000000' }}>Marketing & Advertising</Text>
                             <Switch
                                 style={{ marginLeft: 85 }}
-                                trackColor={{ false: "#C4C4C4", true: "#00D9CE" }}
+                                trackColor={{ false: '#C4C4C4', true: '#00D9CE' }}
                                 onValueChange={() => settoggleSwitchAll(toggleSwitchAll == false ? true : false)}
                                 value={toggleSwitchAll} />
                         </View>
@@ -387,7 +387,7 @@ const homeScreen = (props) => {
                             <Text style={{ textAlign: 'center', color: '#000000' }}>Technology</Text>
                             <Switch
                                 style={{ marginLeft: 160 }}
-                                trackColor={{ false: "#C4C4C4", true: "#00D9CE" }}
+                                trackColor={{ false: '#C4C4C4', true: '#00D9CE' }}
                                 onValueChange={() => settoggleSwitchAll(toggleSwitchAll == false ? true : false)}
                                 value={toggleSwitchAll} />
                         </View>
@@ -399,7 +399,7 @@ const homeScreen = (props) => {
                             <Text style={{ textAlign: 'center', color: '#000000' }}>Business & Strategy</Text>
                             <Switch
                                 style={{ marginLeft: 110 }}
-                                trackColor={{ false: "#C4C4C4", true: "#00D9CE" }}
+                                trackColor={{ false: '#C4C4C4', true: '#00D9CE' }}
                                 onValueChange={() => settoggleSwitchAll(toggleSwitchAll == false ? true : false)}
                                 value={toggleSwitchAll} />
                         </View>

@@ -1,11 +1,11 @@
 import { StyleSheet, Dimensions } from 'react-native';
-const HEIGHT = Dimensions.get("window").height;
-const WIDTH = Dimensions.get("window").width;
+const HEIGHT = Dimensions.get('window').height;
+const WIDTH = Dimensions.get('window').width;
 
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#EEEEEE",
+        backgroundColor: '#EEEEEE',
     },
     graficview: {
         flexDirection: 'row',
@@ -54,7 +54,7 @@ export const styles = StyleSheet.create({
         borderRadius: 100,
         alignItems: 'center',
         justifyContent: 'center',
-        shadowColor: "#000000",
+        shadowColor: '#000000',
         shadowOffset: {
             width: 0,
             height: 2,

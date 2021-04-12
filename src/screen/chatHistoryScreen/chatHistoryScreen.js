@@ -3,8 +3,8 @@ import { View, Text, SafeAreaView, Dimensions, StyleSheet, ScrollView, Touchable
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as SCREEN from '../../context/screen/screenName';
 import ChatMenu from '../../components/ChatMenu/ChatMenu';
-const HEIGHT = Dimensions.get("window").height;
-const WIDTH = Dimensions.get("window").width;
+const HEIGHT = Dimensions.get('window').height;
+const WIDTH = Dimensions.get('window').width;
 
 function chatHistoryScreen(props) {
     return (
@@ -14,7 +14,7 @@ function chatHistoryScreen(props) {
 
                     <View style={{ justifyContent: 'flex-start' }}>
                         <TouchableOpacity style={styles.categoryIcon} onPress={() => { props.navigation.navigate(SCREEN.HOMESCREEN) }} >
-                            <AntDesign name="arrowleft" size={24} color="#5AC8FA" />
+                            <AntDesign name='arrowleft' size={24} color='#5AC8FA' />
                         </TouchableOpacity>
                     </View>
 
@@ -245,7 +245,7 @@ export default chatHistoryScreen
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#EEEEEE"
+        backgroundColor: '#EEEEEE'
     },
     chatview: {
         width: WIDTH - 20,

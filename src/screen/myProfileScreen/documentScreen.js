@@ -12,7 +12,7 @@ const documentScreen = (props) => {
                 <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 30 }}>
                     <View style={{ justifyContent: 'flex-start' }}>
                         <TouchableOpacity onPress={() => { props.navigation.goBack(null) }}>
-                            <AntDesign name="arrowleft" size={24} color='#FFFFFF' style={{ marginLeft: 15 }} />
+                            <AntDesign name='arrowleft' size={24} color='#FFFFFF' style={{ marginLeft: 15 }} />
                         </TouchableOpacity>
                     </View>
                     <View style={{ justifyContent: 'flex-end' }}>
@@ -30,7 +30,7 @@ const documentScreen = (props) => {
                             <Image source={require('../../assets/images/user2.png')}
                                 style={{ marginTop: -50, width: 100, height: 100, borderRadius: 100 }} />
                             <TouchableOpacity style={{ marginTop: -60 }}>
-                                <Feather name="camera" size={24} color='#FFFFFF' />
+                                <Feather name='camera' size={24} color='#FFFFFF' />
                             </TouchableOpacity>
                         </View>
 
@@ -51,18 +51,18 @@ const documentScreen = (props) => {
                         <View style={STYLE.Documentstyles.inputView}>
                             <TextInput
                                 style={STYLE.Documentstyles.TextInput}
-                                placeholder="BGAAFDASDFA"
+                                placeholder='BGAAFDASDFA'
                                 type='clear'
-                                returnKeyType="next"
-                                placeholderTextColor="#000000"
+                                returnKeyType='next'
+                                placeholderTextColor='#000000'
                                 blurOnSubmit={false}
-                                defaultValue="BGAAFDASDFA"
+                                defaultValue='BGAAFDASDFA'
                             />
                         </View>
                         <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
                             <View style={STYLE.Documentstyles.FontBoxStyle}>
                                 <TouchableOpacity>
-                                    <Feather name="camera" size={24} color='#000000' />
+                                    <Feather name='camera' size={24} color='#000000' />
                                 </TouchableOpacity>
                                 <Text style={{ color: '#000000', fontSize: 12 }}>FRONT</Text>
                             </View>
@@ -74,19 +74,19 @@ const documentScreen = (props) => {
                         <View style={STYLE.Documentstyles.inputView}>
                             <TextInput
                                 style={STYLE.Documentstyles.TextInput}
-                                placeholder="123SDFGSDFGSDF"
+                                placeholder='123SDFGSDFGSDF'
                                 type='clear'
-                                returnKeyType="next"
-                                placeholderTextColor="#000000"
+                                returnKeyType='next'
+                                placeholderTextColor='#000000'
                                 blurOnSubmit={false}
-                                defaultValue="123SDFGSDFGSDF"
+                                defaultValue='123SDFGSDFGSDF'
                             />
 
                         </View>
                         <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
                             <View style={STYLE.Documentstyles.FontBoxStyle}>
                                 <TouchableOpacity>
-                                    <Feather name="camera" size={24} color='#000000' />
+                                    <Feather name='camera' size={24} color='#000000' />
                                 </TouchableOpacity>
                                 <Text style={{ color: '#000000', fontSize: 12 }}>FRONT</Text>
                             </View>
@@ -94,7 +94,7 @@ const documentScreen = (props) => {
                         <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
                             <View style={STYLE.Documentstyles.FontBoxStyle}>
                                 <TouchableOpacity>
-                                    <Feather name="camera" size={24} color='#000000' />
+                                    <Feather name='camera' size={24} color='#000000' />
                                 </TouchableOpacity>
                                 <Text style={{ color: '#000000', fontSize: 12 }}>BACK</Text>
                             </View>

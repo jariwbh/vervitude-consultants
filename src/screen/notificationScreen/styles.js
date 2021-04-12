@@ -5,10 +5,10 @@ const WIDTH = Dimensions.get('window').width;
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#5AC8FA",
+        backgroundColor: '#5AC8FA',
     },
     notificationview: {
-        flexDirection: "column",
+        flexDirection: 'column',
         height: 100,
         width: WIDTH - 20,
         backgroundColor: '#FFFFFF',
@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
         borderRadius: 100,
         alignItems: 'center',
         justifyContent: 'center',
-        shadowColor: "#000000",
+        shadowColor: '#000000',
         shadowOffset: {
             width: 0,
             height: 2,

@@ -13,7 +13,7 @@ const editScreen = (props) => {
                 <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 30 }}>
                     <View style={{ justifyContent: 'flex-start' }}>
                         <TouchableOpacity onPress={() => { props.navigation.goBack(null) }}>
-                            <AntDesign name="arrowleft" size={24} color='#FFFFFF' style={{ marginLeft: 15 }} />
+                            <AntDesign name='arrowleft' size={24} color='#FFFFFF' style={{ marginLeft: 15 }} />
                         </TouchableOpacity>
                     </View>
                     <View style={{ justifyContent: 'flex-end' }}>
@@ -31,7 +31,7 @@ const editScreen = (props) => {
                             <Image source={require('../../assets/images/user2.png')}
                                 style={{ marginTop: -50, width: 100, height: 100, borderRadius: 100 }} />
                             <TouchableOpacity style={{ marginTop: -60 }}>
-                                <Feather name="camera" size={24} color='#FFFFFF' />
+                                <Feather name='camera' size={24} color='#FFFFFF' />
                             </TouchableOpacity>
                         </View>
                         <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 60, marginBottom: 15 }}>
@@ -46,12 +46,12 @@ const editScreen = (props) => {
                         <View style={STYLE.Editstyles.inputView}>
                             <TextInput
                                 style={STYLE.Editstyles.TextInputbold}
-                                placeholder="Ranjan"
+                                placeholder='Ranjan'
                                 type='clear'
-                                returnKeyType="next"
-                                placeholderTextColor="#000000"
+                                returnKeyType='next'
+                                placeholderTextColor='#000000'
                                 blurOnSubmit={false}
-                                defaultValue="Ranjan"
+                                defaultValue='Ranjan'
                             />
                         </View>
 
@@ -61,12 +61,12 @@ const editScreen = (props) => {
                         <View style={STYLE.Editstyles.inputView}>
                             <TextInput
                                 style={STYLE.Editstyles.TextInputbold}
-                                placeholder="Pathak"
+                                placeholder='Pathak'
                                 type='clear'
-                                returnKeyType="next"
-                                placeholderTextColor="#000000"
+                                returnKeyType='next'
+                                placeholderTextColor='#000000'
                                 blurOnSubmit={false}
-                                defaultValue="Pathak"
+                                defaultValue='Pathak'
                             />
                         </View>
 
@@ -76,12 +76,12 @@ const editScreen = (props) => {
                         <View style={STYLE.Editstyles.inputView}>
                             <TextInput
                                 style={STYLE.Editstyles.TextInput}
-                                placeholder="#pathak"
+                                placeholder='#pathak'
                                 type='clear'
-                                returnKeyType="next"
-                                placeholderTextColor="#000000"
+                                returnKeyType='next'
+                                placeholderTextColor='#000000'
                                 blurOnSubmit={false}
-                                defaultValue="#pathak"
+                                defaultValue='#pathak'
                             />
                         </View>
 
@@ -91,12 +91,12 @@ const editScreen = (props) => {
                         <View style={STYLE.Editstyles.inputView}>
                             <TextInput
                                 style={STYLE.Editstyles.TextInput}
-                                placeholder="+91 9923719601"
+                                placeholder='+91 9923719601'
                                 type='clear'
-                                returnKeyType="next"
-                                placeholderTextColor="#000000"
+                                returnKeyType='next'
+                                placeholderTextColor='#000000'
                                 blurOnSubmit={false}
-                                defaultValue="+91 9923719601"
+                                defaultValue='+91 9923719601'
                             />
                         </View>
 
@@ -106,12 +106,12 @@ const editScreen = (props) => {
                         <View style={STYLE.Editstyles.inputView}>
                             <TextInput
                                 style={STYLE.Editstyles.TextInput}
-                                placeholder="ranjanpathak@gmail.com"
+                                placeholder='ranjanpathak@gmail.com'
                                 type='clear'
-                                returnKeyType="next"
-                                placeholderTextColor="#000000"
+                                returnKeyType='next'
+                                placeholderTextColor='#000000'
                                 blurOnSubmit={false}
-                                defaultValue="ranjanpathak@gmail.com"
+                                defaultValue='ranjanpathak@gmail.com'
                             />
                         </View>
 
@@ -121,14 +121,14 @@ const editScreen = (props) => {
                         <View style={STYLE.Editstyles.inputView}>
                             <TextInput
                                 style={STYLE.Editstyles.TextInput}
-                                placeholder="Mumbai"
+                                placeholder='Mumbai'
                                 type='clear'
-                                returnKeyType="next"
-                                placeholderTextColor="#000000"
+                                returnKeyType='next'
+                                placeholderTextColor='#000000'
                                 blurOnSubmit={false}
-                                defaultValue="Mumbai"
+                                defaultValue='Mumbai'
                             />
-                            <Ionicons name="location" size={24} color='#000000' />
+                            <Ionicons name='location' size={24} color='#000000' />
                         </View>
 
                         <View style={{ marginLeft: 10, marginTop: 5 }}>
@@ -137,14 +137,14 @@ const editScreen = (props) => {
                         <View style={STYLE.Editstyles.textAreainputView}>
                             <TextInput
                                 style={STYLE.Editstyles.TextareaInput}
-                                placeholder="Ranjan is UX Designer working with clients"
+                                placeholder='Ranjan is UX Designer working with clients'
                                 type='clear'
-                                returnKeyType="done"
-                                placeholderTextColor="#000000"
+                                returnKeyType='done'
+                                placeholderTextColor='#000000'
                                 blurOnSubmit={false}
                                 numberOfLines={3}
                                 multiline={true}
-                                defaultValue="Ranjan is UX Designer working with clients all over the world from last 10 years. Ranjan has worked with more then 100 brands. "
+                                defaultValue='Ranjan is UX Designer working with clients all over the world from last 10 years. Ranjan has worked with more then 100 brands. '
                             />
                         </View>
                         <View style={{ flexDirection: 'column', marginLeft: 20, marginTop: 5 }}>
@@ -158,21 +158,21 @@ const editScreen = (props) => {
                                 }} />
                             </TouchableOpacity>
                             <TouchableOpacity style={{ marginLeft: -70 }}>
-                                <AntDesign name="closecircleo" size={20} color='#000000' style={{ backgroundColor: '#ffffff', borderRadius: 100 }} />
+                                <AntDesign name='closecircleo' size={20} color='#000000' style={{ backgroundColor: '#ffffff', borderRadius: 100 }} />
                             </TouchableOpacity>
 
                             <TouchableOpacity style={STYLE.Editstyles.brandstyle}>
                                 <Image source={require('../../assets/images/b1.png')} style={{ width: 80, height: 80, borderRadius: 100, borderColor: '#AAAAAA', borderWidth: 1 }} />
                             </TouchableOpacity>
                             <TouchableOpacity style={{ marginLeft: -70 }}>
-                                <AntDesign name="closecircleo" size={20} color='#000000' style={{ backgroundColor: '#ffffff', borderRadius: 100 }} />
+                                <AntDesign name='closecircleo' size={20} color='#000000' style={{ backgroundColor: '#ffffff', borderRadius: 100 }} />
                             </TouchableOpacity>
 
                             <TouchableOpacity style={STYLE.Editstyles.brandstyle}>
                                 <Image source={require('../../assets/images/c1.png')} style={{ width: 80, height: 80, borderRadius: 100, borderColor: '#AAAAAA', borderWidth: 1 }} />
                             </TouchableOpacity>
                             <TouchableOpacity style={{ marginLeft: -70 }}>
-                                <AntDesign name="closecircleo" size={20} color='#000000' style={{ backgroundColor: '#ffffff', borderRadius: 100 }} />
+                                <AntDesign name='closecircleo' size={20} color='#000000' style={{ backgroundColor: '#ffffff', borderRadius: 100 }} />
                             </TouchableOpacity>
                         </View>
 
@@ -183,14 +183,14 @@ const editScreen = (props) => {
                                 }} />
                             </TouchableOpacity>
                             <TouchableOpacity style={{ marginLeft: -70 }}>
-                                <AntDesign name="closecircleo" size={20} color='#000000' style={{ backgroundColor: '#ffffff', borderRadius: 100 }} />
+                                <AntDesign name='closecircleo' size={20} color='#000000' style={{ backgroundColor: '#ffffff', borderRadius: 100 }} />
                             </TouchableOpacity>
 
                             <TouchableOpacity style={STYLE.Editstyles.brandstyle}>
                                 <Image source={require('../../assets/images/e1.png')} style={{ width: 80, height: 80, borderRadius: 100, borderColor: '#AAAAAA', borderWidth: 1 }} />
                             </TouchableOpacity>
                             <TouchableOpacity style={{ marginLeft: -70 }}>
-                                <AntDesign name="closecircleo" size={20} color='#000000' style={{ backgroundColor: '#ffffff', borderRadius: 100 }} />
+                                <AntDesign name='closecircleo' size={20} color='#000000' style={{ backgroundColor: '#ffffff', borderRadius: 100 }} />
                             </TouchableOpacity>
 
                             <TouchableOpacity style={STYLE.Editstyles.brandstyle}>

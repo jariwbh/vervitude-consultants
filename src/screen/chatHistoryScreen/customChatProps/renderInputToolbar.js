@@ -1,8 +1,8 @@
 import React from 'react';
 import { Image, Dimensions } from 'react-native';
 import { InputToolbar, Composer, Actions, Send } from 'react-native-gifted-chat';
-const HEIGHT = Dimensions.get("window").height;
-const WIDTH = Dimensions.get("window").width;
+const HEIGHT = Dimensions.get('window').height;
+const WIDTH = Dimensions.get('window').width;
 
 const renderInputToolbar = (props) => (
 	<InputToolbar

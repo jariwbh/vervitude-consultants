@@ -13,7 +13,7 @@ export default function MenuButton(props) {
 
 const styles = StyleSheet.create({
     categoryIcon: {
-        alignItems: "center",
+        alignItems: 'center',
         justifyContent: 'center'
     }
 });

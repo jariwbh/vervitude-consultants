@@ -12,7 +12,7 @@ const selectCategoryScreen = (props) => {
 
                     <View style={{ justifyContent: 'flex-start' }}>
                         <TouchableOpacity onPress={() => props.navigation.goBack(null)}>
-                            <AntDesign name="arrowleft" color="#5AC8FA" size={24} style={{ marginLeft: 15 }} />
+                            <AntDesign name='arrowleft' color='#5AC8FA' size={24} style={{ marginLeft: 15 }} />
                         </TouchableOpacity>
                     </View>
 
@@ -28,21 +28,21 @@ const selectCategoryScreen = (props) => {
                     <View style={STYLE.styles.graficview}>
                         <Text style={{ fontSize: 20, marginLeft: 20 }}>Graphic Design</Text>
                         <TouchableOpacity>
-                            <AntDesign name="closecircleo" size={20} color='#000000' style={{ marginRight: 20 }} />
+                            <AntDesign name='closecircleo' size={20} color='#000000' style={{ marginRight: 20 }} />
                         </TouchableOpacity>
                     </View>
 
                     <View style={STYLE.styles.uxview}>
                         <Text style={{ fontSize: 20, marginLeft: 20 }}>UX Design</Text>
                         <TouchableOpacity>
-                            <AntDesign name="closecircleo" size={20} color='#000000' style={{ marginRight: 20 }} />
+                            <AntDesign name='closecircleo' size={20} color='#000000' style={{ marginRight: 20 }} />
                         </TouchableOpacity>
                     </View>
 
                     <View style={STYLE.styles.interiorview}>
                         <Text style={{ fontSize: 20, marginLeft: 20 }}>Interior Design</Text>
                         <TouchableOpacity>
-                            <AntDesign name="closecircleo" size={20} color='#000000' style={{ marginRight: 20 }} />
+                            <AntDesign name='closecircleo' size={20} color='#000000' style={{ marginRight: 20 }} />
                         </TouchableOpacity>
                     </View>
                 </View>

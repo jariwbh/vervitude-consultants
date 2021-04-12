@@ -107,9 +107,9 @@ export default class loginScreen extends Component {
         // setTimeout(() => {
         //     this.setState({ loading: false });
         //     if (Platform.OS === 'android') {
-        //         ToastAndroid.show("Username and Password Invalid!", ToastAndroid.LONG)
+        //         ToastAndroid.show('Username and Password Invalid!', ToastAndroid.LONG)
         //     } else {
-        //         alert("Username and Password Invalid!");
+        //         alert('Username and Password Invalid!');
         //     }
         //     this.resetScreen();
         //     return;
@@ -125,9 +125,9 @@ export default class loginScreen extends Component {
                         this.authenticateUser(response.data.user);
                         this.setState({ loading: false })
                         if (Platform.OS === 'android') {
-                            ToastAndroid.show("SignIn Success!", ToastAndroid.LONG);
+                            ToastAndroid.show('SignIn Success!', ToastAndroid.LONG);
                         } else {
-                            alert("SignIn Success!");
+                            alert('SignIn Success!');
                         }
                         this.props.navigation.navigate(MAINSCREEN);
                         return;
@@ -137,9 +137,9 @@ export default class loginScreen extends Component {
             this.setState({ loading: false });
             this.resetScreen();
             if (Platform.OS === 'android') {
-                ToastAndroid.show("Username and Password Invalid!", ToastAndroid.LONG);
+                ToastAndroid.show('Username and Password Invalid!', ToastAndroid.LONG);
             } else {
-                alert("Username and Password Invalid!");
+                alert('Username and Password Invalid!');
             }
         };
     }
@@ -148,7 +148,7 @@ export default class loginScreen extends Component {
         const { loading, showModalVisible, showMessageModalVisible, usererror, passworderror } = this.state;
         return (
             <SafeAreaView style={STYLES.styles.container}>
-                <StatusBar backgroundColor="#80caff" hidden barStyle="light-content" />
+                <StatusBar backgroundColor='#80caff' hidden barStyle='light-content' />
                 <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={'always'}>
                     <View style={STYLES.styles.circle}>
                         <Image source={require('../../assets/images/icon.png')} style={STYLES.styles.imageView} />
@@ -170,11 +170,11 @@ export default class loginScreen extends Component {
                                     <View style={usererror == null ? STYLES.styles.inputView : STYLES.styles.inputViewError}>
                                         <TextInput
                                             style={STYLES.styles.TextInput}
-                                            placeholder="Email Address"
+                                            placeholder='Email Address'
                                             type='clear'
-                                            returnKeyType="next"
+                                            returnKeyType='next'
                                             defaultValue={this.state.username}
-                                            placeholderTextColor="#000000"
+                                            placeholderTextColor='#000000'
                                             blurOnSubmit={false}
                                             onSubmitEditing={() => { this.secondTextInputRef.current.focus() }}
                                             onChangeText={(email) => this.setEmail(email)}
@@ -183,12 +183,12 @@ export default class loginScreen extends Component {
                                     <View style={passworderror == null ? STYLES.styles.inputView : STYLES.styles.inputViewError}>
                                         <TextInput
                                             style={STYLES.styles.TextInput}
-                                            placeholder="Password"
+                                            placeholder='Password'
                                             type='clear'
                                             defaultValue={this.state.password}
-                                            placeholderTextColor="#000000"
+                                            placeholderTextColor='#000000'
                                             secureTextEntry={true}
-                                            returnKeyType="done"
+                                            returnKeyType='done'
                                             ref={this.secondTextInputRef}
                                             onSubmitEditing={() => this.onPressSubmit()}
                                             onChangeText={(password) => this.setPassword(password)}
@@ -217,7 +217,7 @@ export default class loginScreen extends Component {
                 { loading ? <Loader /> : null}
                 {/* Help & Support model Pop */}
                 <Modal
-                    animationType="slide"
+                    animationType='slide'
                     transparent={true}
                     visible={showModalVisible}
                     onRequestClose={() => { this.showModalVisible(!showModalVisible) }}
@@ -228,20 +228,20 @@ export default class loginScreen extends Component {
                             <View style={STYLES.styles.modelInputView}>
                                 <TextInput
                                     style={STYLES.styles.modelTextInput}
-                                    placeholder="Subject"
+                                    placeholder='Subject'
                                     type='clear'
-                                    returnKeyType="next"
-                                    placeholderTextColor="#999999"
+                                    returnKeyType='next'
+                                    placeholderTextColor='#999999'
                                 />
                             </View>
 
                             <View style={STYLES.styles.modelTextAreainputView}>
                                 <TextInput
                                     style={STYLES.styles.modelTextareaInput}
-                                    placeholder="Write Your Descripation"
+                                    placeholder='Write Your Descripation'
                                     type='clear'
-                                    returnKeyType="done"
-                                    placeholderTextColor="#999999"
+                                    returnKeyType='done'
+                                    placeholderTextColor='#999999'
                                     blurOnSubmit={false}
                                     numberOfLines={3}
                                     multiline={true}
@@ -262,7 +262,7 @@ export default class loginScreen extends Component {
                 </Modal>
                 {/* message model Pop */}
                 <Modal
-                    animationType="slide"
+                    animationType='slide'
                     transparent={true}
                     visible={showMessageModalVisible}
                     onRequestClose={() => { this.showMessageModalVisible(!showMessageModalVisible) }}

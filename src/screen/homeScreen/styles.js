@@ -1,11 +1,11 @@
 import { StyleSheet, Dimensions } from 'react-native';
-const HEIGHT = Dimensions.get("window").height;
-const WIDTH = Dimensions.get("window").width;
+const HEIGHT = Dimensions.get('window').height;
+const WIDTH = Dimensions.get('window').width;
 
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#EEEEEE",
+        backgroundColor: '#EEEEEE',
     },
     box1: {
         flexDirection: 'column',
@@ -64,9 +64,9 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         width: WIDTH / 2 - 40,
         height: 40,
-        backgroundColor: "#5AC8FA",
+        backgroundColor: '#5AC8FA',
         borderRadius: 14,
-        alignItems: "center",
+        alignItems: 'center',
         justifyContent: 'space-evenly',
         marginLeft: 10
     },
@@ -113,9 +113,9 @@ export const styles = StyleSheet.create({
         height: 200,
         width: WIDTH - 90,
         borderRadius: 20,
-        backgroundColor: "white",
-        alignItems: "center",
-        shadowColor: "#000",
+        backgroundColor: 'white',
+        alignItems: 'center',
+        shadowColor: '#000',
         shadowOffset: {
             width: 0,
             height: 2
@@ -128,9 +128,9 @@ export const styles = StyleSheet.create({
         marginTop: HEIGHT / 2 - 150,
         width: WIDTH - 50,
         borderRadius: 20,
-        backgroundColor: "white",
-        alignItems: "center",
-        shadowColor: "#000",
+        backgroundColor: 'white',
+        alignItems: 'center',
+        shadowColor: '#000',
         shadowOffset: {
             width: 0,
             height: 2
@@ -148,7 +148,7 @@ export const styles = StyleSheet.create({
         borderRadius: 20,
         alignItems: 'center',
         justifyContent: 'center',
-        shadowColor: "#000",
+        shadowColor: '#000',
         shadowOffset: {
             width: 0,
             height: 2,
@@ -165,7 +165,7 @@ export const styles = StyleSheet.create({
         borderRadius: 20,
         alignItems: 'center',
         justifyContent: 'center',
-        shadowColor: "#000",
+        shadowColor: '#000',
         shadowOffset: {
             width: 0,
             height: 2,
@@ -177,10 +177,10 @@ export const styles = StyleSheet.create({
     onlineswitchBtn: {
         flexDirection: 'row',
         width: WIDTH / 2 - 80,
-        backgroundColor: "#FFFFFF",
+        backgroundColor: '#FFFFFF',
         borderRadius: 50,
         height: 40,
-        alignItems: "center",
+        alignItems: 'center',
         justifyContent: 'space-evenly'
     },
     onlineswitchBtnText: {
@@ -191,10 +191,10 @@ export const styles = StyleSheet.create({
     oflineswitchBtn: {
         flexDirection: 'row',
         width: WIDTH / 2 - 80,
-        backgroundColor: "#FFFFFF",
+        backgroundColor: '#FFFFFF',
         borderRadius: 50,
         height: 40,
-        alignItems: "center",
+        alignItems: 'center',
         justifyContent: 'center'
     },
     oflineswitchBtnText: {

@@ -22,13 +22,13 @@ export const styles = StyleSheet.create({
         height: 350,
         width: 350,
         borderRadius: 200,
-        backgroundColor: "#FFFFFF",
+        backgroundColor: '#FFFFFF',
         marginTop: -250,
         marginLeft: -50
     },
     inputView: {
         flexDirection: 'row',
-        backgroundColor: "#fff",
+        backgroundColor: '#fff',
         borderRadius: 20,
         borderColor: '#5AC8FA',
         width: WIDTH - 80,
@@ -38,7 +38,7 @@ export const styles = StyleSheet.create({
     },
     inputViewError: {
         flexDirection: 'row',
-        backgroundColor: "#fff",
+        backgroundColor: '#fff',
         borderRadius: 20,
         borderColor: '#ff0000',
         width: WIDTH - 80,
@@ -80,10 +80,10 @@ export const styles = StyleSheet.create({
     submitBtn: {
         flexDirection: 'row',
         width: WIDTH / 2,
-        backgroundColor: "#5AC8FA",
+        backgroundColor: '#5AC8FA',
         borderRadius: 50,
         height: 40,
-        alignItems: "center",
+        alignItems: 'center',
         justifyContent: 'center'
     },
     submitbtnText: {
@@ -107,9 +107,9 @@ export const styles = StyleSheet.create({
         height: 200,
         width: WIDTH - 90,
         borderRadius: 20,
-        backgroundColor: "white",
-        alignItems: "center",
-        shadowColor: "#000000",
+        backgroundColor: 'white',
+        alignItems: 'center',
+        shadowColor: '#000000',
         shadowOffset: {
             width: 0,
             height: 2
@@ -123,9 +123,9 @@ export const styles = StyleSheet.create({
         height: 200,
         width: WIDTH - 90,
         borderRadius: 20,
-        backgroundColor: "white",
-        alignItems: "center",
-        shadowColor: "#000000",
+        backgroundColor: 'white',
+        alignItems: 'center',
+        shadowColor: '#000000',
         shadowOffset: {
             width: 0,
             height: 2
@@ -143,7 +143,7 @@ export const styles = StyleSheet.create({
         borderRadius: 20,
         alignItems: 'center',
         justifyContent: 'center',
-        shadowColor: "#000000",
+        shadowColor: '#000000',
         shadowOffset: {
             width: 0,
             height: 2,
@@ -160,7 +160,7 @@ export const styles = StyleSheet.create({
         borderRadius: 20,
         alignItems: 'center',
         justifyContent: 'center',
-        shadowColor: "#000000",
+        shadowColor: '#000000',
         shadowOffset: {
             width: 0,
             height: 2,
@@ -171,7 +171,7 @@ export const styles = StyleSheet.create({
     },
     modelInputView: {
         flexDirection: 'row',
-        backgroundColor: "#F4F4F4",
+        backgroundColor: '#F4F4F4',
         borderWidth: 0.5,
         borderColor: '#000000',
         width: WIDTH - 120,
@@ -187,7 +187,7 @@ export const styles = StyleSheet.create({
     },
     modelTextAreainputView: {
         flexDirection: 'row',
-        backgroundColor: "#F4F4F4",
+        backgroundColor: '#F4F4F4',
         borderWidth: 0.5,
         borderColor: '#000000',
         width: WIDTH - 120,

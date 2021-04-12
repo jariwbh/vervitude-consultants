@@ -4,8 +4,8 @@ import * as SCREEN from '../../context/screen/screenName';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import ChatMenu from '../../components/ChatMenu/ChatMenu';
-const HEIGHT = Dimensions.get("window").height;
-const WIDTH = Dimensions.get("window").width;
+const HEIGHT = Dimensions.get('window').height;
+const WIDTH = Dimensions.get('window').width;
 //
 import AsyncStorage from '@react-native-community/async-storage';
 import { AUTHUSER } from '../../context/actions/type';
@@ -103,7 +103,7 @@ const rubychatScreen = ({ navigation }) => {
 							navigation.goBack(null);
 						}}
 					>
-						<AntDesign name="arrowleft" size={24} color="#5AC8FA" />
+						<AntDesign name='arrowleft' size={24} color='#5AC8FA' />
 					</TouchableOpacity>
 				</View>
 
@@ -112,9 +112,9 @@ const rubychatScreen = ({ navigation }) => {
 					style={{ width: 50, height: 52, borderRadius: 100, marginLeft: 5 }}
 				/>
 				<FontAwesome
-					name="circle"
+					name='circle'
 					size={15}
-					color="#5AC8FA"
+					color='#5AC8FA'
 					style={{ marginLeft: -20, marginTop: -40 }}
 				/>
 				<View

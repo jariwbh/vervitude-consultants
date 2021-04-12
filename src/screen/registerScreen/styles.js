@@ -22,13 +22,13 @@ export const styles = StyleSheet.create({
         height: 350,
         width: 350,
         borderRadius: 200,
-        backgroundColor: "#FFFFFF",
+        backgroundColor: '#FFFFFF',
         marginTop: -250,
         marginLeft: -50
     },
     inputView: {
         flexDirection: 'row',
-        backgroundColor: "#fff",
+        backgroundColor: '#fff',
         borderRadius: 20,
         borderColor: '#5AC8FA',
         width: WIDTH - 80,
@@ -38,7 +38,7 @@ export const styles = StyleSheet.create({
     },
     inputViewError: {
         flexDirection: 'row',
-        backgroundColor: "#fff",
+        backgroundColor: '#fff',
         borderRadius: 20,
         borderColor: '#ff0000',
         width: WIDTH - 80,
@@ -80,10 +80,10 @@ export const styles = StyleSheet.create({
     submitBtn: {
         flexDirection: 'row',
         width: WIDTH / 2,
-        backgroundColor: "#5AC8FA",
+        backgroundColor: '#5AC8FA',
         borderRadius: 50,
         height: 40,
-        alignItems: "center",
+        alignItems: 'center',
         justifyContent: 'center'
     },
     submitbtnText: {

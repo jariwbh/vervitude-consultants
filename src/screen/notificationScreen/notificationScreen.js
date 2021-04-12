@@ -12,7 +12,7 @@ const notificationScreen = (props) => {
                 <View style={{ justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', marginTop: 30, marginBottom: 10 }}>
                     <View style={{ justifyContent: 'flex-start' }}>
                         <TouchableOpacity onPress={() => props.navigation.goBack(null)}>
-                            <AntDesign name="arrowleft" color="#FFFFFF" size={24} style={{ marginLeft: 15 }} />
+                            <AntDesign name='arrowleft' color='#FFFFFF' size={24} style={{ marginLeft: 15 }} />
                         </TouchableOpacity>
                     </View>
                     <View style={{ marginLeft: -150 }}>
@@ -35,7 +35,7 @@ const notificationScreen = (props) => {
                         </View>
                         <View style={{ flexDirection: 'row', flex: 1, marginTop: -30, marginLeft: 15, alignItems: 'center' }}>
                             <View style={{ width: 40, height: 40, backgroundColor: '#EEEEEE', borderRadius: 20, justifyContent: 'center', alignItems: 'center' }}>
-                                <FontAwesome name="rupee" size={25} color='#04DE71' />
+                                <FontAwesome name='rupee' size={25} color='#04DE71' />
                             </View>
                             <View style={{ flex: 1, marginLeft: 15 }}>
                                 <Text style={{ fontSize: 12, color: '#F67742' }} >#Transaction</Text>
@@ -52,7 +52,7 @@ const notificationScreen = (props) => {
                         </View>
                         <View style={{ flexDirection: 'row', flex: 1, marginTop: -30, marginLeft: 15, alignItems: 'center' }}>
                             <View style={{ width: 40, height: 40, backgroundColor: '#EEEEEE', borderRadius: 20, justifyContent: 'center', alignItems: 'center' }}>
-                                <FontAwesome name="rupee" size={25} color='#04DE71' />
+                                <FontAwesome name='rupee' size={25} color='#04DE71' />
                             </View>
                             <View style={{ flex: 1, marginLeft: 15 }}>
                                 <Text style={{ fontSize: 12, color: '#F67742' }} >#Transaction</Text>
@@ -69,7 +69,7 @@ const notificationScreen = (props) => {
                         </View>
                         <View style={{ flexDirection: 'row', flex: 1, marginTop: -30, marginLeft: 15, alignItems: 'center' }}>
                             <View style={{ width: 40, height: 40, backgroundColor: '#EEEEEE', borderRadius: 20, justifyContent: 'center', alignItems: 'center' }}>
-                                <FontAwesome name="rupee" size={25} color='#04DE71' />
+                                <FontAwesome name='rupee' size={25} color='#04DE71' />
                             </View>
                             <View style={{ flex: 1, marginLeft: 15 }}>
                                 <Text style={{ fontSize: 12, color: '#F67742' }} >#Transaction</Text>

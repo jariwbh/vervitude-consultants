@@ -77,10 +77,11 @@ export default class registerScreen extends Component {
         }
         axiosConfig('606abd8799e17f1678300c12');
         const body = {
-            "property": {
-                "username": username,
-                "fullname": fullname,
-                "mobile_number": mobile_number
+            'property': {
+                'fullname': fullname,
+                'mobile': mobile_number,
+                'primaryemail': username,
+                'type': 'consultant'
             }
         }
         this.setState({ loading: true });
@@ -89,9 +90,9 @@ export default class registerScreen extends Component {
                 if (response.data != null && response.data != 'undefind' && response.status == 200) {
                     this.setState({ loading: false })
                     if (Platform.OS === 'android') {
-                        ToastAndroid.show("SignUp Success!", ToastAndroid.LONG);
+                        ToastAndroid.show('SignUp Success!', ToastAndroid.LONG);
                     } else {
-                        alert("SignUp Success!");
+                        alert('SignUp Success!');
                     }
                     this.props.navigation.navigate(LOGINSCREEN);
                 }
@@ -100,9 +101,9 @@ export default class registerScreen extends Component {
         catch (error) {
             this.setState({ loading: false })
             if (Platform.OS === 'android') {
-                ToastAndroid.show("SignUp Failed!", ToastAndroid.SHORT);
+                ToastAndroid.show('SignUp Failed!', ToastAndroid.SHORT);
             } else {
-                alert("SignUp Failed!");
+                alert('SignUp Failed!');
             }
         }
     }
@@ -111,7 +112,7 @@ export default class registerScreen extends Component {
         const { loading, usererror, mobile_numbererror, fullnameerror } = this.state;
         return (
             <SafeAreaView style={STYLES.styles.container}>
-                <StatusBar backgroundColor="#80caff" hidden barStyle="light-content" />
+                <StatusBar backgroundColor='#80caff' hidden barStyle='light-content' />
                 <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={'always'}>
                     <View style={STYLES.styles.circle}>
                         <Image source={require('../../assets/images/icon.png')} style={STYLES.styles.imageView} />
@@ -133,10 +134,10 @@ export default class registerScreen extends Component {
                                     <View style={fullnameerror == null ? STYLES.styles.inputView : STYLES.styles.inputViewError}>
                                         <TextInput
                                             style={STYLES.styles.TextInput}
-                                            placeholder="Full Name"
+                                            placeholder='Full Name'
                                             type='clear'
-                                            returnKeyType="next"
-                                            placeholderTextColor="#000000"
+                                            returnKeyType='next'
+                                            placeholderTextColor='#000000'
                                             defaultValue={this.state.fullname}
                                             blurOnSubmit={false}
                                             onSubmitEditing={() => { this.secondTextInputRef.current.focus() }}
@@ -146,10 +147,10 @@ export default class registerScreen extends Component {
                                     <View style={usererror == null ? STYLES.styles.inputView : STYLES.styles.inputViewError}>
                                         <TextInput
                                             style={STYLES.styles.TextInput}
-                                            placeholder="Email Address"
+                                            placeholder='Email Address'
                                             type='clear'
-                                            returnKeyType="next"
-                                            placeholderTextColor="#000000"
+                                            returnKeyType='next'
+                                            placeholderTextColor='#000000'
                                             defaultValue={this.state.username}
                                             ref={this.secondTextInputRef}
                                             blurOnSubmit={false}
@@ -160,11 +161,11 @@ export default class registerScreen extends Component {
                                     <View style={mobile_numbererror == null ? STYLES.styles.inputView : STYLES.styles.inputViewError}>
                                         <TextInput
                                             style={STYLES.styles.TextInput}
-                                            placeholder="Mobile Number"
+                                            placeholder='Mobile Number'
                                             type='clear'
                                             keyboardType='number-pad'
-                                            returnKeyType="done"
-                                            placeholderTextColor="#000000"
+                                            returnKeyType='done'
+                                            placeholderTextColor='#000000'
                                             defaultValue={this.state.mobile_number}
                                             ref={this.thirdTextInputRef}
                                             blurOnSubmit={false}
@@ -181,9 +182,12 @@ export default class registerScreen extends Component {
                             </View>
                         </View>
                         <View style={STYLES.styles.centeView} >
-                            <TouchableOpacity onPress={() => { this.props.navigation.navigate(LOGINSCREEN), this.resetScreen() }} >
-                                <Text style={STYLES.styles.loginText}>Already have an account? Login</Text>
-                            </TouchableOpacity>
+                            <View style={{ flexDirection: 'row' }}>
+                                <Text style={STYLES.styles.loginText}>Already have an account?</Text>
+                                <TouchableOpacity onPress={() => { this.props.navigation.navigate(LOGINSCREEN), this.resetScreen() }} >
+                                    <Text style={STYLES.styles.loginText}>{' ' + 'Login'}</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     </View>
                 </ScrollView>

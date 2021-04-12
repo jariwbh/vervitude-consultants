@@ -12,7 +12,7 @@ const bankInfoScreen = (props) => {
                 <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 30 }}>
                     <View style={{ justifyContent: 'flex-start' }}>
                         <TouchableOpacity onPress={() => { props.navigation.goBack(null) }}>
-                            <AntDesign name="arrowleft" size={24} color='#FFFFFF' style={{ marginLeft: 15 }} />
+                            <AntDesign name='arrowleft' size={24} color='#FFFFFF' style={{ marginLeft: 15 }} />
                         </TouchableOpacity>
                     </View>
                     <View style={{ justifyContent: 'flex-end' }}>
@@ -30,7 +30,7 @@ const bankInfoScreen = (props) => {
                             <Image source={require('../../assets/images/user2.png')}
                                 style={{ marginTop: -50, width: 100, height: 100, borderRadius: 100 }} />
                             <TouchableOpacity style={{ marginTop: -60 }}>
-                                <Feather name="camera" size={24} color='#FFFFFF' />
+                                <Feather name='camera' size={24} color='#FFFFFF' />
                             </TouchableOpacity>
                         </View>
 
@@ -56,12 +56,12 @@ const bankInfoScreen = (props) => {
                         <View style={STYLE.Bankstyles.inputView}>
                             <TextInput
                                 style={STYLE.Bankstyles.TextInput}
-                                placeholder="Ranjan Pathak"
+                                placeholder='Ranjan Pathak'
                                 type='clear'
-                                returnKeyType="next"
-                                placeholderTextColor="#000000"
+                                returnKeyType='next'
+                                placeholderTextColor='#000000'
                                 blurOnSubmit={false}
-                                defaultValue="Ranjan Pathak"
+                                defaultValue='Ranjan Pathak'
                             />
 
                         </View>
@@ -71,12 +71,12 @@ const bankInfoScreen = (props) => {
                         <View style={STYLE.Bankstyles.inputView}>
                             <TextInput
                                 style={STYLE.Bankstyles.TextInput}
-                                placeholder="ICIC Bank"
+                                placeholder='ICIC Bank'
                                 type='clear'
-                                returnKeyType="next"
-                                placeholderTextColor="#000000"
+                                returnKeyType='next'
+                                placeholderTextColor='#000000'
                                 blurOnSubmit={false}
-                                defaultValue="ICIC Bank"
+                                defaultValue='ICIC Bank'
                             />
 
                         </View>
@@ -86,15 +86,15 @@ const bankInfoScreen = (props) => {
                         <View style={STYLE.Bankstyles.inputView}>
                             <TextInput
                                 style={STYLE.Bankstyles.TextInput}
-                                placeholder="ICIC0323"
+                                placeholder='ICIC0323'
                                 type='clear'
-                                returnKeyType="next"
-                                placeholderTextColor="#000000"
+                                returnKeyType='next'
+                                placeholderTextColor='#000000'
                                 blurOnSubmit={false}
-                                defaultValue="ICIC0323"
+                                defaultValue='ICIC0323'
                             />
                             <TouchableOpacity>
-                                <Feather name="search" size={20} color='#555555' style={{ marginRight: 10 }} />
+                                <Feather name='search' size={20} color='#555555' style={{ marginRight: 10 }} />
                             </TouchableOpacity>
                         </View>
                         <View style={{ marginLeft: 15, marginTop: 15 }}>
@@ -114,12 +114,12 @@ const bankInfoScreen = (props) => {
                         <View style={STYLE.Bankstyles.inputView}>
                             <TextInput
                                 style={STYLE.Bankstyles.TextInput}
-                                placeholder="1234567890"
+                                placeholder='1234567890'
                                 type='clear'
-                                returnKeyType="next"
-                                placeholderTextColor="#000000"
+                                returnKeyType='next'
+                                placeholderTextColor='#000000'
                                 blurOnSubmit={false}
-                                defaultValue="1234567890"
+                                defaultValue='1234567890'
                             />
 
                         </View>
@@ -129,19 +129,19 @@ const bankInfoScreen = (props) => {
                         <View style={STYLE.Bankstyles.inputView}>
                             <TextInput
                                 style={STYLE.Bankstyles.TextInput}
-                                placeholder="1234567890"
+                                placeholder='1234567890'
                                 type='clear'
-                                returnKeyType="next"
-                                placeholderTextColor="#000000"
+                                returnKeyType='next'
+                                placeholderTextColor='#000000'
                                 blurOnSubmit={false}
-                                defaultValue="1234567890"
+                                defaultValue='1234567890'
                             />
 
                         </View>
                         <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
                             <View style={STYLE.Bankstyles.ChequeBoxStyle}>
                                 <TouchableOpacity>
-                                    <Feather name="camera" size={24} color='#000000' />
+                                    <Feather name='camera' size={24} color='#000000' />
                                 </TouchableOpacity>
                                 <Text style={{ color: '#000000', fontSize: 12 }}>CANCELD CHEQUE</Text>
                             </View>

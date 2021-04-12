@@ -38,10 +38,10 @@ export const styles = StyleSheet.create({
     submitBtn: {
         flexDirection: 'row',
         width: 150,
-        backgroundColor: "#5AC8FA",
+        backgroundColor: '#5AC8FA',
         borderRadius: 50,
         height: 35,
-        alignItems: "center",
+        alignItems: 'center',
         justifyContent: 'center'
     },
     submitbtnText: {
@@ -54,9 +54,20 @@ export const styles = StyleSheet.create({
     },
     inputView: {
         flexDirection: 'row',
-        backgroundColor: "#F4F4F4",
+        backgroundColor: '#F4F4F4',
         borderWidth: 1,
         borderColor: 'rgba(0, 0, 0, 0.2)',
+        width: WIDTH - 60,
+        height: 40,
+        marginLeft: 20,
+        borderRadius: 5,
+        marginBottom: 20
+    },
+    inputViewError: {
+        flexDirection: 'row',
+        backgroundColor: '#F4F4F4',
+        borderWidth: 1,
+        borderColor: '#ff0000',
         width: WIDTH - 60,
         height: 40,
         marginLeft: 20,

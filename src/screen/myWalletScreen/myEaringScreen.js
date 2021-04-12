@@ -4,7 +4,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as SCREEN from '../../context/screen/screenName';
 import * as STYLE from './styles'
-const WIDTH = Dimensions.get("window").width;
+const WIDTH = Dimensions.get('window').width;
 
 function myEaringScreen(props) {
   return (
@@ -13,7 +13,7 @@ function myEaringScreen(props) {
         <View style={{ justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', marginTop: 30 }}>
           <View style={{ justifyContent: 'flex-start' }}>
             <TouchableOpacity onPress={() => props.navigation.goBack(null)}>
-              <AntDesign name="arrowleft" color="#5AC8FA" size={24} style={{ marginLeft: 15 }} />
+              <AntDesign name='arrowleft' color='#5AC8FA' size={24} style={{ marginLeft: 15 }} />
             </TouchableOpacity>
           </View>
 
@@ -22,7 +22,7 @@ function myEaringScreen(props) {
               style={STYLE.Wallatestyles.wallatwbtn}>
               <Text style={{ fontSize: 16, color: '#FFFFFF' }}>5324.00</Text>
               <View style={{ width: 24, height: 24, backgroundColor: '#FFFFFF', alignItems: 'center', borderRadius: 100, justifyContent: 'center' }}>
-                <FontAwesome name="rupee" size={15} color='#04DE71' />
+                <FontAwesome name='rupee' size={15} color='#04DE71' />
               </View>
             </TouchableOpacity>
           </View>
