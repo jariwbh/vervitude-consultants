@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
     },
     notificationview: {
         flexDirection: 'column',
-        height: 100,
+        height: 90,
         width: WIDTH - 20,
         backgroundColor: '#FFFFFF',
         marginTop: 15,

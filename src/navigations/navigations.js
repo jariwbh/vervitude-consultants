@@ -16,6 +16,7 @@ import SPLASHSCREEN from '../screen/SplashScreen/splashScreen';
 import EDITSCREEN from '../screen/myProfileScreen/editScreen';
 import LOGINSCREEN from '../screen/loginScreen/loginScreen';
 import HOMESCREEN from '../screen/homeScreen/homeScreen';
+import VIEWPROFILESCREEN from '../screen/myProfileScreen/ViewFullPicture';
 
 const Stack = createStackNavigator();
 const navigationsApp = () => {
@@ -47,6 +48,7 @@ function MainNavigation() {
             <HomeStack.Screen name='selectCategoryScreen' component={SELECTCATEGORYSCREEN} />
             <HomeStack.Screen name='chatHistoryScreen' component={CHATHISTORYSCREEN} />
             <HomeStack.Screen name='rubychatScreen' component={RUBYCHATSCREEN} />
+            <HomeStack.Screen name='ViewFullPicture' component={VIEWPROFILESCREEN} />
         </HomeStack.Navigator>
     );
 };

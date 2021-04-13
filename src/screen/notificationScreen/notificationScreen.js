@@ -78,7 +78,7 @@ const notificationScreen = (props) => {
                         </View>
                     </View>
                 </TouchableOpacity>
-
+                <View style={{ paddingBottom: 50 }} />
             </ScrollView>
         </SafeAreaView>
     )

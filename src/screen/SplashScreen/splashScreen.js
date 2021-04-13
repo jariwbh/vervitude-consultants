@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
-import { StatusBar, SafeAreaView } from 'react-native';
+import MyPermissionController from '../../helpers/appPermission';
 import AsyncStorage from '@react-native-community/async-storage';
-import { AUTHUSER } from '../../context/actions/type'
 import * as SCREEN from '../../context/screen/screenName';
+import { StatusBar, SafeAreaView } from 'react-native';
+import { AUTHUSER } from '../../context/actions/type';
 import axiosConfig from '../../helpers/axiosConfig';
 
 function SplashScreen(props) {
@@ -21,7 +22,20 @@ function SplashScreen(props) {
       }
     }
     AuthController();
+    checkPermission();
   }, []);
+
+  //check permission 
+  const checkPermission = () => {
+    setTimeout(
+      () => {
+        MyPermissionController.checkAndRequestStoragePermission()
+          .then((granted) => console.log('>Storage Permission Granted'))
+          .catch((err) => console.log(err))
+      },
+      500
+    );
+  }
 
   return (
     <SafeAreaView style={{ flex: 1 }} >

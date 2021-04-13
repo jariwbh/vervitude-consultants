@@ -1,12 +1,148 @@
-import React from 'react'
-import { View, Text, Image, SafeAreaView, TouchableOpacity, TextInput, ScrollView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, Image, SafeAreaView, TouchableOpacity, TextInput, ScrollView, ToastAndroid, Platform } from 'react-native';
+import UpdateUserService from '../../services/UserService/UserService';
+import AsyncStorage from '@react-native-community/async-storage';
+import MyPermissionController from '../../helpers/appPermission';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as SCREEN from '../../context/screen/screenName';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Feather from 'react-native-vector-icons/Feather';
+import { AUTHUSER } from '../../context/actions/type';
+import ImagePicker from 'react-native-image-picker';
+import Loader from '../../components/loader/index';
+import RNFetchBlob from 'rn-fetch-blob';
 import * as STYLE from './styles';
 
 const editScreen = (props) => {
+    const [loading, setloading] = useState(false);
+    const [userDetails, setuserDetails] = useState(null);
+    const [newProfilePath, setnewProfilePath] = useState(null);
+
+    const [first_name, setfirst_name] = useState(null);
+    const [last_name, setlast_name] = useState(null);
+    const [mobile, setmobile] = useState(null);
+    const [primaryemail, setprimaryemail] = useState(null);
+    const [usertag, setusertag] = useState(null);
+    const [location, setlocation] = useState(null);
+    const [about, setabout] = useState(null);
+
+    //get AsyncStorage current user Details
+    const getUserDetails = async () => {
+        //get AsyncStorage current user Details
+        var getUser = await AsyncStorage.getItem(AUTHUSER);
+        if (getUser == null) {
+            setTimeout(() => {
+                props.navigation.replace(SCREEN.LOGINSCREEN)
+            }, 3000);;
+        } else {
+            var UserInfo = JSON.parse(getUser);
+            setuserDetails(UserInfo);
+            setfirst_name(UserInfo.property.first_name);
+            setlast_name(UserInfo.property.last_name);
+            setmobile(UserInfo.property.mobile);
+            setprimaryemail(UserInfo.property.primaryemail);
+            setusertag(UserInfo.property.usertag);
+            setlocation(UserInfo.property.location);
+            setabout(UserInfo.property.about);
+        }
+    }
+
+    //REPLACE AND ADD LOCAL STORAGE FUNCTION
+    const authenticateUser = (user) => {
+        //AsyncStorage.removeItem(AUTHUSER);
+        AsyncStorage.setItem(AUTHUSER, JSON.stringify(user));
+    }
+
+    //check permission 
+    const checkPermission = () => {
+        setTimeout(
+            () => {
+                MyPermissionController.checkAndRequestStoragePermission()
+                    .then((granted) => console.log('>Storage Permission Granted'))
+                    .catch((err) => console.log(err))
+            },
+            500
+        );
+    }
+
+    useEffect(() => {
+        checkPermission();
+        getUserDetails();
+    }, []);
+
+    const onPressSubmit = () => {
+    }
+
+    //IMAGE CLICK TO GET CALL FUNCTION
+    const handlePicker = () => {
+        ImagePicker.showImagePicker({}, (response) => {
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            } else {
+                setloading(true);
+                onPressUploadFile(response);
+            }
+        });
+    };
+
+    //Upload Cloud storage function
+    const onPressUploadFile = async (fileObj) => {
+        if (fileObj != null) {
+            await RNFetchBlob.fetch('POST', 'https://api.cloudinary.com/v1_1/dlopjt9le/upload', { 'Content-Type': 'multipart/form-data' },
+                [{ name: 'file', filename: fileObj.fileName, type: fileObj.type, data: RNFetchBlob.wrap(fileObj.uri) },
+                { name: 'upload_preset', data: 'gs95u3um' }])
+                .then(response => response.json())
+                .then(data => {
+                    setloading(false);
+                    if (data && data.url) {
+                        setnewProfilePath(data.url);
+                        UpdateProfileService();
+                    }
+                }).catch(error => {
+                    alert("Uploading Failed!");
+                })
+        } else {
+            alert('Please Select File');
+        }
+    }
+
+    //PROFILE PICTURE CLICK TO CALL FUNCTION
+    const onChangeProfilePic = () => {
+        handlePicker();
+    }
+
+    //UPDATE PROFILE PICTURE API CALL
+    const UpdateProfileService = () => {
+        let body = {
+            _id: userDetails._id,
+            profilepic: newProfilePath
+        }
+
+        try {
+            UpdateUserService(body).then(response => {
+                if (response.data != null && response.data != 'undefind' && response.status == 200) {
+                    authenticateUser(response.data);
+                    getUserDetails();
+                    if (Platform.OS === 'android') {
+                        ToastAndroid.show("Your Profile Update!", ToastAndroid.SHORT);
+                    } else {
+                        alert('Your Profile Update!');
+                    }
+                }
+            })
+        }
+        catch (error) {
+            setloading(false);
+            if (Platform.OS === 'android') {
+                ToastAndroid.show("Your Profile Not Update!", ToastAndroid.SHORT);
+            } else { alert('Your Profile Not Update!') }
+        }
+    }
+
     return (
         <SafeAreaView style={STYLE.Editstyles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -28,9 +164,10 @@ const editScreen = (props) => {
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                     <View style={STYLE.Editstyles.profileview}>
                         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                            <Image source={require('../../assets/images/user2.png')}
+                            <Image source={{ uri: userDetails ? userDetails.profilepic !== null && userDetails.profilepic ? userDetails.profilepic : 'https://res.cloudinary.com/dnogrvbs2/image/upload/v1613538969/profile1_xspwoy.png' : null }}
                                 style={{ marginTop: -50, width: 100, height: 100, borderRadius: 100 }} />
-                            <TouchableOpacity style={{ marginTop: -60 }}>
+                            <TouchableOpacity onPress={() => onChangeProfilePic()}
+                                style={{ marginTop: -60 }}>
                                 <Feather name='camera' size={24} color='#FFFFFF' />
                             </TouchableOpacity>
                         </View>
@@ -46,12 +183,12 @@ const editScreen = (props) => {
                         <View style={STYLE.Editstyles.inputView}>
                             <TextInput
                                 style={STYLE.Editstyles.TextInputbold}
-                                placeholder='Ranjan'
+                                defaultValue={first_name}
+                                placeholder='First Name'
                                 type='clear'
                                 returnKeyType='next'
                                 placeholderTextColor='#000000'
                                 blurOnSubmit={false}
-                                defaultValue='Ranjan'
                             />
                         </View>
 
@@ -61,12 +198,12 @@ const editScreen = (props) => {
                         <View style={STYLE.Editstyles.inputView}>
                             <TextInput
                                 style={STYLE.Editstyles.TextInputbold}
-                                placeholder='Pathak'
+                                placeholder='Last Name'
                                 type='clear'
                                 returnKeyType='next'
                                 placeholderTextColor='#000000'
                                 blurOnSubmit={false}
-                                defaultValue='Pathak'
+                                defaultValue={last_name}
                             />
                         </View>
 
@@ -76,12 +213,12 @@ const editScreen = (props) => {
                         <View style={STYLE.Editstyles.inputView}>
                             <TextInput
                                 style={STYLE.Editstyles.TextInput}
-                                placeholder='#pathak'
+                                placeholder='User Tag'
                                 type='clear'
                                 returnKeyType='next'
                                 placeholderTextColor='#000000'
                                 blurOnSubmit={false}
-                                defaultValue='#pathak'
+                                defaultValue={usertag}
                             />
                         </View>
 
@@ -91,12 +228,12 @@ const editScreen = (props) => {
                         <View style={STYLE.Editstyles.inputView}>
                             <TextInput
                                 style={STYLE.Editstyles.TextInput}
-                                placeholder='+91 9923719601'
+                                placeholder='Phone Number'
                                 type='clear'
                                 returnKeyType='next'
                                 placeholderTextColor='#000000'
                                 blurOnSubmit={false}
-                                defaultValue='+91 9923719601'
+                                defaultValue={mobile}
                             />
                         </View>
 
@@ -106,12 +243,12 @@ const editScreen = (props) => {
                         <View style={STYLE.Editstyles.inputView}>
                             <TextInput
                                 style={STYLE.Editstyles.TextInput}
-                                placeholder='ranjanpathak@gmail.com'
+                                placeholder='exmple@gmail.com'
                                 type='clear'
                                 returnKeyType='next'
                                 placeholderTextColor='#000000'
                                 blurOnSubmit={false}
-                                defaultValue='ranjanpathak@gmail.com'
+                                defaultValue={primaryemail}
                             />
                         </View>
 
@@ -121,12 +258,12 @@ const editScreen = (props) => {
                         <View style={STYLE.Editstyles.inputView}>
                             <TextInput
                                 style={STYLE.Editstyles.TextInput}
-                                placeholder='Mumbai'
+                                placeholder='Location'
                                 type='clear'
                                 returnKeyType='next'
                                 placeholderTextColor='#000000'
                                 blurOnSubmit={false}
-                                defaultValue='Mumbai'
+                                defaultValue={location}
                             />
                             <Ionicons name='location' size={24} color='#000000' />
                         </View>
@@ -137,14 +274,14 @@ const editScreen = (props) => {
                         <View style={STYLE.Editstyles.textAreainputView}>
                             <TextInput
                                 style={STYLE.Editstyles.TextareaInput}
-                                placeholder='Ranjan is UX Designer working with clients'
+                                placeholder='Write Description'
                                 type='clear'
                                 returnKeyType='done'
                                 placeholderTextColor='#000000'
                                 blurOnSubmit={false}
                                 numberOfLines={3}
                                 multiline={true}
-                                defaultValue='Ranjan is UX Designer working with clients all over the world from last 10 years. Ranjan has worked with more then 100 brands. '
+                                defaultValue={about}
                             />
                         </View>
                         <View style={{ flexDirection: 'column', marginLeft: 20, marginTop: 5 }}>
@@ -214,6 +351,7 @@ const editScreen = (props) => {
                     <View style={{ marginBottom: 20 }}></View>
                 </View>
             </ScrollView>
+            {loading ? <Loader /> : null}
         </SafeAreaView>
     )
 }

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, SafeAreaView, Image, TouchableOpacity, ScrollView, Modal, TextInput, ToastAndroid, Platform } from 'react-native';
+import { Text, View, SafeAreaView, Image, TouchableOpacity, ScrollView, Modal, TextInput, ToastAndroid, Platform, Pressable } from 'react-native';
 import HelpSupportService from '../../services/HelpSupportService/HelpSupportService'
 import MenuButton from '../../components/ProfileMenuButton/ProfileMenuButton';
 import AsyncStorage from '@react-native-community/async-storage';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import * as SCREENNAME from '../../context/screen/screenName'
 import * as SCREEN from '../../context/screen/screenName';
 import { AUTHUSER } from '../../context/actions/type'
 import Loader from '../../components/loader/index';
@@ -21,8 +20,8 @@ const myProfileScreen = (props) => {
     const [descriptionerror, setdescriptionerror] = useState(null);
     const secondTextInputRef = React.createRef();
 
+    //get AsyncStorage current user Details
     const getStudentData = async () => {
-        //get AsyncStorage current user Details
         var getUser = await AsyncStorage.getItem(AUTHUSER);
         if (getUser == null) {
             setTimeout(() => {
@@ -46,7 +45,7 @@ const myProfileScreen = (props) => {
         } else {
             alert('Log Out Success!');
         }
-        props.navigation.replace(SCREENNAME.LOGINSCREEN);
+        props.navigation.replace(SCREEN.LOGINSCREEN);
     }
 
     //check validation of subject
@@ -116,6 +115,18 @@ const myProfileScreen = (props) => {
         setshowModalVisible(false);
     }
 
+    //view profile 
+    const onTouchViewProfile = () => {
+        let userProfileImage
+        let profilePic = userDetails.profileimage;
+        if (profilePic) {
+            userProfileImage = profilePic;
+            props.navigation.navigate(SCREEN.VIEWPROFILESCREEN, { userProfileImage });
+        } else {
+            props.navigation.navigate(SCREEN.VIEWPROFILESCREEN, { userProfileImage: 'https://res.cloudinary.com/dnogrvbs2/image/upload/v1613538969/profile1_xspwoy.png' });
+        }
+    }
+
     return (
         <SafeAreaView style={STYLES.styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -145,14 +156,15 @@ const myProfileScreen = (props) => {
                     <View style={STYLES.styles.cardview}>
                         <View style={{ justifyContent: 'space-around', flexDirection: 'row', marginTop: 20 }}>
                             <View >
-                                <Text style={{ fontWeight: 'bold', fontSize: 20 }}>{userDetails ? userDetails.fullname : null}</Text>
-                                <Text>#{userDetails ? userDetails.property.usertag && userDetails.property.usertag : null}</Text>
+                                <Text style={{ fontWeight: 'bold', fontSize: 20, textTransform: 'capitalize' }}>{userDetails ? userDetails.fullname : null}</Text>
+                                <Text>{userDetails ? userDetails.property.usertag && userDetails.property.usertag : null}</Text>
                             </View>
-                            <View style={STYLES.styles.profileImageView}>
-                                <Image source={{ uri: userDetails ? userDetails.profileimage ? userDetails.profileimage : 'https://res.cloudinary.com/dnogrvbs2/image/upload/v1613538969/profile1_xspwoy.png' : null }}
+                            <Pressable onPress={() => onTouchViewProfile()}
+                                style={STYLES.styles.profileImageView}>
+                                <Image source={{ uri: userDetails ? userDetails.profilepic !== null && userDetails.profilepic ? userDetails.profilepic : 'https://res.cloudinary.com/dnogrvbs2/image/upload/v1613538969/profile1_xspwoy.png' : null }}
                                     style={STYLES.styles.profileImage}
                                 />
-                            </View>
+                            </Pressable>
                         </View>
                         <TouchableOpacity onPress={() => props.navigation.navigate(SCREEN.EDITSCREEN)}
                             style={{ flexDirection: 'row' }}>

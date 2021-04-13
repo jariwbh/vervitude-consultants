@@ -1,11 +1,70 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import { View, Text, Image, SafeAreaView, TouchableOpacity, TextInput, ScrollView } from 'react-native'
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as SCREEN from '../../context/screen/screenName';
 import Feather from 'react-native-vector-icons/Feather';
 import * as STYLE from './styles';
+import AsyncStorage from '@react-native-community/async-storage';
+import { AUTHUSER } from '../../context/actions/type';
+import MyPermissionController from '../../helpers/appPermission';
 
 const bankInfoScreen = (props) => {
+    const [loading, setloading] = useState(false);
+    const [userDetails, setuserDetails] = useState(null);
+
+    const [nameofaccount, setnameofaccount] = useState(null);
+    const [bankname, setbankname] = useState(null);
+    const [ifsccode, setifsccode] = useState(null);
+    const [accounttype, setaccounttype] = useState(null);
+    const [accountnumber, setaccountnumber] = useState(null);
+    const [repeataccountnumber, setrepeataccountnumber] = useState(null);
+    const [cancelcheque, setcancelcheque] = useState(null);
+
+    //get AsyncStorage current user Details
+    const getUserDetails = async () => {
+        //get AsyncStorage current user Details
+        var getUser = await AsyncStorage.getItem(AUTHUSER);
+        if (getUser == null) {
+            setTimeout(() => {
+                props.navigation.replace(SCREEN.LOGINSCREEN)
+            }, 3000);;
+        } else {
+            var UserInfo = JSON.parse(getUser);
+            setuserDetails(UserInfo);
+            setnameofaccount(UserInfo.property.nameofaccount);
+            setbankname(UserInfo.property.bankname);
+            setifsccode(UserInfo.property.ifsccode);
+            setaccounttype(UserInfo.property.accounttype);
+            setaccountnumber(UserInfo.property.accountnumber);
+            setrepeataccountnumber(UserInfo.property.repeataccountnumber);
+            setcancelcheque(UserInfo.property.cancelcheque);
+
+        }
+    }
+
+    //REPLACE AND ADD LOCAL STORAGE FUNCTION
+    const authenticateUser = (user) => {
+        //AsyncStorage.removeItem(AUTHUSER);
+        AsyncStorage.setItem(AUTHUSER, JSON.stringify(user));
+    }
+
+    //check permission 
+    const checkPermission = () => {
+        setTimeout(
+            () => {
+                MyPermissionController.checkAndRequestStoragePermission()
+                    .then((granted) => console.log('>Storage Permission Granted'))
+                    .catch((err) => console.log(err))
+            },
+            500
+        );
+    }
+
+    useEffect(() => {
+        checkPermission();
+        getUserDetails();
+    }, []);
+
     return (
         <SafeAreaView style={STYLE.Bankstyles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -27,7 +86,7 @@ const bankInfoScreen = (props) => {
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                     <View style={STYLE.Bankstyles.profileview}>
                         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                            <Image source={require('../../assets/images/user2.png')}
+                            <Image source={{ uri: userDetails ? userDetails.profilepic !== null && userDetails.profilepic ? userDetails.profilepic : 'https://res.cloudinary.com/dnogrvbs2/image/upload/v1613538969/profile1_xspwoy.png' : null }}
                                 style={{ marginTop: -50, width: 100, height: 100, borderRadius: 100 }} />
                             <TouchableOpacity style={{ marginTop: -60 }}>
                                 <Feather name='camera' size={24} color='#FFFFFF' />
@@ -56,12 +115,12 @@ const bankInfoScreen = (props) => {
                         <View style={STYLE.Bankstyles.inputView}>
                             <TextInput
                                 style={STYLE.Bankstyles.TextInput}
-                                placeholder='Ranjan Pathak'
+                                placeholder='Name on Account'
                                 type='clear'
                                 returnKeyType='next'
                                 placeholderTextColor='#000000'
                                 blurOnSubmit={false}
-                                defaultValue='Ranjan Pathak'
+                                defaultValue={nameofaccount}
                             />
 
                         </View>
@@ -71,12 +130,12 @@ const bankInfoScreen = (props) => {
                         <View style={STYLE.Bankstyles.inputView}>
                             <TextInput
                                 style={STYLE.Bankstyles.TextInput}
-                                placeholder='ICIC Bank'
+                                placeholder='Bank Name'
                                 type='clear'
                                 returnKeyType='next'
                                 placeholderTextColor='#000000'
                                 blurOnSubmit={false}
-                                defaultValue='ICIC Bank'
+                                defaultValue={bankname}
                             />
 
                         </View>
@@ -86,17 +145,18 @@ const bankInfoScreen = (props) => {
                         <View style={STYLE.Bankstyles.inputView}>
                             <TextInput
                                 style={STYLE.Bankstyles.TextInput}
-                                placeholder='ICIC0323'
+                                placeholder='IFSC Code'
                                 type='clear'
                                 returnKeyType='next'
                                 placeholderTextColor='#000000'
                                 blurOnSubmit={false}
-                                defaultValue='ICIC0323'
+                                defaultValue={ifsccode}
                             />
                             <TouchableOpacity>
                                 <Feather name='search' size={20} color='#555555' style={{ marginRight: 10 }} />
                             </TouchableOpacity>
                         </View>
+
                         <View style={{ marginLeft: 15, marginTop: 15 }}>
                             <Text style={{ fontSize: 12 }}>Account Type</Text>
                         </View>
@@ -108,18 +168,19 @@ const bankInfoScreen = (props) => {
                                 <Text style={{ color: '#000000', fontSize: 12 }}>Currrent</Text>
                             </TouchableOpacity>
                         </View>
+
                         <View style={{ marginLeft: 15, marginTop: 15 }}>
                             <Text style={{ fontSize: 12 }}>Account Number</Text>
                         </View>
                         <View style={STYLE.Bankstyles.inputView}>
                             <TextInput
                                 style={STYLE.Bankstyles.TextInput}
-                                placeholder='1234567890'
+                                placeholder='Account Number'
                                 type='clear'
                                 returnKeyType='next'
                                 placeholderTextColor='#000000'
                                 blurOnSubmit={false}
-                                defaultValue='1234567890'
+                                defaultValue={accountnumber}
                             />
 
                         </View>
@@ -129,12 +190,12 @@ const bankInfoScreen = (props) => {
                         <View style={STYLE.Bankstyles.inputView}>
                             <TextInput
                                 style={STYLE.Bankstyles.TextInput}
-                                placeholder='1234567890'
+                                placeholder='Repeat Account Number'
                                 type='clear'
                                 returnKeyType='next'
                                 placeholderTextColor='#000000'
                                 blurOnSubmit={false}
-                                defaultValue='1234567890'
+                                defaultValue={repeataccountnumber}
                             />
 
                         </View>

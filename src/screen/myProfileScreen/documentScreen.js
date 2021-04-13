@@ -1,11 +1,66 @@
-import React from 'react'
-import { View, Text, Image, SafeAreaView, TouchableOpacity, TextInput, ScrollView } from 'react-native'
+import React, { useState, useEffect } from 'react';
+import { View, Text, Image, SafeAreaView, TouchableOpacity, TextInput, ScrollView } from 'react-native';
+import MyPermissionController from '../../helpers/appPermission';
+import AsyncStorage from '@react-native-community/async-storage';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import Feather from 'react-native-vector-icons/Feather';
 import * as SCREEN from '../../context/screen/screenName';
+import Feather from 'react-native-vector-icons/Feather';
+import { AUTHUSER } from '../../context/actions/type';
 import * as STYLE from './styles'
 
 const documentScreen = (props) => {
+    const [loading, setloading] = useState(false);
+    const [userDetails, setuserDetails] = useState(null);
+
+    const [pancardnumber, setpancardnumber] = useState(null);
+    const [pancardimage, setpancardimage] = useState(null);
+    const [aadharcardnumber, setaadharcardnumber] = useState(null);
+    const [frontaadharcard, setfrontaadharcard] = useState(null);
+    const [backaadharcard, setbackaadharcard] = useState(null);
+
+    //get AsyncStorage current user Details
+    const getUserDetails = async () => {
+        //get AsyncStorage current user Details
+        var getUser = await AsyncStorage.getItem(AUTHUSER);
+        if (getUser == null) {
+            setTimeout(() => {
+                props.navigation.replace(SCREEN.LOGINSCREEN)
+            }, 3000);;
+        } else {
+            var UserInfo = JSON.parse(getUser);
+            setuserDetails(UserInfo);
+            setpancardnumber(UserInfo.property.pancardnumber);
+            setpancardimage(UserInfo.property.pancardimage);
+            setaadharcardnumber(UserInfo.property.aadharcardnumber);
+            setfrontaadharcard(UserInfo.property.frontaadharcard);
+            setbackaadharcard(UserInfo.property.backaadharcard);
+        }
+    }
+
+
+    //REPLACE AND ADD LOCAL STORAGE FUNCTION
+    const authenticateUser = (user) => {
+        //AsyncStorage.removeItem(AUTHUSER);
+        AsyncStorage.setItem(AUTHUSER, JSON.stringify(user));
+    }
+
+    //check permission 
+    const checkPermission = () => {
+        setTimeout(
+            () => {
+                MyPermissionController.checkAndRequestStoragePermission()
+                    .then((granted) => console.log('>Storage Permission Granted'))
+                    .catch((err) => console.log(err))
+            },
+            500
+        );
+    }
+
+    useEffect(() => {
+        checkPermission();
+        getUserDetails();
+    }, []);
+
     return (
         <SafeAreaView style={STYLE.Documentstyles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -27,7 +82,7 @@ const documentScreen = (props) => {
                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                     <View style={STYLE.Documentstyles.profileview}>
                         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                            <Image source={require('../../assets/images/user2.png')}
+                            <Image source={{ uri: userDetails ? userDetails.profilepic !== null && userDetails.profilepic ? userDetails.profilepic : 'https://res.cloudinary.com/dnogrvbs2/image/upload/v1613538969/profile1_xspwoy.png' : null }}
                                 style={{ marginTop: -50, width: 100, height: 100, borderRadius: 100 }} />
                             <TouchableOpacity style={{ marginTop: -60 }}>
                                 <Feather name='camera' size={24} color='#FFFFFF' />
@@ -51,12 +106,12 @@ const documentScreen = (props) => {
                         <View style={STYLE.Documentstyles.inputView}>
                             <TextInput
                                 style={STYLE.Documentstyles.TextInput}
-                                placeholder='BGAAFDASDFA'
+                                placeholder='Pan Card Number'
                                 type='clear'
                                 returnKeyType='next'
                                 placeholderTextColor='#000000'
                                 blurOnSubmit={false}
-                                defaultValue='BGAAFDASDFA'
+                                defaultValue={pancardnumber}
                             />
                         </View>
                         <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
@@ -74,12 +129,12 @@ const documentScreen = (props) => {
                         <View style={STYLE.Documentstyles.inputView}>
                             <TextInput
                                 style={STYLE.Documentstyles.TextInput}
-                                placeholder='123SDFGSDFGSDF'
+                                placeholder='Aadhar Card Number'
                                 type='clear'
                                 returnKeyType='next'
                                 placeholderTextColor='#000000'
                                 blurOnSubmit={false}
-                                defaultValue='123SDFGSDFGSDF'
+                                defaultValue={aadharcardnumber}
                             />
 
                         </View>
