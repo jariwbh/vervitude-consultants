@@ -347,62 +347,82 @@ const homeScreen = (props) => {
             >
                 <View style={STYLES.styles.centeView}>
                     <View style={STYLES.styles.modalViewOnline}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', padding: 15 }}>
-                            <Text style={{ textAlign: 'center', color: '#000000' }}>All</Text>
-                            <Switch
-                                style={{ marginLeft: 210 }}
-                                trackColor={{ false: '#C4C4C4', true: '#0F74C8' }}
-                                onValueChange={() => settoggleSwitchAll(toggleSwitchAll == false ? true : false)}
-                                value={toggleSwitchAll} />
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 15 }}>
+                            <View style={{ justifyContent: 'flex-start' }}>
+                                <Text style={{ textAlign: 'center', color: '#000000', justifyContent: 'flex-start' }}>All</Text>
+                            </View>
+                            <View style={{ justifyContent: 'flex-end' }}>
+                                <Switch
+                                    trackColor={{ false: '#C4C4C4', true: '#0F74C8' }}
+                                    onValueChange={() => settoggleSwitchAll(toggleSwitchAll == false ? true : false)}
+                                    value={toggleSwitchAll} />
+                            </View>
                         </View>
+
                         <View style={{ flexDirection: 'row' }}>
                             <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
                         </View>
 
-                        <View style={{ flexDirection: 'row', alignItems: 'center', padding: 15 }}>
-                            <Text style={{ textAlign: 'center', color: '#000000' }}>Design</Text>
-                            <Switch
-                                style={{ marginLeft: 190 }}
-                                trackColor={{ false: '#C4C4C4', true: '#00D9CE' }}
-                                onValueChange={() => settoggleSwitchAll(toggleSwitchAll == false ? true : false)}
-                                value={toggleSwitchAll} />
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 15 }}>
+                            <View style={{ justifyContent: 'flex-start' }}>
+                                <Text style={{ textAlign: 'center', color: '#000000', justifyContent: 'flex-start' }}>Design</Text>
+                            </View>
+                            <View style={{ justifyContent: 'flex-end' }}>
+                                <Switch
+                                    trackColor={{ false: '#C4C4C4', true: '#0F74C8' }}
+                                    onValueChange={() => settoggleSwitchAll(toggleSwitchAll == false ? true : false)}
+                                    value={toggleSwitchAll} />
+                            </View>
                         </View>
+
                         <View style={{ flexDirection: 'row' }}>
                             <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
                         </View>
 
-                        <View style={{ flexDirection: 'row', alignItems: 'center', padding: 15 }}>
-                            <Text style={{ textAlign: 'center', color: '#000000' }}>Marketing & Advertising</Text>
-                            <Switch
-                                style={{ marginLeft: 85 }}
-                                trackColor={{ false: '#C4C4C4', true: '#00D9CE' }}
-                                onValueChange={() => settoggleSwitchAll(toggleSwitchAll == false ? true : false)}
-                                value={toggleSwitchAll} />
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 15 }}>
+                            <View style={{ justifyContent: 'flex-start' }}>
+                                <Text style={{ textAlign: 'center', color: '#000000', justifyContent: 'flex-start' }}>Marketing & Advertising</Text>
+                            </View>
+                            <View style={{ justifyContent: 'flex-end' }}>
+                                <Switch
+                                    trackColor={{ false: '#C4C4C4', true: '#0F74C8' }}
+                                    onValueChange={() => settoggleSwitchAll(toggleSwitchAll == false ? true : false)}
+                                    value={toggleSwitchAll} />
+                            </View>
                         </View>
+
                         <View style={{ flexDirection: 'row' }}>
                             <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
                         </View>
 
-                        <View style={{ flexDirection: 'row', alignItems: 'center', padding: 15 }}>
-                            <Text style={{ textAlign: 'center', color: '#000000' }}>Technology</Text>
-                            <Switch
-                                style={{ marginLeft: 160 }}
-                                trackColor={{ false: '#C4C4C4', true: '#00D9CE' }}
-                                onValueChange={() => settoggleSwitchAll(toggleSwitchAll == false ? true : false)}
-                                value={toggleSwitchAll} />
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 15 }}>
+                            <View style={{ justifyContent: 'flex-start' }}>
+                                <Text style={{ textAlign: 'center', color: '#000000', justifyContent: 'flex-start' }}>Technology</Text>
+                            </View>
+                            <View style={{ justifyContent: 'flex-end' }}>
+                                <Switch
+                                    trackColor={{ false: '#C4C4C4', true: '#0F74C8' }}
+                                    onValueChange={() => settoggleSwitchAll(toggleSwitchAll == false ? true : false)}
+                                    value={toggleSwitchAll} />
+                            </View>
                         </View>
+
                         <View style={{ flexDirection: 'row' }}>
                             <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
                         </View>
 
-                        <View style={{ flexDirection: 'row', alignItems: 'center', padding: 15 }}>
-                            <Text style={{ textAlign: 'center', color: '#000000' }}>Business & Strategy</Text>
-                            <Switch
-                                style={{ marginLeft: 110 }}
-                                trackColor={{ false: '#C4C4C4', true: '#00D9CE' }}
-                                onValueChange={() => settoggleSwitchAll(toggleSwitchAll == false ? true : false)}
-                                value={toggleSwitchAll} />
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 15 }}>
+                            <View style={{ justifyContent: 'flex-start' }}>
+                                <Text style={{ textAlign: 'center', color: '#000000', justifyContent: 'flex-start' }}>Business & Strategy</Text>
+                            </View>
+                            <View style={{ justifyContent: 'flex-end' }}>
+                                <Switch
+                                    trackColor={{ false: '#C4C4C4', true: '#0F74C8' }}
+                                    onValueChange={() => settoggleSwitchAll(toggleSwitchAll == false ? true : false)}
+                                    value={toggleSwitchAll} />
+                            </View>
                         </View>
+
                         <View style={{ flexDirection: 'row' }}>
                             <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
                         </View>

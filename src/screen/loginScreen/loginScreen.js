@@ -213,6 +213,7 @@ export default class loginScreen extends Component {
                             </TouchableOpacity>
                         </View>
                     </View>
+                    <View style={{ marginVertical: 80 }} />
                 </ScrollView>
                 { loading ? <Loader /> : null}
                 {/* Help & Support model Pop */}

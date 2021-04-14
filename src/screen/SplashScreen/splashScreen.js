@@ -14,7 +14,7 @@ function SplashScreen(props) {
       var userData = JSON.parse(getUser);
       if (userData) {
         //set header auth user key
-        let token = userData.addedby;
+        let token = userData._id;
         axiosConfig(token);
         return props.navigation.navigate(SCREEN.MAINSCREEN)
       } else {

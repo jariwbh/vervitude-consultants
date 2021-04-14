@@ -109,8 +109,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center'
     },
     modalView: {
-        marginTop: HEIGHT / 2 - 100,
-        height: 200,
+        marginTop: HEIGHT / 2 - 150,
         width: WIDTH - 90,
         borderRadius: 20,
         backgroundColor: 'white',
@@ -129,8 +128,7 @@ export const styles = StyleSheet.create({
         width: WIDTH - 50,
         borderRadius: 20,
         backgroundColor: 'white',
-        alignItems: 'center',
-        shadowColor: '#000',
+        shadowColor: '#000000',
         shadowOffset: {
             width: 0,
             height: 2

@@ -13,7 +13,7 @@ function chatHistoryScreen(props) {
                 <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 30 }}>
 
                     <View style={{ justifyContent: 'flex-start' }}>
-                        <TouchableOpacity style={styles.categoryIcon} onPress={() => { props.navigation.navigate(SCREEN.HOMESCREEN) }} >
+                        <TouchableOpacity style={styles.categoryIcon} onPress={() => { props.navigation.goBack(null) }} >
                             <AntDesign name='arrowleft' size={24} color='#5AC8FA' />
                         </TouchableOpacity>
                     </View>
