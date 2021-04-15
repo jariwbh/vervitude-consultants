@@ -14,27 +14,43 @@ function selectCategoryScreen(props) {
     const [loading, setloading] = useState(true);
     const [selectCategory, setselectCategory] = useState([]);
     const [userDetails, setuserDetails] = useState(null);
+    let userdata = null;
 
     useEffect(() => {
-        getUserDetails();
-        CategoryService().then(response => {
-            setCategoryList(response.data);
-            setloading(false);
-        })
-        setselectCategoryDefaultValue();
+        onLoadScreen();
     }, []);
 
     useEffect(() => {
     }, [selectCategory, userDetails])
 
-    const setselectCategoryDefaultValue = () => {
+    //first time screen open to call function
+    const onLoadScreen = async () => {
+        await getUserDetails();
+        const response = await CategoryService();
+        setCategoryList(response.data);
+        await setselectCategoryDefaultValue(response.data);
+        setloading(false);
+    }
+
+    //first time screen open to call function
+    const setselectCategoryDefaultValue = (res) => {
         let category = [];
-        categoryList.forEach(element => {
-            let obj = userDetails.property.skill.filter(x => x === element._id);
-            category.push(obj);
-        });
-        console.log(`category`, category);
-        //setselectCategory(category);
+        let obj = {};
+        if (res) {
+            res.forEach(element => {
+                if (userdata && userdata.property && userdata.property.skill) {
+                    userdata.property.skill.forEach(ele => {
+                        if (ele === element._id) {
+                            obj = {}
+                            obj["item"] = element
+                            category.push(obj);
+                        }
+                        return;
+                    });
+                }
+            });
+            setselectCategory(category);
+        }
     }
 
     //get AsyncStorage current user Details
@@ -46,6 +62,7 @@ function selectCategoryScreen(props) {
             }, 3000);;
         } else {
             var UserInfo = JSON.parse(getUser);
+            userdata = UserInfo;
             setuserDetails(UserInfo);
         }
     }
@@ -115,7 +132,6 @@ function selectCategoryScreen(props) {
             })
         }
         catch (error) {
-            console.log(`error`, error);
             setloading(false);
             if (Platform.OS === 'android') {
                 ToastAndroid.show("Your Category Not Update!", ToastAndroid.SHORT);
@@ -135,7 +151,7 @@ function selectCategoryScreen(props) {
                     </View>
 
                     <View style={{ justifyContent: 'flex-end' }}>
-                        <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.MYPROFILESCREEN) }}
+                        <TouchableOpacity onPress={() => onPressSubmit()}
                             style={STYLE.styles.submitbtn}>
                             <Text style={{ fontSize: 14, color: '#5AC8FA' }}>Submit</Text>
                         </TouchableOpacity>

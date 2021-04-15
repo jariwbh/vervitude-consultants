@@ -115,16 +115,10 @@ const myProfileScreen = (props) => {
         setshowModalVisible(false);
     }
 
-    //view profile 
+    //view profile function
     const onTouchViewProfile = () => {
-        let userProfileImage
-        let profilePic = userDetails.profileimage;
-        if (profilePic) {
-            userProfileImage = profilePic;
-            props.navigation.navigate(SCREEN.VIEWPROFILESCREEN, { userProfileImage });
-        } else {
-            props.navigation.navigate(SCREEN.VIEWPROFILESCREEN, { userProfileImage: 'https://res.cloudinary.com/dnogrvbs2/image/upload/v1613538969/profile1_xspwoy.png' });
-        }
+        let userProfileImage = userDetails && userDetails.profilepic ? userDetails.profilepic : 'https://res.cloudinary.com/dnogrvbs2/image/upload/v1613538969/profile1_xspwoy.png'
+        props.navigation.navigate(SCREEN.VIEWPROFILESCREEN, { userProfileImage });
     }
 
     return (
