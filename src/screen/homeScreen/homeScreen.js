@@ -369,7 +369,7 @@ const homeScreen = (props) => {
                             </View>
                             <View style={{ justifyContent: 'flex-end' }}>
                                 <Switch
-                                    trackColor={{ false: '#C4C4C4', true: '#0F74C8' }}
+                                    trackColor={{ false: '#C4C4C4', true: '#00D9CE' }}
                                     onValueChange={() => settoggleSwitchAll(toggleSwitchAll == false ? true : false)}
                                     value={toggleSwitchAll} />
                             </View>
@@ -385,7 +385,7 @@ const homeScreen = (props) => {
                             </View>
                             <View style={{ justifyContent: 'flex-end' }}>
                                 <Switch
-                                    trackColor={{ false: '#C4C4C4', true: '#0F74C8' }}
+                                    trackColor={{ false: '#C4C4C4', true: '#00D9CE' }}
                                     onValueChange={() => settoggleSwitchAll(toggleSwitchAll == false ? true : false)}
                                     value={toggleSwitchAll} />
                             </View>
@@ -401,7 +401,7 @@ const homeScreen = (props) => {
                             </View>
                             <View style={{ justifyContent: 'flex-end' }}>
                                 <Switch
-                                    trackColor={{ false: '#C4C4C4', true: '#0F74C8' }}
+                                    trackColor={{ false: '#C4C4C4', true: '#00D9CE' }}
                                     onValueChange={() => settoggleSwitchAll(toggleSwitchAll == false ? true : false)}
                                     value={toggleSwitchAll} />
                             </View>
@@ -417,7 +417,7 @@ const homeScreen = (props) => {
                             </View>
                             <View style={{ justifyContent: 'flex-end' }}>
                                 <Switch
-                                    trackColor={{ false: '#C4C4C4', true: '#0F74C8' }}
+                                    trackColor={{ false: '#C4C4C4', true: '#00D9CE' }}
                                     onValueChange={() => settoggleSwitchAll(toggleSwitchAll == false ? true : false)}
                                     value={toggleSwitchAll} />
                             </View>
