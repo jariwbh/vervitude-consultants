@@ -49,7 +49,6 @@ const editScreen = (props) => {
 
     //REPLACE AND ADD LOCAL STORAGE FUNCTION
     const authenticateUser = (user) => {
-        //AsyncStorage.removeItem(AUTHUSER);
         AsyncStorage.setItem(AUTHUSER, JSON.stringify(user));
     }
 
@@ -117,15 +116,13 @@ const editScreen = (props) => {
 
     //UPDATE PROFILE PICTURE API CALL
     const UpdateProfileService = () => {
-        let body = {
-            _id: userDetails._id,
-            profilepic: newProfilePath
-        }
 
+        let user = userDetails;
+        user.profilepic = newProfilePath;
         try {
-            UpdateUserService(body).then(response => {
+            UpdateUserService(user).then(response => {
                 if (response.data != null && response.data != 'undefind' && response.status == 200) {
-                    authenticateUser(response.data);
+                    authenticateUser(user);
                     getUserDetails();
                     if (Platform.OS === 'android') {
                         ToastAndroid.show("Your Profile Update!", ToastAndroid.SHORT);
