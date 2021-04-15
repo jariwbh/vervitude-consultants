@@ -119,7 +119,7 @@ const inviteScreen = (props) => {
 
     return (
         <SafeAreaView style={STYLES.styles.container}>
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={'always'}>
                 <View style={{ justifyContent: 'flex-start', marginLeft: 20, marginTop: 30 }}>
                     <TouchableOpacity onPress={() => props.navigation.goBack(null)}>
                         <AntDesign name='arrowleft' color='#5AC8FA' size={24} />
