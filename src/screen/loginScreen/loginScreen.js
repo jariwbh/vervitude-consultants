@@ -60,10 +60,14 @@ export default class loginScreen extends Component {
 
     //check email validation
     setEmail(email) {
-        if (!email || email <= 0) {
-            return this.setState({ usererror: 'User Name cannot be empty' });
+        const re = /\S+@\S+\.\S+/;
+        if (!email || email.length <= 0) {
+            return this.setState({ usererror: 'Email Id can not be empty', username: null });
         }
-        return this.setState({ username: email, usererror: null });
+        if (!re.test(email)) {
+            return this.setState({ usererror: 'Ooops! We need a valid email address', username: null });
+        }
+        return this.setState({ username: email, usererror: null })
     }
 
     //check password validation
