@@ -22,6 +22,7 @@ target 'vervitudeconsultants' do
   # flipper_post_install(installer)
   #end
 end
+pod 'Firebase/Analytics'
 
 target 'vervitudeconsultants-tvOS' do
   # Pods for vervitudeconsultants-tvOS
