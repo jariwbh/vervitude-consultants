@@ -26,7 +26,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center'
     },
     modalView: {
-        marginTop: HEIGHT / 2 - 100,
+        marginTop: HEIGHT / 2 + 50,
         height: 200,
         width: WIDTH - 90,
         borderRadius: 20,
@@ -42,7 +42,7 @@ export const styles = StyleSheet.create({
         elevation: 5
     },
     msgModalView: {
-        marginTop: HEIGHT / 2 - 100,
+        marginTop: HEIGHT / 2 + 50,
         height: 200,
         width: WIDTH - 90,
         borderRadius: 20,

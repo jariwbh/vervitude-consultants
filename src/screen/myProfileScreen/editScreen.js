@@ -67,7 +67,7 @@ const editScreen = (props) => {
     useEffect(() => {
         checkPermission();
         getUserDetails();
-    }, []);
+    }, [newProfilePath]);
 
     const onPressSubmit = () => {
     }
@@ -99,7 +99,7 @@ const editScreen = (props) => {
                     setloading(false);
                     if (data && data.url) {
                         setnewProfilePath(data.url);
-                        UpdateProfileService();
+                        UpdateProfileService(data.url);
                     }
                 }).catch(error => {
                     alert("Uploading Failed!");
@@ -115,12 +115,12 @@ const editScreen = (props) => {
     }
 
     //UPDATE PROFILE PICTURE API CALL
-    const UpdateProfileService = () => {
+    const UpdateProfileService = async (profilepic) => {
 
         let user = userDetails;
-        user.profilepic = newProfilePath;
+        user.profilepic = profilepic;
         try {
-            UpdateUserService(user).then(response => {
+            await UpdateUserService(user).then(response => {
                 if (response.data != null && response.data != 'undefind' && response.status == 200) {
                     authenticateUser(user);
                     getUserDetails();

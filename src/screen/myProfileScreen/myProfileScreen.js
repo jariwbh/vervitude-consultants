@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, SafeAreaView, Image, TouchableOpacity, ScrollView, Modal, TextInput, ToastAndroid, Platform, Pressable } from 'react-native';
+import { Text, View, Dimensions, SafeAreaView, Image, TouchableOpacity, ScrollView, Modal, TextInput, ToastAndroid, Platform, Pressable } from 'react-native';
 import HelpSupportService from '../../services/HelpSupportService/HelpSupportService'
 import MenuButton from '../../components/ProfileMenuButton/ProfileMenuButton';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -8,6 +8,8 @@ import * as SCREEN from '../../context/screen/screenName';
 import { AUTHUSER } from '../../context/actions/type'
 import Loader from '../../components/loader/index';
 import * as STYLES from './styles';
+const HEIGHT = Dimensions.get('window').height;
+const WIDTH = Dimensions.get('window').width;
 
 const myProfileScreen = (props) => {
     const [loading, setloading] = useState(false);
@@ -84,7 +86,7 @@ const myProfileScreen = (props) => {
             'content': description
 
         }
-        //setloading(true);
+        setloading(true);
         try {
             HelpSupportService(body).then(response => {
                 if (response.data != null && response.data != 'undefind' && response.status == 200) {
@@ -95,7 +97,6 @@ const myProfileScreen = (props) => {
             })
         }
         catch (error) {
-            console.log(`error`, error);
             setloading(false);
             if (Platform.OS === 'android') {
                 ToastAndroid.show('Message Sending Failed!', ToastAndroid.SHORT);
@@ -239,7 +240,6 @@ const myProfileScreen = (props) => {
                                 defaultValue={description}
                                 blurOnSubmit={false}
                                 ref={secondTextInputRef}
-                                onSubmitEditing={() => onPressSubmit()}
                                 onChangeText={(description) => setdescription(description)}
                             />
                         </View>
