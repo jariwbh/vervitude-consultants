@@ -144,7 +144,7 @@ const rubychatScreen = ({ navigation }) => {
 					<ChatMenu />
 				</View>
 			</View>
-			<ScrollView showsVerticalScrollIndicator={false}>
+			<ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={'always'}>
 				<View style={styles.chatview}>
 					<GiftedChat
 						user={{ _id: sender }}
