@@ -14,18 +14,20 @@ import { GiftedChat } from 'react-native-gifted-chat';
 import { renderDay, renderBubble, renderInputToolbar } from './customChatProps';
 import firestore from '@react-native-firebase/firestore';
 //
-const rubychatScreen = ({ navigation }) => {
+const rubychatScreen = (props, { navigation }) => {
 	const [chatId, setchatId] = useState(null);
 	const [sender, setsender] = useState(null);
 	const [messages, setMessages] = useState([]);
+	const UserId = props.route.params.item;
 
 	// Chat Module - Auto Initiate //
 	useEffect(
 		() => {
+			console.log(`UserId`, UserId);
 			AsyncStorage.getItem(AUTHUSER).then((res) => {
 				let sender = JSON.parse(res)._id;
 				setsender(sender);
-				newChat(sender, '605845dcac1539438768c833').then((id) => {
+				newChat(sender, UserId.contextid).then((id) => {
 					setchatId(id);
 					let getMessages = firestore()
 						.collection('chat')
@@ -70,7 +72,6 @@ const rubychatScreen = ({ navigation }) => {
 				.collection('chat')
 				.doc(chatId)
 				.update({ previewMessage: messages[0].text, createdAt: createdAt.toString() });
-
 			const message = {
 				_id: Math.random(),
 				text,
@@ -100,7 +101,7 @@ const rubychatScreen = ({ navigation }) => {
 					<TouchableOpacity
 						style={styles.chatIcon}
 						onPress={() => {
-							navigation.goBack(null);
+							props.navigation.goBack(null);
 						}}
 					>
 						<AntDesign name='arrowleft' size={24} color='#5AC8FA' />

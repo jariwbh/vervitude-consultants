@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, Image, SafeAreaView, TouchableOpacity, ScrollView, FlatList, Platform, ToastAndroid } from 'react-native';
 import CategoryService from '../../services/CategoryService/CategoryService';
-import UpdateUserService from '../../services/UserService/UserService';
+import { UpdateUserService } from '../../services/UserService/UserService';
 import AsyncStorage from '@react-native-community/async-storage';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as SCREEN from '../../context/screen/screenName';

@@ -1,9 +1,21 @@
 import Axios from '../../helpers/appConfig'
 
-const UserService = (data) => {
+const UpdateUserService = (data) => {
     let id = data._id;
     const body = JSON.stringify(data);
     return Axios.patch('users/' + id, body);
 }
 
-export default UserService;
+const UserListService = () => {
+    const body = {
+        'search': [{
+            'searchfield': 'status',
+            'searchvalue': 'active',
+            'criteria': 'eq',
+            'datatype': 'text'
+        }]
+    }
+    return Axios.patch('members/' + id, body);
+}
+
+export { UpdateUserService, UserListService }
