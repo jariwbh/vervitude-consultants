@@ -12,9 +12,9 @@ const recentChatService = (id) => {
             'searchfield': 'property.consultantid',
             'searchvalue': `${id}`,
             'criteria': 'eq',
-            'datatype': 'text'
+            'datatype': 'objectId'
         }
-        ]
+        ], "formname": "livechat"
     }
     body = JSON.stringify(body);
     return Axios.post('formdatas/filter', body);

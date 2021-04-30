@@ -12,12 +12,14 @@ const WIDTH = Dimensions.get('window').width;
 import { AUTHUSER } from '../../context/actions/type';
 import AsyncStorage from '@react-native-community/async-storage';
 import { recentChatService } from '../../services/ChatService/ChatService';
+const image = 'https://res.cloudinary.com/dnogrvbs2/image/upload/v1613538969/profile1_xspwoy.png';
 
 function chatHistoryScreen(props) {
     const [recentChat, setrecentChat] = useState([])
     useEffect(() => {
         AsyncStorage.getItem(AUTHUSER).then((res) => {
             let currentUser = JSON.parse(res)._id;
+            console.log(`currentUser`, currentUser);
             chatlist(currentUser);
         });
     }, [])
@@ -26,32 +28,36 @@ function chatHistoryScreen(props) {
         try {
             const response = await recentChatService(currentUser);
             if (response.data != null && response.data != 'undefind' && response.status == 200) {
+                console.log(`response.data`, response.data);
                 setrecentChat(response.data);
             }
         }
         catch (error) {
             console.log(`error`, error);
         }
+    }
 
+    const navigationhandler = (item) => {
+        props.navigation.navigate(SCREEN.RUBYCHATSCREEN, { item });
     }
 
     const renderChatUser = ({ item }) => (
         <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
-            <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.RUBYCHATSCREEN, { item }) }} style={styles.chatview}>
+            <TouchableOpacity onPress={() => navigationhandler(item)} style={styles.chatview}>
                 <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 5 }}>
                     <Text style={{ color: '#5AC8FA', marginLeft: 15, fontSize: 10 }}>New</Text>
                     <Text style={{ color: '#999999', fontSize: 12, marginRight: 15 }}>2:30 PM</Text>
                 </View>
 
                 <View style={{ flexDirection: 'row', justifyContent: 'flex-start', marginTop: -5 }}>
-                    <Image source={require('../../assets/images/user4.png')}
+                    <Image source={{ uri: item.profilepic ? item.profilepic : image }}
                         style={{ width: 70, height: 70, borderRadius: 100, marginLeft: 25 }} />
                     <View style={{ marginLeft: -20, height: 15, width: 15, backgroundColor: '#EEEEEE', borderColor: '#000000', borderRadius: 100, borderWidth: 1 }}></View>
                 </View>
 
                 <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: -60 }}>
                     <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: 0 }}>
-                        <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#000000' }}>Ruby</Text>
+                        <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#000000', textTransform: 'capitalize' }}>{item.contextid.fullname}</Text>
                         <Text style={{ fontSize: 14, color: '#04DE71' }}>+ ₹ 20.00</Text>
                     </View>
                 </View>
@@ -68,7 +74,6 @@ function chatHistoryScreen(props) {
         <SafeAreaView style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 30 }}>
-
                     <View style={{ justifyContent: 'flex-start' }}>
                         <TouchableOpacity style={styles.categoryIcon} onPress={() => { props.navigation.goBack(null) }} >
                             <AntDesign name='arrowleft' size={24} color='#5AC8FA' />

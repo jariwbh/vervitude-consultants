@@ -23,11 +23,10 @@ const rubychatScreen = (props, { navigation }) => {
 	// Chat Module - Auto Initiate //
 	useEffect(
 		() => {
-			console.log(`UserId`, UserId);
 			AsyncStorage.getItem(AUTHUSER).then((res) => {
 				let sender = JSON.parse(res)._id;
 				setsender(sender);
-				newChat(sender, UserId.contextid).then((id) => {
+				newChat(sender, UserId.contextid._id).then((id) => {
 					setchatId(id);
 					let getMessages = firestore()
 						.collection('chat')
