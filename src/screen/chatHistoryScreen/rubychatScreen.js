@@ -14,19 +14,24 @@ import { GiftedChat } from 'react-native-gifted-chat';
 import { renderDay, renderBubble, renderInputToolbar } from './customChatProps';
 import firestore from '@react-native-firebase/firestore';
 //
+import Loader from '../../components/loader/index';
+const defaultProfile = 'https://res.cloudinary.com/dnogrvbs2/image/upload/v1613538969/profile1_xspwoy.png';
+
 const rubychatScreen = (props, { navigation }) => {
+	const [loading, setloading] = useState(false);
 	const [chatId, setchatId] = useState(null);
 	const [sender, setsender] = useState(null);
 	const [messages, setMessages] = useState([]);
-	const UserId = props.route.params.item;
+	const User = props.route.params.item;
 
 	// Chat Module - Auto Initiate //
 	useEffect(
 		() => {
 			AsyncStorage.getItem(AUTHUSER).then((res) => {
 				let sender = JSON.parse(res)._id;
+				setloading(true);
 				setsender(sender);
-				newChat(sender, UserId.contextid._id).then((id) => {
+				newChat(sender, User.contextid._id).then((id) => {
 					setchatId(id);
 					let getMessages = firestore()
 						.collection('chat')
@@ -36,6 +41,7 @@ const rubychatScreen = (props, { navigation }) => {
 					getMessages.onSnapshot((snap) => {
 						let messages = snap.docs.map((item) => item.data());
 						setMessages(messages);
+						setloading(false);
 					});
 				});
 			});
@@ -108,7 +114,7 @@ const rubychatScreen = (props, { navigation }) => {
 				</View>
 
 				<Image
-					source={require('../../assets/images/user4.png')}
+					source={{ uri: User.contextid.profileoic ? User.contextid.profileoic : defaultProfile }}
 					style={{ width: 50, height: 52, borderRadius: 100, marginLeft: 5 }}
 				/>
 				<FontAwesome
@@ -119,13 +125,13 @@ const rubychatScreen = (props, { navigation }) => {
 				/>
 				<View
 					style={{
-						justifyContent: 'center',
-						alignItems: 'center',
+						justifyContent: 'flex-start',
+						alignItems: 'flex-start',
 						flexDirection: 'column',
 						marginLeft: 15
 					}}
 				>
-					<Text style={{ fontSize: 20, color: '#5AC8FA' }}>Ruby</Text>
+					<Text style={{ fontSize: 20, color: '#5AC8FA', textTransform: 'capitalize' }}>{User.contextid.property.first_name}</Text>
 					<Text style={{ fontSize: 10, color: '#000000' }}>Online</Text>
 				</View>
 
@@ -161,6 +167,7 @@ const rubychatScreen = (props, { navigation }) => {
 				</View>
 				<View style={{ marginBottom: 10 }} />
 			</ScrollView>
+			{loading ? <Loader /> : null}
 		</SafeAreaView>
 	);
 };

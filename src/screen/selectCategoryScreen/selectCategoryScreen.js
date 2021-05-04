@@ -160,13 +160,11 @@ function selectCategoryScreen(props) {
                 </View>
 
                 <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 40 }}>
-                    {
-                        <FlatList
-                            renderItem={renderSelectCategory}
-                            data={selectCategory}
-                            keyExtractor={item => item._id}
-                        />
-                    }
+                    <FlatList
+                        renderItem={renderSelectCategory}
+                        data={selectCategory}
+                        keyExtractor={item => item._id}
+                    />
                 </View>
 
                 <View style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center' }}>

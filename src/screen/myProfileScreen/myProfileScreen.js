@@ -23,7 +23,7 @@ const myProfileScreen = (props) => {
     const secondTextInputRef = React.createRef();
 
     //get AsyncStorage current user Details
-    const getStudentData = async () => {
+    const getUserData = async () => {
         var getUser = await AsyncStorage.getItem(AUTHUSER);
         if (getUser == null) {
             setTimeout(() => {
@@ -36,7 +36,7 @@ const myProfileScreen = (props) => {
     }
 
     useEffect(() => {
-        getStudentData();
+        getUserData();
     }, []);
 
     //LogOut Button click to call 

@@ -125,6 +125,7 @@ export const styles = StyleSheet.create({
     },
     modalViewOnline: {
         marginTop: HEIGHT / 2 - 150,
+        height: HEIGHT / 3,
         width: WIDTH - 50,
         borderRadius: 20,
         backgroundColor: 'white',
