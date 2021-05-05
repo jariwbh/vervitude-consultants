@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, SafeAreaView, Dimensions, TouchableOpacity, ScrollView, BackHandler, Modal, Switch, Image } from 'react-native';
+import { Text, View, SafeAreaView, Dimensions, TouchableOpacity, ScrollView, BackHandler, FlatList, Modal, Switch, Image, Platform, ToastAndroid } from 'react-native';
 import { MYPROFILESCREEN, CHATHISTORYSCREEN } from '../../context/screen/screenName';
+import { getCategory } from '../../services/HomeService/HomeService';
 import MenuButton from '../../components/MenuButton/MenuButton';
 import ChatMenu from '../../components/ChatMenu/ChatMenu';
 import { StackedBarChart } from 'react-native-chart-kit';
 const screenWidth = Dimensions.get('window').width;
 import * as STYLES from './styles';
+import AsyncStorage from '@react-native-community/async-storage';
+import { AUTHUSER } from '../../context/actions/type';
+import Loader from '../../components/loader/index';
+import { UpdateUserService } from '../../services/UserService/UserService';
+import LogoutService from '../../services/LogoutService/LogoutService';
 
 const data = {
     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Sat', 'Sun'],
@@ -35,10 +41,16 @@ const homeScreen = (props) => {
     const [loading, setloading] = useState(false);
     const [filterModalVisible, setFilterModalVisible] = useState(false);
     const [onlineModalVisible, setOnlineModalVisible] = useState(false);
-    const [toggleSwitchAll, settoggleSwitchAll] = useState(false);
+    //const [toggleSwitchAll, settoggleSwitchAll] = useState(false);
+    const [selectCategory, setSelectCategory] = useState(null);
+    const [selectedItem, setselectedItem] = useState([]);
+    const [userDetails, setuserDetails] = useState([]);
     const [online, setOnlineUser] = useState(false);
+    const [allCategorytoggle, setallCategorytoggle] = useState(false);
 
     useEffect(() => {
+        getCategoryList();
+        getUserData();
         props.navigation.addListener('focus', e => {
             BackHandler.addEventListener('hardwareBackPress', handleBackButton);
         });
@@ -48,19 +60,177 @@ const homeScreen = (props) => {
         });
     }, []);
 
+    useEffect(() => {
+        console.log(`selectedItem`, selectedItem);
+    }, [selectedItem, userDetails, allCategorytoggle])
+
+    //get AsyncStorage current user Details
+    const getUserData = async () => {
+        var getUser = await AsyncStorage.getItem(AUTHUSER);
+        if (getUser == null) {
+            setTimeout(() => {
+                props.navigation.replace(LOGINSCREEN)
+            }, 3000);;
+        } else {
+            var UserInfo = JSON.parse(getUser);
+            setuserDetails(UserInfo);
+        }
+    }
+
+    //online model pop up in save button click to call
+    const onPressSaveCategory = () => {
+        let selCat = [];
+        selectedItem.map((item, index) => {
+            selCat.push(item.name);
+        })
+        userDetails.property.live = true;
+        userDetails.property.livechat = selCat;
+        updateUserDetails(userDetails);
+        setOnlineUser(true);
+        setOnlineModalVisible(!onlineModalVisible);
+        authenticateUser(userDetails);
+    }
+
+    //REPLACE AND ADD LOCAL STORAGE FUNCTION
+    const authenticateUser = (user) => {
+        AsyncStorage.setItem(AUTHUSER, JSON.stringify(user));
+    }
+
+    //toggle switch rendom select to call function 
+    const onTouchSelectItem = (item) => {
+        if (item.isSelected === true) {
+            let filteredlists = [];
+            if (selectedItem) {
+                selectedItem.forEach(element => {
+                    element.name === item.name;
+                    item.isSelected = false;
+                });
+                filteredlists = selectedItem.filter(x => x.name !== item.name);
+            }
+            setallCategorytoggle(false);
+            setselectedItem(filteredlists);
+        } else {
+            item.isSelected = true;
+            setselectedItem([...selectedItem, item]);
+        }
+    }
+
+    //get category list api function
+    const getCategoryList = async () => {
+        try {
+            const response = await getCategory();
+            if (response.data != null && response.status === 200) {
+                setSelectCategory(response.data.data);
+            }
+        } catch (error) {
+            console.log(`error`, error);
+        }
+    }
+
     //mobile back press to call
     const handleBackButton = () => {
         BackHandler.exitApp()
         return true;
     }
 
+    //set onlline model to call function
     const setOnline = (online) => {
         if (online == false) {
             setOnlineUser(true);
             setOnlineModalVisible(true);
             return;
         }
-        if (online == true) return setOnlineUser(false);
+
+        if (online == true) {
+            userDetails.property.live = false;
+            userDetails.property.livechat = [];
+            let filteredlists = [];
+            if (selectedItem) {
+                selectedItem.forEach(element => {
+                    element.isSelected = false;
+                });
+                filteredlists = [];
+            }
+            setselectedItem(filteredlists);
+            LogoutUser(userDetails);
+            return;
+        }
+    }
+
+    //LOGOUT/Offile Function after online user
+    const LogoutUser = async (user) => {
+        try {
+            // const response = await LogoutService(user);
+            const response = await UpdateUserService(user);
+            if (response.data != null && response.data != 'undefind' && response.status == 200) {
+                authenticateUser(user);
+                setOnlineUser(false);
+                if (Platform.OS === 'android') {
+                    ToastAndroid.show('User is ofline', ToastAndroid.LONG);
+                } else {
+                    alert('User is ofline');
+                }
+            }
+        } catch (error) {
+            console.log(`error`, error);
+        }
+    }
+
+    //select all category toggle switch
+    const allItemSelect = () => {
+        if (allCategorytoggle === true) {
+            let filteredlists = [];
+            if (selectedItem) {
+                selectedItem.forEach(element => {
+                    element.isSelected = false;
+                });
+                filteredlists = [];
+            }
+            setallCategorytoggle(false);
+            setselectedItem(filteredlists);
+        } else {
+            selectCategory.forEach(element => {
+                element.isSelected = true;
+            });
+            setselectedItem(selectCategory);
+            setallCategorytoggle(true);
+        }
+    }
+
+    //render select category list in model pop 
+    const renderSelectCategory = ({ item }) => (
+        <View>
+            <View style={{ flexDirection: 'row' }}>
+                <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
+            </View>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 15 }}>
+                <View style={{ justifyContent: 'flex-start' }}>
+                    <Text style={{ textAlign: 'center', color: '#000000', justifyContent: 'flex-start' }}>{item.name}</Text>
+                </View>
+                <View style={{ justifyContent: 'flex-end' }}>
+                    <Switch
+                        trackColor={{ false: '#C4C4C4', true: '#00D9CE' }}
+                        onValueChange={() => onTouchSelectItem(item)}
+                        value={item.isSelected === true ? true : false} />
+                </View>
+            </View>
+        </View>
+    )
+
+    //update user Details
+    const updateUserDetails = async (user) => {
+        try {
+            const response = await UpdateUserService(user);
+            if (response.data != null && response.data != 'undefind' && response.status == 200) {
+                if (Platform.OS === 'android') {
+                    ToastAndroid.show('User is Online', ToastAndroid.LONG);
+                } else {
+                    alert('User is Online');
+                }
+            }
+        } catch (error) {
+            console.log(`error`, error);
+        };
     }
 
     return (
@@ -354,92 +524,30 @@ const homeScreen = (props) => {
                             <View style={{ justifyContent: 'flex-end' }}>
                                 <Switch
                                     trackColor={{ false: '#C4C4C4', true: '#0F74C8' }}
-                                    onValueChange={() => settoggleSwitchAll(toggleSwitchAll == false ? true : false)}
-                                    value={toggleSwitchAll} />
+                                    onValueChange={() => allItemSelect()}
+                                    value={allCategorytoggle} />
                             </View>
                         </View>
-
-                        <View style={{ flexDirection: 'row' }}>
-                            <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
-                        </View>
-
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 15 }}>
-                            <View style={{ justifyContent: 'flex-start' }}>
-                                <Text style={{ textAlign: 'center', color: '#000000', justifyContent: 'flex-start' }}>Design</Text>
-                            </View>
-                            <View style={{ justifyContent: 'flex-end' }}>
-                                <Switch
-                                    trackColor={{ false: '#C4C4C4', true: '#00D9CE' }}
-                                    onValueChange={() => settoggleSwitchAll(toggleSwitchAll == false ? true : false)}
-                                    value={toggleSwitchAll} />
-                            </View>
-                        </View>
-
-                        <View style={{ flexDirection: 'row' }}>
-                            <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
-                        </View>
-
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 15 }}>
-                            <View style={{ justifyContent: 'flex-start' }}>
-                                <Text style={{ textAlign: 'center', color: '#000000', justifyContent: 'flex-start' }}>Marketing & Advertising</Text>
-                            </View>
-                            <View style={{ justifyContent: 'flex-end' }}>
-                                <Switch
-                                    trackColor={{ false: '#C4C4C4', true: '#00D9CE' }}
-                                    onValueChange={() => settoggleSwitchAll(toggleSwitchAll == false ? true : false)}
-                                    value={toggleSwitchAll} />
-                            </View>
-                        </View>
-
-                        <View style={{ flexDirection: 'row' }}>
-                            <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
-                        </View>
-
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 15 }}>
-                            <View style={{ justifyContent: 'flex-start' }}>
-                                <Text style={{ textAlign: 'center', color: '#000000', justifyContent: 'flex-start' }}>Technology</Text>
-                            </View>
-                            <View style={{ justifyContent: 'flex-end' }}>
-                                <Switch
-                                    trackColor={{ false: '#C4C4C4', true: '#00D9CE' }}
-                                    onValueChange={() => settoggleSwitchAll(toggleSwitchAll == false ? true : false)}
-                                    value={toggleSwitchAll} />
-                            </View>
-                        </View>
-
-                        <View style={{ flexDirection: 'row' }}>
-                            <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
-                        </View>
-
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 15 }}>
-                            <View style={{ justifyContent: 'flex-start' }}>
-                                <Text style={{ textAlign: 'center', color: '#000000', justifyContent: 'flex-start' }}>Business & Strategy</Text>
-                            </View>
-                            <View style={{ justifyContent: 'flex-end' }}>
-                                <Switch
-                                    trackColor={{ false: '#C4C4C4', true: '#00D9CE' }}
-                                    onValueChange={() => settoggleSwitchAll(toggleSwitchAll == false ? true : false)}
-                                    value={toggleSwitchAll} />
-                            </View>
-                        </View>
-
-                        <View style={{ flexDirection: 'row' }}>
-                            <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
-                        </View>
+                        <FlatList
+                            showsVerticalScrollIndicator={false}
+                            renderItem={renderSelectCategory}
+                            data={selectCategory}
+                            keyExtractor={(item, index) => index.toString()}
+                        />
                     </View>
-
                     <View style={{ marginTop: 15, flexDirection: 'row' }}>
-                        <TouchableOpacity onPress={() => { setOnlineModalVisible(!onlineModalVisible) }}
+                        <TouchableOpacity onPress={() => onPressSaveCategory()}
                             style={STYLES.styles.savebtn}>
                             <Text style={{ fontSize: 14, color: '#FFFFFF' }}>Save</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { setOnlineModalVisible(!onlineModalVisible), setOnlineUser(false) }}
+                        <TouchableOpacity onPress={() => { setOnlineModalVisible(!onlineModalVisible), setOnlineUser(false), setselectedItem([]), getCategoryList() }}
                             style={STYLES.styles.cancelbtn}>
                             <Text style={{ fontSize: 14, color: '#000000' }}>Cancel</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
             </Modal>
+            {loading ? <Loader /> : null}
         </SafeAreaView>
     )
 }
