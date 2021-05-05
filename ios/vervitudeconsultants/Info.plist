@@ -37,8 +37,14 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>camera use to profile picture change</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string/>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>photolibrary to profile picture update </string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>photolibrary to profile picture update </string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>

@@ -18,7 +18,7 @@ function selectCategoryScreen(props) {
 
     useEffect(() => {
         onLoadScreen();
-    }, []);
+    }, [loading]);
 
     useEffect(() => {
     }, [selectCategory, userDetails])
@@ -79,7 +79,7 @@ function selectCategoryScreen(props) {
                 <Image source={{ uri: item.property.image[0].attachment }}
                     style={{ width: 70, height: 70, borderRadius: 10 }} />
             </TouchableOpacity>
-            <Text style={{ fontSize: 12, textAlign: 'center', textTransform: 'uppercase', marginTop: 5 }}>{item.property.title}</Text>
+            <Text style={{ fontSize: 12, textAlign: 'center', textTransform: 'uppercase', marginTop: 5 }}>{item.property.skillcategory}</Text>
         </View>
     );
 
@@ -101,7 +101,7 @@ function selectCategoryScreen(props) {
     const renderSelectCategory = ({ item }) => (
         <View style={{ padding: 5 }}>
             <View style={STYLE.styles.graficview}>
-                <Text style={{ fontSize: 20, marginLeft: 20 }}>{item.item && item.item.property && item.item.property.title}</Text>
+                <Text style={{ fontSize: 20, marginLeft: 20 }}>{item.item && item.item.property && item.item.property.skillcategory}</Text>
                 <TouchableOpacity onPress={() => onTouchRemoveCategory({ item })}>
                     <AntDesign name='closecircleo' size={20} color='#000000' style={{ marginRight: 20 }} />
                 </TouchableOpacity>
@@ -184,7 +184,7 @@ function selectCategoryScreen(props) {
                 </View>
                 <View style={{ marginBottom: 50 }}></View>
             </ScrollView>
-            {loading && <Loader />}
+            {loading ? <Loader /> : null}
         </SafeAreaView>
     )
 }
