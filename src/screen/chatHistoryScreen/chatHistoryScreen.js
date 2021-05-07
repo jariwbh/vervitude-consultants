@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
     View, Text, SafeAreaView, Dimensions, StyleSheet,
-    ScrollView, TouchableOpacity, Image, FlatList,RefreshControl
+    ScrollView, TouchableOpacity, Image, FlatList, RefreshControl
 } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as SCREEN from '../../context/screen/screenName';
@@ -30,14 +30,14 @@ function chatHistoryScreen(props) {
         });
     }, [])
 
-    useEffect(()=>{},[refreshing])
+    useEffect(() => { }, [refreshing])
 
     const wait = (timeout) => {
         return new Promise(resolve => {
             setTimeout(resolve, timeout);
         });
     }
-    
+
     const onRefresh = () => {
         let id = currentUserId;
         setrefreshing(true);
@@ -81,7 +81,7 @@ function chatHistoryScreen(props) {
 
                 <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: -60 }}>
                     <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: 0 }}>
-                        <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#000000', textTransform: 'capitalize' }}>{item.contextid.fullname}</Text>
+                        <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#000000', textTransform: 'capitalize' }}>{item && item.contextid.fullname.split(' ')[0]}</Text>
                         <Text style={{ fontSize: 14, color: '#04DE71' }}>+ ₹ 20.00</Text>
                     </View>
                 </View>
@@ -96,26 +96,26 @@ function chatHistoryScreen(props) {
 
     return (
         <SafeAreaView style={styles.container}>
-        <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 30 }}>
-                    <View style={{ justifyContent: 'flex-start' }}>
-                        <TouchableOpacity style={styles.categoryIcon} onPress={() => { props.navigation.goBack(null) }} >
-                            <AntDesign name='arrowleft' size={24} color='#5AC8FA' />
-                        </TouchableOpacity>
-                    </View>
-
-                    <View style={{ justifyContent: 'flex-end', flexDirection: 'row' }}>
-                        <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: 0, marginRight: 5 }}>
-                            <Image source={require('../../assets/images/chat.png')} style={{ width: 45, height: 22 }} />
-                            <Text style={{ fontSize: 12, color: '#5AC8FA', position: 'absolute' }}>20K</Text>
-                        </View>
-                        <ChatMenu />
-                    </View>
+            <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 30 }}>
+                <View style={{ justifyContent: 'flex-start' }}>
+                    <TouchableOpacity style={styles.categoryIcon} onPress={() => { props.navigation.goBack(null) }} >
+                        <AntDesign name='arrowleft' size={24} color='#5AC8FA' />
+                    </TouchableOpacity>
                 </View>
 
+                <View style={{ justifyContent: 'flex-end', flexDirection: 'row' }}>
+                    <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: 0, marginRight: 5 }}>
+                        <Image source={require('../../assets/images/chat.png')} style={{ width: 45, height: 22 }} />
+                        <Text style={{ fontSize: 12, color: '#5AC8FA', position: 'absolute' }}>20K</Text>
+                    </View>
+                    <ChatMenu />
+                </View>
+            </View>
+
             <ScrollView showsVerticalScrollIndicator={false}
-             nestedScrollEnabled={true}
-             refreshControl={<RefreshControl refreshing={refreshing} title="Pull to refresh" tintColor="#5AC8FA" titleColor="#5AC8FA" colors={["#00D9CE"]} onRefresh={() => onRefresh()} />}>
-                
+                nestedScrollEnabled={true}
+                refreshControl={<RefreshControl refreshing={refreshing} title="Pull to refresh" tintColor="#5AC8FA" titleColor="#5AC8FA" colors={["#00D9CE"]} onRefresh={() => onRefresh()} />}>
+
 
                 {(recentChat == null) || (recentChat && recentChat.length == 0) ?
                     (loading ? null :
