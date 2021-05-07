@@ -114,7 +114,7 @@ const rubychatScreen = (props, { navigation }) => {
 				</View>
 
 				<Image
-					source={{ uri: User.contextid.profileoic ? User.contextid.profileoic : defaultProfile }}
+					source={{ uri: User.contextid.profilepic ? User.contextid.profilepic: defaultProfile }}
 					style={{ width: 50, height: 52, borderRadius: 100, marginLeft: 5 }}
 				/>
 				<FontAwesome
@@ -132,7 +132,7 @@ const rubychatScreen = (props, { navigation }) => {
 					}}
 				>
 					<Text style={{ fontSize: 20, color: '#5AC8FA', textTransform: 'capitalize' }}>{User.contextid.property.first_name}</Text>
-					<Text style={{ fontSize: 10, color: '#000000' }}>Online</Text>
+					<Text style={{ fontSize: 10, color: '#000000' }}>{ User.contextid.property.live ? 'Online' : 'Ofline' }</Text>
 				</View>
 
 				<View
