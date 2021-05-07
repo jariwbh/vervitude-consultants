@@ -15,6 +15,7 @@ import { renderDay, renderBubble, renderInputToolbar } from './customChatProps';
 import firestore from '@react-native-firebase/firestore';
 //
 import Loader from '../../components/loader/index';
+import moment from 'moment';
 const defaultProfile = 'https://res.cloudinary.com/dnogrvbs2/image/upload/v1613538969/profile1_xspwoy.png';
 
 const rubychatScreen = (props, { navigation }) => {
@@ -22,8 +23,10 @@ const rubychatScreen = (props, { navigation }) => {
 	const [chatId, setchatId] = useState(null);
 	const [sender, setsender] = useState(null);
 	const [messages, setMessages] = useState([]);
-	const User = props.route.params.item;
+	const [hideInput, setHideInput] = useState(false);
 
+	const User = props.route.params.item;
+	console.log(`User`, User);
 	// Chat Module - Auto Initiate //
 	useEffect(
 		() => {
@@ -31,6 +34,12 @@ const rubychatScreen = (props, { navigation }) => {
 				let sender = JSON.parse(res)._id;
 				setloading(true);
 				setsender(sender);
+				if (User && User.property.endat != null) {
+					setHideInput(true);
+				} else {
+					setHideInput(false);
+				}
+
 				newChat(sender, User.contextid._id).then((id) => {
 					setchatId(id);
 					let getMessages = firestore()
@@ -91,6 +100,13 @@ const rubychatScreen = (props, { navigation }) => {
 		}
 	});
 
+	const EndChat = () => (
+		<View style={{ alignItems: 'center', margin: 5 }}>
+			<Text style={{ fontSize: 14, color: '#000000' }}>{`Your Chat is close in this Date ${User && moment(User.property.endat).format("MMM Do YYYY")}`}</Text>
+			<Text style={{ fontSize: 14, color: '#000000' }}>{`and time ${User && moment(User.property.endat).format('LTS')}`}</Text>
+		</View>
+	)
+
 	return (
 		<SafeAreaView style={styles.container}>
 
@@ -114,7 +130,7 @@ const rubychatScreen = (props, { navigation }) => {
 				</View>
 
 				<Image
-					source={{ uri: User.contextid.profilepic ? User.contextid.profilepic: defaultProfile }}
+					source={{ uri: User.contextid.profilepic ? User.contextid.profilepic : defaultProfile }}
 					style={{ width: 50, height: 52, borderRadius: 100, marginLeft: 5 }}
 				/>
 				<FontAwesome
@@ -132,7 +148,7 @@ const rubychatScreen = (props, { navigation }) => {
 					}}
 				>
 					<Text style={{ fontSize: 20, color: '#5AC8FA', textTransform: 'capitalize' }}>{User.contextid.property.first_name}</Text>
-					<Text style={{ fontSize: 10, color: '#000000' }}>{ User.contextid.property.live ? 'Online' : 'Ofline' }</Text>
+					<Text style={{ fontSize: 10, color: '#000000' }}>{User.contextid.property.live ? 'Online' : 'Ofline'}</Text>
 				</View>
 
 				<View
@@ -162,7 +178,7 @@ const rubychatScreen = (props, { navigation }) => {
 						renderBubble={(props) => renderBubble(props, navigation)}
 						// renderDay={renderDay}
 						minInputToolbarHeight={80}
-						renderInputToolbar={renderInputToolbar}
+						renderInputToolbar={hideInput ? () => <EndChat /> : renderInputToolbar}
 					/>
 				</View>
 				<View style={{ marginBottom: 10 }} />
