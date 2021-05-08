@@ -10,20 +10,21 @@ const notificationScreen = (props) => {
         <SafeAreaView style={STYLE.styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={{ justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', marginTop: 30, marginBottom: 10 }}>
-                    <View style={{ justifyContent: 'flex-start' }}>
+                    <View style={{ justifyContent: 'flex-start', flexDirection: 'row' }}>
                         <TouchableOpacity onPress={() => props.navigation.goBack(null)}>
                             <AntDesign name='arrowleft' color='#FFFFFF' size={24} style={{ marginLeft: 15 }} />
                         </TouchableOpacity>
+                        <View style={{ marginLeft: 30 }}>
+                            <TouchableOpacity >
+                                <Image source={require('../../assets/images/notificationicon.png')} style={{ height: 25, width: 20 }} />
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                    <View style={{ marginLeft: -150 }}>
-                        <TouchableOpacity >
-                            <Image source={require('../../assets/images/notificationicon.png')} style={{ height: 25, width: 20 }} />
-                        </TouchableOpacity>
-                    </View>
+
                     <View style={{ justifyContent: 'flex-end' }}>
                         <TouchableOpacity
                             style={STYLE.styles.submitbtn}>
-                            <Text style={{ fontSize: 14, color: '#00D9CE' }}>Clear</Text>
+                            <Text style={{ fontSize: 14, color: '#5AC8FA' }}>Clear</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

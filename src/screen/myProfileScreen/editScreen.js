@@ -116,7 +116,6 @@ const editScreen = (props) => {
 
     //UPDATE PROFILE PICTURE API CALL
     const UpdateProfileService = async (profilepic) => {
-
         let user = userDetails;
         user.profilepic = profilepic;
         try {
@@ -186,6 +185,7 @@ const editScreen = (props) => {
                                 returnKeyType='next'
                                 placeholderTextColor='#000000'
                                 blurOnSubmit={false}
+                                autoCapitalize='none'
                             />
                         </View>
 
@@ -201,6 +201,7 @@ const editScreen = (props) => {
                                 placeholderTextColor='#000000'
                                 blurOnSubmit={false}
                                 defaultValue={last_name}
+                                autoCapitalize='none'
                             />
                         </View>
 
@@ -216,6 +217,7 @@ const editScreen = (props) => {
                                 placeholderTextColor='#000000'
                                 blurOnSubmit={false}
                                 defaultValue={usertag}
+                                autoCapitalize='none'
                             />
                         </View>
 
@@ -246,6 +248,7 @@ const editScreen = (props) => {
                                 placeholderTextColor='#000000'
                                 blurOnSubmit={false}
                                 defaultValue={primaryemail}
+                                autoCapitalize='none'
                             />
                         </View>
 
@@ -261,6 +264,7 @@ const editScreen = (props) => {
                                 placeholderTextColor='#000000'
                                 blurOnSubmit={false}
                                 defaultValue={location}
+                                autoCapitalize='none'
                             />
                             <Ionicons name='location' size={24} color='#000000' />
                         </View>
@@ -279,6 +283,7 @@ const editScreen = (props) => {
                                 numberOfLines={3}
                                 multiline={true}
                                 defaultValue={about}
+                                autoCapitalize='none'
                             />
                         </View>
                         <View style={{ flexDirection: 'column', marginLeft: 20, marginTop: 5 }}>

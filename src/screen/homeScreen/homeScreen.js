@@ -237,26 +237,28 @@ const homeScreen = (props) => {
         <SafeAreaView style={STYLES.styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 30 }}>
-                    <View style={{ justifyContent: 'flex-start' }}>
+                    <View style={{ justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center' }}>
                         <MenuButton onPress={() => { props.navigation.navigate(MYPROFILESCREEN) }} />
+
+                        {online == true ?
+                            <View style={{ marginLeft: 30 }}>
+                                <TouchableOpacity style={STYLES.styles.onlineswitchBtn} onPress={() => { setOnline(true) }} >
+                                    <Text style={STYLES.styles.onlineswitchBtnText}>Online</Text>
+                                    <Image source={require('../../assets/images/settingicon.png')}
+                                        style={{ alignItems: 'center', height: 22, width: 22 }} />
+                                </TouchableOpacity>
+                            </View>
+                            :
+                            <View style={{ marginLeft: 30 }}>
+                                <TouchableOpacity style={STYLES.styles.oflineswitchBtn} onPress={() => { setOnline(false) }} >
+                                    <Image source={require('../../assets/images/offlineicon.png')}
+                                        style={{ alignItems: 'center', height: 22, width: 22 }} />
+                                    <Text style={STYLES.styles.oflineswitchBtnText}>Offline</Text>
+                                </TouchableOpacity>
+                            </View>
+                        }
                     </View>
-                    {online == true ?
-                        <View style={{ marginLeft: screenWidth / 2 - 280 }}>
-                            <TouchableOpacity style={STYLES.styles.onlineswitchBtn} onPress={() => { setOnline(true) }} >
-                                <Text style={STYLES.styles.onlineswitchBtnText}>Online</Text>
-                                <Image source={require('../../assets/images/settingicon.png')}
-                                    style={{ alignItems: 'center', height: 22, width: 22 }} />
-                            </TouchableOpacity>
-                        </View>
-                        :
-                        <View style={{ marginLeft: screenWidth / 2 - 280 }}>
-                            <TouchableOpacity style={STYLES.styles.oflineswitchBtn} onPress={() => { setOnline(false) }} >
-                                <Image source={require('../../assets/images/offlineicon.png')}
-                                    style={{ alignItems: 'center', height: 22, width: 22 }} />
-                                <Text style={STYLES.styles.oflineswitchBtnText}>Offline</Text>
-                            </TouchableOpacity>
-                        </View>
-                    }
+
                     <View style={{ justifyContent: 'flex-end' }}>
                         <ChatMenu onPress={() => { props.navigation.navigate(CHATHISTORYSCREEN) }} />
                     </View>
@@ -467,43 +469,45 @@ const homeScreen = (props) => {
                 visible={filterModalVisible}
                 onRequestClose={() => { setFilterModalVisible(!filterModalVisible) }}
             >
-                <View style={STYLES.styles.centeView}>
-                    <View style={STYLES.styles.modalView}>
-                        <Text style={{ padding: 15, textAlign: 'center', color: '#000000', fontSize: 14 }}>All</Text>
-                        <View style={{ flexDirection: 'row' }}>
-                            <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
+                <View style={{ alignItems: 'center', flex: 1 }}>
+                    <View style={{ position: 'absolute', bottom: 20 }}>
+                        <View style={STYLES.styles.modalView}>
+                            <Text style={{ padding: 15, textAlign: 'center', color: '#000000', fontSize: 14 }}>All</Text>
+                            <View style={{ flexDirection: 'row' }}>
+                                <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
+                            </View>
+
+                            <Text style={{ padding: 15, textAlign: 'center', color: '#000000', fontSize: 14 }}>Yearly</Text>
+                            <View style={{ flexDirection: 'row' }}>
+                                <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
+                            </View>
+
+                            <Text style={{ padding: 15, textAlign: 'center', color: '#000000', fontSize: 14 }}>Weekly</Text>
+                            <View style={{ flexDirection: 'row' }}>
+                                <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
+                            </View>
+
+                            <Text style={{ padding: 15, textAlign: 'center', color: '#5AC8FA', fontSize: 14 }}>Montly</Text>
+                            <View style={{ flexDirection: 'row' }}>
+                                <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
+                            </View>
+
+                            <Text style={{ padding: 15, textAlign: 'center', color: '#000000', fontSize: 14 }}>Today</Text>
+                            <View style={{ flexDirection: 'row' }}>
+                                <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
+                            </View>
                         </View>
 
-                        <Text style={{ padding: 15, textAlign: 'center', color: '#000000', fontSize: 14 }}>Yearly</Text>
-                        <View style={{ flexDirection: 'row' }}>
-                            <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
+                        <View style={{ marginTop: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                            <TouchableOpacity onPress={() => { setFilterModalVisible(!filterModalVisible) }}
+                                style={STYLES.styles.savebtn}>
+                                <Text style={{ fontSize: 14, color: '#FFFFFF' }}>Save</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => { setFilterModalVisible(!filterModalVisible) }}
+                                style={STYLES.styles.cancelbtn}>
+                                <Text style={{ fontSize: 14, color: '#000000' }}>Cancel</Text>
+                            </TouchableOpacity>
                         </View>
-
-                        <Text style={{ padding: 15, textAlign: 'center', color: '#000000', fontSize: 14 }}>Weekly</Text>
-                        <View style={{ flexDirection: 'row' }}>
-                            <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
-                        </View>
-
-                        <Text style={{ padding: 15, textAlign: 'center', color: '#5AC8FA', fontSize: 14 }}>Montly</Text>
-                        <View style={{ flexDirection: 'row' }}>
-                            <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
-                        </View>
-
-                        <Text style={{ padding: 15, textAlign: 'center', color: '#000000', fontSize: 14 }}>Today</Text>
-                        <View style={{ flexDirection: 'row' }}>
-                            <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
-                        </View>
-                    </View>
-
-                    <View style={{ marginTop: 15, flexDirection: 'row' }}>
-                        <TouchableOpacity onPress={() => { setFilterModalVisible(!filterModalVisible) }}
-                            style={STYLES.styles.savebtn}>
-                            <Text style={{ fontSize: 14, color: '#FFFFFF' }}>Save</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { setFilterModalVisible(!filterModalVisible) }}
-                            style={STYLES.styles.cancelbtn}>
-                            <Text style={{ fontSize: 14, color: '#000000' }}>Cancel</Text>
-                        </TouchableOpacity>
                     </View>
                 </View>
             </Modal>
@@ -515,35 +519,37 @@ const homeScreen = (props) => {
                 visible={onlineModalVisible}
                 onRequestClose={() => { setOnlineModalVisible(!onlineModalVisible) }}
             >
-                <View style={STYLES.styles.centeView}>
-                    <View style={STYLES.styles.modalViewOnline}>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 15 }}>
-                            <View style={{ justifyContent: 'flex-start' }}>
-                                <Text style={{ textAlign: 'center', color: '#000000', justifyContent: 'flex-start' }}>All</Text>
+                <View style={{ alignItems: 'center', flex: 1 }}>
+                    <View style={{ position: 'absolute', bottom: 20 }}>
+                        <View style={STYLES.styles.modalViewOnline}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 15 }}>
+                                <View style={{ justifyContent: 'flex-start' }}>
+                                    <Text style={{ textAlign: 'center', color: '#000000', justifyContent: 'flex-start' }}>All</Text>
+                                </View>
+                                <View style={{ justifyContent: 'flex-end' }}>
+                                    <Switch
+                                        trackColor={{ false: '#C4C4C4', true: '#0F74C8' }}
+                                        onValueChange={() => allItemSelect()}
+                                        value={allCategorytoggle} />
+                                </View>
                             </View>
-                            <View style={{ justifyContent: 'flex-end' }}>
-                                <Switch
-                                    trackColor={{ false: '#C4C4C4', true: '#0F74C8' }}
-                                    onValueChange={() => allItemSelect()}
-                                    value={allCategorytoggle} />
-                            </View>
+                            <FlatList
+                                showsVerticalScrollIndicator={false}
+                                renderItem={renderSelectCategory}
+                                data={selectCategory}
+                                keyExtractor={(item, index) => index.toString()}
+                            />
                         </View>
-                        <FlatList
-                            showsVerticalScrollIndicator={false}
-                            renderItem={renderSelectCategory}
-                            data={selectCategory}
-                            keyExtractor={(item, index) => index.toString()}
-                        />
-                    </View>
-                    <View style={{ marginTop: 15, flexDirection: 'row' }}>
-                        <TouchableOpacity onPress={() => onPressSaveCategory()}
-                            style={STYLES.styles.savebtn}>
-                            <Text style={{ fontSize: 14, color: '#FFFFFF' }}>Save</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { setOnlineModalVisible(!onlineModalVisible), setOnlineUser(false), setselectedItem([]), getCategoryList() }}
-                            style={STYLES.styles.cancelbtn}>
-                            <Text style={{ fontSize: 14, color: '#000000' }}>Cancel</Text>
-                        </TouchableOpacity>
+                        <View style={{ marginTop: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                            <TouchableOpacity onPress={() => onPressSaveCategory()}
+                                style={STYLES.styles.savebtn}>
+                                <Text style={{ fontSize: 14, color: '#FFFFFF' }}>Save</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => { setOnlineModalVisible(!onlineModalVisible), setOnlineUser(false), setselectedItem([]), getCategoryList() }}
+                                style={STYLES.styles.cancelbtn}>
+                                <Text style={{ fontSize: 14, color: '#000000' }}>Cancel</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
             </Modal>

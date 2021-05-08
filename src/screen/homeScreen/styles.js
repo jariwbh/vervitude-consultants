@@ -109,7 +109,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center'
     },
     modalView: {
-        marginTop: HEIGHT / 2 - 150,
+        height: HEIGHT / 3 + 20,
         width: WIDTH - 90,
         borderRadius: 20,
         backgroundColor: 'white',
@@ -124,7 +124,6 @@ export const styles = StyleSheet.create({
         elevation: 5
     },
     modalViewOnline: {
-        marginTop: HEIGHT / 2 - 150,
         height: HEIGHT / 3,
         width: WIDTH - 50,
         borderRadius: 20,
@@ -140,8 +139,8 @@ export const styles = StyleSheet.create({
     },
     savebtn: {
         flexDirection: 'row',
-        marginRight: 50,
-        width: 100,
+        marginLeft: 10,
+        width: WIDTH / 3,
         height: 35,
         backgroundColor: '#5AC8FA',
         borderRadius: 20,
@@ -158,7 +157,8 @@ export const styles = StyleSheet.create({
     },
     cancelbtn: {
         flexDirection: 'row',
-        width: 100,
+        marginRight: 10,
+        width: WIDTH / 3,
         height: 35,
         backgroundColor: '#EEEEEE',
         borderRadius: 20,
@@ -175,10 +175,10 @@ export const styles = StyleSheet.create({
     },
     onlineswitchBtn: {
         flexDirection: 'row',
-        width: WIDTH / 2 - 80,
+        width: WIDTH / 4,
         backgroundColor: '#FFFFFF',
         borderRadius: 50,
-        height: 40,
+        height: 35,
         alignItems: 'center',
         justifyContent: 'space-evenly'
     },
@@ -189,10 +189,10 @@ export const styles = StyleSheet.create({
     },
     oflineswitchBtn: {
         flexDirection: 'row',
-        width: WIDTH / 2 - 80,
+        width: WIDTH / 4,
         backgroundColor: '#FFFFFF',
         borderRadius: 50,
-        height: 40,
+        height: 35,
         alignItems: 'center',
         justifyContent: 'center'
     },

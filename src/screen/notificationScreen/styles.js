@@ -20,7 +20,7 @@ export const styles = StyleSheet.create({
             height: 0,
             width: 0,
         },
-        elevation: 4,
+        elevation: 2,
     },
     submitbtn: {
         flexDirection: 'row',
@@ -38,6 +38,6 @@ export const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        elevation: 5
+        elevation: 2
     }
 })

@@ -19,6 +19,7 @@ function myEaringScreen(props) {
 
           <View style={{ justifyContent: 'flex-end' }}>
             <TouchableOpacity
+              onPress={() => props.navigation.navigate(SCREEN.MYEARINGSCREEN)}
               style={STYLE.Wallatestyles.wallatwbtn}>
               <Text style={{ fontSize: 16, color: '#FFFFFF' }}>5324.00</Text>
               <View style={{ width: 24, height: 24, backgroundColor: '#FFFFFF', alignItems: 'center', borderRadius: 100, justifyContent: 'center' }}>

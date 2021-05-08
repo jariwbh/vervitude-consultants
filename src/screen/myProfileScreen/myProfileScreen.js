@@ -126,18 +126,17 @@ const myProfileScreen = (props) => {
         <SafeAreaView style={STYLES.styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={{ marginTop: 30, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }} >
-                    <View style={{ justifyContent: 'flex-start' }}>
+                    <View style={{ justifyContent: 'flex-start', flexDirection: 'row' }}>
                         <MenuButton onPress={() => { props.navigation.navigate(SCREEN.HOMESCREEN) }} />
-                    </View>
-
-                    <View style={{ marginLeft: -80, justifyContent: 'center', alignItems: 'center' }}>
-                        <TouchableOpacity onPress={() => props.navigation.navigate(SCREEN.NOTIFICATIONSCREEN)}>
-                            <Image source={require('../../assets/images/notificationicon.png')} style={{ height: 25, width: 20 }} />
-                        </TouchableOpacity>
+                        <View style={{ marginLeft: 20, justifyContent: 'center', alignItems: 'center' }}>
+                            <TouchableOpacity onPress={() => props.navigation.navigate(SCREEN.NOTIFICATIONSCREEN)}>
+                                <Image source={require('../../assets/images/notificationicon.png')} style={{ height: 25, width: 20 }} />
+                            </TouchableOpacity>
+                        </View>
                     </View>
 
                     <View style={{ justifyContent: 'flex-end' }}>
-                        <TouchableOpacity
+                        <TouchableOpacity onPress={() => props.navigation.navigate(SCREEN.MYEARINGSCREEN)}
                             style={{ height: 40, width: 130, backgroundColor: '#FFFFFF', flexDirection: 'row', borderRadius: 20, alignItems: 'center', justifyContent: 'center', marginRight: 10 }}>
                             <Text style={{ fontSize: 16, color: '#5AC8FA' }}>5324.00</Text>
                             <View style={{ width: 25, height: 25, backgroundColor: '#5AC8FA', alignItems: 'center', marginLeft: 15, borderRadius: 20, justifyContent: 'center' }}>
@@ -170,7 +169,7 @@ const myProfileScreen = (props) => {
                         <TouchableOpacity onPress={() => props.navigation.navigate(SCREEN.CHATHISTORYSCREEN)}
                             style={{ flexDirection: 'row', marginTop: 30 }}>
                             <Image source={require('../../assets/images/conversation.png')} style={{ height: 25, width: 25, marginLeft: 20 }} />
-                            <Text style={{ marginLeft: 20, color: '#4D4D4D', fontSize: 16 }}>My conversations</Text>
+                            <Text style={{ marginLeft: 20, color: '#4D4D4D', fontSize: 16 }}>My Conversations</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', marginTop: 30, marginBottom: 5 }}
@@ -210,53 +209,56 @@ const myProfileScreen = (props) => {
                 visible={showModalVisible}
                 onRequestClose={() => { setshowModalVisible(!showModalVisible) }}
             >
-                <View style={STYLES.styles.centerView}>
-                    <View style={STYLES.styles.modalView}>
-                        <View style={{ marginTop: 20 }}></View>
-                        <View style={subjecterror == null ? STYLES.styles.inputView : STYLES.styles.inputViewError}>
-                            <TextInput
-                                style={STYLES.styles.TextInput}
-                                placeholder='Subject'
-                                type='clear'
-                                returnKeyType='next'
-                                placeholderTextColor='#999999'
-                                defaultValue={subject}
-                                blurOnSubmit={false}
-                                onSubmitEditing={() => { secondTextInputRef.current.focus() }}
-                                onChangeText={(subject) => setSubject(subject)}
-                            />
-                        </View>
+                <View style={{ alignItems: 'center', flex: 1 }}>
+                    <View style={{ position: 'absolute', bottom: 20 }}>
+                        <View style={STYLES.styles.modalView}>
+                            <View style={{ marginTop: 20 }}></View>
+                            <View style={subjecterror == null ? STYLES.styles.inputView : STYLES.styles.inputViewError}>
+                                <TextInput
+                                    style={STYLES.styles.TextInput}
+                                    placeholder='Subject'
+                                    type='clear'
+                                    returnKeyType='next'
+                                    placeholderTextColor='#999999'
+                                    defaultValue={subject}
+                                    blurOnSubmit={false}
+                                    onSubmitEditing={() => { secondTextInputRef.current.focus() }}
+                                    onChangeText={(subject) => setSubject(subject)}
+                                />
+                            </View>
 
-                        <View style={descriptionerror == null ? STYLES.styles.textAreainputView : STYLES.styles.textAreainputViewError}>
-                            <TextInput
-                                style={STYLES.styles.TextareaInput}
-                                placeholder='Write Your Description'
-                                type='clear'
-                                returnKeyType='done'
-                                placeholderTextColor='#999999'
-                                blurOnSubmit={false}
-                                numberOfLines={3}
-                                multiline={true}
-                                defaultValue={description}
-                                blurOnSubmit={false}
-                                ref={secondTextInputRef}
-                                onChangeText={(description) => setdescription(description)}
-                            />
-                        </View>
+                            <View style={descriptionerror == null ? STYLES.styles.textAreainputView : STYLES.styles.textAreainputViewError}>
+                                <TextInput
+                                    style={STYLES.styles.TextareaInput}
+                                    placeholder='Write Your Description'
+                                    type='clear'
+                                    returnKeyType='done'
+                                    placeholderTextColor='#999999'
+                                    blurOnSubmit={false}
+                                    numberOfLines={3}
+                                    multiline={true}
+                                    defaultValue={description}
+                                    blurOnSubmit={false}
+                                    ref={secondTextInputRef}
+                                    onChangeText={(description) => setdescription(description)}
+                                />
+                            </View>
 
-                    </View>
-                    <View style={{ marginTop: 15, flexDirection: 'row' }}>
-                        <TouchableOpacity onPress={() => onPressSubmit()}
-                            style={STYLES.styles.savebtn}>
-                            <Text style={{ fontSize: 14, color: '#FFFFFF' }}>Submit</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => onPressCancel()}
-                            style={STYLES.styles.cancelbtn}>
-                            <Text style={{ fontSize: 14, color: '#000000' }}>Cancel</Text>
-                        </TouchableOpacity>
+                        </View>
+                        <View style={{ marginTop: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                            <TouchableOpacity onPress={() => onPressSubmit()}
+                                style={STYLES.styles.savebtn}>
+                                <Text style={{ fontSize: 14, color: '#FFFFFF' }}>Submit</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => onPressCancel()}
+                                style={STYLES.styles.cancelbtn}>
+                                <Text style={{ fontSize: 14, color: '#000000' }}>Cancel</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
             </Modal>
+
             {/* message model Pop */}
             <Modal
                 animationType='slide'
@@ -264,22 +266,24 @@ const myProfileScreen = (props) => {
                 visible={showMessageModalVisible}
                 onRequestClose={() => { setshowMessageModalVisible(false) }}
             >
-                <View style={STYLES.styles.centerView}>
-                    <View style={STYLES.styles.msgModalView}>
-                        <Image source={require('../../assets/images/smileicon.png')} style={{ marginTop: 15, height: 40, width: 40 }} />
-                        <Text style={{ marginTop: 15, fontSize: 14, color: '#000000' }}>Sorry to hear about the issue</Text>
-                        <Text style={{ fontSize: 14, color: '#000000' }}>Your quiry has been Submit</Text>
-                        <Text style={{ marginTop: 15, fontSize: 14, color: '#000000' }}>You will hear from us very soon</Text>
-                    </View>
-                    <View style={{ justifyContent: 'center', flexDirection: 'row', marginTop: 15 }}>
-                        <TouchableOpacity onPress={() => { setshowMessageModalVisible(false) }}
-                            style={STYLES.styles.cancelbtn}>
-                            <Text style={{ fontSize: 14, color: '#000000' }}>Ok</Text>
-                        </TouchableOpacity>
+                <View style={{ alignItems: 'center', flex: 1 }}>
+                    <View style={{ position: 'absolute', bottom: 20 }}>
+                        <View style={STYLES.styles.msgModalView}>
+                            <Image source={require('../../assets/images/smileicon.png')} style={{ marginTop: 15, height: 40, width: 40 }} />
+                            <Text style={{ marginTop: 15, fontSize: 14, color: '#000000' }}>Sorry to hear about the issue</Text>
+                            <Text style={{ fontSize: 14, color: '#000000' }}>Your quiry has been Submit</Text>
+                            <Text style={{ marginTop: 15, fontSize: 14, color: '#000000' }}>You will hear from us very soon</Text>
+                        </View>
+                        <View style={{ justifyContent: 'center', flexDirection: 'row', marginTop: 15 }}>
+                            <TouchableOpacity onPress={() => { setshowMessageModalVisible(false) }}
+                                style={STYLES.styles.cancelbtn}>
+                                <Text style={{ fontSize: 14, color: '#000000' }}>Ok</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
             </Modal>
-            {loading ? <Loader /> : null}
+            { loading ? <Loader /> : null}
         </SafeAreaView>
     )
 }

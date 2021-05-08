@@ -21,7 +21,7 @@ export const Transferstyles = StyleSheet.create({
             height: 0,
             width: 0,
         },
-        elevation: 3
+        elevation: 2
     },
     gamountview: {
         height: 280,
@@ -84,7 +84,7 @@ export const Wallatestyles = StyleSheet.create({
             height: 0,
             width: 0,
         },
-        elevation: 3
+        elevation: 2
     },
     bankview: {
         height: 70,

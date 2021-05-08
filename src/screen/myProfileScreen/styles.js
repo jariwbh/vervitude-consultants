@@ -19,14 +19,13 @@ export const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        elevation: 5,
+        elevation: 2
     },
     centerView: {
         justifyContent: 'center',
         alignItems: 'center'
     },
     modalView: {
-        marginTop: HEIGHT / 2 + 50,
         height: 200,
         width: WIDTH - 90,
         borderRadius: 20,
@@ -39,10 +38,9 @@ export const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
-        elevation: 5
+        elevation: 2
     },
     msgModalView: {
-        marginTop: HEIGHT / 2 + 50,
         height: 200,
         width: WIDTH - 90,
         borderRadius: 20,
@@ -55,7 +53,7 @@ export const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
-        elevation: 5
+        elevation: 2
     },
     profileImage: {
         borderRadius: 100,
@@ -83,8 +81,8 @@ export const styles = StyleSheet.create({
     },
     savebtn: {
         flexDirection: 'row',
-        marginRight: 50,
-        width: 100,
+        marginLeft: 10,
+        width: WIDTH / 3,
         height: 35,
         backgroundColor: '#5AC8FA',
         borderRadius: 20,
@@ -97,11 +95,12 @@ export const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        elevation: 5
+        elevation: 2
     },
     cancelbtn: {
         flexDirection: 'row',
-        width: 100,
+        marginRight: 10,
+        width: WIDTH / 3,
         height: 35,
         backgroundColor: '#EEEEEE',
         borderRadius: 20,
@@ -114,7 +113,7 @@ export const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        elevation: 5
+        elevation: 2
     },
     inputView: {
         flexDirection: 'row',
@@ -164,7 +163,7 @@ export const styles = StyleSheet.create({
         fontSize: 14,
         flex: 1,
         backgroundColor: '#F4F4F4',
-        marginLeft: 5,
+        marginLeft: 5
     }
 })
 
@@ -208,6 +207,13 @@ export const Editstyles = StyleSheet.create({
         borderRadius: 3,
         marginLeft: 10
     },
+    TextareaInput: {
+        fontSize: 14,
+        flex: 1,
+        padding: 5,
+        height: 80,
+        justifyContent: 'flex-start'
+    },
     TextInput: {
         fontSize: 14,
         flex: 1,
@@ -218,13 +224,6 @@ export const Editstyles = StyleSheet.create({
         flex: 1,
         padding: 5,
         fontWeight: 'bold'
-    },
-    TextareaInput: {
-        fontSize: 14,
-        flex: 1,
-        padding: 5,
-        height: 150,
-        justifyContent: 'flex-start'
     },
     submitbtn: {
         flexDirection: 'row',
@@ -242,7 +241,7 @@ export const Editstyles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        elevation: 5
+        elevation: 2
     },
     generalinfitext: {
         width: WIDTH - 40,
@@ -251,31 +250,14 @@ export const Editstyles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#5AC8FA',
         borderRadius: 100,
-        shadowColor: '#000000',
         shadowOffset: {
             width: 0,
             height: 0,
         },
         shadowOpacity: 3,
         shadowRadius: 2,
-        elevation: 0,
-    },
-    // brandstyle: {
-    //     color: '#888888',
-    //     width: 80,
-    //     height: 80,
-    //     alignItems: 'center',
-    //     justifyContent: 'center',
-    //     borderRadius: 100,
-    //     shadowColor: '#000000',
-    //     shadowOpacity: 0.5,
-    //     shadowRadius: 3,
-    //     shadowOffset: {
-    //         height: 0,
-    //         width: 0,
-    //     },
-    //     elevation: 2
-    // }
+        elevation: 1,
+    }
 })
 
 export const Documentstyles = StyleSheet.create({
@@ -328,7 +310,7 @@ export const Documentstyles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        elevation: 5
+        elevation: 2
     },
     generalinfitext: {
         width: WIDTH - 40,
@@ -337,14 +319,13 @@ export const Documentstyles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#5EA2FC',
         borderRadius: 100,
-        shadowColor: '#000000',
         shadowOffset: {
             width: 0,
             height: 0,
         },
         shadowOpacity: 3,
         shadowRadius: 2,
-        elevation: 0,
+        elevation: 1,
     },
     bankinfitext: {
         width: WIDTH - 40,
@@ -353,14 +334,13 @@ export const Documentstyles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#5AC8FA',
         borderRadius: 100,
-        shadowColor: '#000000',
         shadowOffset: {
             width: 0,
             height: 0,
         },
         shadowOpacity: 3,
         shadowRadius: 2,
-        elevation: 0,
+        elevation: 1,
     },
     FontBoxStyle: {
         width: WIDTH - 60,
@@ -413,14 +393,13 @@ export const Bankstyles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#5EA2FC',
         borderRadius: 100,
-        shadowColor: '#000000',
         shadowOffset: {
             width: 0,
             height: 0,
         },
         shadowOpacity: 3,
         shadowRadius: 2,
-        elevation: 0,
+        elevation: 1
     },
     submitbtn: {
         flexDirection: 'row',
@@ -438,7 +417,7 @@ export const Bankstyles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        elevation: 5
+        elevation: 2
     },
     ChequeBoxStyle: {
         width: WIDTH - 60,
