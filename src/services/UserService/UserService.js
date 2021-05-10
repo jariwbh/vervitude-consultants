@@ -6,6 +6,12 @@ const UpdateUserService = (data) => {
     return Axios.patch('users/' + id, body);
 }
 
+const UserUpdateService = (data) => {
+    let id = data._id;
+    const body = JSON.stringify(data);
+    return Axios.put('users/' + id, body);
+}
+
 const UserListService = () => {
     const body = {
         'search': [{
@@ -18,4 +24,4 @@ const UserListService = () => {
     return Axios.patch('members/' + id, body);
 }
 
-export { UpdateUserService, UserListService }
+export { UpdateUserService, UserListService, UserUpdateService }

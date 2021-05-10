@@ -287,7 +287,19 @@ export const Documentstyles = StyleSheet.create({
         marginTop: 5,
         alignItems: 'center',
         borderRadius: 3,
-        marginLeft: 20
+        marginLeft: 20,
+    },
+    inputViewError: {
+        flexDirection: 'row',
+        backgroundColor: '#EFEFEF',
+        borderColor: '#FF0000',
+        width: WIDTH - 60,
+        height: 35,
+        marginTop: 5,
+        alignItems: 'center',
+        borderRadius: 3,
+        marginLeft: 20,
+        borderWidth: 1
     },
     TextInput: {
         fontSize: 14,
@@ -381,6 +393,18 @@ export const Bankstyles = StyleSheet.create({
         borderRadius: 3,
         marginLeft: 15
     },
+    inputViewError: {
+        flexDirection: 'row',
+        backgroundColor: '#EFEFEF',
+        borderColor: '#FF0000',
+        width: WIDTH - 50,
+        height: 35,
+        marginTop: 5,
+        alignItems: 'center',
+        borderRadius: 3,
+        marginLeft: 15,
+        borderWidth: 1
+    },
     TextInput: {
         fontSize: 14,
         flex: 1,
@@ -426,5 +450,22 @@ export const Bankstyles = StyleSheet.create({
         alignItems: 'center',
         borderColor: '#999999',
         borderWidth: 1
+    }, accoutTypeStyle: {
+        width: 100,
+        backgroundColor: '#F4F4F4',
+        height: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 100,
+        marginRight: 5
+    },
+    OnChangeAccoutTypeStyle: {
+        width: 100,
+        backgroundColor: '#80d4ff',
+        height: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 100,
+        marginRight: 5
     }
 })

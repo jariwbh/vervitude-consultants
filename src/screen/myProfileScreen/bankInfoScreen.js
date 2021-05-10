@@ -1,24 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, SafeAreaView, TouchableOpacity, TextInput, ScrollView } from 'react-native'
+import { View, Text, Image, SafeAreaView, TouchableOpacity, TextInput, ScrollView, Dimensions, Keyboard, FlatList, ToastAndroid } from 'react-native'
+import { UpdateUserService } from "../../services/UserService/UserService";
+import AsyncStorage from '@react-native-community/async-storage';
+import MyPermissionController from '../../helpers/appPermission';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as SCREEN from '../../context/screen/screenName';
 import Feather from 'react-native-vector-icons/Feather';
-import * as STYLE from './styles';
-import AsyncStorage from '@react-native-community/async-storage';
 import { AUTHUSER } from '../../context/actions/type';
-import MyPermissionController from '../../helpers/appPermission';
+import ImagePicker from 'react-native-image-picker';
+import Loader from "../../components/loader/index";
+import RNFetchBlob from 'rn-fetch-blob';
+import * as STYLE from './styles';
+const WIDTH = Dimensions.get('window').width;
 
 const bankInfoScreen = (props) => {
     const [loading, setloading] = useState(false);
     const [userDetails, setuserDetails] = useState(null);
-
     const [nameofaccount, setnameofaccount] = useState(null);
+    const [nameofaccountError, setnameofaccountError] = useState(null);
     const [bankname, setbankname] = useState(null);
+    const [banknameError, setbanknameError] = useState(null);
     const [ifsccode, setifsccode] = useState(null);
+    const [ifsccodeError, setifsccodeError] = useState(null);
     const [accounttype, setaccounttype] = useState(null);
     const [accountnumber, setaccountnumber] = useState(null);
+    const [accountnumberError, setaccountnumberError] = useState(null);
     const [repeataccountnumber, setrepeataccountnumber] = useState(null);
+    const [repeataccountnumberError, setrepeataccountnumberError] = useState(null);
     const [cancelcheque, setcancelcheque] = useState(null);
+    const secondTextInputRef = React.createRef();
+    const thirdTextInputRef = React.createRef();
+    const fourTextInputRef = React.createRef();
+    const fifthTextInputRef = React.createRef();
+
+    useEffect(() => {
+    }, [nameofaccount, bankname, ifsccode, accounttype, accountnumber, repeataccountnumber, cancelcheque])
 
     //get AsyncStorage current user Details
     const getUserDetails = async () => {
@@ -37,9 +53,63 @@ const bankInfoScreen = (props) => {
             setaccounttype(UserInfo.property.accounttype);
             setaccountnumber(UserInfo.property.accountnumber);
             setrepeataccountnumber(UserInfo.property.repeataccountnumber);
-            setcancelcheque(UserInfo.property.cancelcheque);
-
+            setcancelcheque(UserInfo.property.cancelcheque[0].attachment);
         }
+    }
+
+    //Check Validation name of acccount
+    const nameofaccountCheck = (name) => {
+        if (!name || name <= 0) {
+            setnameofaccountError('Name of Account cannot be empty')
+            return;
+        }
+        setnameofaccount(name);
+        setnameofaccountError(null);
+        return;
+    }
+
+    //Check Validation bank name
+    const banknameCheck = (bankname) => {
+        if (!bankname || bankname <= 0) {
+            setbanknameError('Bank Name cannot be empty')
+            return;
+        }
+        setbankname(bankname);
+        setbanknameError(null);
+        return;
+    }
+
+    //Check Validation IFSC Code
+    const ifsccodeCheck = (ifsccode) => {
+        if (!ifsccode || ifsccode <= 0) {
+            setifsccodeError('IFSC Code cannot be empty')
+            return;
+        }
+        setifsccode(ifsccode);
+        setifsccodeError(null);
+        return;
+    }
+
+    //Check Validation account number
+    const accountnumberCheck = (accountnumber) => {
+        if (!accountnumber || accountnumber <= 0) {
+            setaccounttypeError('Account Number cannot be empty')
+            return;
+        }
+        setaccountnumber(accountnumber);
+        setaccountnumberError(null);
+        return;
+    }
+
+    //Check Validation Repeate account number
+    const repeataccountnumberCheck = (repeataccountnumber) => {
+        if (!repeataccountnumber || repeataccountnumber <= 0) {
+            setrepeataccountnumberError('Repeat Account Number cannot be empty')
+            return;
+        }
+        setrepeataccountnumber(accountnumber);
+        setrepeataccountnumberError(null);
+        return;
     }
 
     //REPLACE AND ADD LOCAL STORAGE FUNCTION
@@ -60,6 +130,138 @@ const bankInfoScreen = (props) => {
         );
     }
 
+    //IMAGE CLICK TO GET CALL FUNCTION
+    const handlePicker = (field) => {
+        ImagePicker.showImagePicker({}, (response) => {
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            } else {
+                setloading(true);
+                onPressUploadFile(field, response);
+            }
+        });
+    };
+
+    //Upload Cloud storage function
+    const onPressUploadFile = async (field, fileObj) => {
+        if (fileObj != null) {
+            await RNFetchBlob.fetch('POST', 'https://api.cloudinary.com/v1_1/dlopjt9le/upload', { 'Content-Type': 'multipart/form-data' },
+                [{ name: 'file', filename: fileObj.fileName, type: fileObj.type, data: RNFetchBlob.wrap(fileObj.uri) },
+                { name: 'upload_preset', data: 'gs95u3um' }])
+                .then(response => response.json())
+                .then(data => {
+                    setloading(false);
+                    if (data && data.url) {
+                        if (field === 'cancelcheque') {
+                            setcancelcheque(data.url);
+                        } else if (field === 'profilepic') {
+                            UpdateProfileService(data.url);
+                        }
+                    }
+                }).catch(error => {
+                    alert("Uploading Failed!");
+                })
+        } else {
+            alert('Please Select File');
+        }
+    }
+
+    //UPLOAD PHOTO CLICK TO CALL FUNCTION
+    const onChangePhoto = (field) => {
+        handlePicker(field);
+    }
+
+    //PROFILE PICTURE CLICK TO CALL FUNCTION
+    const onChangeProfilePic = (field) => {
+        handlePicker(field);
+    }
+
+    //UPDATE PROFILE PICTURE API CALL
+    const UpdateProfileService = async (profilepic) => {
+        let user = userDetails;
+        user.profilepic = profilepic;
+        try {
+            const response = await UpdateUserService(user);
+            if (response.data != null && response.data != 'undefind' && response.status == 200) {
+                authenticateUser(user);
+                getUserDetails();
+                if (Platform.OS === 'android') {
+                    ToastAndroid.show("Your Profile Update!", ToastAndroid.SHORT);
+                } else {
+                    alert('Your Profile Update!');
+                }
+            }
+        }
+        catch (error) {
+            console.log(`error`, error);
+            setloading(false);
+            if (Platform.OS === 'android') {
+                ToastAndroid.show("Your Profile Not Update!", ToastAndroid.SHORT);
+            } else { alert('Your Profile Not Update!') }
+        }
+    }
+
+    //UPDATE PROFILE INFOMATION API CALL
+    const UpdateUserInfo = async () => {
+        if (!nameofaccount || !bankname || !ifsccode || !accountnumber || !repeataccountnumber) {
+            setrepeataccountnumberError(repeataccountnumber);
+            setnameofaccountError(nameofaccount);
+            setaccountnumberError(accountnumber);
+            setbanknameError(bankname);
+            setifsccodeError(ifsccode);
+            if (!cancelcheque) {
+                alert('Please Upload Cancel Cheque Photo');
+                return;
+            } else if (!accounttype) {
+                alert('Please Select Your Account Type');
+                return;
+            }
+            return;
+        }
+
+        setloading(true);
+        let user = userDetails;
+        user.property.nameofaccount = nameofaccount;
+        user.property.bankname = bankname;
+        user.property.ifsccode = ifsccode;
+        user.property.accounttype = accounttype;
+        user.property.accountnumber = accountnumber;
+        user.property.repeataccountnumber = repeataccountnumber;
+        user.property.cancelcheque[0].attachment = cancelcheque;
+
+        try {
+            await UpdateUserService(user).then(response => {
+                if (response.data != null && response.data != 'undefind' && response.status == 200) {
+                    authenticateUser(user);
+                    if (Platform.OS === 'android') {
+                        ToastAndroid.show("Your Information Update", ToastAndroid.SHORT);
+                    } else {
+                        alert('Your Information Update');
+                    }
+                    props.navigation.navigate(SCREEN.MYPROFILESCREEN)
+                }
+            })
+        }
+        catch (error) {
+            setloading(false);
+            if (Platform.OS === 'android') {
+                ToastAndroid.show("Your Information Not Update", ToastAndroid.SHORT);
+            } else { alert('Your Information Not Update') }
+        }
+    }
+
+    const onPressToSelectService = (type) => {
+        if (type == 'saving') {
+            setaccounttype(type);
+        } else {
+            setaccounttype(type);
+        }
+    }
+
     useEffect(() => {
         checkPermission();
         getUserDetails();
@@ -67,7 +269,7 @@ const bankInfoScreen = (props) => {
 
     return (
         <SafeAreaView style={STYLE.Bankstyles.container}>
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={'always'}>
                 <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 30 }}>
                     <View style={{ justifyContent: 'flex-start' }}>
                         <TouchableOpacity onPress={() => { props.navigation.goBack(null) }}>
@@ -76,7 +278,7 @@ const bankInfoScreen = (props) => {
                     </View>
                     <View style={{ justifyContent: 'flex-end' }}>
                         <TouchableOpacity
-                            onPress={() => { props.navigation.navigate(SCREEN.MYPROFILESCREEN) }}
+                            onPress={() => UpdateUserInfo()}
                             style={STYLE.Bankstyles.submitbtn}>
                             <Text style={{ fontSize: 14, color: '#5AC8FA' }}>Submit</Text>
                         </TouchableOpacity>
@@ -88,7 +290,8 @@ const bankInfoScreen = (props) => {
                         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                             <Image source={{ uri: userDetails ? userDetails.profilepic !== null && userDetails.profilepic ? userDetails.profilepic : 'https://res.cloudinary.com/dnogrvbs2/image/upload/v1613538969/profile1_xspwoy.png' : null }}
                                 style={{ marginTop: -50, width: 100, height: 100, borderRadius: 100 }} />
-                            <TouchableOpacity style={{ marginTop: -60 }}>
+                            <TouchableOpacity onPress={() => onChangeProfilePic('profilepic')}
+                                style={{ marginTop: -60 }}>
                                 <Feather name='camera' size={24} color='#FFFFFF' />
                             </TouchableOpacity>
                         </View>
@@ -112,7 +315,7 @@ const bankInfoScreen = (props) => {
                         <View style={{ marginLeft: 15, marginTop: 15 }}>
                             <Text style={{ fontSize: 12 }}>Name on Account</Text>
                         </View>
-                        <View style={STYLE.Bankstyles.inputView}>
+                        <View style={nameofaccountError == null ? STYLE.Bankstyles.inputView : STYLE.Bankstyles.inputViewError}>
                             <TextInput
                                 style={STYLE.Bankstyles.TextInput}
                                 placeholder='Name on Account'
@@ -121,13 +324,14 @@ const bankInfoScreen = (props) => {
                                 placeholderTextColor='#000000'
                                 blurOnSubmit={false}
                                 defaultValue={nameofaccount}
+                                onSubmitEditing={() => secondTextInputRef.current.focus()}
+                                onChangeText={(nameofaccount) => nameofaccountCheck(nameofaccount)}
                             />
-
                         </View>
                         <View style={{ marginLeft: 15, marginTop: 15 }}>
                             <Text style={{ fontSize: 12 }}>Bank Name</Text>
                         </View>
-                        <View style={STYLE.Bankstyles.inputView}>
+                        <View style={banknameError == null ? STYLE.Bankstyles.inputView : STYLE.Bankstyles.inputViewError}>
                             <TextInput
                                 style={STYLE.Bankstyles.TextInput}
                                 placeholder='Bank Name'
@@ -136,13 +340,15 @@ const bankInfoScreen = (props) => {
                                 placeholderTextColor='#000000'
                                 blurOnSubmit={false}
                                 defaultValue={bankname}
+                                ref={secondTextInputRef}
+                                onSubmitEditing={() => thirdTextInputRef.current.focus()}
+                                onChangeText={(bankname) => banknameCheck(bankname)}
                             />
-
                         </View>
                         <View style={{ marginLeft: 15, marginTop: 15 }}>
                             <Text style={{ fontSize: 12 }}>IFSC Code</Text>
                         </View>
-                        <View style={STYLE.Bankstyles.inputView}>
+                        <View style={ifsccodeError == null ? STYLE.Bankstyles.inputView : STYLE.Bankstyles.inputViewError}>
                             <TextInput
                                 style={STYLE.Bankstyles.TextInput}
                                 placeholder='IFSC Code'
@@ -151,6 +357,9 @@ const bankInfoScreen = (props) => {
                                 placeholderTextColor='#000000'
                                 blurOnSubmit={false}
                                 defaultValue={ifsccode}
+                                ref={thirdTextInputRef}
+                                onSubmitEditing={() => fourTextInputRef.current.focus()}
+                                onChangeText={(ifsccode) => ifsccodeCheck(ifsccode)}
                             />
                             <TouchableOpacity>
                                 <Feather name='search' size={20} color='#555555' style={{ marginRight: 10 }} />
@@ -160,19 +369,32 @@ const bankInfoScreen = (props) => {
                         <View style={{ marginLeft: 15, marginTop: 15 }}>
                             <Text style={{ fontSize: 12 }}>Account Type</Text>
                         </View>
-                        <View style={{ marginTop: 5, flexDirection: 'row', marginLeft: 20 }}>
-                            <TouchableOpacity style={{ width: 100, backgroundColor: '#80d4ff', height: 30, justifyContent: 'center', alignItems: 'center', borderRadius: 100, marginRight: 10 }}>
-                                <Text style={{ color: '#000000', fontSize: 12 }}>Saving</Text>
+                        {/* <FlatList
+                            showsHorizontalScrollIndicator={false}
+                            horizontal={false}
+                            numColumns={2}
+                            data={accounttypeList}
+                            renderItem={renderAccountType}
+                            keyExtractor={item => `${item.id}`}
+                        /> */}
+
+                        <View style={{ marginTop: 5, flexDirection: 'row', marginLeft: 15 }}>
+                            <TouchableOpacity
+                                onPress={() => onPressToSelectService('saving')}
+                                style={accounttype == 'saving' ? STYLE.Bankstyles.OnChangeAccoutTypeStyle : STYLE.Bankstyles.accoutTypeStyle}>
+                                <Text style={{ color: '#000000', fontSize: 12, textTransform: 'capitalize' }}>saving</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ width: 100, backgroundColor: '#F4F4F4', height: 30, justifyContent: 'center', alignItems: 'center', borderRadius: 100 }}>
-                                <Text style={{ color: '#000000', fontSize: 12 }}>Currrent</Text>
+                            <TouchableOpacity
+                                onPress={() => onPressToSelectService('current')}
+                                style={accounttype == 'current' ? STYLE.Bankstyles.OnChangeAccoutTypeStyle : STYLE.Bankstyles.accoutTypeStyle}>
+                                <Text style={{ color: '#000000', fontSize: 12, textTransform: 'capitalize' }}>current</Text>
                             </TouchableOpacity>
                         </View>
 
                         <View style={{ marginLeft: 15, marginTop: 15 }}>
                             <Text style={{ fontSize: 12 }}>Account Number</Text>
                         </View>
-                        <View style={STYLE.Bankstyles.inputView}>
+                        <View style={accountnumberError == null ? STYLE.Bankstyles.inputView : STYLE.Bankstyles.inputViewError}>
                             <TextInput
                                 style={STYLE.Bankstyles.TextInput}
                                 placeholder='Account Number'
@@ -181,37 +403,56 @@ const bankInfoScreen = (props) => {
                                 placeholderTextColor='#000000'
                                 blurOnSubmit={false}
                                 defaultValue={accountnumber}
+                                ref={fourTextInputRef}
+                                onSubmitEditing={() => fifthTextInputRef.current.focus()}
+                                onChangeText={(accountnumber) => accountnumberCheck(accountnumber)}
                             />
-
                         </View>
                         <View style={{ marginLeft: 15, marginTop: 15 }}>
                             <Text style={{ fontSize: 12 }}>Repeat Account Number</Text>
                         </View>
-                        <View style={STYLE.Bankstyles.inputView}>
+                        <View style={repeataccountnumberError == null ? STYLE.Bankstyles.inputView : STYLE.Bankstyles.inputViewError}>
                             <TextInput
                                 style={STYLE.Bankstyles.TextInput}
                                 placeholder='Repeat Account Number'
                                 type='clear'
-                                returnKeyType='next'
+                                returnKeyType='done'
                                 placeholderTextColor='#000000'
                                 blurOnSubmit={false}
                                 defaultValue={repeataccountnumber}
+                                ref={fifthTextInputRef}
+                                onSubmitEditing={() => Keyboard.dismiss()}
+                                onChangeText={(repeataccountnumber) => repeataccountnumberCheck(repeataccountnumber)}
                             />
-
                         </View>
                         <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
-                            <View style={STYLE.Bankstyles.ChequeBoxStyle}>
-                                <TouchableOpacity>
-                                    <Feather name='camera' size={24} color='#000000' />
-                                </TouchableOpacity>
-                                <Text style={{ color: '#000000', fontSize: 12 }}>CANCELD CHEQUE</Text>
-                            </View>
+                            {
+                                cancelcheque ?
+                                    <View>
+                                        <Image source={{ uri: cancelcheque }}
+                                            style={{ width: WIDTH - 60, height: 160, resizeMode: 'stretch' }} />
+                                        <TouchableOpacity
+                                            onPress={() => onChangePhoto('cancelcheque')}
+                                            style={{ alignItems: 'center', position: 'absolute', marginVertical: 150 / 2, margin: WIDTH / 2 - 60 }}>
+                                            <Feather name='camera' size={24} color='#000000' />
+                                        </TouchableOpacity>
+                                        <Text style={{ color: '#000000', fontSize: 12, position: 'absolute', marginVertical: 150 / 2 + 25, marginLeft: WIDTH / 2 - 100 }}>CANCELD CHEQUE</Text>
+                                    </View>
+                                    :
+                                    <View style={STYLE.Bankstyles.ChequeBoxStyle}>
+                                        <TouchableOpacity onPress={() => onChangePhoto('cancelcheque')}>
+                                            <Feather name='camera' size={24} color='#000000' />
+                                        </TouchableOpacity>
+                                        <Text style={{ color: '#000000', fontSize: 12 }}>CANCELD CHEQUE</Text>
+                                    </View>
+                            }
                             <View style={{ marginBottom: 25 }}></View>
                         </View>
                     </View>
                 </View>
                 <View style={{ marginBottom: 20 }}></View>
             </ScrollView>
+            { loading ? <Loader /> : null}
         </SafeAreaView>
     )
 }

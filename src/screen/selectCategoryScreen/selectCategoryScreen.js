@@ -122,20 +122,20 @@ function selectCategoryScreen(props) {
             UpdateUserService(user).then(response => {
                 if (response.data != null && response.data != 'undefind' && response.status == 200) {
                     authenticateUser(user);
-                    if (Platform.OS === 'android') {
-                        ToastAndroid.show("Your Category Update!", ToastAndroid.SHORT);
-                    } else {
-                        alert('Your Category Update!');
-                    }
+                    // if (Platform.OS === 'android') {
+                    //     ToastAndroid.show("Your Category Update!", ToastAndroid.SHORT);
+                    // } else {
+                    //     alert('Your Category Update!');
+                    // }
                     props.navigation.navigate(SCREEN.MYPROFILESCREEN);
                 }
             })
         }
         catch (error) {
             setloading(false);
-            if (Platform.OS === 'android') {
-                ToastAndroid.show("Your Category Not Update!", ToastAndroid.SHORT);
-            } else { alert('Your Category Not Update!') }
+            // if (Platform.OS === 'android') {
+            //     ToastAndroid.show("Your Category Not Update!", ToastAndroid.SHORT);
+            // } else { alert('Your Category Not Update!') }
         }
     }
 

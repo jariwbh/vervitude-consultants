@@ -88,7 +88,6 @@ const homeScreen = (props) => {
         updateUserDetails(userDetails);
         setOnlineUser(true);
         setOnlineModalVisible(!onlineModalVisible);
-        authenticateUser(userDetails);
     }
 
     //REPLACE AND ADD LOCAL STORAGE FUNCTION
@@ -165,11 +164,6 @@ const homeScreen = (props) => {
             if (response.data != null && response.data != 'undefind' && response.status == 200) {
                 authenticateUser(user);
                 setOnlineUser(false);
-                if (Platform.OS === 'android') {
-                    ToastAndroid.show('User is ofline', ToastAndroid.LONG);
-                } else {
-                    alert('User is ofline');
-                }
             }
         } catch (error) {
             console.log(`error`, error);
@@ -222,11 +216,7 @@ const homeScreen = (props) => {
         try {
             const response = await UpdateUserService(user);
             if (response.data != null && response.data != 'undefind' && response.status == 200) {
-                if (Platform.OS === 'android') {
-                    ToastAndroid.show('User is Online', ToastAndroid.LONG);
-                } else {
-                    alert('User is Online');
-                }
+                authenticateUser(user);
             }
         } catch (error) {
             console.log(`error`, error);

@@ -1,22 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, SafeAreaView, TouchableOpacity, TextInput, ScrollView } from 'react-native';
+import { View, Text, Image, SafeAreaView, TouchableOpacity, TextInput, ScrollView, Dimensions, ToastAndroid } from 'react-native';
+import { UpdateUserService } from "../../services/UserService/UserService";
 import MyPermissionController from '../../helpers/appPermission';
 import AsyncStorage from '@react-native-community/async-storage';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as SCREEN from '../../context/screen/screenName';
 import Feather from 'react-native-vector-icons/Feather';
 import { AUTHUSER } from '../../context/actions/type';
+import ImagePicker from 'react-native-image-picker';
+import Loader from "../../components/loader/index";
+import RNFetchBlob from 'rn-fetch-blob';
 import * as STYLE from './styles'
+const WIDTH = Dimensions.get('window').width;
 
 const documentScreen = (props) => {
     const [loading, setloading] = useState(false);
     const [userDetails, setuserDetails] = useState(null);
-
     const [pancardnumber, setpancardnumber] = useState(null);
+    const [pancardnumberError, setpancardnumberError] = useState(null);
     const [pancardimage, setpancardimage] = useState(null);
     const [aadharcardnumber, setaadharcardnumber] = useState(null);
+    const [aadharcardnumberError, setaadharcardnumberError] = useState(null);
     const [frontaadharcard, setfrontaadharcard] = useState(null);
     const [backaadharcard, setbackaadharcard] = useState(null);
+    const secondTextInputRef = React.createRef();
 
     //get AsyncStorage current user Details
     const getUserDetails = async () => {
@@ -30,18 +37,145 @@ const documentScreen = (props) => {
             var UserInfo = JSON.parse(getUser);
             setuserDetails(UserInfo);
             setpancardnumber(UserInfo.property.pancardnumber);
-            setpancardimage(UserInfo.property.pancardimage);
+            setpancardimage(UserInfo.property.pancardimage[0].attachment);
             setaadharcardnumber(UserInfo.property.aadharcardnumber);
-            setfrontaadharcard(UserInfo.property.frontaadharcard);
-            setbackaadharcard(UserInfo.property.backaadharcard);
+            setfrontaadharcard(UserInfo.property.frontaadharcard[0].attachment);
+            setbackaadharcard(UserInfo.property.backaadharcard[0].attachment);
         }
     }
 
+    useEffect(() => {
+    }, [loading, pancardnumber, pancardimage, aadharcardnumber, frontaadharcard, backaadharcard, aadharcardnumberError, pancardnumberError])
 
     //REPLACE AND ADD LOCAL STORAGE FUNCTION
     const authenticateUser = (user) => {
         //AsyncStorage.removeItem(AUTHUSER);
         AsyncStorage.setItem(AUTHUSER, JSON.stringify(user));
+    }
+
+    //IMAGE CLICK TO GET CALL FUNCTION
+    const handlePicker = (field) => {
+        ImagePicker.showImagePicker({}, (response) => {
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            } else {
+                setloading(true);
+                onPressUploadFile(field, response);
+            }
+        });
+    };
+
+    //Upload Cloud storage function
+    const onPressUploadFile = async (field, fileObj) => {
+        if (fileObj != null) {
+            await RNFetchBlob.fetch('POST', 'https://api.cloudinary.com/v1_1/dlopjt9le/upload', { 'Content-Type': 'multipart/form-data' },
+                [{ name: 'file', filename: fileObj.fileName, type: fileObj.type, data: RNFetchBlob.wrap(fileObj.uri) },
+                { name: 'upload_preset', data: 'gs95u3um' }])
+                .then(response => response.json())
+                .then(data => {
+                    setloading(false);
+                    if (data && data.url) {
+                        if (field === 'pancardnumberfont') {
+                            setpancardimage(data.url)
+                        } else if (field === 'aadharnumberfont') {
+                            setfrontaadharcard(data.url)
+                        } else if (field === 'aadharnumberback') {
+                            setbackaadharcard(data.url)
+                        }
+                    }
+                }).catch(error => {
+                    alert("Uploading Failed!");
+                })
+        } else {
+            alert('Please Select File');
+        }
+    }
+
+    //UPLOAD PICTURE CLICK TO CALL FUNCTION
+    const onChangePhoto = (field) => {
+        handlePicker(field);
+    }
+
+    //UPDATE PROFILE INFOMATION API CALL
+    const UpdateUserInfo = async () => {
+        if (!pancardnumber || !pancardimage || !aadharcardnumber || !frontaadharcard || !backaadharcard) {
+            panCardNumberCheck(pancardnumber);
+            aadhraNumberCheck(aadharcardnumber);
+            if (!pancardimage) {
+                alert('Please Upload PanCard Photo');
+                return;
+            } else if (!frontaadharcard) {
+                alert('Please Upload Front AadharCard Photo');
+                return;
+            } else if (!backaadharcard) {
+                alert('Please Upload Back AadharCard Photo');
+                return;
+            }
+            return;
+        }
+
+        setloading(true);
+        let user = userDetails;
+        user.property.pancardnumber = pancardnumber;
+        user.property.pancardimage[0].attachment = pancardimage;
+        user.property.aadharcardnumber = aadharcardnumber;
+        user.property.frontaadharcard[0].attachment = frontaadharcard;
+        user.property.backaadharcard[0].attachment = backaadharcard;
+
+        try {
+            await UpdateUserService(user).then(response => {
+                if (response.data != null && response.data != 'undefind' && response.status == 200) {
+                    authenticateUser(user);
+                    if (Platform.OS === 'android') {
+                        ToastAndroid.show("Your Information Update", ToastAndroid.SHORT);
+                    } else {
+                        alert('Your Information Update');
+                    }
+                    props.navigation.navigate(SCREEN.BANKINFOSCREEN)
+                }
+            })
+        }
+        catch (error) {
+            setloading(false);
+            if (Platform.OS === 'android') {
+                ToastAndroid.show("Your Information Not Update", ToastAndroid.SHORT);
+            } else { alert('Your Information Not Update') }
+        }
+    }
+
+    //check aadharnumber validation
+    const aadhraNumberCheck = (aadharcardnumber) => {
+        const reg = /^[2-9]{1}[0-9]{3}\s{1}[0-9]{4}\s{1}[0-9]{4}$/;
+        if (!aadharcardnumber || aadharcardnumber.length <= 0) {
+            setaadharcardnumberError('Aadharcard Number cannot be empty');
+            return;
+        }
+        if (!reg.test(aadharcardnumber)) {
+            setaadharcardnumberError('Ooops! We need a valid Aadharcard Number ');
+            return;
+        }
+        setaadharcardnumber(aadharcardnumber);
+        setaadharcardnumberError(null);
+        return;
+    }
+
+    const panCardNumberCheck = (pancardnumber) => {
+        const reg = /([A-Z]){5}([0-9]){4}([A-Z]){1}$/;
+        if (!pancardnumber || pancardnumber.length <= 0) {
+            setpancardnumberError('Pan Card Number cannot be empty');
+            return;
+        }
+        if (!reg.test(pancardnumber)) {
+            setpancardnumberError('Ooops! We need a valid Pan Card Number');
+            return;
+        }
+        setpancardnumber(pancardnumber);
+        setpancardnumberError(null);
+        return;
     }
 
     //check permission 
@@ -63,7 +197,7 @@ const documentScreen = (props) => {
 
     return (
         <SafeAreaView style={STYLE.Documentstyles.container}>
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={'always'}>
                 <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 30 }}>
                     <View style={{ justifyContent: 'flex-start' }}>
                         <TouchableOpacity onPress={() => { props.navigation.goBack(null) }}>
@@ -72,7 +206,7 @@ const documentScreen = (props) => {
                     </View>
                     <View style={{ justifyContent: 'flex-end' }}>
                         <TouchableOpacity
-                            onPress={() => { props.navigation.navigate(SCREEN.BANKINFOSCREEN) }}
+                            onPress={() => UpdateUserInfo()}
                             style={STYLE.Editstyles.submitbtn}>
                             <Text style={{ fontSize: 14, color: '#5AC8FA' }}>Submit</Text>
                         </TouchableOpacity>
@@ -103,7 +237,7 @@ const documentScreen = (props) => {
                         <View style={{ marginLeft: 20, marginTop: 5 }}>
                             <Text style={{ fontSize: 12 }}>Pan Card</Text>
                         </View>
-                        <View style={STYLE.Documentstyles.inputView}>
+                        <View style={pancardnumberError == null ? STYLE.Documentstyles.inputView : STYLE.Documentstyles.inputViewError}>
                             <TextInput
                                 style={STYLE.Documentstyles.TextInput}
                                 placeholder='Pan Card Number'
@@ -112,21 +246,36 @@ const documentScreen = (props) => {
                                 placeholderTextColor='#000000'
                                 blurOnSubmit={false}
                                 defaultValue={pancardnumber}
+                                onSubmitEditing={() => secondTextInputRef.current.focus()}
+                                onChangeText={(pancardnumber) => panCardNumberCheck(pancardnumber)}
                             />
                         </View>
                         <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
-                            <View style={STYLE.Documentstyles.FontBoxStyle}>
-                                <TouchableOpacity>
-                                    <Feather name='camera' size={24} color='#000000' />
-                                </TouchableOpacity>
-                                <Text style={{ color: '#000000', fontSize: 12 }}>FRONT</Text>
-                            </View>
+                            {
+                                pancardimage ?
+                                    <View>
+                                        <Image source={{ uri: pancardimage }}
+                                            style={{ width: WIDTH - 60, height: 160, resizeMode: 'stretch' }} />
+                                        <TouchableOpacity
+                                            onPress={() => onChangePhoto('pancardnumberfont')}
+                                            style={{ alignItems: 'center', position: 'absolute', marginVertical: 150 / 2, margin: WIDTH / 2 - 60 }}>
+                                            <Feather name='camera' size={24} color='#000000' />
+                                            <Text style={{ color: '#000000', fontSize: 12 }}>FRONT</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                    :
+                                    <View style={STYLE.Documentstyles.FontBoxStyle}>
+                                        <TouchableOpacity onPress={() => onChangePhoto('pancardnumberfont')}>
+                                            <Feather name='camera' size={24} color='#000000' />
+                                        </TouchableOpacity>
+                                        <Text style={{ color: '#000000', fontSize: 12 }}>FRONT</Text>
+                                    </View>
+                            }
                         </View>
-
                         <View style={{ marginLeft: 20, marginTop: 15 }}>
                             <Text style={{ fontSize: 12 }}>Aadhar Card</Text>
                         </View>
-                        <View style={STYLE.Documentstyles.inputView}>
+                        <View style={aadharcardnumberError == null ? STYLE.Documentstyles.inputView : STYLE.Documentstyles.inputViewError}>
                             <TextInput
                                 style={STYLE.Documentstyles.TextInput}
                                 placeholder='Aadhar Card Number'
@@ -135,24 +284,56 @@ const documentScreen = (props) => {
                                 placeholderTextColor='#000000'
                                 blurOnSubmit={false}
                                 defaultValue={aadharcardnumber}
+                                ref={secondTextInputRef}
+                                onChangeText={(aadhranumber) => aadhraNumberCheck(aadhranumber)}
                             />
 
                         </View>
                         <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
-                            <View style={STYLE.Documentstyles.FontBoxStyle}>
-                                <TouchableOpacity>
-                                    <Feather name='camera' size={24} color='#000000' />
-                                </TouchableOpacity>
-                                <Text style={{ color: '#000000', fontSize: 12 }}>FRONT</Text>
-                            </View>
+                            {
+                                frontaadharcard ?
+                                    <View>
+                                        <Image source={{ uri: frontaadharcard }}
+                                            style={{ width: WIDTH - 60, height: 160, resizeMode: 'stretch' }} />
+                                        <TouchableOpacity
+                                            onPress={() => onChangePhoto('aadharnumberfont')}
+                                            style={{ alignItems: 'center', position: 'absolute', marginVertical: 150 / 2, margin: WIDTH / 2 - 60 }}>
+                                            <Feather name='camera' size={24} color='#000000' />
+                                            <Text style={{ color: '#000000', fontSize: 12 }}>FRONT</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                    :
+                                    <View style={STYLE.Documentstyles.FontBoxStyle}>
+                                        <TouchableOpacity
+                                            onPress={() => onChangePhoto('aadharnumberfont')} >
+                                            <Feather name='camera' size={24} color='#000000' />
+                                        </TouchableOpacity>
+                                        <Text style={{ color: '#000000', fontSize: 12 }}>FRONT</Text>
+                                    </View>
+                            }
                         </View>
                         <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
-                            <View style={STYLE.Documentstyles.FontBoxStyle}>
-                                <TouchableOpacity>
-                                    <Feather name='camera' size={24} color='#000000' />
-                                </TouchableOpacity>
-                                <Text style={{ color: '#000000', fontSize: 12 }}>BACK</Text>
-                            </View>
+                            {
+                                backaadharcard ?
+                                    <View>
+                                        <Image source={{ uri: backaadharcard }}
+                                            style={{ width: WIDTH - 60, height: 160, resizeMode: 'stretch' }} />
+                                        <TouchableOpacity
+                                            onPress={() => onChangePhoto('aadharnumberback')}
+                                            style={{ alignItems: 'center', position: 'absolute', marginVertical: 150 / 2, margin: WIDTH / 2 - 60 }}>
+                                            <Feather name='camera' size={24} color='#000000' />
+                                            <Text style={{ color: '#000000', fontSize: 12 }}>BACK</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                    :
+                                    <View style={STYLE.Documentstyles.FontBoxStyle}>
+                                        <TouchableOpacity
+                                            onPress={() => onChangePhoto('aadharnumberback')}>
+                                            <Feather name='camera' size={24} color='#000000' />
+                                        </TouchableOpacity>
+                                        <Text style={{ color: '#000000', fontSize: 12 }}>BACK</Text>
+                                    </View>
+                            }
                         </View>
                         <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20, marginBottom: 5 }}>
                             <TouchableOpacity style={STYLE.Documentstyles.bankinfitext} onPress={() => { props.navigation.navigate(SCREEN.BANKINFOSCREEN) }}>
@@ -164,6 +345,7 @@ const documentScreen = (props) => {
                 </View>
                 <View style={{ marginBottom: 20 }}></View>
             </ScrollView>
+            { loading ? <Loader /> : null}
         </SafeAreaView>
     )
 }
