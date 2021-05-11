@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, SafeAreaView, TouchableOpacity, TextInput, ScrollView, Dimensions, ToastAndroid } from 'react-native';
+import { View, Text, Image, SafeAreaView, TouchableOpacity, TextInput, ScrollView, Dimensions, ToastAndroid, Platform } from 'react-native';
 import { UpdateUserService } from "../../services/UserService/UserService";
 import MyPermissionController from '../../helpers/appPermission';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -72,8 +72,9 @@ const documentScreen = (props) => {
     //Upload Cloud storage function
     const onPressUploadFile = async (field, fileObj) => {
         if (fileObj != null) {
+            const realPath = Platform.OS === 'ios' ? fileObj.uri.replace('file://', '') : fileObj.uri;
             await RNFetchBlob.fetch('POST', 'https://api.cloudinary.com/v1_1/dlopjt9le/upload', { 'Content-Type': 'multipart/form-data' },
-                [{ name: 'file', filename: fileObj.fileName, type: fileObj.type, data: RNFetchBlob.wrap(fileObj.uri) },
+                [{ name: 'file', filename: fileObj.fileSize, type: fileObj.type, data: RNFetchBlob.wrap(decodeURIComponent(realPath)) },
                 { name: 'upload_preset', data: 'gs95u3um' }])
                 .then(response => response.json())
                 .then(data => {
@@ -90,9 +91,11 @@ const documentScreen = (props) => {
                         }
                     }
                 }).catch(error => {
+                    setloading(false);
                     alert("Uploading Failed!");
                 })
         } else {
+            setloading(false);
             alert('Please Select File');
         }
     }
@@ -122,8 +125,7 @@ const documentScreen = (props) => {
                 }
             }
         }
-        catch (error) {
-            console.log(`error`, error);
+        catch (error) {           
             setloading(false);
             if (Platform.OS === 'android') {
                 ToastAndroid.show("Your Profile Not Update!", ToastAndroid.SHORT);

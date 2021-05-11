@@ -179,6 +179,7 @@ const editScreen = (props) => {
     //IMAGE CLICK TO GET CALL FUNCTION
     const handlePicker = (field) => {
         ImagePicker.showImagePicker({}, (response) => {
+            console.log('response', response);
             if (response.didCancel) {
                 console.log('User cancelled image picker');
             } else if (response.error) {
@@ -195,8 +196,9 @@ const editScreen = (props) => {
     //Upload Cloud storage function
     const onPressUploadFile = async (field, fileObj) => {
         if (fileObj != null) {
+            const realPath = Platform.OS === 'ios' ? fileObj.uri.replace('file://', '') : fileObj.uri;
             await RNFetchBlob.fetch('POST', 'https://api.cloudinary.com/v1_1/dlopjt9le/upload', { 'Content-Type': 'multipart/form-data' },
-                [{ name: 'file', filename: fileObj.fileName, type: fileObj.type, data: RNFetchBlob.wrap(fileObj.uri) },
+                [{ name: 'file', filename: fileObj.fileSize, type: fileObj.type, data: RNFetchBlob.wrap(decodeURIComponent(realPath)) },
                 { name: 'upload_preset', data: 'gs95u3um' }])
                 .then(response => response.json())
                 .then(data => {
@@ -208,7 +210,6 @@ const editScreen = (props) => {
                                 "extension": data.format,
                                 "originalfilename": data.original_filename
                             }
-
                             let filteredLists = [];
                             if (brand) {
                                 filteredLists = brand.filter(({ add = false }) => {
@@ -221,9 +222,11 @@ const editScreen = (props) => {
                         }
                     }
                 }).catch(error => {
+                    setloading(false);
                     alert("Uploading Failed!");
                 })
         } else {
+            setloading(false);
             alert('Please Select File');
         }
     }
