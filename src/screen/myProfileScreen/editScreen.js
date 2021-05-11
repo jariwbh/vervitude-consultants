@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, SafeAreaView, TouchableOpacity, TextInput, ScrollView, ToastAndroid, Platform, Keyboard } from 'react-native';
+import {
+    View, Text, Image, ImageBackground, SafeAreaView, TouchableOpacity, TextInput,
+    ScrollView, ToastAndroid, Platform, Keyboard, FlatList
+} from 'react-native';
 import { UpdateUserService } from '../../services/UserService/UserService';
 import AsyncStorage from '@react-native-community/async-storage';
 import MyPermissionController from '../../helpers/appPermission';
@@ -147,6 +150,7 @@ const editScreen = (props) => {
             setusertag(UserInfo.property.usertag);
             setlocation(UserInfo.property.location);
             setabout(UserInfo.property.about);
+            setbrand([...UserInfo.property.add_brand, { add: true }]);
         }
     }
 
@@ -204,7 +208,14 @@ const editScreen = (props) => {
                                 "extension": data.format,
                                 "originalfilename": data.original_filename
                             }
-                            setbrand([...brand, photoObj]);
+
+                            let filteredLists = [];
+                            if (brand) {
+                                filteredLists = brand.filter(({ add = false }) => {
+                                    return add === false
+                                });
+                            }
+                            setbrand([...filteredLists, photoObj, { add: true }]);
                         } else if (field === 'profilepic') {
                             UpdateProfileService(data.url);
                         }
@@ -242,6 +253,12 @@ const editScreen = (props) => {
 
         setloading(true);
         let user = userDetails;
+        let filteredLists = [];
+        if (brand) {
+            filteredLists = brand.filter(({ add = false }) => {
+                return add === false
+            });
+        }
         user.property.first_name = first_name;
         user.property.last_name = last_name;
         user.property.mobile = mobile;
@@ -249,6 +266,7 @@ const editScreen = (props) => {
         user.property.usertag = usertag;
         user.property.location = location;
         user.property.about = about;
+        user.property.add_brand = filteredLists;
 
         try {
             await UpdateUserService(user).then(response => {
@@ -296,15 +314,39 @@ const editScreen = (props) => {
         }
     }
 
+    //on press to remove brand
+    const onPressRemoveBrand = (item) => {
+        let filteredLists = [];
+        if (brand) {
+            filteredLists = brand.filter(x => x.originalfilename != item.originalfilename);
+        }
+        setbrand(filteredLists);
+    }
+
     //render Brand Photo 
-    const renderCategory = ({ item }) => (
-        <View style={{ paddingHorizontal: 10, paddingVertical: 5 }}>
-            <TouchableOpacity onPress={() => onTouchSelectCategory({ item })}>
-                <Image source={{ uri: item.property.image[0].attachment }}
-                    style={{ width: 70, height: 70, borderRadius: 10 }} />
-            </TouchableOpacity>
-            <Text style={{ fontSize: 12, textAlign: 'center', textTransform: 'uppercase', marginTop: 5 }}>{item.property.skillcategory}</Text>
-        </View>
+    const renderAddBrand = ({ item }) => (
+        item.add == true ?
+            <View style={{ justifyContent: 'flex-start', flexDirection: 'row', marginTop: 15, paddingHorizontal: 20 }}>
+                <TouchableOpacity
+                    onPress={() => onChangeBrandPhoto('brand')}
+                    style={STYLE.Editstyles.brandstyle}>
+                    <Image source={require('../../assets/images/PLUS.png')} style={{ width: 80, height: 80, borderRadius: 100, borderColor: '#AAAAAA', borderWidth: 1 }} />
+                </TouchableOpacity>
+            </View>
+            :
+            <View style={{ paddingHorizontal: 20, paddingVertical: 15 }}>
+                <View style={{ borderRadius: 100, width: 80, height: 80 }}>
+                    <ImageBackground source={{ uri: item.attachment }} style={{
+                        width: 80, height: 80, borderRadius: 100, borderColor: '#AAAAAA', borderWidth: 1
+                    }} >
+                        <TouchableOpacity
+                            onPress={() => onPressRemoveBrand(item)}
+                            style={{ backgroundColor: '#FFFFFF', borderRadius: 100, marginLeft: 55 }}>
+                            <AntDesign name='closecircleo' size={20} color='#262626' style={{ backgroundColor: '#ffffff', borderRadius: 100 }} />
+                        </TouchableOpacity>
+                    </ImageBackground>
+                </View>
+            </View>
     );
 
     return (
@@ -480,13 +522,23 @@ const editScreen = (props) => {
                             <Text style={{ fontSize: 14 }}>Add Brands</Text>
                         </View>
 
-                        <View style={{ justifyContent: 'flex-start', flexDirection: 'row', marginTop: 15, marginLeft: 20 }}>
+                        <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
+                            <FlatList
+                                renderItem={renderAddBrand}
+                                data={brand}
+                                horizontal={false}
+                                numColumns={3}
+                                keyExtractor={(item, index) => index}
+                            />
+                        </View>
+
+                        {/* <View style={{ justifyContent: 'flex-start', flexDirection: 'row', marginTop: 15, marginLeft: 30 }}>
                             <TouchableOpacity
                                 onPress={() => onChangeBrandPhoto('brand')}
                                 style={STYLE.Editstyles.brandstyle}>
                                 <Image source={require('../../assets/images/PLUS.png')} style={{ width: 80, height: 80, borderRadius: 100, borderColor: '#AAAAAA', borderWidth: 1 }} />
                             </TouchableOpacity>
-                        </View>
+                        </View> */}
 
                         <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 30 }}>
                             <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.DOCUMENTSCREEN) }} style={STYLE.Editstyles.generalinfitext}>

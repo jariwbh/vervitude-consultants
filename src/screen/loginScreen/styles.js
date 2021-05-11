@@ -50,7 +50,7 @@ export const styles = StyleSheet.create({
         flex: 1,
         fontSize: 14,
         textAlign: 'center',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     },
     centeView: {
         justifyContent: 'center',

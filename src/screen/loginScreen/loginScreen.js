@@ -107,18 +107,6 @@ export default class loginScreen extends Component {
             password: password
         }
         this.setState({ loading: true });
-
-        // setTimeout(() => {
-        //     this.setState({ loading: false });
-        //     if (Platform.OS === 'android') {
-        //         ToastAndroid.show('Username and Password Invalid!', ToastAndroid.LONG)
-        //     } else {
-        //         alert('Username and Password Invalid!');
-        //     }
-        //     this.resetScreen();
-        //     return;
-        // }, 6000);
-
         try {
             await LoginService(body)
                 .then(response => {
@@ -175,6 +163,7 @@ export default class loginScreen extends Component {
                                         <TextInput
                                             style={STYLES.styles.TextInput}
                                             placeholder='Email Address'
+                                            keyboardType='email-address'
                                             type='clear'
                                             returnKeyType='next'
                                             defaultValue={this.state.username}
