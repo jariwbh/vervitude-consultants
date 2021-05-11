@@ -85,6 +85,8 @@ const documentScreen = (props) => {
                             setfrontaadharcard(data.url)
                         } else if (field === 'aadharnumberback') {
                             setbackaadharcard(data.url)
+                        } else if (field === 'profilepic') {
+                            UpdateProfileService(data.url);
                         }
                     }
                 }).catch(error => {
@@ -98,6 +100,35 @@ const documentScreen = (props) => {
     //UPLOAD PICTURE CLICK TO CALL FUNCTION
     const onChangePhoto = (field) => {
         handlePicker(field);
+    }
+
+    //PROFILE PICTURE CLICK TO CALL FUNCTION
+    const onChangeProfilePic = (field) => {
+        handlePicker(field);
+    }
+    //UPDATE PROFILE PICTURE API CALL
+    const UpdateProfileService = async (profilepic) => {
+        let user = userDetails;
+        user.profilepic = profilepic;
+        try {
+            const response = await UpdateUserService(user);
+            if (response.data != null && response.data != 'undefind' && response.status == 200) {
+                authenticateUser(user);
+                getUserDetails();
+                if (Platform.OS === 'android') {
+                    ToastAndroid.show("Your Profile Update!", ToastAndroid.SHORT);
+                } else {
+                    alert('Your Profile Update!');
+                }
+            }
+        }
+        catch (error) {
+            console.log(`error`, error);
+            setloading(false);
+            if (Platform.OS === 'android') {
+                ToastAndroid.show("Your Profile Not Update!", ToastAndroid.SHORT);
+            } else { alert('Your Profile Not Update!') }
+        }
     }
 
     //UPDATE PROFILE INFOMATION API CALL
@@ -135,7 +166,7 @@ const documentScreen = (props) => {
                     } else {
                         alert('Your Information Update');
                     }
-                    props.navigation.navigate(SCREEN.BANKINFOSCREEN)
+                    props.navigation.navigate(SCREEN.BANKINFOSCREEN);
                 }
             })
         }
@@ -163,6 +194,7 @@ const documentScreen = (props) => {
         return;
     }
 
+    //check pancard number validation
     const panCardNumberCheck = (pancardnumber) => {
         const reg = /([A-Z]){5}([0-9]){4}([A-Z]){1}$/;
         if (!pancardnumber || pancardnumber.length <= 0) {
@@ -200,7 +232,7 @@ const documentScreen = (props) => {
             <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={'always'}>
                 <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 30 }}>
                     <View style={{ justifyContent: 'flex-start' }}>
-                        <TouchableOpacity onPress={() => { props.navigation.goBack(null) }}>
+                        <TouchableOpacity onPress={() => props.navigation.replace(SCREEN.EDITSCREEN)}>
                             <AntDesign name='arrowleft' size={24} color='#FFFFFF' style={{ marginLeft: 15 }} />
                         </TouchableOpacity>
                     </View>
@@ -218,7 +250,8 @@ const documentScreen = (props) => {
                         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                             <Image source={{ uri: userDetails ? userDetails.profilepic !== null && userDetails.profilepic ? userDetails.profilepic : 'https://res.cloudinary.com/dnogrvbs2/image/upload/v1613538969/profile1_xspwoy.png' : null }}
                                 style={{ marginTop: -50, width: 100, height: 100, borderRadius: 100 }} />
-                            <TouchableOpacity style={{ marginTop: -60 }}>
+                            <TouchableOpacity onPress={() => onChangeProfilePic('profilepic')}
+                                style={{ marginTop: -60 }}>
                                 <Feather name='camera' size={24} color='#FFFFFF' />
                             </TouchableOpacity>
                         </View>

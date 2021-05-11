@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, SafeAreaView, TouchableOpacity, TextInput, ScrollView, ToastAndroid, Platform } from 'react-native';
+import { View, Text, Image, SafeAreaView, TouchableOpacity, TextInput, ScrollView, ToastAndroid, Platform, Keyboard } from 'react-native';
 import { UpdateUserService } from '../../services/UserService/UserService';
 import AsyncStorage from '@react-native-community/async-storage';
 import MyPermissionController from '../../helpers/appPermission';
@@ -16,15 +16,118 @@ import * as STYLE from './styles';
 const editScreen = (props) => {
     const [loading, setloading] = useState(false);
     const [userDetails, setuserDetails] = useState(null);
-    const [newProfilePath, setnewProfilePath] = useState(null);
-
     const [first_name, setfirst_name] = useState(null);
+    const [first_nameError, setfirst_nameError] = useState(null);
     const [last_name, setlast_name] = useState(null);
+    const [last_nameError, setlast_nameError] = useState(null);
     const [mobile, setmobile] = useState(null);
+    const [mobileError, setmobileError] = useState(null);
     const [primaryemail, setprimaryemail] = useState(null);
+    const [primaryemailError, setprimaryemailError] = useState(null);
     const [usertag, setusertag] = useState(null);
+    const [usertagError, setusertagError] = useState(null);
     const [location, setlocation] = useState(null);
+    const [locationError, setlocationError] = useState(null);
     const [about, setabout] = useState(null);
+    const [aboutError, setaboutError] = useState(null);
+    const [brand, setbrand] = useState([]);
+    const secondTextInputRef = React.createRef();
+    const thirdTextInputRef = React.createRef();
+    const fourTextInputRef = React.createRef();
+    const fifthTextInputRef = React.createRef();
+    const sixTextInputRef = React.createRef();
+    const sevenTextInputRef = React.createRef();
+
+    useEffect(() => {
+        console.log(`brand`, brand);
+    }, [loading, first_name, last_name, mobile, primaryemail, usertag, location, about, brand])
+
+    //check first name validation
+    const first_nameCheck = (first_name) => {
+        if (!first_name || first_name <= 0) {
+            setfirst_nameError('First Name cannot be empty');
+            return;
+        }
+        setfirst_name(first_name);
+        setfirst_nameError(null);
+        return;
+    }
+
+    //check last name validation
+    const last_nameCheck = (last_name) => {
+        if (!last_name || last_name <= 0) {
+            setlast_nameError('Last Name cannot be empty');
+            return;
+        }
+        setlast_name(last_name);
+        setlast_nameError(null);
+        return;
+    }
+
+    //check mobile validation
+    const mobileCheck = (mobile) => {
+        const reg = /^\d{10}$/;
+        if (!mobile || mobile.length <= 0) {
+            setmobileError('Mobile Number cannot be empty');
+            return;
+        }
+        if (!reg.test(mobile)) {
+            setmobileError('Ooops! We need a valid Mobile Number');
+            return;
+        }
+        setmobile(mobile);
+        setmobileError(null);
+        return;
+    }
+
+    //check email validation
+    const primaryemailCheck = (email) => {
+        const re = /\S+@\S+\.\S+/;
+        if (!email || email.length <= 0) {
+            setprimaryemailError('Email Id can not be empty')
+            return;
+        }
+        if (!re.test(email)) {
+            setprimaryemailError('Ooops! We need a valid email address')
+            return;
+        }
+        setprimaryemail(email);
+        setprimaryemailError(null);
+        return;
+    }
+
+    //check userTag validation
+    const usertagCheck = (usertag) => {
+        if (!usertag || usertag <= 0) {
+            setusertagError('User Tag cannot be empty');
+            return;
+        }
+        setusertag(usertag);
+        setusertagError(null);
+        return;
+    }
+
+    //check location validation
+    const locationCheck = (location) => {
+        if (!location || location <= 0) {
+            setlocationError('location cannot be empty');
+            return;
+        }
+        setlocation(location);
+        setlocationError(null);
+        return;
+    }
+
+    //check aboout validation
+    const aboutCheck = (about) => {
+        if (!about || about <= 0) {
+            setaboutError('location cannot be empty');
+            return;
+        }
+        setabout(about);
+        setaboutError(null);
+        return;
+    }
 
     //get AsyncStorage current user Details
     const getUserDetails = async () => {
@@ -67,13 +170,10 @@ const editScreen = (props) => {
     useEffect(() => {
         checkPermission();
         getUserDetails();
-    }, [newProfilePath]);
-
-    const onPressSubmit = () => {
-    }
+    }, []);
 
     //IMAGE CLICK TO GET CALL FUNCTION
-    const handlePicker = () => {
+    const handlePicker = (field) => {
         ImagePicker.showImagePicker({}, (response) => {
             if (response.didCancel) {
                 console.log('User cancelled image picker');
@@ -83,13 +183,13 @@ const editScreen = (props) => {
                 console.log('User tapped custom button: ', response.customButton);
             } else {
                 setloading(true);
-                onPressUploadFile(response);
+                onPressUploadFile(field, response);
             }
         });
     };
 
     //Upload Cloud storage function
-    const onPressUploadFile = async (fileObj) => {
+    const onPressUploadFile = async (field, fileObj) => {
         if (fileObj != null) {
             await RNFetchBlob.fetch('POST', 'https://api.cloudinary.com/v1_1/dlopjt9le/upload', { 'Content-Type': 'multipart/form-data' },
                 [{ name: 'file', filename: fileObj.fileName, type: fileObj.type, data: RNFetchBlob.wrap(fileObj.uri) },
@@ -97,9 +197,17 @@ const editScreen = (props) => {
                 .then(response => response.json())
                 .then(data => {
                     setloading(false);
-                    if (data && data.url) {
-                        setnewProfilePath(data.url);
-                        UpdateProfileService(data.url);
+                    if (data) {
+                        if (field === 'brand') {
+                            let photoObj = {
+                                "attachment": data.url,
+                                "extension": data.format,
+                                "originalfilename": data.original_filename
+                            }
+                            setbrand([...brand, photoObj]);
+                        } else if (field === 'profilepic') {
+                            UpdateProfileService(data.url);
+                        }
                     }
                 }).catch(error => {
                     alert("Uploading Failed!");
@@ -110,8 +218,57 @@ const editScreen = (props) => {
     }
 
     //PROFILE PICTURE CLICK TO CALL FUNCTION
-    const onChangeProfilePic = () => {
-        handlePicker();
+    const onChangeProfilePic = (field) => {
+        handlePicker(field);
+    }
+
+    //UPLOAD PHOTO CLICK TO CALL FUNCTION
+    const onChangeBrandPhoto = (field) => {
+        handlePicker(field);
+    }
+
+    //UPDATE PROFILE INFOMATION API CALL
+    const UpdateUserInfo = async () => {
+        if (!first_name || !last_name || !mobile || !primaryemail || !usertag || !location || !about) {
+            setfirst_name(first_name);
+            setlast_name(last_name);
+            setmobile(mobile);
+            setprimaryemail(primaryemail);
+            setusertag(usertag);
+            setlocation(location);
+            about(about)
+            return;
+        }
+
+        setloading(true);
+        let user = userDetails;
+        user.property.first_name = first_name;
+        user.property.last_name = last_name;
+        user.property.mobile = mobile;
+        user.property.primaryemail = primaryemail;
+        user.property.usertag = usertag;
+        user.property.location = location;
+        user.property.about = about;
+
+        try {
+            await UpdateUserService(user).then(response => {
+                if (response.data != null && response.data != 'undefind' && response.status == 200) {
+                    authenticateUser(user);
+                    if (Platform.OS === 'android') {
+                        ToastAndroid.show("Your Information Update", ToastAndroid.SHORT);
+                    } else {
+                        alert('Your Information Update');
+                    }
+                    props.navigation.navigate(SCREEN.DOCUMENTSCREEN);
+                }
+            })
+        }
+        catch (error) {
+            setloading(false);
+            if (Platform.OS === 'android') {
+                ToastAndroid.show("Your Information Not Update", ToastAndroid.SHORT);
+            } else { alert('Your Information Not Update') }
+        }
     }
 
     //UPDATE PROFILE PICTURE API CALL
@@ -139,18 +296,29 @@ const editScreen = (props) => {
         }
     }
 
+    //render Brand Photo 
+    const renderCategory = ({ item }) => (
+        <View style={{ paddingHorizontal: 10, paddingVertical: 5 }}>
+            <TouchableOpacity onPress={() => onTouchSelectCategory({ item })}>
+                <Image source={{ uri: item.property.image[0].attachment }}
+                    style={{ width: 70, height: 70, borderRadius: 10 }} />
+            </TouchableOpacity>
+            <Text style={{ fontSize: 12, textAlign: 'center', textTransform: 'uppercase', marginTop: 5 }}>{item.property.skillcategory}</Text>
+        </View>
+    );
+
     return (
         <SafeAreaView style={STYLE.Editstyles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 30 }}>
                     <View style={{ justifyContent: 'flex-start' }}>
-                        <TouchableOpacity onPress={() => { props.navigation.goBack(null) }}>
+                        <TouchableOpacity onPress={() => props.navigation.replace(SCREEN.MYPROFILESCREEN)} >
                             <AntDesign name='arrowleft' size={24} color='#FFFFFF' style={{ marginLeft: 15 }} />
                         </TouchableOpacity>
                     </View>
                     <View style={{ justifyContent: 'flex-end' }}>
                         <TouchableOpacity
-                            onPress={() => { props.navigation.navigate(SCREEN.DOCUMENTSCREEN) }}
+                            onPress={() => UpdateUserInfo()}
                             style={STYLE.Editstyles.submitbtn}>
                             <Text style={{ fontSize: 14, color: '#5AC8FA' }}>Submit</Text>
                         </TouchableOpacity>
@@ -162,7 +330,7 @@ const editScreen = (props) => {
                         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                             <Image source={{ uri: userDetails ? userDetails.profilepic !== null && userDetails.profilepic ? userDetails.profilepic : 'https://res.cloudinary.com/dnogrvbs2/image/upload/v1613538969/profile1_xspwoy.png' : null }}
                                 style={{ marginTop: -50, width: 100, height: 100, borderRadius: 100 }} />
-                            <TouchableOpacity onPress={() => onChangeProfilePic()}
+                            <TouchableOpacity onPress={() => onChangeProfilePic('profilepic')}
                                 style={{ marginTop: -60 }}>
                                 <Feather name='camera' size={24} color='#FFFFFF' />
                             </TouchableOpacity>
@@ -176,7 +344,7 @@ const editScreen = (props) => {
                         <View style={{ marginLeft: 10, marginTop: 5 }}>
                             <Text style={{ fontSize: 12 }}>First Name</Text>
                         </View>
-                        <View style={STYLE.Editstyles.inputView}>
+                        <View style={first_nameError == null ? STYLE.Editstyles.inputView : STYLE.Editstyles.inputViewError}>
                             <TextInput
                                 style={STYLE.Editstyles.TextInputbold}
                                 defaultValue={first_name}
@@ -186,13 +354,15 @@ const editScreen = (props) => {
                                 placeholderTextColor='#000000'
                                 blurOnSubmit={false}
                                 autoCapitalize='none'
+                                onSubmitEditing={() => secondTextInputRef.current.focus()}
+                                onChangeText={(first_name) => first_nameCheck(first_name)}
                             />
                         </View>
 
                         <View style={{ marginLeft: 10, marginTop: 5 }}>
                             <Text style={{ fontSize: 12 }}>Last Name</Text>
                         </View>
-                        <View style={STYLE.Editstyles.inputView}>
+                        <View style={last_nameError == null ? STYLE.Editstyles.inputView : STYLE.Editstyles.inputViewError}>
                             <TextInput
                                 style={STYLE.Editstyles.TextInputbold}
                                 placeholder='Last Name'
@@ -202,13 +372,16 @@ const editScreen = (props) => {
                                 blurOnSubmit={false}
                                 defaultValue={last_name}
                                 autoCapitalize='none'
+                                ref={secondTextInputRef}
+                                onSubmitEditing={() => thirdTextInputRef.current.focus()}
+                                onChangeText={(last_name) => last_nameCheck(last_name)}
                             />
                         </View>
 
                         <View style={{ marginLeft: 10, marginTop: 5 }}>
                             <Text style={{ fontSize: 12 }}>User Tag</Text>
                         </View>
-                        <View style={STYLE.Editstyles.inputView}>
+                        <View style={usertagError == null ? STYLE.Editstyles.inputView : STYLE.Editstyles.inputViewError}>
                             <TextInput
                                 style={STYLE.Editstyles.TextInput}
                                 placeholder='User Tag'
@@ -218,28 +391,35 @@ const editScreen = (props) => {
                                 blurOnSubmit={false}
                                 defaultValue={usertag}
                                 autoCapitalize='none'
+                                ref={thirdTextInputRef}
+                                onSubmitEditing={() => fourTextInputRef.current.focus()}
+                                onChangeText={(usertag) => usertagCheck(usertag)}
                             />
                         </View>
 
                         <View style={{ marginLeft: 10, marginTop: 5 }}>
                             <Text style={{ fontSize: 12 }}>Phone Number</Text>
                         </View>
-                        <View style={STYLE.Editstyles.inputView}>
+                        <View style={mobileError == null ? STYLE.Editstyles.inputView : STYLE.Editstyles.inputViewError}>
                             <TextInput
                                 style={STYLE.Editstyles.TextInput}
                                 placeholder='Phone Number'
                                 type='clear'
                                 returnKeyType='next'
                                 placeholderTextColor='#000000'
+                                keyboardType='number-pad'
                                 blurOnSubmit={false}
                                 defaultValue={mobile}
+                                ref={fourTextInputRef}
+                                onSubmitEditing={() => fifthTextInputRef.current.focus()}
+                                onChangeText={(mobile) => mobileCheck(mobile)}
                             />
                         </View>
 
                         <View style={{ marginLeft: 10, marginTop: 5 }}>
                             <Text style={{ fontSize: 12 }}>Email Address</Text>
                         </View>
-                        <View style={STYLE.Editstyles.inputView}>
+                        <View style={primaryemailError == null ? STYLE.Editstyles.inputView : STYLE.Editstyles.inputViewError}>
                             <TextInput
                                 style={STYLE.Editstyles.TextInput}
                                 placeholder='exmple@gmail.com'
@@ -249,13 +429,17 @@ const editScreen = (props) => {
                                 blurOnSubmit={false}
                                 defaultValue={primaryemail}
                                 autoCapitalize='none'
+                                keyboardType='email-address'
+                                ref={fifthTextInputRef}
+                                onSubmitEditing={() => sixTextInputRef.current.focus()}
+                                onChangeText={(email) => primaryemailCheck(email)}
                             />
                         </View>
 
                         <View style={{ marginLeft: 10, marginTop: 5 }}>
                             <Text style={{ fontSize: 12 }}>Location</Text>
                         </View>
-                        <View style={STYLE.Editstyles.inputView}>
+                        <View style={locationError == null ? STYLE.Editstyles.inputView : STYLE.Editstyles.inputViewError}>
                             <TextInput
                                 style={STYLE.Editstyles.TextInput}
                                 placeholder='Location'
@@ -265,6 +449,9 @@ const editScreen = (props) => {
                                 blurOnSubmit={false}
                                 defaultValue={location}
                                 autoCapitalize='none'
+                                ref={sixTextInputRef}
+                                onSubmitEditing={() => sevenTextInputRef.current.focus()}
+                                onChangeText={(location) => locationCheck(location)}
                             />
                             <Ionicons name='location' size={24} color='#000000' />
                         </View>
@@ -272,7 +459,7 @@ const editScreen = (props) => {
                         <View style={{ marginLeft: 10, marginTop: 5 }}>
                             <Text style={{ fontSize: 12 }}>About</Text>
                         </View>
-                        <View style={STYLE.Editstyles.textAreainputView}>
+                        <View style={aboutError == null ? STYLE.Editstyles.textAreainputView : STYLE.Editstyles.textAreainputViewError}>
                             <TextInput
                                 style={STYLE.Editstyles.TextareaInput}
                                 placeholder='Write Description'
@@ -284,55 +471,19 @@ const editScreen = (props) => {
                                 multiline={true}
                                 defaultValue={about}
                                 autoCapitalize='none'
+                                ref={sixTextInputRef}
+                                onSubmitEditing={() => Keyboard.dismiss()}
+                                onChangeText={(about) => aboutCheck(about)}
                             />
                         </View>
                         <View style={{ flexDirection: 'column', marginLeft: 20, marginTop: 5 }}>
                             <Text style={{ fontSize: 14 }}>Add Brands</Text>
                         </View>
 
-                        <View style={{ justifyContent: 'space-around', flexDirection: 'row', marginTop: 15 }}>
-                            <TouchableOpacity style={STYLE.Editstyles.brandstyle}>
-                                <Image source={require('../../assets/images/a1.png')} style={{
-                                    width: 80, height: 80, borderRadius: 100, borderColor: '#AAAAAA', borderWidth: 1
-                                }} />
-                            </TouchableOpacity>
-                            <TouchableOpacity style={{ marginLeft: -70 }}>
-                                <AntDesign name='closecircleo' size={20} color='#000000' style={{ backgroundColor: '#ffffff', borderRadius: 100 }} />
-                            </TouchableOpacity>
-
-                            <TouchableOpacity style={STYLE.Editstyles.brandstyle}>
-                                <Image source={require('../../assets/images/b1.png')} style={{ width: 80, height: 80, borderRadius: 100, borderColor: '#AAAAAA', borderWidth: 1 }} />
-                            </TouchableOpacity>
-                            <TouchableOpacity style={{ marginLeft: -70 }}>
-                                <AntDesign name='closecircleo' size={20} color='#000000' style={{ backgroundColor: '#ffffff', borderRadius: 100 }} />
-                            </TouchableOpacity>
-
-                            <TouchableOpacity style={STYLE.Editstyles.brandstyle}>
-                                <Image source={require('../../assets/images/c1.png')} style={{ width: 80, height: 80, borderRadius: 100, borderColor: '#AAAAAA', borderWidth: 1 }} />
-                            </TouchableOpacity>
-                            <TouchableOpacity style={{ marginLeft: -70 }}>
-                                <AntDesign name='closecircleo' size={20} color='#000000' style={{ backgroundColor: '#ffffff', borderRadius: 100 }} />
-                            </TouchableOpacity>
-                        </View>
-
-                        <View style={{ justifyContent: 'space-around', flexDirection: 'row', marginTop: 15 }}>
-                            <TouchableOpacity style={STYLE.Editstyles.brandstyle}>
-                                <Image source={require('../../assets/images/d1.png')} style={{
-                                    width: 80, height: 80, borderRadius: 100, borderColor: '#AAAAAA', borderWidth: 1
-                                }} />
-                            </TouchableOpacity>
-                            <TouchableOpacity style={{ marginLeft: -70 }}>
-                                <AntDesign name='closecircleo' size={20} color='#000000' style={{ backgroundColor: '#ffffff', borderRadius: 100 }} />
-                            </TouchableOpacity>
-
-                            <TouchableOpacity style={STYLE.Editstyles.brandstyle}>
-                                <Image source={require('../../assets/images/e1.png')} style={{ width: 80, height: 80, borderRadius: 100, borderColor: '#AAAAAA', borderWidth: 1 }} />
-                            </TouchableOpacity>
-                            <TouchableOpacity style={{ marginLeft: -70 }}>
-                                <AntDesign name='closecircleo' size={20} color='#000000' style={{ backgroundColor: '#ffffff', borderRadius: 100 }} />
-                            </TouchableOpacity>
-
-                            <TouchableOpacity style={STYLE.Editstyles.brandstyle}>
+                        <View style={{ justifyContent: 'flex-start', flexDirection: 'row', marginTop: 15, marginLeft: 20 }}>
+                            <TouchableOpacity
+                                onPress={() => onChangeBrandPhoto('brand')}
+                                style={STYLE.Editstyles.brandstyle}>
                                 <Image source={require('../../assets/images/PLUS.png')} style={{ width: 80, height: 80, borderRadius: 100, borderColor: '#AAAAAA', borderWidth: 1 }} />
                             </TouchableOpacity>
                         </View>

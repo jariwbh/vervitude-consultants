@@ -196,6 +196,18 @@ export const Editstyles = StyleSheet.create({
         borderRadius: 3,
         marginLeft: 10
     },
+    inputViewError: {
+        flexDirection: 'row',
+        backgroundColor: '#EFEFEF',
+        borderColor: '#FF0000',
+        width: WIDTH - 40,
+        height: 35,
+        marginTop: 2,
+        alignItems: 'center',
+        borderRadius: 3,
+        marginLeft: 10,
+        borderWidth: 1
+    },
     textAreainputView: {
         flexDirection: 'row',
         backgroundColor: '#EFEFEF',
@@ -206,6 +218,18 @@ export const Editstyles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 3,
         marginLeft: 10
+    },
+    textAreainputViewError: {
+        flexDirection: 'row',
+        backgroundColor: '#EFEFEF',
+        borderColor: '#FF0000',
+        width: WIDTH - 40,
+        height: 80,
+        marginTop: 1,
+        alignItems: 'center',
+        borderRadius: 3,
+        marginLeft: 10,
+        borderWidth: 1
     },
     TextareaInput: {
         fontSize: 14,

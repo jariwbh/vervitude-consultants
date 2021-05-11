@@ -77,19 +77,20 @@ function chatHistoryScreen(props) {
                         <View style={{ marginLeft: -20, height: 15, width: 15, backgroundColor: '#5AC8FA', borderColor: '#5Ac8FA', borderRadius: 100, borderWidth: 1 }}></View>
                         : <View style={{ marginLeft: -20, height: 15, width: 15, backgroundColor: '#EEEEEE', borderColor: '#000000', borderRadius: 100, borderWidth: 1 }}></View>
                     }
-                </View>
 
-                <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: -60 }}>
-                    <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: 0 }}>
-                        <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#000000', textTransform: 'capitalize' }}>{item && item.contextid.fullname.split(' ')[0]}</Text>
-                        <Text style={{ fontSize: 14, color: '#04DE71' }}>+ ₹ 20.00</Text>
+                    <View style={{ flexDirection: 'row', justifyContent: 'center', marginHorizontal: 30 }}>
+                        <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: 0 }}>
+                            <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#000000', textTransform: 'capitalize' }}>{item && item.contextid.fullname.split(' ')[0]}</Text>
+                            <Text style={{ fontSize: 14, color: '#04DE71' }}>+ ₹ 20.00</Text>
+                        </View>
                     </View>
                 </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: -60 }}>
+
+                {/* <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: -60 }}>
                     <View style={{ marginRight: 25, width: 30, height: 30, marginTop: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 100, backgroundColor: '#0F74C8' }}>
                         <Text style={{ color: '#FFFFFF' }}>5</Text>
                     </View>
-                </View>
+                </View> */}
             </TouchableOpacity>
         </View>
     )
@@ -114,8 +115,7 @@ function chatHistoryScreen(props) {
 
             <ScrollView showsVerticalScrollIndicator={false}
                 nestedScrollEnabled={true}
-                refreshControl={<RefreshControl refreshing={refreshing} title="Pull to refresh" tintColor="#5AC8FA" titleColor="#5AC8FA" colors={["#00D9CE"]} onRefresh={() => onRefresh()} />}>
-
+                refreshControl={<RefreshControl refreshing={refreshing} title="Pull to refresh" tintColor="#5AC8FA" titleColor="#5AC8FA" colors={["#5AC8FA"]} onRefresh={() => onRefresh()} />}>
 
                 {(recentChat == null) || (recentChat && recentChat.length == 0) ?
                     (loading ? null :
@@ -135,7 +135,7 @@ function chatHistoryScreen(props) {
     )
 }
 
-export default chatHistoryScreen
+export default chatHistoryScreen;
 
 const styles = StyleSheet.create({
     container: {

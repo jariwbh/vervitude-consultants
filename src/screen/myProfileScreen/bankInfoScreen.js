@@ -242,7 +242,7 @@ const bankInfoScreen = (props) => {
                     } else {
                         alert('Your Information Update');
                     }
-                    props.navigation.navigate(SCREEN.MYPROFILESCREEN)
+                    props.navigation.replace(SCREEN.MYPROFILESCREEN);
                 }
             })
         }
@@ -272,7 +272,7 @@ const bankInfoScreen = (props) => {
             <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={'always'}>
                 <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 30 }}>
                     <View style={{ justifyContent: 'flex-start' }}>
-                        <TouchableOpacity onPress={() => { props.navigation.goBack(null) }}>
+                        <TouchableOpacity onPress={() => props.navigation.replace(SCREEN.DOCUMENTSCREEN)}>
                             <AntDesign name='arrowleft' size={24} color='#FFFFFF' style={{ marginLeft: 15 }} />
                         </TouchableOpacity>
                     </View>
@@ -369,15 +369,6 @@ const bankInfoScreen = (props) => {
                         <View style={{ marginLeft: 15, marginTop: 15 }}>
                             <Text style={{ fontSize: 12 }}>Account Type</Text>
                         </View>
-                        {/* <FlatList
-                            showsHorizontalScrollIndicator={false}
-                            horizontal={false}
-                            numColumns={2}
-                            data={accounttypeList}
-                            renderItem={renderAccountType}
-                            keyExtractor={item => `${item.id}`}
-                        /> */}
-
                         <View style={{ marginTop: 5, flexDirection: 'row', marginLeft: 15 }}>
                             <TouchableOpacity
                                 onPress={() => onPressToSelectService('saving')}

@@ -483,9 +483,6 @@ const homeScreen = (props) => {
                             </View>
 
                             <Text style={{ padding: 15, textAlign: 'center', color: '#000000', fontSize: 14 }}>Today</Text>
-                            <View style={{ flexDirection: 'row' }}>
-                                <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
-                            </View>
                         </View>
 
                         <View style={{ marginTop: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
