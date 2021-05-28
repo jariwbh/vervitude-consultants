@@ -8,6 +8,7 @@ import * as SCREEN from '../../context/screen/screenName';
 import { AUTHUSER } from '../../context/actions/type'
 import Loader from '../../components/loader/index';
 import * as STYLES from './styles';
+import { getByIdUserService } from '../../services/UserService/UserService';
 const HEIGHT = Dimensions.get('window').height;
 const WIDTH = Dimensions.get('window').width;
 
@@ -31,6 +32,7 @@ const myProfileScreen = (props) => {
             }, 3000);;
         } else {
             var UserInfo = JSON.parse(getUser);
+            await getByIdUser(UserInfo._id);
             setuserDetails(UserInfo);
         }
     }
@@ -38,6 +40,25 @@ const myProfileScreen = (props) => {
     useEffect(() => {
         getUserData();
     }, []);
+
+
+    //get member details 
+    const getByIdUser = async (id) => {
+        try {
+            const response = await getByIdUserService(id);
+            if (response.data != null && response.data != 'undefind' && response.status == 200) {
+                authenticateUser(response.data);
+                setuserDetails(UserInfo);
+            }
+        } catch (error) {
+            setloading(false);
+        }
+    }
+
+    //REPLACE AND ADD LOCAL STORAGE FUNCTION
+    const authenticateUser = (user) => {
+        AsyncStorage.setItem(AUTHUSER, JSON.stringify(user));
+    }
 
     //LogOut Button click to call 
     const onPressLogout = () => {
@@ -151,7 +172,7 @@ const myProfileScreen = (props) => {
                         <View style={{ justifyContent: 'space-around', flexDirection: 'row', marginTop: 20 }}>
                             <View >
                                 <Text style={{ fontWeight: 'bold', fontSize: 20, textTransform: 'capitalize' }}>{userDetails ? userDetails.fullname : null}</Text>
-                                <Text>{userDetails ? userDetails.property.usertag && userDetails.property.usertag : null}</Text>
+                                <Text style={{ fontSize: 14, textTransform: 'capitalize' }}>{userDetails ? userDetails.property.usertag && userDetails.property.usertag : null}</Text>
                             </View>
                             <Pressable onPress={() => onTouchViewProfile()}
                                 style={STYLES.styles.profileImageView}>
@@ -269,10 +290,9 @@ const myProfileScreen = (props) => {
                 <View style={{ alignItems: 'center', flex: 1 }}>
                     <View style={{ position: 'absolute', bottom: 20 }}>
                         <View style={STYLES.styles.msgModalView}>
-                            <Image source={require('../../assets/images/smileicon.png')} style={{ marginTop: 15, height: 40, width: 40 }} />
-                            <Text style={{ marginTop: 15, fontSize: 14, color: '#000000' }}>Sorry to hear about the issue</Text>
-                            <Text style={{ fontSize: 14, color: '#000000' }}>Your quiry has been Submit</Text>
-                            <Text style={{ marginTop: 15, fontSize: 14, color: '#000000' }}>You will hear from us very soon</Text>
+                            <Image source={require('../../assets/images/smileicon.png')} style={{ marginTop: 25, height: 40, width: 40 }} />
+                            <Text style={{ fontSize: 14, color: '#000000', marginTop: 15 }}>Thank you for your Feedback</Text>
+                            <Text style={{ fontSize: 14, color: '#000000' }}>We will get back you shortly</Text>
                         </View>
                         <View style={{ justifyContent: 'center', flexDirection: 'row', marginTop: 15 }}>
                             <TouchableOpacity onPress={() => { setshowMessageModalVisible(false) }}

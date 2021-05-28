@@ -10,7 +10,7 @@ import * as STYLES from './styles';
 import AsyncStorage from '@react-native-community/async-storage';
 import { AUTHUSER } from '../../context/actions/type';
 import Loader from '../../components/loader/index';
-import { UpdateUserService } from '../../services/UserService/UserService';
+import { UpdateUserService, getByIdUserService } from '../../services/UserService/UserService';
 import LogoutService from '../../services/LogoutService/LogoutService';
 
 const data = {
@@ -38,10 +38,9 @@ const chartConfig = {
 };
 
 const homeScreen = (props) => {
-    const [loading, setloading] = useState(false);
+    const [loading, setloading] = useState(true);
     const [filterModalVisible, setFilterModalVisible] = useState(false);
     const [onlineModalVisible, setOnlineModalVisible] = useState(false);
-    //const [toggleSwitchAll, settoggleSwitchAll] = useState(false);
     const [selectCategory, setSelectCategory] = useState(null);
     const [selectedItem, setselectedItem] = useState([]);
     const [userDetails, setuserDetails] = useState([]);
@@ -61,8 +60,7 @@ const homeScreen = (props) => {
     }, []);
 
     useEffect(() => {
-        console.log(`selectedItem`, selectedItem);
-    }, [selectedItem, userDetails, allCategorytoggle])
+    }, [selectedItem, userDetails, allCategorytoggle, loading])
 
     //get AsyncStorage current user Details
     const getUserData = async () => {
@@ -73,7 +71,21 @@ const homeScreen = (props) => {
             }, 3000);;
         } else {
             var UserInfo = JSON.parse(getUser);
+            await getByIdUser(UserInfo._id);
             setuserDetails(UserInfo);
+            setloading(false);
+        }
+    }
+
+    //get member details 
+    const getByIdUser = async (id) => {
+        try {
+            const response = await getByIdUserService(id);
+            if (response.data != null && response.data != 'undefind' && response.status == 200) {
+                authenticateUser(response.data);
+            }
+        } catch (error) {
+            setloading(false);
         }
     }
 

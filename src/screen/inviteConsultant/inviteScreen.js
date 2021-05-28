@@ -109,9 +109,9 @@ const inviteScreen = (props) => {
         catch (error) {
             setloading(false);
             if (Platform.OS === 'android') {
-                ToastAndroid.show('SignUp Failed!', ToastAndroid.SHORT);
+                ToastAndroid.show('invited Failed!', ToastAndroid.SHORT);
             } else {
-                alert('SignUp Failed!');
+                alert('invited Failed!');
             }
             resetScreen();
         }

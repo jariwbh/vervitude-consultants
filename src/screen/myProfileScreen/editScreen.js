@@ -179,12 +179,14 @@ const editScreen = (props) => {
     //IMAGE CLICK TO GET CALL FUNCTION
     const handlePicker = (field) => {
         ImagePicker.showImagePicker({}, (response) => {
-            console.log('response', response);
             if (response.didCancel) {
+                setloading(false);
                 console.log('User cancelled image picker');
             } else if (response.error) {
+                setloading(false);
                 console.log('ImagePicker Error: ', response.error);
             } else if (response.customButton) {
+                setloading(false);
                 console.log('User tapped custom button: ', response.customButton);
             } else {
                 setloading(true);
@@ -276,9 +278,9 @@ const editScreen = (props) => {
                 if (response.data != null && response.data != 'undefind' && response.status == 200) {
                     authenticateUser(user);
                     if (Platform.OS === 'android') {
-                        ToastAndroid.show("Your Information Update", ToastAndroid.SHORT);
+                        ToastAndroid.show("Thank you your profile is been submitted for review", ToastAndroid.SHORT);
                     } else {
-                        alert('Your Information Update');
+                        alert('Thank you your profile is been submitted for review');
                     }
                     props.navigation.navigate(SCREEN.DOCUMENTSCREEN);
                 }
@@ -354,7 +356,7 @@ const editScreen = (props) => {
 
     return (
         <SafeAreaView style={STYLE.Editstyles.container}>
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={'always'}>
                 <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 30 }}>
                     <View style={{ justifyContent: 'flex-start' }}>
                         <TouchableOpacity onPress={() => props.navigation.replace(SCREEN.MYPROFILESCREEN)} >

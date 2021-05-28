@@ -12,6 +12,10 @@ const UserUpdateService = (data) => {
     return Axios.put('users/' + id, body);
 }
 
+const getByIdUserService = (id) => {
+    return Axios.get('users/' + id);
+}
+
 const UserListService = () => {
     const body = {
         'search': [{
@@ -24,4 +28,4 @@ const UserListService = () => {
     return Axios.patch('members/' + id, body);
 }
 
-export { UpdateUserService, UserListService, UserUpdateService }
+export { UpdateUserService, UserListService, UserUpdateService, getByIdUserService }

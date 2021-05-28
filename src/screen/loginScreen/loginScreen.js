@@ -254,6 +254,7 @@ export default class loginScreen extends Component {
                         </View>
                     </View>
                 </Modal>
+
                 {/* message model Pop */}
                 <Modal
                     animationType='slide'
@@ -264,9 +265,8 @@ export default class loginScreen extends Component {
                     <View style={STYLES.styles.centerView}>
                         <View style={STYLES.styles.msgModalView}>
                             <Image source={require('../../assets/images/smileicon.png')} style={{ marginTop: 15, height: 40, width: 40 }} />
-                            <Text style={{ marginTop: 15, fontSize: 14 }}>Sorry to hear about the issue</Text>
-                            <Text style={{ fontSize: 14 }}>Your quiry has been Submit</Text>
-                            <Text style={{ marginTop: 15, fontSize: 14 }}>You will hear from us very soon</Text>
+                            <Text style={{ fontSize: 14, color: '#000000', marginTop: 15 }}>Thank you for your Feedback</Text>
+                            <Text style={{ fontSize: 14, color: '#000000' }}>We will get back you shortly</Text>
                         </View>
                         <View style={{ justifyContent: 'center', flexDirection: 'row', marginTop: 15 }}>
                             <TouchableOpacity onPress={() => { this.showMessageModalVisible(!showMessageModalVisible) }}

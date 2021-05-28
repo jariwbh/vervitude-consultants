@@ -134,10 +134,13 @@ const bankInfoScreen = (props) => {
     const handlePicker = (field) => {
         ImagePicker.showImagePicker({}, (response) => {
             if (response.didCancel) {
+                setloading(false);
                 console.log('User cancelled image picker');
             } else if (response.error) {
+                setloading(false);
                 console.log('ImagePicker Error: ', response.error);
             } else if (response.customButton) {
+                setloading(false);
                 console.log('User tapped custom button: ', response.customButton);
             } else {
                 setloading(true);
@@ -200,7 +203,7 @@ const bankInfoScreen = (props) => {
             }
         }
         catch (error) {
-            console.log(`error`, error);
+            ///console.log(`error`, error);
             setloading(false);
             if (Platform.OS === 'android') {
                 ToastAndroid.show("Your Profile Not Update!", ToastAndroid.SHORT);
@@ -241,9 +244,9 @@ const bankInfoScreen = (props) => {
                 if (response.data != null && response.data != 'undefind' && response.status == 200) {
                     authenticateUser(user);
                     if (Platform.OS === 'android') {
-                        ToastAndroid.show("Your Information Update", ToastAndroid.SHORT);
+                        ToastAndroid.show("Thank you your profile is been submitted for review", ToastAndroid.SHORT);
                     } else {
-                        alert('Your Information Update');
+                        alert('Thank you your profile is been submitted for review');
                     }
                     props.navigation.replace(SCREEN.MYPROFILESCREEN);
                 }

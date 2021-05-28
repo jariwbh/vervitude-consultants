@@ -57,10 +57,13 @@ const documentScreen = (props) => {
     const handlePicker = (field) => {
         ImagePicker.showImagePicker({}, (response) => {
             if (response.didCancel) {
+                setloading(false);
                 console.log('User cancelled image picker');
             } else if (response.error) {
+                setloading(false);
                 console.log('ImagePicker Error: ', response.error);
             } else if (response.customButton) {
+                setloading(false);
                 console.log('User tapped custom button: ', response.customButton);
             } else {
                 setloading(true);
@@ -109,6 +112,7 @@ const documentScreen = (props) => {
     const onChangeProfilePic = (field) => {
         handlePicker(field);
     }
+
     //UPDATE PROFILE PICTURE API CALL
     const UpdateProfileService = async (profilepic) => {
         let user = userDetails;
@@ -119,9 +123,9 @@ const documentScreen = (props) => {
                 authenticateUser(user);
                 getUserDetails();
                 if (Platform.OS === 'android') {
-                    ToastAndroid.show("Your Profile Update!", ToastAndroid.SHORT);
+                    ToastAndroid.show("Thank you your profile is been submitted for review", ToastAndroid.SHORT);
                 } else {
-                    alert('Your Profile Update!');
+                    alert('Thank you your profile is been submitted for review');
                 }
             }
         }
