@@ -3,7 +3,7 @@ import Axios from '../../helpers/appConfig'
 function NotificationService(id) {
     let body =
     {
-        "search": [{ "searchfield": "receivers", "searchvalue": "608153f71f13f33070e41a48", "datatype": "ObjectId", "criteria": "eq" },
+        "search": [{ "searchfield": "receivers", "searchvalue": id, "datatype": "ObjectId", "criteria": "eq" },
         { "searchfield": "type", "searchvalue": "PUSHALERT", "datatype": "text", "criteria": "eq" },
         { 'searchfield': 'status', 'searchvalue': 'active', 'criteria': 'eq', 'datatype': 'text' }]
     }
