@@ -105,10 +105,10 @@ function chatHistoryScreen(props) {
                 </View>
 
                 <View style={{ justifyContent: 'flex-end', flexDirection: 'row' }}>
-                    <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: 0, marginRight: 5 }}>
+                    {/* <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: 0, marginRight: 5 }}>
                         <Image source={require('../../assets/images/chat.png')} style={{ width: 45, height: 22 }} />
                         <Text style={{ fontSize: 12, color: '#5AC8FA', position: 'absolute' }}>20K</Text>
-                    </View>
+                    </View> */}
                     <ChatMenu />
                 </View>
             </View>
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         height: 100,
         shadowOpacity: 0.5,
-        shadowRadius: 3,
+        shadowRadius: 1,
         shadowOffset: {
             height: 0,
             width: 0,

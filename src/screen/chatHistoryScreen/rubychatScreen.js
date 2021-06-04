@@ -26,7 +26,6 @@ const rubychatScreen = (props, { navigation }) => {
 	const [hideInput, setHideInput] = useState(false);
 
 	const User = props.route.params.item;
-	console.log(`User`, User);
 	// Chat Module - Auto Initiate //
 	useEffect(
 		() => {
@@ -109,7 +108,6 @@ const rubychatScreen = (props, { navigation }) => {
 
 	return (
 		<SafeAreaView style={styles.container}>
-
 			<View
 				style={{
 					justifyContent: 'space-between',
@@ -133,12 +131,21 @@ const rubychatScreen = (props, { navigation }) => {
 					source={{ uri: User.contextid.profilepic ? User.contextid.profilepic : defaultProfile }}
 					style={{ width: 50, height: 52, borderRadius: 100, marginLeft: 5 }}
 				/>
-				<FontAwesome
-					name='circle'
-					size={15}
-					color='#5AC8FA'
-					style={{ marginLeft: -20, marginTop: -40 }}
-				/>
+				{
+					User.contextid.property.live ?
+						<FontAwesome
+							name='circle'
+							size={15}
+							color='#5AC8FA'
+							style={{ marginLeft: -20, marginTop: -40 }}
+						/> :
+						<FontAwesome
+							name='circle'
+							size={15}
+							color='#EEEEEE'
+							style={{ marginLeft: -20, marginTop: -40 }}
+						/>
+				}
 				<View
 					style={{
 						justifyContent: 'flex-start',
@@ -151,7 +158,7 @@ const rubychatScreen = (props, { navigation }) => {
 					<Text style={{ fontSize: 10, color: '#000000' }}>{User.contextid.property.live ? 'Online' : 'Ofline'}</Text>
 				</View>
 
-				<View
+				{/* <View
 					style={{
 						justifyContent: 'center',
 						alignItems: 'center',
@@ -161,7 +168,7 @@ const rubychatScreen = (props, { navigation }) => {
 				>
 					<Image source={require('../../assets/images/chat.png')} style={{ width: 45, height: 22 }} />
 					<Text style={{ fontSize: 12, color: '#5AC8FA', position: 'absolute' }}>20K</Text>
-				</View>
+				</View> */}
 				<View style={{ justifyContent: 'flex-end' }}>
 					<ChatMenu />
 				</View>

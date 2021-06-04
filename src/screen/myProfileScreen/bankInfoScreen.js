@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, SafeAreaView, TouchableOpacity, TextInput, ScrollView, Dimensions, Keyboard, FlatList, ToastAndroid, Platform } from 'react-native'
-import { UpdateUserService } from "../../services/UserService/UserService";
+import { UserPatchService, UserUpdateService } from "../../services/UserService/UserService";
 import AsyncStorage from '@react-native-community/async-storage';
 import MyPermissionController from '../../helpers/appPermission';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -34,7 +34,8 @@ const bankInfoScreen = (props) => {
     const fifthTextInputRef = React.createRef();
 
     useEffect(() => {
-    }, [nameofaccount, bankname, ifsccode, accounttype, accountnumber, repeataccountnumber, cancelcheque])
+    }, [loading, nameofaccount, bankname, ifsccode, accounttype, nameofaccountError, banknameError, ifsccodeError,
+        repeataccountnumberError, accountnumberError, accountnumber, repeataccountnumber, cancelcheque, userDetails])
 
     //get AsyncStorage current user Details
     const getUserDetails = async () => {
@@ -191,9 +192,10 @@ const bankInfoScreen = (props) => {
         let user = userDetails;
         user.profilepic = profilepic;
         try {
-            const response = await UpdateUserService(user);
+            const response = await UserUpdateService(user);
             if (response.data != null && response.data != 'undefind' && response.status == 200) {
                 authenticateUser(user);
+                setloading(false);
                 getUserDetails();
                 if (Platform.OS === 'android') {
                     ToastAndroid.show("Your Profile Update!", ToastAndroid.SHORT);
@@ -240,7 +242,7 @@ const bankInfoScreen = (props) => {
         user.property.cancelcheque[0].attachment = cancelcheque;
 
         try {
-            await UpdateUserService(user).then(response => {
+            await UserUpdateService(user).then(response => {
                 if (response.data != null && response.data != 'undefind' && response.status == 200) {
                     authenticateUser(user);
                     if (Platform.OS === 'android') {

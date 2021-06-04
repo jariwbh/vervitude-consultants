@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, SafeAreaView, TouchableOpacity, TextInput, ScrollView, Dimensions, ToastAndroid, Platform } from 'react-native';
-import { UpdateUserService } from "../../services/UserService/UserService";
+import { UserPatchService, UserUpdateService } from "../../services/UserService/UserService";
 import MyPermissionController from '../../helpers/appPermission';
 import AsyncStorage from '@react-native-community/async-storage';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -45,7 +45,8 @@ const documentScreen = (props) => {
     }
 
     useEffect(() => {
-    }, [loading, pancardnumber, pancardimage, aadharcardnumber, frontaadharcard, backaadharcard, aadharcardnumberError, pancardnumberError])
+    }, [loading, pancardnumber, pancardimage, aadharcardnumber, frontaadharcard,
+        backaadharcard, aadharcardnumberError, pancardnumberError, userDetails])
 
     //REPLACE AND ADD LOCAL STORAGE FUNCTION
     const authenticateUser = (user) => {
@@ -117,8 +118,9 @@ const documentScreen = (props) => {
     const UpdateProfileService = async (profilepic) => {
         let user = userDetails;
         user.profilepic = profilepic;
+        let userpic = { profilepic: profilepic }
         try {
-            const response = await UpdateUserService(user);
+            const response = await UserPatchService(userDetails._id, userpic);
             if (response.data != null && response.data != 'undefind' && response.status == 200) {
                 authenticateUser(user);
                 getUserDetails();
@@ -163,10 +165,12 @@ const documentScreen = (props) => {
         user.property.frontaadharcard[0].attachment = frontaadharcard;
         user.property.backaadharcard[0].attachment = backaadharcard;
 
+        console.log(`user`, user);
         try {
-            await UpdateUserService(user).then(response => {
+            await UserUpdateService(user).then(response => {
                 if (response.data != null && response.data != 'undefind' && response.status == 200) {
                     authenticateUser(user);
+                    setloading(false);
                     if (Platform.OS === 'android') {
                         ToastAndroid.show("Your Information Update", ToastAndroid.SHORT);
                     } else {
@@ -186,15 +190,16 @@ const documentScreen = (props) => {
 
     //check aadharnumber validation
     const aadhraNumberCheck = (aadharcardnumber) => {
-        const reg = /^[2-9]{1}[0-9]{3}\s{1}[0-9]{4}\s{1}[0-9]{4}$/;
-        if (!aadharcardnumber || aadharcardnumber.length <= 0) {
+        // console.log(`aadharcardnumber`, aadharcardnumber)
+        //const reg = /^[2-9]{1}[0-9]{3}\s{1}[0-9]{4}\s{1}[0-9]{4}$/;
+        if (!aadharcardnumber || aadharcardnumber.length == 11) {
             setaadharcardnumberError('Aadharcard Number cannot be empty');
             return;
         }
-        if (!reg.test(aadharcardnumber)) {
-            setaadharcardnumberError('Ooops! We need a valid Aadharcard Number ');
-            return;
-        }
+        // if (!reg.test(aadharcardnumber)) {
+        //     setaadharcardnumberError('Ooops! We need a valid Aadharcard Number ');
+        //     return;
+        // }
         setaadharcardnumber(aadharcardnumber);
         setaadharcardnumberError(null);
         return;
@@ -202,7 +207,7 @@ const documentScreen = (props) => {
 
     //check pancard number validation
     const panCardNumberCheck = (pancardnumber) => {
-        const reg = /([A-Z]){5}([0-9]){4}([A-Z]){1}$/;
+        const reg = /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/;
         if (!pancardnumber || pancardnumber.length <= 0) {
             setpancardnumberError('Pan Card Number cannot be empty');
             return;

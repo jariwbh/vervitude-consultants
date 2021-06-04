@@ -3,7 +3,7 @@ import {
     View, Text, Image, ImageBackground, SafeAreaView, TouchableOpacity, TextInput,
     ScrollView, ToastAndroid, Platform, Keyboard, FlatList
 } from 'react-native';
-import { UpdateUserService } from '../../services/UserService/UserService';
+import { UserPatchService, UserUpdateService } from '../../services/UserService/UserService';
 import AsyncStorage from '@react-native-community/async-storage';
 import MyPermissionController from '../../helpers/appPermission';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -42,8 +42,8 @@ const editScreen = (props) => {
     const sevenTextInputRef = React.createRef();
 
     useEffect(() => {
-        console.log(`brand`, brand);
-    }, [loading, first_name, last_name, mobile, primaryemail, usertag, location, about, brand])
+    }, [loading, first_name, last_name, mobile, first_nameError, last_nameError, mobileError, primaryemailError,
+        locationError, aboutError, primaryemail, usertag, usertagError, location, about, brand, userDetails])
 
     //check first name validation
     const first_nameCheck = (first_name) => {
@@ -274,9 +274,10 @@ const editScreen = (props) => {
         user.property.add_brand = filteredLists;
 
         try {
-            await UpdateUserService(user).then(response => {
+            await UserUpdateService(user).then(response => {
                 if (response.data != null && response.data != 'undefind' && response.status == 200) {
                     authenticateUser(user);
+                    setloading(false);
                     if (Platform.OS === 'android') {
                         ToastAndroid.show("Thank you your profile is been submitted for review", ToastAndroid.SHORT);
                     } else {
@@ -287,6 +288,7 @@ const editScreen = (props) => {
             })
         }
         catch (error) {
+            console.log(`error`, error);
             setloading(false);
             if (Platform.OS === 'android') {
                 ToastAndroid.show("Your Information Not Update", ToastAndroid.SHORT);
@@ -298,8 +300,9 @@ const editScreen = (props) => {
     const UpdateProfileService = async (profilepic) => {
         let user = userDetails;
         user.profilepic = profilepic;
+        let userpic = { profilepic: profilepic }
         try {
-            await UpdateUserService(user).then(response => {
+            await UserPatchService(userDetails._id, userpic).then(response => {
                 if (response.data != null && response.data != 'undefind' && response.status == 200) {
                     authenticateUser(user);
                     getUserDetails();
@@ -312,6 +315,7 @@ const editScreen = (props) => {
             })
         }
         catch (error) {
+            console.log(`error`, error);
             setloading(false);
             if (Platform.OS === 'android') {
                 ToastAndroid.show("Your Profile Not Update!", ToastAndroid.SHORT);
@@ -518,7 +522,7 @@ const editScreen = (props) => {
                                 multiline={true}
                                 defaultValue={about}
                                 autoCapitalize='none'
-                                ref={sixTextInputRef}
+                                ref={sevenTextInputRef}
                                 onSubmitEditing={() => Keyboard.dismiss()}
                                 onChangeText={(about) => aboutCheck(about)}
                             />

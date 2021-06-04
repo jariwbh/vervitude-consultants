@@ -10,8 +10,11 @@ import * as STYLES from './styles';
 import AsyncStorage from '@react-native-community/async-storage';
 import { AUTHUSER } from '../../context/actions/type';
 import Loader from '../../components/loader/index';
-import { UpdateUserService, getByIdUserService } from '../../services/UserService/UserService';
+import { UpdateUserService, getByIdUserService, UserPatchService } from '../../services/UserService/UserService';
 import LogoutService from '../../services/LogoutService/LogoutService';
+import DeviceInfo from 'react-native-device-info';
+import PushNotificationIOS from "@react-native-community/push-notification-ios";
+import PushNotification from "react-native-push-notification";
 
 const data = {
     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Sat', 'Sun'],
@@ -46,6 +49,7 @@ const homeScreen = (props) => {
     const [userDetails, setuserDetails] = useState([]);
     const [online, setOnlineUser] = useState(false);
     const [allCategorytoggle, setallCategorytoggle] = useState(false);
+    let userID;
 
     useEffect(() => {
         getCategoryList();
@@ -62,6 +66,87 @@ const homeScreen = (props) => {
     useEffect(() => {
     }, [selectedItem, userDetails, allCategorytoggle, loading])
 
+    //UPDATE MEMBER INFORMATION API CALL
+    const UserPatch = async (deviceInfo) => {
+        try {
+            const response = await UserPatchService(userID, deviceInfo);
+            if (response.data != null && response.data != 'undefind' && response.status == 200) {
+                console.log(`DONE`);
+            }
+        }
+        catch (error) {
+            console.log(`error`, error);
+            setloading(false);
+        }
+    }
+
+    //push notification function
+    const PushNotifications = () => {
+        PushNotification.configure({
+            // (optional) Called when Token is generated (iOS and Android)
+            onRegister: function (token) {
+                console.log(`token.token`, token.token)
+                getFcmToken(token.token)
+            },
+
+            // (required) Called when a remote is received or opened, or local notification is opened
+            onNotification: function (notification) {
+                console.log("NOTIFICATION:", notification);
+
+                // process the notification
+
+                // (required) Called when a remote is received or opened, or local notification is opened
+                notification.finish(PushNotificationIOS.FetchResult.NoData);
+            },
+
+            // (optional) Called when Registered Action is pressed and invokeApp is false, if true onNotification will be called (Android)
+            onAction: function (notification) {
+                console.log("ACTION:", notification.action);
+                console.log("NOTIFICATION:", notification);
+
+                // process the action
+            },
+
+            // (optional) Called when the user fails to register for remote notifications. Typically occurs when APNS is having issues, or the device is a simulator. (iOS)
+            onRegistrationError: function (err) {
+                console.error(err.message, err);
+            },
+
+            // IOS ONLY (optional): default: all - Permissions to register.
+            permissions: {
+                alert: true,
+                badge: true,
+                sound: true,
+            },
+
+            // Should the initial notification be popped automatically
+            // default: true
+            popInitialNotification: true,
+
+            /**
+             * (optional) default: true
+             * - Specified if permissions (ios) and token (android and ios) will requested or not,
+             * - if not, you must call PushNotificationsHandler.requestPermissions() later
+             * - if you are not using remote notification or do not have Firebase installed, use this:
+             *     requestPermissions: Platform.OS === 'ios'
+             */
+            requestPermissions: true,
+        });
+    }
+
+    //GET MESSAGE TOKEN
+    const getFcmToken = async (fcmToken) => {
+        if (fcmToken) {
+            let deviceInfo = {
+                anroiddevice: {
+                    "deviceid": await DeviceInfo.getAndroidId(),
+                    "registrationid": fcmToken
+                }
+            }
+            await UserPatch(deviceInfo);
+        }
+    }
+
     //get AsyncStorage current user Details
     const getUserData = async () => {
         var getUser = await AsyncStorage.getItem(AUTHUSER);
@@ -71,6 +156,8 @@ const homeScreen = (props) => {
             }, 3000);;
         } else {
             var UserInfo = JSON.parse(getUser);
+            userID = UserInfo._id
+            PushNotifications();
             await getByIdUser(UserInfo._id);
             setuserDetails(UserInfo);
             setloading(false);

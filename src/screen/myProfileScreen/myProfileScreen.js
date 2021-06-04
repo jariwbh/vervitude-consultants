@@ -9,6 +9,8 @@ import { AUTHUSER } from '../../context/actions/type'
 import Loader from '../../components/loader/index';
 import * as STYLES from './styles';
 import { getByIdUserService } from '../../services/UserService/UserService';
+import { WalletDetailService } from '../../services/WalletService/WalletService';
+import { NotificationService } from '../../services/NotificationService/NotificationService';
 const HEIGHT = Dimensions.get('window').height;
 const WIDTH = Dimensions.get('window').width;
 
@@ -21,7 +23,12 @@ const myProfileScreen = (props) => {
     const [subjecterror, setsubjecterror] = useState(null);
     const [description, setdescription] = useState(null);
     const [descriptionerror, setdescriptionerror] = useState(null);
+    const [walletBalance, setWalletBalance] = useState(null);
+    const [notification, setNotification] = useState(0);
     const secondTextInputRef = React.createRef();
+
+    useEffect(() => {
+    }, [userDetails, subject, subjecterror, description, descriptionerror, loading, walletBalance, notification]);
 
     //get AsyncStorage current user Details
     const getUserData = async () => {
@@ -32,6 +39,8 @@ const myProfileScreen = (props) => {
             }, 3000);;
         } else {
             var UserInfo = JSON.parse(getUser);
+            await getWalletDetail();
+            await getNotification(UserInfo._id);
             await getByIdUser(UserInfo._id);
             setuserDetails(UserInfo);
         }
@@ -41,6 +50,21 @@ const myProfileScreen = (props) => {
         getUserData();
     }, []);
 
+    const getNotification = async (id) => {
+        const response = await NotificationService(id);
+        setNotification(response.data.length)
+    }
+
+    const getWalletDetail = async (id) => {
+        try {
+            const response = await WalletDetailService(id);
+            if (response.data != null && response.data.length != 0 && response.data != 'undefind' && response.status == 200) {
+                setWalletBalance(response.data[0]);
+            }
+        } catch (error) {
+            console.log(`error`, error);
+        }
+    }
 
     //get member details 
     const getByIdUser = async (id) => {
@@ -149,17 +173,19 @@ const myProfileScreen = (props) => {
                 <View style={{ marginTop: 30, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }} >
                     <View style={{ justifyContent: 'flex-start', flexDirection: 'row' }}>
                         <MenuButton onPress={() => { props.navigation.navigate(SCREEN.HOMESCREEN) }} />
-                        <View style={{ marginLeft: 20, justifyContent: 'center', alignItems: 'center' }}>
-                            <TouchableOpacity onPress={() => props.navigation.navigate(SCREEN.NOTIFICATIONSCREEN)}>
-                                <Image source={require('../../assets/images/notificationicon.png')} style={{ height: 25, width: 20 }} />
-                            </TouchableOpacity>
-                        </View>
+                        <TouchableOpacity onPress={() => props.navigation.navigate(SCREEN.NOTIFICATIONSCREEN)}
+                            style={{ marginLeft: 30, marginTop: -10, justifyContent: 'center', alignItems: 'center' }}>
+                            <Image source={require('../../assets/images/notificationicon.png')} style={{ height: 25, width: 20 }} />
+                            <View style={{ marginLeft: 8, marginTop: -40, height: 22, width: 22, borderRadius: 100, justifyContent: 'center', alignItems: 'center', backgroundColor: '#EB5757' }}>
+                                <Text style={{ fontWeight: 'bold', fontSize: 12, color: '#FFFFFF' }}>{notification}</Text>
+                            </View>
+                        </TouchableOpacity>
                     </View>
 
                     <View style={{ justifyContent: 'flex-end' }}>
                         <TouchableOpacity onPress={() => props.navigation.navigate(SCREEN.MYEARINGSCREEN)}
                             style={{ height: 40, width: 130, backgroundColor: '#FFFFFF', flexDirection: 'row', borderRadius: 20, alignItems: 'center', justifyContent: 'center', marginRight: 10 }}>
-                            <Text style={{ fontSize: 16, color: '#5AC8FA' }}>5324.00</Text>
+                            <Text style={{ fontSize: 16, color: '#5AC8FA' }}>{walletBalance == undefined && walletBalance == null ? 0 : walletBalance.wallet.balance}</Text>
                             <View style={{ width: 25, height: 25, backgroundColor: '#5AC8FA', alignItems: 'center', marginLeft: 15, borderRadius: 20, justifyContent: 'center' }}>
                                 <FontAwesome name='rupee' size={18} color='#FFFFFF' />
                             </View>
@@ -304,7 +330,7 @@ const myProfileScreen = (props) => {
                 </View>
             </Modal>
             { loading ? <Loader /> : null}
-        </SafeAreaView>
+        </SafeAreaView >
     )
 }
 export default myProfileScreen;
