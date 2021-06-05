@@ -74,12 +74,25 @@ function selectCategoryScreen(props) {
 
     //render category 
     const renderCategory = ({ item }) => (
+
         <View style={{ paddingHorizontal: 10, paddingVertical: 5 }}>
-            <TouchableOpacity onPress={() => onTouchSelectCategory({ item })}>
-                <Image source={{ uri: item.property.image[0].attachment }}
-                    style={{ width: 70, height: 70, borderRadius: 10 }} />
-            </TouchableOpacity>
-            <Text style={{ fontSize: 12, textAlign: 'center', textTransform: 'uppercase', marginTop: 5 }}>{item.property.skillcategory}</Text>
+            {item.property.skillcategory == 'COMING SOON' ?
+                <View>
+                    <TouchableOpacity disabled={true}>
+                        <Image source={{ uri: item.property.image[0].attachment }}
+                            style={{ width: 70, height: 70, borderRadius: 10 }} />
+                    </TouchableOpacity>
+                    <Text style={{ fontSize: 12, textAlign: 'center', textTransform: 'uppercase', marginTop: 5, color: '#8D8D8D' }}>{item.property.skillcategory.substring(0, 6) + ' ...'}</Text>
+                </View>
+                :
+                <View>
+                    <TouchableOpacity onPress={() => onTouchSelectCategory({ item })}>
+                        <Image source={{ uri: item.property.image[0].attachment }}
+                            style={{ width: 70, height: 70, borderRadius: 10 }} />
+                    </TouchableOpacity>
+                    <Text style={{ fontSize: 12, textAlign: 'center', textTransform: 'uppercase', marginTop: 5, color: '#000000' }}>{item.property.skillcategory}</Text>
+                </View>
+            }
         </View>
     );
 

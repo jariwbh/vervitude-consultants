@@ -292,6 +292,7 @@ const homeScreen = (props) => {
 
     //render select category list in model pop 
     const renderSelectCategory = ({ item }) => (
+        item.name != 'COMING SOON' &&
         <View>
             <View style={{ flexDirection: 'row' }}>
                 <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
