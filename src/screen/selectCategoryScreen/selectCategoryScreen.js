@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, Image, SafeAreaView, TouchableOpacity, ScrollView, FlatList, Platform, ToastAndroid } from 'react-native';
 import CategoryService from '../../services/CategoryService/CategoryService';
-import { UpdateUserService } from '../../services/UserService/UserService';
+import { UserUpdateService } from '../../services/UserService/UserService';
 import AsyncStorage from '@react-native-community/async-storage';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as SCREEN from '../../context/screen/screenName';
@@ -74,7 +74,6 @@ function selectCategoryScreen(props) {
 
     //render category 
     const renderCategory = ({ item }) => (
-
         <View style={{ paddingHorizontal: 10, paddingVertical: 5 }}>
             {item.property.skillcategory == 'COMING SOON' ?
                 <View>
@@ -132,7 +131,7 @@ function selectCategoryScreen(props) {
         let user = userDetails;
         user.property.skill = skill;
         try {
-            UpdateUserService(user).then(response => {
+            UserUpdateService(user).then(response => {
                 if (response.data != null && response.data != 'undefind' && response.status == 200) {
                     authenticateUser(user);
                     // if (Platform.OS === 'android') {
