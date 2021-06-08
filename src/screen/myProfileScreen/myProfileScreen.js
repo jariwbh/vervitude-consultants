@@ -52,6 +52,7 @@ const myProfileScreen = (props) => {
 
     const getNotification = async (id) => {
         const response = await NotificationService(id);
+        console.log(`response.data`, response.data);
         setNotification(response.data.length)
     }
 

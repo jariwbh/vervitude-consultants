@@ -329,6 +329,9 @@ const editScreen = (props) => {
         if (brand) {
             filteredLists = brand.filter(x => x.originalfilename != item.originalfilename);
         }
+        if (filteredLists.length == 0) {
+            filteredLists.push({ add: true })
+        }
         setbrand(filteredLists);
     }
 

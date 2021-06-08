@@ -68,6 +68,7 @@ const homeScreen = (props) => {
 
     //UPDATE MEMBER INFORMATION API CALL
     const UserPatch = async (deviceInfo) => {
+        //console.log(`deviceInfo`, deviceInfo)
         try {
             const response = await UserPatchService(userID, deviceInfo);
             if (response.data != null && response.data != 'undefind' && response.status == 200) {
@@ -91,12 +92,16 @@ const homeScreen = (props) => {
 
             // (required) Called when a remote is received or opened, or local notification is opened
             onNotification: function (notification) {
-                console.log("NOTIFICATION:", notification);
-
                 // process the notification
-
                 // (required) Called when a remote is received or opened, or local notification is opened
-                notification.finish(PushNotificationIOS.FetchResult.NoData);
+                if (notification.foreground) {
+                    notification.data = {
+                        message: notification.message,
+                        title: notification.title
+                    }
+                    console.log("NOTIFICATION:", notification);
+                    notification.finish(PushNotificationIOS.FetchResult.NoData);
+                }
             },
 
             // (optional) Called when Registered Action is pressed and invokeApp is false, if true onNotification will be called (Android)
@@ -136,15 +141,32 @@ const homeScreen = (props) => {
 
     //GET MESSAGE TOKEN
     const getFcmToken = async (fcmToken) => {
-        if (fcmToken) {
-            let deviceInfo = {
-                anroiddevice: {
-                    "deviceid": await DeviceInfo.getAndroidId(),
-                    "registrationid": fcmToken
+        let uniqueId;
+        let deviceInfo;
+        if (Platform.OS === 'android') {
+            uniqueId = await DeviceInfo.getAndroidId()
+            if (fcmToken) {
+                deviceInfo = {
+                    anroiddevice: {
+                        "deviceid": uniqueId,
+                        "registrationid": fcmToken
+                    }
                 }
+                await UserPatch(deviceInfo);
             }
-            await UserPatch(deviceInfo);
+        } else {
+            uniqueId = await DeviceInfo.getUniqueId();
+            if (fcmToken) {
+                deviceInfo = {
+                    iosdevice: {
+                        "deviceid": uniqueId,
+                        "registrationid": fcmToken
+                    }
+                }
+                await UserPatch(deviceInfo);
+            }
         }
+        //console.log('deviceInfo', deviceInfo);
     }
 
     //get AsyncStorage current user Details
@@ -354,11 +376,11 @@ const homeScreen = (props) => {
                     </View>
                 </View>
 
-                <TouchableOpacity style={STYLES.styles.filterBtn} onPress={() => setFilterModalVisible(true)} >
+                {/* <TouchableOpacity style={STYLES.styles.filterBtn} onPress={() => setFilterModalVisible(true)} >
                     <Image source={require('../../assets/images/filtericon.png')}
                         style={{ alignItems: 'center', height: 15, width: 15 }} />
                     <Text style={STYLES.styles.filterBtnText}>Filter Reports</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
                 <View style={{ justifyContent: 'space-around', flexDirection: 'row', marginTop: 10 }}>
                     <View style={STYLES.styles.box1}>
@@ -387,7 +409,7 @@ const homeScreen = (props) => {
                 </View>
 
                 <View style={STYLES.styles.centeView}>
-                    <View style={STYLES.styles.cardViewChart}>
+                    {/* <View style={STYLES.styles.cardViewChart}>
                         <Text style={{ fontSize: 20, flex: 1, color: '#04DE71', marginTop: 15, marginLeft: 20 }}>₹ 5000.20</Text>
                         <View style={{ marginLeft: -40 }}>
                             <StackedBarChart
@@ -401,7 +423,7 @@ const homeScreen = (props) => {
                                 withHorizontalLabels={false}
                             />
                         </View>
-                    </View>
+                    </View> */}
 
                     <View style={STYLES.styles.cardViewlastHistory}>
                         <View>

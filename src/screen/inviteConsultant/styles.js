@@ -75,7 +75,7 @@ export const styles = StyleSheet.create({
         marginBottom: 20
     },
     TextInput: {
-        fontSize: 14,
+        fontSize: 12,
         flex: 1,
         backgroundColor: '#F4F4F4',
         marginLeft: 10

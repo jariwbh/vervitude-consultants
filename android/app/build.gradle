@@ -195,11 +195,11 @@ dependencies {
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
-         //firebase push notification
+    //firebase push notification
     implementation 'com.google.firebase:firebase-analytics'
     implementation project(':react-native-push-notification')
-    implementation platform('com.google.firebase:firebase-bom:26.8.0')
 
+    implementation platform('com.google.firebase:firebase-bom:26.8.0')
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'

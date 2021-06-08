@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, Modal, ImageBackground, SafeAreaView, TouchableOpacity, Image, TextInput, ScrollView, ToastAndroid, StatusBar, BackHandler, Platform } from 'react-native';
+import { Text, View, Modal, ImageBackground, SafeAreaView, TouchableOpacity, Image, TextInput, ScrollView, ToastAndroid, StatusBar, BackHandler, Platform, Keyboard } from 'react-native';
 import { MAINSCREEN, REGISTERSCREEN } from '../../context/screen/screenName';
 import LoginService from '../../services/LoginService/LoginService';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -183,7 +183,7 @@ export default class loginScreen extends Component {
                                             secureTextEntry={true}
                                             returnKeyType='done'
                                             ref={this.secondTextInputRef}
-                                            onSubmitEditing={() => this.onPressSubmit()}
+                                            onSubmitEditing={() => { this.onPressSubmit(), Keyboard.dismiss() }}
                                             onChangeText={(password) => this.setPassword(password)}
                                         />
                                     </View>
