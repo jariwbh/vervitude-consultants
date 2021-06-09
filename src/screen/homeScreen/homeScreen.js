@@ -10,11 +10,12 @@ import * as STYLES from './styles';
 import AsyncStorage from '@react-native-community/async-storage';
 import { AUTHUSER } from '../../context/actions/type';
 import Loader from '../../components/loader/index';
-import { UpdateUserService, getByIdUserService, UserPatchService } from '../../services/UserService/UserService';
+import { UserUpdateService, getByIdUserService, UserPatchService } from '../../services/UserService/UserService';
 import LogoutService from '../../services/LogoutService/LogoutService';
 import DeviceInfo from 'react-native-device-info';
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import PushNotification from "react-native-push-notification";
+import { getDashboard } from "../../services/HomeService/HomeService";
 
 const data = {
     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Sat', 'Sun'],
@@ -54,6 +55,7 @@ const homeScreen = (props) => {
     useEffect(() => {
         getCategoryList();
         getUserData();
+        getDashboardView();
         props.navigation.addListener('focus', e => {
             BackHandler.addEventListener('hardwareBackPress', handleBackButton);
         });
@@ -66,17 +68,27 @@ const homeScreen = (props) => {
     useEffect(() => {
     }, [selectedItem, userDetails, allCategorytoggle, loading])
 
+    //get dashboard view data
+    const getDashboardView = async () => {
+        try {
+            const response = await getDashboard()
+            console.log(`response.data`, response);
+        } catch (error) {
+            console.log(`error`, error);
+        }
+    }
+
     //UPDATE MEMBER INFORMATION API CALL
     const UserPatch = async (deviceInfo) => {
         //console.log(`deviceInfo`, deviceInfo)
         try {
             const response = await UserPatchService(userID, deviceInfo);
             if (response.data != null && response.data != 'undefind' && response.status == 200) {
-                console.log(`DONE`);
+                // console.log(`DONE`);
             }
         }
         catch (error) {
-            console.log(`error`, error);
+            //  console.log(`error`, error);
             setloading(false);
         }
     }
@@ -86,7 +98,7 @@ const homeScreen = (props) => {
         PushNotification.configure({
             // (optional) Called when Token is generated (iOS and Android)
             onRegister: function (token) {
-                console.log(`token.token`, token.token)
+                //console.log(`token.token`, token.token)
                 getFcmToken(token.token)
             },
 
@@ -99,15 +111,15 @@ const homeScreen = (props) => {
                         message: notification.message,
                         title: notification.title
                     }
-                    console.log("NOTIFICATION:", notification);
+                    //   console.log("NOTIFICATION:", notification);
                     notification.finish(PushNotificationIOS.FetchResult.NoData);
                 }
             },
 
             // (optional) Called when Registered Action is pressed and invokeApp is false, if true onNotification will be called (Android)
             onAction: function (notification) {
-                console.log("ACTION:", notification.action);
-                console.log("NOTIFICATION:", notification);
+                // console.log("ACTION:", notification.action);
+                // console.log("NOTIFICATION:", notification);
 
                 // process the action
             },
@@ -183,6 +195,7 @@ const homeScreen = (props) => {
             await getByIdUser(UserInfo._id);
             setuserDetails(UserInfo);
             setloading(false);
+            setOnlineUser(UserInfo.property && UserInfo.property.live == true ? true : false)
         }
     }
 
@@ -281,7 +294,7 @@ const homeScreen = (props) => {
     const LogoutUser = async (user) => {
         try {
             // const response = await LogoutService(user);
-            const response = await UpdateUserService(user);
+            const response = await UserUpdateService(user);
             if (response.data != null && response.data != 'undefind' && response.status == 200) {
                 authenticateUser(user);
                 setOnlineUser(false);
@@ -336,7 +349,7 @@ const homeScreen = (props) => {
     //update user Details
     const updateUserDetails = async (user) => {
         try {
-            const response = await UpdateUserService(user);
+            const response = await UserUpdateService(user);
             if (response.data != null && response.data != 'undefind' && response.status == 200) {
                 authenticateUser(user);
             }
@@ -376,11 +389,11 @@ const homeScreen = (props) => {
                     </View>
                 </View>
 
-                {/* <TouchableOpacity style={STYLES.styles.filterBtn} onPress={() => setFilterModalVisible(true)} >
+                <TouchableOpacity style={STYLES.styles.filterBtn} onPress={() => setFilterModalVisible(true)} >
                     <Image source={require('../../assets/images/filtericon.png')}
                         style={{ alignItems: 'center', height: 15, width: 15 }} />
                     <Text style={STYLES.styles.filterBtnText}>Filter Reports</Text>
-                </TouchableOpacity> */}
+                </TouchableOpacity>
 
                 <View style={{ justifyContent: 'space-around', flexDirection: 'row', marginTop: 10 }}>
                     <View style={STYLES.styles.box1}>

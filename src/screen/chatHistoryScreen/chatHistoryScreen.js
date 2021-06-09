@@ -13,7 +13,9 @@ import { AUTHUSER } from '../../context/actions/type';
 import AsyncStorage from '@react-native-community/async-storage';
 import { recentChatService } from '../../services/ChatService/ChatService';
 import Loader from '../../components/loader/index';
+import moment from 'moment';
 const defaultProfile = 'https://res.cloudinary.com/dnogrvbs2/image/upload/v1613538969/profile1_xspwoy.png';
+import { useFocusEffect } from '@react-navigation/native';
 
 function chatHistoryScreen(props) {
     const [loading, setloading] = useState(false);
@@ -21,14 +23,25 @@ function chatHistoryScreen(props) {
     const [currentUserId, setcurrentUserId] = useState(null);
     const [recentChat, setrecentChat] = useState([]);
 
-    useEffect(() => {
-        AsyncStorage.getItem(AUTHUSER).then((res) => {
-            let currentUser = JSON.parse(res)._id;
-            setloading(true);
-            chatlist(currentUser);
-            setcurrentUserId(currentUser);
-        });
-    }, [])
+    // useEffect(() => {
+    //     AsyncStorage.getItem(AUTHUSER).then((res) => {
+    //         let currentUser = JSON.parse(res)._id;
+    //         setloading(true);
+    //         chatlist(currentUser);
+    //         setcurrentUserId(currentUser);
+    //     });
+    // }, [])
+
+    useFocusEffect(
+        React.useCallback(() => {
+            AsyncStorage.getItem(AUTHUSER).then((res) => {
+                let currentUser = JSON.parse(res)._id;
+                setloading(true);
+                chatlist(currentUser);
+                setcurrentUserId(currentUser);
+            });
+        }, [])
+    );
 
     useEffect(() => { }, [refreshing])
 
@@ -65,9 +78,11 @@ function chatHistoryScreen(props) {
     const renderChatUser = ({ item }) => (
         <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
             <TouchableOpacity onPress={() => navigationhandler(item)} style={styles.chatview}>
-                <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 5 }}>
-                    <Text style={{ color: '#5AC8FA', marginLeft: 15, fontSize: 10 }}>New</Text>
-                    <Text style={{ color: '#999999', fontSize: 12, marginRight: 15 }}>2:30 PM</Text>
+                <View style={{ justifyContent: 'flex-end', flexDirection: 'row', marginTop: 5 }}>
+                    {/* <Text style={{ color: '#5AC8FA', marginLeft: 15, fontSize: 10 }}>New</Text> */}
+                    <Text style={{ color: '#999999', fontSize: 12, marginRight: 15 }}>
+                        {item.property && item.property.endat ? moment(item.property.endat).format('lll') : moment(item.property.startat).format('lll')}
+                    </Text>
                 </View>
 
                 <View style={{ flexDirection: 'row', justifyContent: 'flex-start', marginTop: -5 }}>
@@ -77,11 +92,10 @@ function chatHistoryScreen(props) {
                         <View style={{ marginLeft: -20, height: 15, width: 15, backgroundColor: '#5AC8FA', borderColor: '#5Ac8FA', borderRadius: 100, borderWidth: 1 }}></View>
                         : <View style={{ marginLeft: -20, height: 15, width: 15, backgroundColor: '#EEEEEE', borderColor: '#000000', borderRadius: 100, borderWidth: 1 }}></View>
                     }
-
                     <View style={{ flexDirection: 'row', justifyContent: 'center', marginHorizontal: 30 }}>
                         <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: 0 }}>
                             <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#000000', textTransform: 'capitalize' }}>{item && item.contextid.fullname.split(' ')[0]}</Text>
-                            <Text style={{ fontSize: 14, color: '#04DE71' }}>+ ₹ 20.00</Text>
+                            <Text style={{ fontSize: 14, color: '#555555' }}>+ ₹ 00.00</Text>
                         </View>
                     </View>
                 </View>
@@ -91,6 +105,7 @@ function chatHistoryScreen(props) {
                         <Text style={{ color: '#FFFFFF' }}>5</Text>
                     </View>
                 </View> */}
+
             </TouchableOpacity>
         </View>
     )

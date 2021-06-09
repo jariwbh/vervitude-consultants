@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, Dimensions, SafeAreaView, Image, TouchableOpacity, ScrollView, Modal, TextInput, ToastAndroid, Platform, Pressable } from 'react-native';
+import {
+    Text, View, Dimensions, SafeAreaView, Image, TouchableOpacity, ScrollView, Modal,
+    TextInput, ToastAndroid, Platform, Pressable, ActivityIndicator, StyleSheet, Keyboard
+} from 'react-native';
 import HelpSupportService from '../../services/HelpSupportService/HelpSupportService'
 import MenuButton from '../../components/ProfileMenuButton/ProfileMenuButton';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -13,6 +16,7 @@ import { WalletDetailService } from '../../services/WalletService/WalletService'
 import { NotificationService } from '../../services/NotificationService/NotificationService';
 const HEIGHT = Dimensions.get('window').height;
 const WIDTH = Dimensions.get('window').width;
+import { useFocusEffect } from '@react-navigation/native';
 
 const myProfileScreen = (props) => {
     const [loading, setloading] = useState(false);
@@ -25,10 +29,17 @@ const myProfileScreen = (props) => {
     const [descriptionerror, setdescriptionerror] = useState(null);
     const [walletBalance, setWalletBalance] = useState(null);
     const [notification, setNotification] = useState(0);
+    const [userId, setUserId] = useState(null);
     const secondTextInputRef = React.createRef();
 
     useEffect(() => {
-    }, [userDetails, subject, subjecterror, description, descriptionerror, loading, walletBalance, notification]);
+    }, [userDetails, subject, subjecterror, description, descriptionerror, loading, walletBalance, notification, userId]);
+
+    useFocusEffect(
+        React.useCallback(() => {
+            getUserData();
+        }, [])
+    );
 
     //get AsyncStorage current user Details
     const getUserData = async () => {
@@ -39,23 +50,29 @@ const myProfileScreen = (props) => {
             }, 3000);;
         } else {
             var UserInfo = JSON.parse(getUser);
-            await getWalletDetail();
+            setUserId(UserInfo._id);
+            setuserDetails(UserInfo);
+            await getWalletDetail(UserInfo._id);
             await getNotification(UserInfo._id);
             await getByIdUser(UserInfo._id);
-            setuserDetails(UserInfo);
         }
     }
 
     useEffect(() => {
-        getUserData();
+        // getUserData();
     }, []);
 
+    //get notification count
     const getNotification = async (id) => {
-        const response = await NotificationService(id);
-        console.log(`response.data`, response.data);
-        setNotification(response.data.length)
+        try {
+            const response = await NotificationService(id);
+            setNotification(response.data.length);
+        } catch (error) {
+            console.log(`error`, error);
+        }
     }
 
+    //get wallet balance details
     const getWalletDetail = async (id) => {
         try {
             const response = await WalletDetailService(id);
@@ -126,23 +143,29 @@ const myProfileScreen = (props) => {
         const body = {
             'status': 'Requested',
             'subject': subject,
-            'customerid': userDetails._id,
+            'customerid': userId,
             'onModel': 'User',
             'category': 'System Enhancements',
             'content': description
-
         }
         setloading(true);
         try {
             HelpSupportService(body).then(response => {
                 if (response.data != null && response.data != 'undefind' && response.status == 200) {
+
                     setloading(false);
                     setshowModalVisible(false);
                     setshowMessageModalVisible(true);
+                    getNotification(userId);
+                    setsubject(null)
+                    setsubjecterror(null);
+                    setdescription(null);
+                    setdescriptionerror(null);
                 }
             })
         }
         catch (error) {
+            console.log(`error`, error);
             setloading(false);
             if (Platform.OS === 'android') {
                 ToastAndroid.show('Message Sending Failed!', ToastAndroid.SHORT);
@@ -186,7 +209,7 @@ const myProfileScreen = (props) => {
                     <View style={{ justifyContent: 'flex-end' }}>
                         <TouchableOpacity onPress={() => props.navigation.navigate(SCREEN.MYEARINGSCREEN)}
                             style={{ height: 40, width: 130, backgroundColor: '#FFFFFF', flexDirection: 'row', borderRadius: 20, alignItems: 'center', justifyContent: 'center', marginRight: 10 }}>
-                            <Text style={{ fontSize: 16, color: '#5AC8FA' }}>{walletBalance == undefined && walletBalance == null ? 0 : walletBalance.wallet.balance}</Text>
+                            <Text style={{ fontSize: 16, color: '#5AC8FA' }}>{walletBalance && walletBalance.wallet && walletBalance.wallet.balance ? walletBalance.wallet.balance : 0}</Text>
                             <View style={{ width: 25, height: 25, backgroundColor: '#5AC8FA', alignItems: 'center', marginLeft: 15, borderRadius: 20, justifyContent: 'center' }}>
                                 <FontAwesome name='rupee' size={18} color='#FFFFFF' />
                             </View>
@@ -204,8 +227,7 @@ const myProfileScreen = (props) => {
                             <Pressable onPress={() => onTouchViewProfile()}
                                 style={STYLES.styles.profileImageView}>
                                 <Image source={{ uri: userDetails ? userDetails.profilepic !== null && userDetails.profilepic ? userDetails.profilepic : 'https://res.cloudinary.com/dnogrvbs2/image/upload/v1613538969/profile1_xspwoy.png' : null }}
-                                    style={STYLES.styles.profileImage}
-                                />
+                                    style={STYLES.styles.profileImage} />
                             </Pressable>
                         </View>
                         <TouchableOpacity onPress={() => props.navigation.navigate(SCREEN.EDITSCREEN)}
@@ -274,7 +296,6 @@ const myProfileScreen = (props) => {
                                     onChangeText={(subject) => setSubject(subject)}
                                 />
                             </View>
-
                             <View style={descriptionerror == null ? STYLES.styles.textAreainputView : STYLES.styles.textAreainputViewError}>
                                 <TextInput
                                     style={STYLES.styles.TextareaInput}
@@ -291,10 +312,9 @@ const myProfileScreen = (props) => {
                                     onChangeText={(description) => setdescription(description)}
                                 />
                             </View>
-
                         </View>
                         <View style={{ marginTop: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                            <TouchableOpacity onPress={() => onPressSubmit()}
+                            <TouchableOpacity onPress={() => { onPressSubmit(), Keyboard.dismiss() }}
                                 style={STYLES.styles.savebtn}>
                                 <Text style={{ fontSize: 14, color: '#FFFFFF' }}>Submit</Text>
                             </TouchableOpacity>
@@ -331,7 +351,7 @@ const myProfileScreen = (props) => {
                 </View>
             </Modal>
             { loading ? <Loader /> : null}
-        </SafeAreaView >
+        </SafeAreaView>
     )
 }
 export default myProfileScreen;
