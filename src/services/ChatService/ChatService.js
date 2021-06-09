@@ -12,7 +12,7 @@ const recentChatService = (id) => {
             'searchfield': 'property.consultantid',
             'searchvalue': `${id}`,
             'criteria': 'eq',
-            'datatype': 'objectId'
+            'datatype': 'text'
         }
         ], "formname": "livechat"
     }

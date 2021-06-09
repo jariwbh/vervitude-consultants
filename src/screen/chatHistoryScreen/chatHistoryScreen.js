@@ -43,7 +43,7 @@ function chatHistoryScreen(props) {
         }, [])
     );
 
-    useEffect(() => { }, [refreshing])
+    useEffect(() => { }, [refreshing, recentChat, loading, currentUserId])
 
     const wait = (timeout) => {
         return new Promise(resolve => {
@@ -62,6 +62,7 @@ function chatHistoryScreen(props) {
         try {
             const response = await recentChatService(currentUser);
             if (response.data != null && response.data != 'undefind' && response.status == 200) {
+                console.log(`response.data`, response.data);
                 setrecentChat(response.data);
                 setloading(false);
             }

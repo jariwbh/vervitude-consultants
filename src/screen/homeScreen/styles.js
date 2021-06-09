@@ -38,7 +38,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'column',
         width: WIDTH / 2 - 20,
         height: 110,
-        backgroundColor: '#FFE620',
+        backgroundColor: '#5AC8FA',
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 10

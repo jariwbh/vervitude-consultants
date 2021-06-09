@@ -30,6 +30,29 @@ const data = {
     barColors: ['#C4C4C4', '#5AC8FA']
 };
 
+const filterListData = [
+    {
+        "id": 1,
+        "name": 'All'
+    },
+    {
+        "id": 2,
+        "name": 'Yearly'
+    },
+    {
+        "id": 3,
+        "name": 'Weekly'
+    },
+    {
+        "id": 4,
+        "name": 'Montly'
+    },
+    {
+        "id": 5,
+        "name": 'Today'
+    }
+]
+
 const chartConfig = {
     backgroundGradientFrom: '#FFFFFF',
     backgroundGradientFromOpacity: 0,
@@ -50,9 +73,11 @@ const homeScreen = (props) => {
     const [userDetails, setuserDetails] = useState([]);
     const [online, setOnlineUser] = useState(false);
     const [allCategorytoggle, setallCategorytoggle] = useState(false);
+    const [filterList, setFilterList] = useState(null);
     let userID;
 
     useEffect(() => {
+        setFilterList(filterListData);
         getCategoryList();
         getUserData();
         getDashboardView();
@@ -66,13 +91,13 @@ const homeScreen = (props) => {
     }, []);
 
     useEffect(() => {
-    }, [selectedItem, userDetails, allCategorytoggle, loading])
+    }, [selectedItem, userDetails, allCategorytoggle, loading, filterList])
 
     //get dashboard view data
     const getDashboardView = async () => {
         try {
             const response = await getDashboard()
-            console.log(`response.data`, response);
+            // console.log(`response.data`, response);
         } catch (error) {
             console.log(`error`, error);
         }
@@ -358,6 +383,16 @@ const homeScreen = (props) => {
         };
     }
 
+    //toggle switch rendom select to call function 
+    const onTouchSelectFilterList = (item, index) => {
+        const filteredlists = filterList.map((item) => {
+            item.selected = false;
+            return item;
+        });
+        filteredlists[index].selected = true;
+        setFilterList(filteredlists);
+    }
+
     return (
         <SafeAreaView style={STYLES.styles.container}>
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -412,11 +447,11 @@ const homeScreen = (props) => {
                     <View style={STYLES.styles.box3}>
                         <Text style={STYLES.styles.boxuppertext}>Users</Text>
                         <Text style={STYLES.styles.boxtext}>2K</Text>
-                        <Text style={STYLES.styles.boxtextsecond}>New Users</Text>
+                        <Text style={STYLES.styles.boxtextsecond}>Total Users</Text>
                     </View>
                     <View style={STYLES.styles.box4}>
-                        <Text style={STYLES.styles.boxuppertext}>5 Star</Text>
-                        <Text style={STYLES.styles.boxtext}>100</Text>
+                        <Text style={STYLES.styles.boxuppertext}>50 Rating</Text>
+                        <Text style={STYLES.styles.boxtext}>1.5</Text>
                         <Text style={STYLES.styles.boxtextsecond}>Total Rating</Text>
                     </View>
                 </View>
@@ -587,39 +622,30 @@ const homeScreen = (props) => {
                 </View>
                 <View style={{ marginBottom: 50 }} />
             </ScrollView>
+
             {/* Filter model Pop */}
             <Modal
                 animationType='slide'
                 transparent={true}
                 visible={filterModalVisible}
-                onRequestClose={() => { setFilterModalVisible(!filterModalVisible) }}
-            >
+                onRequestClose={() => { setFilterModalVisible(!filterModalVisible) }}>
                 <View style={{ alignItems: 'center', flex: 1 }}>
                     <View style={{ position: 'absolute', bottom: 20 }}>
                         <View style={STYLES.styles.modalView}>
-                            <Text style={{ padding: 15, textAlign: 'center', color: '#000000', fontSize: 14 }}>All</Text>
-                            <View style={{ flexDirection: 'row' }}>
-                                <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
-                            </View>
-
-                            <Text style={{ padding: 15, textAlign: 'center', color: '#000000', fontSize: 14 }}>Yearly</Text>
-                            <View style={{ flexDirection: 'row' }}>
-                                <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
-                            </View>
-
-                            <Text style={{ padding: 15, textAlign: 'center', color: '#000000', fontSize: 14 }}>Weekly</Text>
-                            <View style={{ flexDirection: 'row' }}>
-                                <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
-                            </View>
-
-                            <Text style={{ padding: 15, textAlign: 'center', color: '#5AC8FA', fontSize: 14 }}>Montly</Text>
-                            <View style={{ flexDirection: 'row' }}>
-                                <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
-                            </View>
-
-                            <Text style={{ padding: 15, textAlign: 'center', color: '#000000', fontSize: 14 }}>Today</Text>
+                            <FlatList
+                                showsVerticalScrollIndicator={false}
+                                renderItem={({ item, index }) => (
+                                    <TouchableOpacity onPress={() => onTouchSelectFilterList(item, index)}>
+                                        <Text style={{ padding: 15, textAlign: 'center', color: item.selected == true ? '#5AC8FA' : '#000000', fontSize: 14 }}>{item.name}</Text>
+                                        <View style={{ flexDirection: 'row' }}>
+                                            <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
+                                        </View>
+                                    </TouchableOpacity>
+                                )}
+                                data={filterList}
+                                keyExtractor={(item, index) => index.toString()}
+                            />
                         </View>
-
                         <View style={{ marginTop: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                             <TouchableOpacity onPress={() => { setFilterModalVisible(!filterModalVisible) }}
                                 style={STYLES.styles.savebtn}>
