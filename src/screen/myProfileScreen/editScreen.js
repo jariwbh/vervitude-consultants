@@ -338,7 +338,7 @@ const editScreen = (props) => {
     //render Brand Photo 
     const renderAddBrand = ({ item }) => (
         item.add == true ?
-            <View style={{ justifyContent: 'flex-start', flexDirection: 'row', paddingHorizontal: 20, paddingVertical: 40 }}>
+            <View style={{ justifyContent: 'flex-start', flexDirection: 'row', paddingHorizontal: 15, paddingVertical: 40 }}>
                 <TouchableOpacity
                     onPress={() => onChangeBrandPhoto('brand')}
                     style={STYLE.Editstyles.brandstyle}>
@@ -346,7 +346,7 @@ const editScreen = (props) => {
                 </TouchableOpacity>
             </View>
             :
-            <View style={{ paddingHorizontal: 20, paddingVertical: 40 }}>
+            <View style={{ paddingHorizontal: 15, paddingVertical: 40 }}>
                 {/* <ImageBackground source={{ uri: item.attachment }} style={{
                     width: 80, height: 80, borderRadius: 100, borderColor: '#AAAAAA', borderWidth: 1
                 }} >

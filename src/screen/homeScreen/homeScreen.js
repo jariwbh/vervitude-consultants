@@ -531,7 +531,7 @@ const homeScreen = (props) => {
                                         <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center', marginLeft: 15, marginTop: 15 }}>
                                             <View style={{ flexDirection: 'row' }}>
                                                 <View style={{ backgroundColor: '#5AC8FA', width: 22, height: 22, marginLeft: -40, marginRight: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 20 }}>
-                                                    <Text style={{ fontSize: 14, color: '#FFFFFF' }}>{index}</Text>
+                                                    <Text style={{ fontSize: 14, color: '#FFFFFF' }}>{index + 1}</Text>
                                                 </View>
                                                 <Text style={{ fontSize: 16, color: '#555555' }}>{item.fullname.split(' ')[0]}</Text>
                                             </View>

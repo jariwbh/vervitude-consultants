@@ -141,7 +141,7 @@ const rubychatScreen = (props, { navigation }) => {
 					<Text style={{ fontSize: 12, color: '#5AC8FA', position: 'absolute' }}>20K</Text>
 				</View> */}
 				<View style={{ justifyContent: 'flex-end' }}>
-					<ChatMenu />
+					<ChatMenu onPress={() => { props.navigation.navigate(SCREEN.CHATHISTORYSCREEN) }} />
 				</View>
 			</View>
 			<ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={'always'}>
