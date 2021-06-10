@@ -11,4 +11,25 @@ const getDashboard = () => {
     return Axios.post('analyticsreports/process', body);
 }
 
-export { getCategory, getDashboard };
+const getDashboardFilter = (sDate, eDate) => {
+    let body = {
+        "search": [
+            {
+                "searchfield": "date",
+                "searchvalue": sDate,
+                "datatype": "Date",
+                "criteria": "lte"
+            },
+            {
+                "searchfield": "date",
+                "searchvalue": eDate,
+                "datatype": "Date",
+                "criteria": "gte"
+            }
+        ],
+        "id": "60c066895c173b555df82226"
+    }
+    return Axios.post('analyticsreports/process', body);
+}
+
+export { getCategory, getDashboard, getDashboardFilter };

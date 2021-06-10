@@ -15,7 +15,8 @@ import LogoutService from '../../services/LogoutService/LogoutService';
 import DeviceInfo from 'react-native-device-info';
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import PushNotification from "react-native-push-notification";
-import { getDashboard } from "../../services/HomeService/HomeService";
+import { getDashboard, getDashboardFilter } from "../../services/HomeService/HomeService";
+import moment from 'moment';
 
 const data = {
     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Sat', 'Sun'],
@@ -33,23 +34,23 @@ const data = {
 const filterListData = [
     {
         "id": 1,
-        "name": 'All'
+        "name": 'all'
     },
     {
         "id": 2,
-        "name": 'Yearly'
+        "name": 'yearly'
     },
     {
         "id": 3,
-        "name": 'Weekly'
+        "name": 'weekly'
     },
     {
         "id": 4,
-        "name": 'Montly'
+        "name": 'montly'
     },
     {
         "id": 5,
-        "name": 'Today'
+        "name": 'today'
     }
 ]
 
@@ -74,6 +75,9 @@ const homeScreen = (props) => {
     const [online, setOnlineUser] = useState(false);
     const [allCategorytoggle, setallCategorytoggle] = useState(false);
     const [filterList, setFilterList] = useState(null);
+    const [dashboardtopEarner, setDashboardtopEarner] = useState([]);
+    const [dashboardView, setDashboardView] = useState(null);
+    const [filterSelectValue, setfilterSelectValue] = useState(null);
     let userID;
 
     useEffect(() => {
@@ -91,13 +95,51 @@ const homeScreen = (props) => {
     }, []);
 
     useEffect(() => {
-    }, [selectedItem, userDetails, allCategorytoggle, loading, filterList])
+    }, [selectedItem, userDetails, allCategorytoggle, loading, filterList, filterSelectValue, selectCategory, online, dashboardView]);
 
     //get dashboard view data
     const getDashboardView = async () => {
         try {
-            const response = await getDashboard()
-            // console.log(`response.data`, response);
+            const response = await getDashboard();
+            setDashboardView(response.data[0]);
+            setDashboardtopEarner(response.data[1].data);
+        } catch (error) {
+            console.log(`error`, error);
+        }
+    }
+
+    //get dashboard view data
+    const getDashboardFilterView = async () => {
+        let sDate, eDate;
+
+        if (filterSelectValue === 'all') {
+            console.log(`all`);
+            sDate = moment().format();
+            eDate = moment().format();
+        } else if (filterSelectValue === 'yearly') {
+            console.log(`yearly`);
+            sDate = moment().format();
+            eDate = moment().subtract(1, 'years')
+            eDate = moment(eDate).format();
+        } else if (filterSelectValue === 'weekly') {
+            console.log(`weekly`);
+            sDate = moment().format();
+            eDate = moment().subtract(1, 'weeks')
+            eDate = moment(eDate).format();
+        } else if (filterSelectValue === 'montly') {
+            console.log(`montly`);
+            sDate = moment().format();
+            eDate = moment().subtract(1, 'months')
+            eDate = moment(eDate).format();
+        } else if (filterSelectValue === 'today') {
+            console.log(`today`);
+            sDate = moment().format();
+            eDate = moment().format();
+        }
+
+        try {
+            const response = await getDashboardFilter(sDate, eDate);
+            setDashboardView(response.data[0]);
         } catch (error) {
             console.log(`error`, error);
         }
@@ -389,6 +431,7 @@ const homeScreen = (props) => {
             item.selected = false;
             return item;
         });
+        setfilterSelectValue(item.name)
         filteredlists[index].selected = true;
         setFilterList(filteredlists);
     }
@@ -399,7 +442,6 @@ const homeScreen = (props) => {
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 30 }}>
                     <View style={{ justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center' }}>
                         <MenuButton onPress={() => { props.navigation.navigate(MYPROFILESCREEN) }} />
-
                         {online == true ?
                             <View style={{ marginLeft: 30 }}>
                                 <TouchableOpacity style={STYLES.styles.onlineswitchBtn} onPress={() => { setOnline(true) }} >
@@ -418,7 +460,6 @@ const homeScreen = (props) => {
                             </View>
                         }
                     </View>
-
                     <View style={{ justifyContent: 'flex-end' }}>
                         <ChatMenu onPress={() => { props.navigation.navigate(CHATHISTORYSCREEN) }} />
                     </View>
@@ -432,26 +473,26 @@ const homeScreen = (props) => {
 
                 <View style={{ justifyContent: 'space-around', flexDirection: 'row', marginTop: 10 }}>
                     <View style={STYLES.styles.box1}>
-                        <Text style={STYLES.styles.boxtext}>₹ 20K</Text>
+                        <Text style={STYLES.styles.boxtext}>₹ {dashboardView && dashboardView.data[0].totalearning}</Text>
                         <Text style={STYLES.styles.boxtextsecond}>Total Earning</Text>
                     </View>
                     <View style={STYLES.styles.box2}>
                         <View>
                             <Text style={STYLES.styles.boxuppertext}>Hrs</Text>
                         </View>
-                        <Text style={STYLES.styles.boxtext}>100</Text>
+                        <Text style={STYLES.styles.boxtext}>{dashboardView && dashboardView.data[0].totalhours}</Text>
                         <Text style={STYLES.styles.boxtextsecond}>Total Hours</Text>
                     </View>
                 </View>
                 <View style={{ justifyContent: 'space-around', flexDirection: 'row', marginTop: 10 }}>
                     <View style={STYLES.styles.box3}>
                         <Text style={STYLES.styles.boxuppertext}>Users</Text>
-                        <Text style={STYLES.styles.boxtext}>2K</Text>
+                        <Text style={STYLES.styles.boxtext}>{dashboardView && dashboardView.data[0].totalusers}</Text>
                         <Text style={STYLES.styles.boxtextsecond}>Total Users</Text>
                     </View>
                     <View style={STYLES.styles.box4}>
-                        <Text style={STYLES.styles.boxuppertext}>50 Rating</Text>
-                        <Text style={STYLES.styles.boxtext}>1.5</Text>
+                        <Text style={STYLES.styles.boxuppertext}>Rating</Text>
+                        <Text style={STYLES.styles.boxtext}>{dashboardView && dashboardView.data[0].totalratings}</Text>
                         <Text style={STYLES.styles.boxtextsecond}>Total Rating</Text>
                     </View>
                 </View>
@@ -473,152 +514,37 @@ const homeScreen = (props) => {
                         </View>
                     </View> */}
 
-                    <View style={STYLES.styles.cardViewlastHistory}>
-                        <View>
-                            <Text style={{ marginTop: 20, marginLeft: 40, fontWeight: 'bold', fontSize: 16, color: '#555555' }}>Top Earners Of the Week</Text>
-                        </View>
-
-                        <View style={{ marginTop: 15, flexDirection: 'row' }}>
-                            <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
-                        </View>
-                        <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center', marginLeft: 15, marginTop: 15 }}>
-                            <View style={{ flexDirection: 'row' }}>
-                                <View style={{ backgroundColor: '#5AC8FA', width: 22, height: 22, marginLeft: -40, marginRight: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 20 }}>
-                                    <Text style={{ fontSize: 14, color: '#FFFFFF' }}>1</Text>
-                                </View>
-                                <Text style={{ fontSize: 16, color: '#555555' }}>George</Text>
+                    {dashboardtopEarner && dashboardtopEarner != null || dashboardtopEarner.length <= 0
+                        ?
+                        <View style={STYLES.styles.cardViewlastHistory}>
+                            <View>
+                                <Text style={{ marginTop: 20, marginLeft: 40, fontWeight: 'bold', fontSize: 16, color: '#555555' }}>Top Earners Of the Week</Text>
                             </View>
-                            <Text style={{ fontSize: 16, color: '#5AC8FA' }}>+105%</Text>
-                            <Text style={{ fontSize: 16, color: '#04DE71' }}>₹ 30k+</Text>
-                        </View>
 
-                        <View style={{ marginTop: 15, flexDirection: 'row' }}>
-                            <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
+                            <FlatList
+                                showsVerticalScrollIndicator={false}
+                                renderItem={({ item, index }) => (
+                                    <>
+                                        <View style={{ marginTop: 15, flexDirection: 'row' }}>
+                                            <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
+                                        </View>
+                                        <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center', marginLeft: 15, marginTop: 15 }}>
+                                            <View style={{ flexDirection: 'row' }}>
+                                                <View style={{ backgroundColor: '#5AC8FA', width: 22, height: 22, marginLeft: -40, marginRight: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 20 }}>
+                                                    <Text style={{ fontSize: 14, color: '#FFFFFF' }}>{index}</Text>
+                                                </View>
+                                                <Text style={{ fontSize: 16, color: '#555555' }}>{item.fullname.split(' ')[0]}</Text>
+                                            </View>
+                                            <Text style={{ fontSize: 16, color: '#5AC8FA' }}>+0%</Text>
+                                            <Text style={{ fontSize: 16, color: '#04DE71' }}>₹ {item.totalearnings}+</Text>
+                                        </View>
+                                    </>
+                                )}
+                                data={dashboardtopEarner && dashboardtopEarner}
+                                keyExtractor={(item, index) => index.toString()}
+                            />
                         </View>
-                        <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center', marginLeft: 15, marginTop: 15 }}>
-                            <View style={{ flexDirection: 'row' }}>
-                                <View style={{ backgroundColor: '#5AC8FA', width: 22, height: 22, marginLeft: -40, marginRight: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 20 }}>
-                                    <Text style={{ fontSize: 14, color: '#FFFFFF' }}>2</Text>
-                                </View>
-                                <Text style={{ fontSize: 16, color: '#555555' }}>George</Text>
-                            </View>
-                            <Text style={{ fontSize: 16, color: '#5AC8FA' }}>+105%</Text>
-                            <Text style={{ fontSize: 16, color: '#04DE71' }}>₹ 30k+</Text>
-                        </View>
-
-                        <View style={{ marginTop: 15, flexDirection: 'row' }}>
-                            <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
-                        </View>
-                        <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center', marginLeft: 15, marginTop: 15 }}>
-                            <View style={{ flexDirection: 'row' }}>
-                                <View style={{ backgroundColor: '#5AC8FA', width: 22, height: 22, marginLeft: -40, marginRight: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 20 }}>
-                                    <Text style={{ fontSize: 14, color: '#FFFFFF' }}>3</Text>
-                                </View>
-                                <Text style={{ fontSize: 16, color: '#555555' }}>George</Text>
-                            </View>
-                            <Text style={{ fontSize: 16, color: '#5AC8FA' }}>+105%</Text>
-                            <Text style={{ fontSize: 16, color: '#04DE71' }}>₹ 30k+</Text>
-                        </View>
-
-                        <View style={{ marginTop: 15, flexDirection: 'row' }}>
-                            <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
-                        </View>
-                        <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center', marginLeft: 15, marginTop: 15 }}>
-                            <View style={{ flexDirection: 'row' }}>
-                                <View style={{ backgroundColor: '#5AC8FA', width: 22, height: 22, marginLeft: -40, marginRight: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 20 }}>
-                                    <Text style={{ fontSize: 14, color: '#FFFFFF' }}>4</Text>
-                                </View>
-                                <Text style={{ fontSize: 16, color: '#555555' }}>George</Text>
-                            </View>
-                            <Text style={{ fontSize: 16, color: '#5AC8FA' }}>+105%</Text>
-                            <Text style={{ fontSize: 16, color: '#04DE71' }}>₹ 30k+</Text>
-                        </View>
-
-                        <View style={{ marginTop: 15, flexDirection: 'row' }}>
-                            <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
-                        </View>
-                        <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center', marginLeft: 15, marginTop: 15 }}>
-                            <View style={{ flexDirection: 'row' }}>
-                                <View style={{ backgroundColor: '#5AC8FA', width: 22, height: 22, marginLeft: -40, marginRight: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 20 }}>
-                                    <Text style={{ fontSize: 14, color: '#FFFFFF' }}>5</Text>
-                                </View>
-                                <Text style={{ fontSize: 16, color: '#555555' }}>George</Text>
-                            </View>
-                            <Text style={{ fontSize: 16, color: '#5AC8FA' }}>+105%</Text>
-                            <Text style={{ fontSize: 16, color: '#04DE71' }}>₹ 30k+</Text>
-                        </View>
-
-                        <View style={{ marginTop: 15, flexDirection: 'row' }}>
-                            <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
-                        </View>
-                        <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center', marginLeft: 15, marginTop: 15 }}>
-                            <View style={{ flexDirection: 'row' }}>
-                                <View style={{ backgroundColor: '#5AC8FA', width: 22, height: 22, marginLeft: -40, marginRight: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 20 }}>
-                                    <Text style={{ fontSize: 14, color: '#FFFFFF' }}>6</Text>
-                                </View>
-                                <Text style={{ fontSize: 16, color: '#555555' }}>George</Text>
-                            </View>
-                            <Text style={{ fontSize: 16, color: '#5AC8FA' }}>+105%</Text>
-                            <Text style={{ fontSize: 16, color: '#04DE71' }}>₹ 30k+</Text>
-                        </View>
-
-                        <View style={{ marginTop: 15, flexDirection: 'row' }}>
-                            <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
-                        </View>
-                        <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center', marginLeft: 15, marginTop: 15 }}>
-                            <View style={{ flexDirection: 'row' }}>
-                                <View style={{ backgroundColor: '#5AC8FA', width: 22, height: 22, marginLeft: -40, marginRight: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 20 }}>
-                                    <Text style={{ fontSize: 14, color: '#FFFFFF' }}>7</Text>
-                                </View>
-                                <Text style={{ fontSize: 16, color: '#555555' }}>George</Text>
-                            </View>
-                            <Text style={{ fontSize: 16, color: '#5AC8FA' }}>+105%</Text>
-                            <Text style={{ fontSize: 16, color: '#04DE71' }}>₹ 30k+</Text>
-                        </View>
-
-                        <View style={{ marginTop: 15, flexDirection: 'row' }}>
-                            <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
-                        </View>
-                        <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center', marginLeft: 15, marginTop: 15 }}>
-                            <View style={{ flexDirection: 'row' }}>
-                                <View style={{ backgroundColor: '#5AC8FA', width: 22, height: 22, marginLeft: -40, marginRight: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 20 }}>
-                                    <Text style={{ fontSize: 14, color: '#FFFFFF' }}>8</Text>
-                                </View>
-                                <Text style={{ fontSize: 16, color: '#555555' }}>George</Text>
-                            </View>
-                            <Text style={{ fontSize: 16, color: '#5AC8FA' }}>+105%</Text>
-                            <Text style={{ fontSize: 16, color: '#04DE71' }}>₹ 30k+</Text>
-                        </View>
-
-                        <View style={{ marginTop: 15, flexDirection: 'row' }}>
-                            <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
-                        </View>
-                        <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center', marginLeft: 15, marginTop: 15 }}>
-                            <View style={{ flexDirection: 'row' }}>
-                                <View style={{ backgroundColor: '#5AC8FA', width: 22, height: 22, marginLeft: -40, marginRight: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 20 }}>
-                                    <Text style={{ fontSize: 14, color: '#FFFFFF' }}>9</Text>
-                                </View>
-                                <Text style={{ fontSize: 16, color: '#555555' }}>George</Text>
-                            </View>
-                            <Text style={{ fontSize: 16, color: '#5AC8FA' }}>+105%</Text>
-                            <Text style={{ fontSize: 16, color: '#04DE71' }}>₹ 30k+</Text>
-                        </View>
-
-                        <View style={{ marginTop: 15, flexDirection: 'row' }}>
-                            <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
-                        </View>
-                        <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center', marginLeft: 15, marginTop: 15 }}>
-                            <View style={{ flexDirection: 'row' }}>
-                                <View style={{ backgroundColor: '#5AC8FA', width: 22, height: 22, marginLeft: -40, marginRight: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 20 }}>
-                                    <Text style={{ fontSize: 14, color: '#FFFFFF' }}>10</Text>
-                                </View>
-                                <Text style={{ fontSize: 16, color: '#555555' }}>George</Text>
-                            </View>
-                            <Text style={{ fontSize: 16, color: '#5AC8FA' }}>+105%</Text>
-                            <Text style={{ fontSize: 16, color: '#04DE71' }}>₹ 30k+</Text>
-                        </View>
-
-                    </View>
+                        : null}
                 </View>
                 <View style={{ marginBottom: 50 }} />
             </ScrollView>
@@ -636,7 +562,7 @@ const homeScreen = (props) => {
                                 showsVerticalScrollIndicator={false}
                                 renderItem={({ item, index }) => (
                                     <TouchableOpacity onPress={() => onTouchSelectFilterList(item, index)}>
-                                        <Text style={{ padding: 15, textAlign: 'center', color: item.selected == true ? '#5AC8FA' : '#000000', fontSize: 14 }}>{item.name}</Text>
+                                        <Text style={{ padding: 15, textAlign: 'center', color: item.selected == true ? '#5AC8FA' : '#000000', fontSize: 14, textTransform: "capitalize" }}>{item.name}</Text>
                                         <View style={{ flexDirection: 'row' }}>
                                             <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
                                         </View>
@@ -647,7 +573,7 @@ const homeScreen = (props) => {
                             />
                         </View>
                         <View style={{ marginTop: 15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                            <TouchableOpacity onPress={() => { setFilterModalVisible(!filterModalVisible) }}
+                            <TouchableOpacity onPress={() => { setFilterModalVisible(!filterModalVisible), getDashboardFilterView() }}
                                 style={STYLES.styles.savebtn}>
                                 <Text style={{ fontSize: 14, color: '#FFFFFF' }}>Save</Text>
                             </TouchableOpacity>

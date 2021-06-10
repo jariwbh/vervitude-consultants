@@ -338,7 +338,7 @@ const editScreen = (props) => {
     //render Brand Photo 
     const renderAddBrand = ({ item }) => (
         item.add == true ?
-            <View style={{ justifyContent: 'flex-start', flexDirection: 'row', marginTop: 15, paddingHorizontal: 20 }}>
+            <View style={{ justifyContent: 'flex-start', flexDirection: 'row', paddingHorizontal: 20, paddingVertical: 40 }}>
                 <TouchableOpacity
                     onPress={() => onChangeBrandPhoto('brand')}
                     style={STYLE.Editstyles.brandstyle}>
@@ -346,18 +346,23 @@ const editScreen = (props) => {
                 </TouchableOpacity>
             </View>
             :
-            <View style={{ paddingHorizontal: 20, paddingVertical: 15 }}>
-                <View style={{ borderRadius: 100, width: 80, height: 80 }}>
-                    <ImageBackground source={{ uri: item.attachment }} style={{
-                        width: 80, height: 80, borderRadius: 100, borderColor: '#AAAAAA', borderWidth: 1
-                    }} >
-                        <TouchableOpacity
-                            onPress={() => onPressRemoveBrand(item)}
-                            style={{ backgroundColor: '#FFFFFF', borderRadius: 100, marginLeft: 55 }}>
-                            <AntDesign name='closecircleo' size={20} color='#262626' style={{ backgroundColor: '#ffffff', borderRadius: 100 }} />
-                        </TouchableOpacity>
-                    </ImageBackground>
-                </View>
+            <View style={{ paddingHorizontal: 20, paddingVertical: 40 }}>
+                {/* <ImageBackground source={{ uri: item.attachment }} style={{
+                    width: 80, height: 80, borderRadius: 100, borderColor: '#AAAAAA', borderWidth: 1
+                }} >
+                    <TouchableOpacity
+                        onPress={() => onPressRemoveBrand(item)}
+                        style={{ backgroundColor: '#FFFFFF', borderRadius: 100, marginLeft: 55 }}>
+                        <AntDesign name='closecircleo' size={20} color='#262626' style={{ backgroundColor: '#ffffff', borderRadius: 100 }} />
+                    </TouchableOpacity>
+                </ImageBackground> */}
+                <Image source={{ uri: item.attachment }}
+                    style={{ width: 80, height: 80, borderRadius: 100, borderColor: '#AAAAAA', borderWidth: 1 }} />
+                <TouchableOpacity
+                    onPress={() => onPressRemoveBrand(item)}
+                    style={{ backgroundColor: '#FFFFFF', borderRadius: 100, marginLeft: 55, marginTop: -80 }}>
+                    <AntDesign name='closecircleo' size={20} color='#262626' style={{ backgroundColor: '#ffffff', borderRadius: 100 }} />
+                </TouchableOpacity>
             </View>
     );
 
@@ -507,7 +512,7 @@ const editScreen = (props) => {
                                 onSubmitEditing={() => sevenTextInputRef.current.focus()}
                                 onChangeText={(location) => locationCheck(location)}
                             />
-                            <Ionicons name='location' size={24} color='#000000' />
+                            {/* <Ionicons name='location' size={24} color='#000000' /> */}
                         </View>
 
                         <View style={{ marginLeft: 10, marginTop: 5 }}>
@@ -530,8 +535,8 @@ const editScreen = (props) => {
                                 onChangeText={(about) => aboutCheck(about)}
                             />
                         </View>
-                        <View style={{ flexDirection: 'column', marginLeft: 20, marginTop: 5 }}>
-                            <Text style={{ fontSize: 14 }}>Add Brands</Text>
+                        <View style={{ flexDirection: 'column', marginLeft: 10, marginTop: 5, marginBottom: -25 }}>
+                            <Text style={{ fontSize: 12 }}>Add Brands</Text>
                         </View>
 
                         <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>

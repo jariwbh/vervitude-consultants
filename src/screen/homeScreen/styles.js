@@ -79,7 +79,7 @@ export const styles = StyleSheet.create({
         borderRadius: 30,
         marginTop: 15,
         width: WIDTH - 20,
-        height: 600,
+        // height: 600,
         backgroundColor: '#FFFFFF',
         shadowOffset: {
             width: 0,
@@ -87,7 +87,8 @@ export const styles = StyleSheet.create({
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-        elevation: 5,
+        elevation: 2,
+        paddingBottom: 20
     },
     cardViewChart: {
         borderRadius: 30,

@@ -369,9 +369,9 @@ const bankInfoScreen = (props) => {
                                 onSubmitEditing={() => fourTextInputRef.current.focus()}
                                 onChangeText={(ifsccode) => ifsccodeCheck(ifsccode)}
                             />
-                            <TouchableOpacity>
+                            {/* <TouchableOpacity>
                                 <Feather name='search' size={20} color='#555555' style={{ marginRight: 10 }} />
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
                         </View>
 
                         <View style={{ marginLeft: 15, marginTop: 15 }}>
