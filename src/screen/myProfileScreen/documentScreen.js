@@ -172,9 +172,9 @@ const documentScreen = (props) => {
                     authenticateUser(user);
                     setloading(false);
                     if (Platform.OS === 'android') {
-                        ToastAndroid.show("Your Information Update", ToastAndroid.SHORT);
+                        ToastAndroid.show("Thank you your profile is been submitted for review", ToastAndroid.SHORT);
                     } else {
-                        alert('Your Information Update');
+                        alert('Thank you your profile is been submitted for review');
                     }
                     props.navigation.navigate(SCREEN.BANKINFOSCREEN);
                 }

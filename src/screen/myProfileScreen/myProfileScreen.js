@@ -58,10 +58,6 @@ const myProfileScreen = (props) => {
         }
     }
 
-    useEffect(() => {
-        // getUserData();
-    }, []);
-
     //get notification count
     const getNotification = async (id) => {
         try {

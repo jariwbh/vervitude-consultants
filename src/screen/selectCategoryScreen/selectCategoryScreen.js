@@ -49,6 +49,7 @@ function selectCategoryScreen(props) {
                     });
                 }
             });
+            console.log(`category`, category);
             setselectCategory(category);
         }
     }
@@ -87,7 +88,7 @@ function selectCategoryScreen(props) {
                 <View>
                     <TouchableOpacity onPress={() => onTouchSelectCategory({ item })}>
                         <Image source={{ uri: item.property.image[0].attachment }}
-                            style={{ width: 70, height: 70, borderRadius: 10 }} />
+                            style={{ width: 70, height: 70, borderRadius: 10, borderWidth: 0.2, borderColor: '#555555' }} />
                     </TouchableOpacity>
                     <Text style={{ fontSize: 12, textAlign: 'center', textTransform: 'uppercase', marginTop: 5, color: '#000000' }}>{item.property.skillcategory}</Text>
                 </View>
@@ -97,7 +98,13 @@ function selectCategoryScreen(props) {
 
     //category box touch to add data
     const onTouchSelectCategory = (item) => {
-        setselectCategory([...selectCategory, item]);
+        let filteredLists = [];
+        if (item) {
+            filteredLists = selectCategory.filter(x => x.item._id == item.item._id);
+        }
+        if (filteredLists.length == 0) {
+            setselectCategory([...selectCategory, item]);
+        }
     }
 
     //selected category to remove data of array list

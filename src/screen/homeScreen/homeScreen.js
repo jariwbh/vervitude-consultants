@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, SafeAreaView, Dimensions, TouchableOpacity, ScrollView, BackHandler, FlatList, Modal, Switch, Image, Platform, ToastAndroid } from 'react-native';
+import {
+    Text, View, SafeAreaView, Dimensions, TouchableOpacity, ScrollView, BackHandler,
+    FlatList, Modal, Switch, Image, Platform, ToastAndroid, RefreshControl
+} from 'react-native';
 import { MYPROFILESCREEN, CHATHISTORYSCREEN } from '../../context/screen/screenName';
 import { getCategory } from '../../services/HomeService/HomeService';
 import MenuButton from '../../components/MenuButton/MenuButton';
@@ -17,6 +20,7 @@ import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import PushNotification from "react-native-push-notification";
 import { getDashboard, getDashboardFilter } from "../../services/HomeService/HomeService";
 import moment from 'moment';
+import { useFocusEffect } from '@react-navigation/native';
 
 const data = {
     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Sat', 'Sun'],
@@ -78,13 +82,14 @@ const homeScreen = (props) => {
     const [dashboardtopEarner, setDashboardtopEarner] = useState([]);
     const [dashboardView, setDashboardView] = useState(null);
     const [filterSelectValue, setfilterSelectValue] = useState(null);
+    const [refreshing, setrefreshing] = useState(false);
+
     let userID;
 
     useEffect(() => {
         setFilterList(filterListData);
         getCategoryList();
         getUserData();
-        getDashboardView();
         props.navigation.addListener('focus', e => {
             BackHandler.addEventListener('hardwareBackPress', handleBackButton);
         });
@@ -95,7 +100,26 @@ const homeScreen = (props) => {
     }, []);
 
     useEffect(() => {
-    }, [selectedItem, userDetails, allCategorytoggle, loading, filterList, filterSelectValue, selectCategory, online, dashboardView]);
+    }, [selectedItem, userDetails, allCategorytoggle, loading, filterList, filterSelectValue, selectCategory, online, dashboardView, refreshing]);
+
+    useFocusEffect(
+        React.useCallback(() => {
+            getDashboardView();
+        }, [])
+    );
+
+    const wait = (timeout) => {
+        return new Promise(resolve => {
+            setTimeout(resolve, timeout);
+        });
+    }
+
+    //refresh function
+    const onRefresh = () => {
+        setrefreshing(true);
+        getDashboardView();
+        wait(3000).then(() => setrefreshing(false));
+    }
 
     //get dashboard view data
     const getDashboardView = async () => {
@@ -438,7 +462,8 @@ const homeScreen = (props) => {
 
     return (
         <SafeAreaView style={STYLES.styles.container}>
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView showsVerticalScrollIndicator={false}
+                refreshControl={<RefreshControl refreshing={refreshing} title="Pull to refresh" tintColor="#5AC8FA" titleColor="#5AC8FA" colors={["#5AC8FA"]} onRefresh={() => onRefresh()} />}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 30 }}>
                     <View style={{ justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center' }}>
                         <MenuButton onPress={() => { props.navigation.navigate(MYPROFILESCREEN) }} />
@@ -528,15 +553,15 @@ const homeScreen = (props) => {
                                         <View style={{ marginTop: 15, flexDirection: 'row' }}>
                                             <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
                                         </View>
-                                        <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center', marginLeft: 15, marginTop: 15 }}>
+                                        <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center', marginLeft: -40, marginTop: 15 }}>
                                             <View style={{ flexDirection: 'row' }}>
                                                 <View style={{ backgroundColor: '#5AC8FA', width: 22, height: 22, marginLeft: -40, marginRight: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 20 }}>
                                                     <Text style={{ fontSize: 14, color: '#FFFFFF' }}>{index + 1}</Text>
                                                 </View>
                                                 <Text style={{ fontSize: 16, color: '#555555' }}>{item.fullname.split(' ')[0]}</Text>
                                             </View>
-                                            <Text style={{ fontSize: 16, color: '#5AC8FA' }}>+0%</Text>
-                                            <Text style={{ fontSize: 16, color: '#04DE71' }}>₹ {item.totalearnings}+</Text>
+                                            {/* <Text style={{ fontSize: 16, color: '#5AC8FA' }}>+0%</Text> */}
+                                            <Text style={{ fontSize: 16, color: item.totalearnings == 0 ? '#555555' : '#04DE71' }}>₹ {item.totalearnings}+</Text>
                                         </View>
                                     </>
                                 )}
