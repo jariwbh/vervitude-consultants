@@ -79,7 +79,7 @@ const homeScreen = (props) => {
     const [online, setOnlineUser] = useState(false);
     const [allCategorytoggle, setallCategorytoggle] = useState(false);
     const [filterList, setFilterList] = useState(null);
-    const [dashboardtopEarner, setDashboardtopEarner] = useState([]);
+    const [dashboardtopEarner, setDashboardtopEarner] = useState(null);
     const [dashboardView, setDashboardView] = useState(null);
     const [filterSelectValue, setfilterSelectValue] = useState(null);
     const [refreshing, setrefreshing] = useState(false);
@@ -100,7 +100,8 @@ const homeScreen = (props) => {
     }, []);
 
     useEffect(() => {
-    }, [selectedItem, userDetails, allCategorytoggle, loading, filterList, filterSelectValue, selectCategory, online, dashboardView, refreshing]);
+    }, [selectedItem, userDetails, allCategorytoggle, loading, filterList, filterSelectValue,
+        selectCategory, online, dashboardView, refreshing, dashboardtopEarner]);
 
     useFocusEffect(
         React.useCallback(() => {
@@ -538,14 +539,12 @@ const homeScreen = (props) => {
                             />
                         </View>
                     </View> */}
-
-                    {dashboardtopEarner && dashboardtopEarner != null || dashboardtopEarner.length <= 0
-                        ?
-                        <View style={STYLES.styles.cardViewlastHistory}>
-                            <View>
-                                <Text style={{ marginTop: 20, marginLeft: 40, fontWeight: 'bold', fontSize: 16, color: '#555555' }}>Top Earners Of the Week</Text>
-                            </View>
-
+                    <View style={STYLES.styles.cardViewlastHistory}>
+                        <View>
+                            <Text style={{ marginTop: 20, marginLeft: 40, fontWeight: 'bold', fontSize: 16, color: '#555555' }}>Top Earners Of the Week</Text>
+                        </View>
+                        {(dashboardtopEarner && dashboardtopEarner != null)
+                            ?
                             <FlatList
                                 showsVerticalScrollIndicator={false}
                                 renderItem={({ item, index }) => (
@@ -558,18 +557,20 @@ const homeScreen = (props) => {
                                                 <View style={{ backgroundColor: '#5AC8FA', width: 22, height: 22, marginLeft: -40, marginRight: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 20 }}>
                                                     <Text style={{ fontSize: 14, color: '#FFFFFF' }}>{index + 1}</Text>
                                                 </View>
-                                                <Text style={{ fontSize: 16, color: '#555555' }}>{item.fullname.split(' ')[0]}</Text>
+                                                <Text style={{ fontSize: 16, color: '#555555', textTransform: 'capitalize' }}>{item.fullname.split(' ')[0]}</Text>
                                             </View>
                                             {/* <Text style={{ fontSize: 16, color: '#5AC8FA' }}>+0%</Text> */}
                                             <Text style={{ fontSize: 16, color: item.totalearnings == 0 ? '#555555' : '#04DE71' }}>₹ {item.totalearnings}+</Text>
                                         </View>
                                     </>
                                 )}
-                                data={dashboardtopEarner && dashboardtopEarner}
+                                data={dashboardtopEarner}
                                 keyExtractor={(item, index) => index.toString()}
                             />
-                        </View>
-                        : null}
+                            :
+                            <Text style={{ textAlign: 'center', fontSize: 16, color: '#747474', marginTop: 20 }}>Top Earners Not available</Text>
+                        }
+                    </View>
                 </View>
                 <View style={{ marginBottom: 50 }} />
             </ScrollView>

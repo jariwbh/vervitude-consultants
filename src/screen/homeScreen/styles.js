@@ -79,7 +79,7 @@ export const styles = StyleSheet.create({
         borderRadius: 30,
         marginTop: 15,
         width: WIDTH - 20,
-        // height: 600,
+        //height: 600,
         backgroundColor: '#FFFFFF',
         shadowOffset: {
             width: 0,
