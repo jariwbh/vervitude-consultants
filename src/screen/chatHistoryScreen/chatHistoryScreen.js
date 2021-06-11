@@ -43,7 +43,7 @@ function chatHistoryScreen(props) {
         }, [])
     );
 
-    useEffect(() => { }, [refreshing, recentChat, loading, currentUserId])
+    useEffect(() => { }, [refreshing, recentChat, loading, currentUserId]);
 
     const wait = (timeout) => {
         return new Promise(resolve => {
@@ -87,16 +87,26 @@ function chatHistoryScreen(props) {
                 </View>
 
                 <View style={{ flexDirection: 'row', justifyContent: 'flex-start', marginTop: -5 }}>
-                    <Image source={{ uri: item.contextid.profilepic ? item.contextid.profilepic : defaultProfile }}
+                    <Image source={{ uri: item && item.contextid && item.contextid.profilepic ? item.contextid.profilepic : defaultProfile }}
                         style={{ width: 70, height: 70, borderRadius: 100, marginLeft: 25 }} />
-                    {item.contextid.property.live ?
+                    {item && item.contextid && item.contextid.property.live ?
                         <View style={{ marginLeft: -20, height: 15, width: 15, backgroundColor: '#5AC8FA', borderColor: '#5Ac8FA', borderRadius: 100, borderWidth: 1 }}></View>
                         : <View style={{ marginLeft: -20, height: 15, width: 15, backgroundColor: '#EEEEEE', borderColor: '#000000', borderRadius: 100, borderWidth: 1 }}></View>
                     }
                     <View style={{ flexDirection: 'row', justifyContent: 'center', marginHorizontal: 30 }}>
-                        <View style={{ justifyContent: 'center', alignItems: 'center', marginLeft: 0 }}>
-                            <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#000000', textTransform: 'capitalize' }}>{item && item.contextid.fullname.split(' ')[0]}</Text>
-                            <Text style={{ fontSize: 14, color: '#555555' }}>+ ₹ 00.00</Text>
+                        <View style={{ justifyContent: 'flex-start', alignItems: 'flex-start', marginTop: 8 }}>
+                            <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#000000', textTransform: 'capitalize' }}>{item && item.contextid && item.contextid.fullname.split(' ')[0]}</Text>
+                            {item.property && item.property.totalcost ?
+                                <Text style={{ fontSize: 14, color: '#04DE71', justifyContent: 'flex-start', alignItems: 'flex-start' }}>+ ₹ {item.property.totalcost}</Text>
+                                :
+                                item.property.startat
+                                    ?
+                                    <Text style={{ fontSize: 14, color: '#04DE71', justifyContent: 'flex-start', alignItems: 'flex-start' }}>+ ₹
+                                        {((item.property.consultantid.property.chargespermin) * (moment.utc(moment(moment(), "HH:mm:ss").diff(moment(item.property.startat, "HH:mm:ss"))).format("mm")) / 2)}
+                                    </Text>
+                                    :
+                                    <Text style={{ fontSize: 14, color: '#555555' }}>+ ₹ 0.00</Text>
+                            }
                         </View>
                     </View>
                 </View>

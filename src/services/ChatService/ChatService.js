@@ -6,13 +6,13 @@ const recentChatService = (id) => {
             'searchfield': 'formid',
             'searchvalue': '608a5d7ebbeb5b2b03571f2c',
             'criteria': 'eq',
-            'datatype': 'text'
+            'datatype': 'objectid'
         },
         {
             'searchfield': 'property.consultantid',
             'searchvalue': `${id}`,
             'criteria': 'eq',
-            'datatype': 'text'
+            'datatype': 'objectid'
         }
         ], "formname": "livechat"
     }
