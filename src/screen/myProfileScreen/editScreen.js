@@ -1,23 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import {
-    View, Text, Image, ImageBackground, SafeAreaView, TouchableOpacity, TextInput,
-    ScrollView, ToastAndroid, Platform, Keyboard, FlatList
+    View, Text, Image, SafeAreaView, TouchableOpacity, TextInput,
+    ScrollView, ToastAndroid, Platform, Keyboard, FlatList, Modal
 } from 'react-native';
-import { UserPatchService, UserUpdateService } from '../../services/UserService/UserService';
+import { SendEmailService, SendSmsService } from '../../services/SendEmailandSmsService/SendEmailandSmsService';
+import { UserReviewService } from '../../services/UserService/UserService';
 import AsyncStorage from '@react-native-community/async-storage';
 import MyPermissionController from '../../helpers/appPermission';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as SCREEN from '../../context/screen/screenName';
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import Entypo from 'react-native-vector-icons/Entypo';
 import Feather from 'react-native-vector-icons/Feather';
 import { AUTHUSER } from '../../context/actions/type';
+import Loading from '../../components/loader/Loading';
 import ImagePicker from 'react-native-image-picker';
 import Loader from '../../components/loader/index';
 import RNFetchBlob from 'rn-fetch-blob';
 import * as STYLE from './styles';
+import OtpInputs from 'react-native-otp-inputs';
 
 const editScreen = (props) => {
     const [loading, setloading] = useState(false);
+    const [btnloading, setBtnloading] = useState(false);
+    const [verifyloading, setVerifyloading] = useState(false);
     const [userDetails, setuserDetails] = useState(null);
     const [first_name, setfirst_name] = useState(null);
     const [first_nameError, setfirst_nameError] = useState(null);
@@ -34,6 +39,18 @@ const editScreen = (props) => {
     const [about, setabout] = useState(null);
     const [aboutError, setaboutError] = useState(null);
     const [brand, setbrand] = useState([]);
+    const [oldEmail, setOldEmail] = useState(null);
+    const [oldMobile, setOldMobile] = useState(null);
+
+    const [verifyOtpNumber, setverifyOtpNumber] = useState(null);
+    const [inputOtpNumber, setinputOtpNumber] = useState(null);
+    const [inputOtpNumberError, setinputOtpNumberError] = useState(null);
+    const [showModel, setShowModel] = useState(false);
+    const [username, setUsername] = useState(null);
+    const [usererror, setUsererror] = useState(null);
+    const [sendEmailbtnDisable, setSendEmailbtnDisable] = useState(false);
+    const [verifybtnDisable, setVerifybtnDisable] = useState(true);
+
     const secondTextInputRef = React.createRef();
     const thirdTextInputRef = React.createRef();
     const fourTextInputRef = React.createRef();
@@ -43,7 +60,8 @@ const editScreen = (props) => {
 
     useEffect(() => {
     }, [loading, first_name, last_name, mobile, first_nameError, last_nameError, mobileError, primaryemailError,
-        locationError, aboutError, primaryemail, usertag, usertagError, location, about, brand, userDetails])
+        locationError, aboutError, primaryemail, usertag, usertagError, location, about, brand, userDetails, btnloading,
+        verifyOtpNumber, inputOtpNumber, showModel, verifyloading, inputOtpNumberError])
 
     //check first name validation
     const first_nameCheck = (first_name) => {
@@ -150,7 +168,9 @@ const editScreen = (props) => {
             setusertag(UserInfo.property.usertag);
             setlocation(UserInfo.property.location);
             setabout(UserInfo.property.about);
-            setbrand([...UserInfo.property.add_brand, { add: true }]);
+            setbrand([...UserInfo.property.add_brand, { add: true, change: false }]);
+            setOldEmail(UserInfo.property.primaryemail);
+            setOldMobile(UserInfo.property.mobile);
         }
     }
 
@@ -218,9 +238,10 @@ const editScreen = (props) => {
                                     return add === false
                                 });
                             }
-                            setbrand([...filteredLists, photoObj, { add: true }]);
+                            setbrand([...filteredLists, photoObj, { add: true, change: true }]);
                         } else if (field === 'profilepic') {
-                            UpdateProfileService(data.url);
+                            let image = { url: data.url, change: true }
+                            UpdateProfileService(image);
                         }
                     }
                 }).catch(error => {
@@ -243,83 +264,39 @@ const editScreen = (props) => {
         handlePicker(field);
     }
 
-    //UPDATE PROFILE INFOMATION API CALL
-    const UpdateUserInfo = async () => {
-        if (!first_name || !last_name || !mobile || !primaryemail || !usertag || !location || !about) {
-            setfirst_name(first_name);
-            setlast_name(last_name);
-            setmobile(mobile);
-            setprimaryemail(primaryemail);
-            setusertag(usertag);
-            setlocation(location);
-            about(about)
-            return;
-        }
-
-        setloading(true);
-        let user = userDetails;
-        let filteredLists = [];
-        if (brand) {
-            filteredLists = brand.filter(({ add = false }) => {
-                return add === false
-            });
-        }
-        user.property.first_name = first_name;
-        user.property.last_name = last_name;
-        user.property.mobile = mobile;
-        user.property.primaryemail = primaryemail;
-        user.property.usertag = usertag;
-        user.property.location = location;
-        user.property.about = about;
-        user.property.add_brand = filteredLists;
-
-        try {
-            await UserUpdateService(user).then(response => {
-                if (response.data != null && response.data != 'undefind' && response.status == 200) {
-                    authenticateUser(user);
-                    setloading(false);
-                    if (Platform.OS === 'android') {
-                        ToastAndroid.show("Thank you your profile is been submitted for review", ToastAndroid.SHORT);
-                    } else {
-                        alert('Thank you your profile is been submitted for review');
-                    }
-                    props.navigation.navigate(SCREEN.DOCUMENTSCREEN);
-                }
-            })
-        }
-        catch (error) {
-            console.log(`error`, error);
-            setloading(false);
-            if (Platform.OS === 'android') {
-                ToastAndroid.show("Your Information Not Update", ToastAndroid.SHORT);
-            } else { alert('Your Information Not Update') }
-        }
-    }
-
     //UPDATE PROFILE PICTURE API CALL
     const UpdateProfileService = async (profilepic) => {
-        let user = userDetails;
-        user.profilepic = profilepic;
-        let userpic = { profilepic: profilepic }
-        try {
-            await UserPatchService(userDetails._id, userpic).then(response => {
-                if (response.data != null && response.data != 'undefind' && response.status == 200) {
-                    authenticateUser(user);
-                    getUserDetails();
-                    if (Platform.OS === 'android') {
-                        ToastAndroid.show("Your Profile Update!", ToastAndroid.SHORT);
-                    } else {
-                        alert('Your Profile Update!');
-                    }
+        if (profilepic.change) {
+            let body = {
+                contextid: userDetails._id,
+                onModel: 'User',
+                formid: '6051da7ac49da515d8175b20',
+                property: {
+                    profilepic: profilepic.url
                 }
-            })
-        }
-        catch (error) {
-            console.log(`error`, error);
-            setloading(false);
+            }
+            try {
+                await UserReviewService(body).then(response => {
+                    if (response.data != null && response.data != 'undefind' && response.status == 200) {
+                        if (Platform.OS === 'android') {
+                            ToastAndroid.show("Thank you your profile is been submitted for review", ToastAndroid.SHORT);
+                        } else {
+                            alert('Thank you your profile is been submitted for review');
+                        }
+                    }
+                })
+            }
+            catch (error) {
+                // console.log(`error`, error);
+                setloading(false);
+                if (Platform.OS === 'android') {
+                    ToastAndroid.show("Your Profile Not Update", ToastAndroid.SHORT);
+                } else { alert('Your Profile Not Update') }
+            }
+        } else {
             if (Platform.OS === 'android') {
-                ToastAndroid.show("Your Profile Not Update!", ToastAndroid.SHORT);
-            } else { alert('Your Profile Not Update!') }
+                ToastAndroid.show("Your Profile Not Update", ToastAndroid.SHORT);
+            } else { alert('Your Profile Not Update') }
         }
     }
 
@@ -330,9 +307,12 @@ const editScreen = (props) => {
             filteredLists = brand.filter(x => x.originalfilename != item.originalfilename);
         }
         if (filteredLists.length == 0) {
-            filteredLists.push({ add: true })
+            filteredLists.push({ add: true, change: true })
         }
-        setbrand(filteredLists);
+        let nwefilteredLists = filteredLists.map(el => (
+            el.add === true ? { ...el, change: true } : el
+        ))
+        setbrand(nwefilteredLists);
     }
 
     //render Brand Photo 
@@ -347,15 +327,6 @@ const editScreen = (props) => {
             </View>
             :
             <View style={{ paddingHorizontal: 15, paddingVertical: 40 }}>
-                {/* <ImageBackground source={{ uri: item.attachment }} style={{
-                    width: 80, height: 80, borderRadius: 100, borderColor: '#AAAAAA', borderWidth: 1
-                }} >
-                    <TouchableOpacity
-                        onPress={() => onPressRemoveBrand(item)}
-                        style={{ backgroundColor: '#FFFFFF', borderRadius: 100, marginLeft: 55 }}>
-                        <AntDesign name='closecircleo' size={20} color='#262626' style={{ backgroundColor: '#ffffff', borderRadius: 100 }} />
-                    </TouchableOpacity>
-                </ImageBackground> */}
                 <Image source={{ uri: item.attachment }}
                     style={{ width: 80, height: 80, borderRadius: 100, borderColor: '#AAAAAA', borderWidth: 1 }} />
                 <TouchableOpacity
@@ -365,6 +336,235 @@ const editScreen = (props) => {
                 </TouchableOpacity>
             </View>
     );
+
+    //UPDATE PROFILE INFOMATION API CALL
+    const UpdateUserInfo = async () => {
+        try {
+            if (!first_name || !last_name || !mobile || !primaryemail || !usertag || !location || !about) {
+                setfirst_name(first_name);
+                setlast_name(last_name);
+                setmobile(mobile);
+                setprimaryemail(primaryemail);
+                setusertag(usertag);
+                setlocation(location);
+                about(about);
+                return;
+            }
+
+            if (oldMobile != mobile && oldEmail != primaryemail) {
+                alert('For the Security of the account you can only change one contact information(email or phone number) at a time');
+                return;
+            }
+
+            if (oldMobile != mobile || oldEmail != primaryemail) {
+                setShowModel(true);
+                if (oldMobile != mobile) {
+                    setUsername(mobile);
+                }
+                if (oldEmail != primaryemail) {
+                    setUsername(primaryemail);
+                }
+                return;
+            }
+            let filtercheck = [];
+            if (brand) {
+                filtercheck = brand.filter(x => x.change === true);
+            }
+
+            if (userDetails.property.first_name != first_name || userDetails.property.last_name != last_name || userDetails.property.mobile != mobile
+                || userDetails.property.primaryemail != primaryemail || userDetails.property.usertag != usertag || userDetails.property.location != location
+                || userDetails.property.about != about || filtercheck && filtercheck.length != 0) {
+                CheckAndUpdateUserInfo();
+            }
+        } catch (error) {
+            console.log(`error`, error);
+        }
+    }
+
+    //SEND OTP IN BUTTON ONPRESS TO PROCESS
+    const onPressSubmitOTP = async () => {
+        const verifyOtpNum = Math.floor(1000 + Math.random() * 9000);
+        setverifyOtpNumber(verifyOtpNum);
+        let mobilebody;
+        let emailbody;
+        if (mobile) {
+            mobilebody = {
+                "messagetype": "SMS",
+                "message": {
+                    "content": `${verifyOtpNum} is the OTP for accessing on E-Quest Counsulting Solutions Pvt. Ltd. Valid till 5 Minutes.Do not share this with anyone.`,
+                    "to": [mobile],
+                    "subject": "Profile Verification OTP"
+                }
+            }
+        }
+
+        if (primaryemail) {
+            emailbody = {
+                "messagetype": "EMAIL",
+                "message": {
+                    "content": `${verifyOtpNum} is the OTP for accessing on E-Quest Counsulting Solutions Pvt. Ltd. Valid till 5 Minutes.Do not share this with anyone.`,
+                    "to": [primaryemail],
+                    "subject": "Profile Verification OTP"
+                }
+            }
+        }
+        setBtnloading(true);
+        try {
+            if (primaryemail) {
+                const response = await SendEmailService(emailbody);
+                if (response.data != 'undefind' && response.status == 200) {
+                    if (Platform.OS === 'android') {
+                        ToastAndroid.show('OTP Sending', ToastAndroid.LONG);
+                    } else {
+                        alert('OTP Sending');
+                    }
+                    setBtnloading(false);
+                }
+            }
+
+            if (mobile) {
+                const response1 = await SendSmsService(mobilebody);
+                if (response1.data != 'undefind' && response1.status == 200) {
+                    if (Platform.OS === 'android') {
+                        ToastAndroid.show('OTP Sending', ToastAndroid.LONG);
+                    } else {
+                        alert('OTP Sending');
+                    }
+                    setBtnloading(false);
+                }
+            }
+        }
+        catch (error) {
+            console.log(`error`, error);
+            setBtnloading(false);
+            if (Platform.OS === 'android') {
+                ToastAndroid.show('OTP Sending Problem', ToastAndroid.LONG);
+            } else {
+                alert('OTP Sending Problem');
+            }
+        };
+    }
+
+    //user input Code set
+    const handleChange = (code) => {
+        setinputOtpNumber(code);
+        if (Number(code) === Number(verifyOtpNumber)) {
+            setVerifybtnDisable(false);
+        }
+    }
+
+    //OTP verify Button function
+    const otpVerify = async () => {
+        if (!username) {
+            setUsererror('error');
+            return;
+        }
+        if (!inputOtpNumber) {
+            setinputOtpNumberError('error');
+            return;
+        }
+        setVerifyloading(true);
+        try {
+            if (Number(inputOtpNumber) === Number(verifyOtpNumber)) {
+                setVerifyloading(false);
+                CheckAndUpdateUserInfo();
+            } else {
+                setVerifyloading(false);
+                setinputOtpNumber(null);
+                if (Platform.OS === 'android') {
+                    ToastAndroid.show('OTP not Match!', ToastAndroid.LONG)
+                } else {
+                    alert('OTP not Match!');
+                }
+            }
+        }
+        catch (error) {
+            setVerifyloading(false);
+            if (Platform.OS === 'android') {
+                ToastAndroid.show('OTP not Match!', ToastAndroid.LONG);
+            } else {
+                alert('OTP not Match!');
+            }
+        };
+    }
+
+    //UPDATE PROFILE INFOMATION API CALL
+    const CheckAndUpdateUserInfo = async () => {
+        setloading(false);
+        let filteredLists = [];
+        let filtercheck = [];
+        if (brand) {
+            filteredLists = brand.filter(({ add = false }) => {
+                return add === false
+            });
+        }
+
+        let body = {
+            contextid: userDetails._id,
+            onModel: 'User',
+            formid: '6051da7ac49da515d8175b20',
+            property: {}
+        }
+
+        if (userDetails.property.first_name != first_name) {
+            body.property.first_name = first_name;
+        }
+        if (userDetails.property.last_name != last_name) {
+            body.property.last_name = last_name;
+        }
+        if (userDetails.property.mobile != mobile) {
+            body.property.mobile = mobile;
+        }
+        if (userDetails.property.primaryemail != primaryemail) {
+            body.property.primaryemail = primaryemail;
+        }
+        if (userDetails.property.usertag != usertag) {
+            body.property.usertag = usertag;
+        }
+        if (userDetails.property.location != location) {
+            body.property.location = location;
+        }
+        if (userDetails.property.about != about) {
+            body.property.about = about;
+        }
+        if (brand) {
+            filtercheck = brand.filter(x => x.change === true);
+            if (filtercheck && filtercheck.length != 0 && filtercheck[0].change == true) {
+                body.property.add_brand = filteredLists;
+            }
+        }
+
+        if (body.property) {
+            if (userDetails.property.first_name != first_name || userDetails.property.last_name != last_name || userDetails.property.mobile != mobile
+                || userDetails.property.primaryemail != primaryemail || userDetails.property.usertag != usertag || userDetails.property.location != location
+                || userDetails.property.about != about || filtercheck && filtercheck.length != 0) {
+                try {
+                    await UserReviewService(body).then(response => {
+                        if (response.data != null && response.data != 'undefind' && response.status == 200) {
+                            setShowModel(false);
+                            setUsername(null);
+                            setUsererror(null);
+                            setinputOtpNumber(null);
+                            setloading(false);
+                            if (Platform.OS === 'android') {
+                                ToastAndroid.show("Thank you your profile is been submitted for review", ToastAndroid.SHORT);
+                            } else {
+                                alert('Thank you your profile is been submitted for review');
+                            }
+                            props.navigation.navigate(SCREEN.DOCUMENTSCREEN);
+                        }
+                    })
+                }
+                catch (error) {
+                    console.log(`error`, error);
+                    setloading(false);
+                    if (Platform.OS === 'android') {
+                        ToastAndroid.show("Your Information Not Update", ToastAndroid.SHORT);
+                    } else { alert('Your Information Not Update') }
+                }
+            }
+        }
+    }
 
     return (
         <SafeAreaView style={STYLE.Editstyles.container}>
@@ -548,21 +748,11 @@ const editScreen = (props) => {
                                 keyExtractor={(item, index) => index}
                             />
                         </View>
-
-                        {/* <View style={{ justifyContent: 'flex-start', flexDirection: 'row', marginTop: 15, marginLeft: 30 }}>
-                            <TouchableOpacity
-                                onPress={() => onChangeBrandPhoto('brand')}
-                                style={STYLE.Editstyles.brandstyle}>
-                                <Image source={require('../../assets/images/PLUS.png')} style={{ width: 80, height: 80, borderRadius: 100, borderColor: '#AAAAAA', borderWidth: 1 }} />
-                            </TouchableOpacity>
-                        </View> */}
-
                         <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 30 }}>
                             <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.DOCUMENTSCREEN) }} style={STYLE.Editstyles.generalinfitext}>
                                 <Text style={{ fontSize: 16, textAlign: 'center', color: '#FFFFFF' }}>Document Information</Text>
                             </TouchableOpacity>
                         </View>
-
                         <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
                             <TouchableOpacity onPress={() => { props.navigation.navigate(SCREEN.BANKINFOSCREEN) }} style={STYLE.Editstyles.generalinfitext}>
                                 <Text style={{ fontSize: 16, textAlign: 'center', color: '#FFFFFF' }}>Banking Information</Text>
@@ -573,6 +763,58 @@ const editScreen = (props) => {
                     <View style={{ marginBottom: 20 }}></View>
                 </View>
             </ScrollView>
+
+            {/* verify Profile Model model Pop */}
+            <Modal
+                animationType='slide'
+                transparent={true}
+                visible={showModel}
+                onRequestClose={() => setShowModel(false)}
+            >
+                <View style={{ alignItems: 'center', flex: 1 }}>
+                    <View style={{ position: 'absolute', bottom: 20 }}>
+                        <View style={STYLE.Editstyles.boxView}>
+                            <TouchableOpacity
+                                onPress={() => setShowModel(false)}
+                                style={STYLE.Editstyles.crossbtn}>
+                                <AntDesign name='closecircleo' size={28} color='#000000' style={{ backgroundColor: '#FFFFFF', borderRadius: 100 }} />
+                            </TouchableOpacity>
+                            <View style={{ marginTop: 20 }}>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <View pointerEvents="none" style={usererror == null ? STYLE.Editstyles.inputView2 : STYLE.Editstyles.inputErrorView2}>
+                                        <TextInput
+                                            defaultValue={username}
+                                            style={STYLE.Editstyles.TextInput}
+                                            placeholder='Username'
+                                            type='clear'
+                                            returnKeyType='done'
+                                            placeholderTextColor='#B5B5B5'
+                                            onSubmitEditing={() => Keyboard.dismiss()}
+                                            onChangeText={(email) => setEmail(email)}
+                                        />
+                                    </View>
+                                    <TouchableOpacity style={STYLE.Editstyles.otpBtndisable1} disabled={sendEmailbtnDisable} onPress={() => onPressSubmitOTP()}>
+                                        {btnloading == true ? <Loading /> : <Text style={STYLE.Editstyles.otpbtnText1}>Send OTP</Text>}
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={{ flex: 0.5, marginTop: 30, marginLeft: 5, marginRight: 5 }}>
+                                    <OtpInputs
+                                        handleChange={(code) => handleChange(code)}
+                                        numberOfInputs={4}
+                                        inputStyles={STYLE.Editstyles.inputView1}
+                                        defaultValue={inputOtpNumber}
+                                    />
+                                </View>
+                                <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 60 }}>
+                                    <TouchableOpacity style={verifybtnDisable ? STYLE.Editstyles.otpBtndisable : STYLE.Editstyles.otpBtn} disabled={verifybtnDisable} onPress={() => otpVerify()}>
+                                        {verifyloading == true ? <Loading /> : <Text style={STYLE.Editstyles.otpbtnText1}>Verify OTP</Text>}
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
             {loading ? <Loader /> : null}
         </SafeAreaView>
     )

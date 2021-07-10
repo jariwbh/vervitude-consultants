@@ -979,6 +979,11 @@
     "@types/yargs" "^15.0.0"
     chalk "^3.0.0"
 
+"@react-native-clipboard/clipboard@^1.8.2":
+  version "1.8.2"
+  resolved "https://registry.yarnpkg.com/@react-native-clipboard/clipboard/-/clipboard-1.8.2.tgz#454000db103442e830026566e3c2a436e9b3f781"
+  integrity sha512-IMUBqkwS6HyyHX1Dcu/yNqSYsgmI6UGilcUhD+qbH7tVQP8mX3k7hugr5K5IPzpGKaC1VSq4Lt7avy0jomHhLg==
+
 "@react-native-community/async-storage@^1.12.1":
   version "1.12.1"
   resolved "https://registry.yarnpkg.com/@react-native-community/async-storage/-/async-storage-1.12.1.tgz#25f821b4f6b13abe005ad67e47c6f1cee9f27b24"
@@ -5932,6 +5937,11 @@ react-native-lightbox@^0.8.1:
   integrity sha512-TFZA6iKEEHpAUIXjMTRb6vx0/9rHgEKy3ZBiRAy295PwldYg5c8opwnbyURLIl522ykeqhVx9uGdXjSMIowLvA==
   dependencies:
     prop-types "^15.7.2"
+
+react-native-otp-inputs@^7.0.3:
+  version "7.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-otp-inputs/-/react-native-otp-inputs-7.0.3.tgz#f341284ff5f865239c59f0aad008994e26b114cb"
+  integrity sha512-s+Bfcct2xpNSOqO9EiGjDh0RzwjDuiNW+nH41BzUz3ahL2iHo073RutHtb4wrvHX9r8f9aJNsfI9HtVCS80slA==
 
 react-native-parsed-text@0.0.22:
   version "0.0.22"

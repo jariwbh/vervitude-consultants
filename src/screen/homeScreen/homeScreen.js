@@ -79,11 +79,10 @@ const homeScreen = (props) => {
     const [online, setOnlineUser] = useState(false);
     const [allCategorytoggle, setallCategorytoggle] = useState(false);
     const [filterList, setFilterList] = useState(null);
-    const [dashboardtopEarner, setDashboardtopEarner] = useState(null);
+    const [dashboardtopEarner, setDashboardtopEarner] = useState([]);
     const [dashboardView, setDashboardView] = useState(null);
     const [filterSelectValue, setfilterSelectValue] = useState(null);
     const [refreshing, setrefreshing] = useState(false);
-
     let userID;
 
     useEffect(() => {
@@ -139,7 +138,7 @@ const homeScreen = (props) => {
 
         if (filterSelectValue === 'all') {
             console.log(`all`);
-            sDate = moment().format();
+            sDate = moment('1990-01-01').format();
             eDate = moment().format();
         } else if (filterSelectValue === 'yearly') {
             console.log(`yearly`);
@@ -480,7 +479,7 @@ const homeScreen = (props) => {
                             <View style={{ marginLeft: 30 }}>
                                 <TouchableOpacity style={STYLES.styles.oflineswitchBtn} onPress={() => { setOnline(false) }} >
                                     <Image source={require('../../assets/images/offlineicon.png')}
-                                        style={{ alignItems: 'center', height: 22, width: 22 }} />
+                                        style={{ alignItems: 'center', height: 22, width: 22, marginLeft: 10 }} />
                                     <Text style={STYLES.styles.oflineswitchBtnText}>Offline</Text>
                                 </TouchableOpacity>
                             </View>
@@ -499,26 +498,26 @@ const homeScreen = (props) => {
 
                 <View style={{ justifyContent: 'space-around', flexDirection: 'row', marginTop: 10 }}>
                     <View style={STYLES.styles.box1}>
-                        <Text style={STYLES.styles.boxtext}>₹ {dashboardView && dashboardView.data[0].totalearning}</Text>
+                        <Text style={STYLES.styles.boxtext}> {dashboardView && dashboardView.data[0].totalearning ? '₹' + dashboardView.data[0].totalearning : '--'}</Text>
                         <Text style={STYLES.styles.boxtextsecond}>Total Earning</Text>
                     </View>
                     <View style={STYLES.styles.box2}>
                         <View>
                             <Text style={STYLES.styles.boxuppertext}>Hrs</Text>
                         </View>
-                        <Text style={STYLES.styles.boxtext}>{dashboardView && dashboardView.data[0].totalhours}</Text>
+                        <Text style={STYLES.styles.boxtext}>{dashboardView && dashboardView.data[0].totalhours ? dashboardView.data[0].totalhours : '--'}</Text>
                         <Text style={STYLES.styles.boxtextsecond}>Total Hours</Text>
                     </View>
                 </View>
                 <View style={{ justifyContent: 'space-around', flexDirection: 'row', marginTop: 10 }}>
                     <View style={STYLES.styles.box3}>
                         <Text style={STYLES.styles.boxuppertext}>Users</Text>
-                        <Text style={STYLES.styles.boxtext}>{dashboardView && dashboardView.data[0].totalusers}</Text>
+                        <Text style={STYLES.styles.boxtext}>{dashboardView && dashboardView.data[0].totalusers ? dashboardView.data[0].totalusers : '--'}</Text>
                         <Text style={STYLES.styles.boxtextsecond}>Total Users</Text>
                     </View>
                     <View style={STYLES.styles.box4}>
                         <Text style={STYLES.styles.boxuppertext}>Rating</Text>
-                        <Text style={STYLES.styles.boxtext}>{dashboardView && dashboardView.data[0].totalratings}</Text>
+                        <Text style={STYLES.styles.boxtext}>{dashboardView && dashboardView.data[0].totalratings ? dashboardView.data[0].totalratings : '--'}</Text>
                         <Text style={STYLES.styles.boxtextsecond}>Total Rating</Text>
                     </View>
                 </View>
@@ -543,7 +542,7 @@ const homeScreen = (props) => {
                         <View>
                             <Text style={{ marginTop: 20, marginLeft: 40, fontWeight: 'bold', fontSize: 16, color: '#555555' }}>Top Earners Of the Week</Text>
                         </View>
-                        {(dashboardtopEarner && dashboardtopEarner != null)
+                        {(dashboardtopEarner == null) || (dashboardtopEarner && dashboardtopEarner.length < 0)
                             ?
                             <FlatList
                                 showsVerticalScrollIndicator={false}

@@ -33,4 +33,9 @@ const UserPatchService = (id, data) => {
     return Axios.patch('users/' + id, body);
 }
 
-export { UpdateUserService, UserListService, UserUpdateService, getByIdUserService, UserPatchService };
+const UserReviewService = (data) => {
+    const body = JSON.stringify(data);
+    return Axios.post('formdatas', body);
+}
+
+export { UpdateUserService, UserListService, UserUpdateService, getByIdUserService, UserPatchService, UserReviewService };

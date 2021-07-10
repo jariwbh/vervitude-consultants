@@ -62,8 +62,8 @@ export const styles = StyleSheet.create({
     filterBtn: {
         marginTop: 15,
         flexDirection: 'row',
-        width: WIDTH / 2 - 40,
-        height: 40,
+        width: WIDTH / 2 - 30,
+        height: 50,
         backgroundColor: '#5AC8FA',
         borderRadius: 14,
         alignItems: 'center',
@@ -181,7 +181,7 @@ export const styles = StyleSheet.create({
         borderRadius: 50,
         height: 35,
         alignItems: 'center',
-        justifyContent: 'space-evenly'
+        justifyContent: 'space-around'
     },
     onlineswitchBtnText: {
         color: '#5AC8FA',
@@ -195,11 +195,12 @@ export const styles = StyleSheet.create({
         borderRadius: 50,
         height: 35,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'space-around'
     },
     oflineswitchBtnText: {
         color: '#000000',
         fontSize: 14,
-        marginLeft: 15
+        marginLeft: 15,
+        marginRight: 10
     }
 })

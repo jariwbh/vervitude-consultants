@@ -12,9 +12,9 @@ export default class loginScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: null,
+            username: 'harshadjariwala1998@gmail.com',
             usererror: null,
-            password: null,
+            password: 'Pass@123',
             passworderror: null,
             loading: false,
             showModalVisible: false,
@@ -208,7 +208,7 @@ export default class loginScreen extends Component {
                     </View>
                     <View style={{ marginVertical: 80 }} />
                 </ScrollView>
-                { loading ? <Loader /> : null}
+                {loading ? <Loader /> : null}
                 {/* Help & Support model Pop */}
                 <Modal
                     animationType='slide'

@@ -281,6 +281,104 @@ export const Editstyles = StyleSheet.create({
         shadowOpacity: 3,
         shadowRadius: 2,
         elevation: 1,
+    },
+    boxView: {
+        height: 280,
+        width: WIDTH - 30,
+        shadowOpacity: 0.5,
+        shadowRadius: 1,
+        elevation: 4,
+        shadowOffset: {
+            height: 0,
+            width: 0,
+        },
+        borderRadius: 20,
+        backgroundColor: '#FFFFFF',
+        alignItems: 'center',
+        marginBottom: 20
+    },
+    crossbtn: {
+        marginLeft: (WIDTH + 230) / 2,
+        borderRadius: 100,
+        backgroundColor: '#FFFFFF'
+    },
+    inputView2: {
+        flexDirection: 'row',
+        backgroundColor: '#FFFFFF',
+        borderColor: '#555555',
+        width: WIDTH / 2 + 20,
+        height: 40,
+        marginLeft: 5,
+        borderWidth: 0.5
+    },
+    inputErrorView2: {
+        flexDirection: 'row',
+        backgroundColor: '#FFFFFF',
+        borderColor: '#FF0000',
+        width: WIDTH / 2 + 20,
+        height: 40,
+        marginLeft: 5,
+        borderWidth: 0.5
+    },
+    otpBtndisable1: {
+        flexDirection: 'row',
+        width: WIDTH / 3 - 20,
+        backgroundColor: '#5AC8FA',
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    otpbtnText1: {
+        color: '#FFFFFF',
+        fontSize: 16,
+        fontWeight: 'bold'
+    },
+    inputView1: {
+        marginTop: 25,
+        backgroundColor: '#FFFFFF',
+        borderColor: '#555555',
+        width: 40,
+        height: 40,
+        borderWidth: 0.5,
+        textAlign: 'center',
+        fontSize: 18
+    },
+    inputViewError1: {
+        marginTop: 25,
+        backgroundColor: '#FFFFFF',
+        borderColor: '#FF0000',
+        width: 40,
+        height: 40,
+        borderWidth: 0.5,
+        textAlign: 'center',
+        fontSize: 18
+    },
+    otpBtn: {
+        flexDirection: 'row',
+        width: WIDTH - 80,
+        backgroundColor: '#5AC8FA',
+        borderColor: '#5EA2FC',
+        borderRadius: 50,
+        borderWidth: 0.5,
+        height: 45,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    otpBtndisable: {
+        flexDirection: 'row',
+        width: WIDTH - 80,
+        backgroundColor: '#5AC8FA',
+        borderColor: '#5EA2FC',
+        borderRadius: 50,
+        borderWidth: 0.5,
+        height: 45,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    otpbtnText1: {
+        color: '#FFFFFF',
+        fontSize: 16,
+        fontWeight: 'bold'
     }
 })
 
