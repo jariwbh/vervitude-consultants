@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, SafeAreaView, TouchableOpacity, TextInput, ScrollView, Dimensions, Keyboard, FlatList, ToastAndroid, Platform } from 'react-native'
-import { UserPatchService, UserUpdateService } from "../../services/UserService/UserService";
+import { UserReviewService } from "../../services/UserService/UserService";
 import AsyncStorage from '@react-native-community/async-storage';
 import MyPermissionController from '../../helpers/appPermission';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -33,6 +33,12 @@ const bankInfoScreen = (props) => {
     const fourTextInputRef = React.createRef();
     const fifthTextInputRef = React.createRef();
 
+
+    useEffect(() => {
+        checkPermission();
+        getUserDetails();
+    }, []);
+
     useEffect(() => {
     }, [loading, nameofaccount, bankname, ifsccode, accounttype, nameofaccountError, banknameError, ifsccodeError,
         repeataccountnumberError, accountnumberError, accountnumber, repeataccountnumber, cancelcheque, userDetails])
@@ -54,7 +60,7 @@ const bankInfoScreen = (props) => {
             setaccounttype(UserInfo.property.accounttype);
             setaccountnumber(UserInfo.property.accountnumber);
             setrepeataccountnumber(UserInfo.property.repeataccountnumber);
-            setcancelcheque(UserInfo.property.cancelcheque[0].attachment);
+            setcancelcheque({ url: UserInfo.property.cancelcheque[0].attachment, change: false });
         }
     }
 
@@ -161,10 +167,11 @@ const bankInfoScreen = (props) => {
                 .then(data => {
                     setloading(false);
                     if (data && data.url) {
+                        let image = { url: data.url, change: true }
                         if (field === 'cancelcheque') {
-                            setcancelcheque(data.url);
+                            setcancelcheque(image);
                         } else if (field === 'profilepic') {
-                            UpdateProfileService(data.url);
+                            UpdateProfileService(image);
                         }
                     }
                 }).catch(error => {
@@ -189,27 +196,37 @@ const bankInfoScreen = (props) => {
 
     //UPDATE PROFILE PICTURE API CALL
     const UpdateProfileService = async (profilepic) => {
-        let user = userDetails;
-        user.profilepic = profilepic;
-        try {
-            const response = await UserUpdateService(user);
-            if (response.data != null && response.data != 'undefind' && response.status == 200) {
-                authenticateUser(user);
-                setloading(false);
-                getUserDetails();
-                if (Platform.OS === 'android') {
-                    ToastAndroid.show("Your Profile Update!", ToastAndroid.SHORT);
-                } else {
-                    alert('Your Profile Update!');
+        if (profilepic.change) {
+            let body = {
+                contextid: userDetails._id,
+                onModel: 'User',
+                formid: '6051da7ac49da515d8175b20',
+                property: {
+                    profilepic: profilepic.url
                 }
             }
-        }
-        catch (error) {
-            ///console.log(`error`, error);
-            setloading(false);
+            try {
+                await UserReviewService(body).then(response => {
+                    if (response.data != null && response.data != 'undefind' && response.status == 200) {
+                        if (Platform.OS === 'android') {
+                            ToastAndroid.show("Thank you your profile is been submitted for review", ToastAndroid.SHORT);
+                        } else {
+                            alert('Thank you your profile is been submitted for review');
+                        }
+                    }
+                })
+            }
+            catch (error) {
+                // console.log(`error`, error);
+                setloading(false);
+                if (Platform.OS === 'android') {
+                    ToastAndroid.show("Your Profile Not Update", ToastAndroid.SHORT);
+                } else { alert('Your Profile Not Update') }
+            }
+        } else {
             if (Platform.OS === 'android') {
-                ToastAndroid.show("Your Profile Not Update!", ToastAndroid.SHORT);
-            } else { alert('Your Profile Not Update!') }
+                ToastAndroid.show("Your Profile Not Update", ToastAndroid.SHORT);
+            } else { alert('Your Profile Not Update') }
         }
     }
 
@@ -231,34 +248,77 @@ const bankInfoScreen = (props) => {
             return;
         }
 
-        setloading(true);
-        let user = userDetails;
-        user.property.nameofaccount = nameofaccount;
-        user.property.bankname = bankname;
-        user.property.ifsccode = ifsccode;
-        user.property.accounttype = accounttype;
-        user.property.accountnumber = accountnumber;
-        user.property.repeataccountnumber = repeataccountnumber;
-        user.property.cancelcheque[0].attachment = cancelcheque;
-
         try {
-            await UserUpdateService(user).then(response => {
-                if (response.data != null && response.data != 'undefind' && response.status == 200) {
-                    authenticateUser(user);
-                    if (Platform.OS === 'android') {
-                        ToastAndroid.show("Thank you your profile is been submitted for review", ToastAndroid.SHORT);
-                    } else {
-                        alert('Thank you your profile is been submitted for review');
-                    }
-                    props.navigation.replace(SCREEN.MYPROFILESCREEN);
-                }
-            })
+            if (userDetails.property.nameofaccount != nameofaccount || userDetails.property.bankname != bankname || userDetails.property.ifsccode != ifsccode
+                || userDetails.property.accounttype != accounttype || userDetails.property.accountnumber != accountnumber
+                || userDetails.property.repeataccountnumber != repeataccountnumber || cancelcheque.change) {
+                CheckAndUpdateUserInfo();
+            }
         }
         catch (error) {
             setloading(false);
             if (Platform.OS === 'android') {
                 ToastAndroid.show("Your Information Not Update", ToastAndroid.SHORT);
             } else { alert('Your Information Not Update') }
+        }
+    }
+
+    //UPDATE PROFILE INFOMATION API CALL
+    const CheckAndUpdateUserInfo = async () => {
+        setloading(true);
+        let body = {
+            contextid: userDetails._id,
+            onModel: 'User',
+            formid: '6051da7ac49da515d8175b20',
+            property: {}
+        }
+
+        if (userDetails.property.nameofaccount != nameofaccount) {
+            body.property.nameofaccount = nameofaccount;
+        }
+        if (userDetails.property.bankname != bankname) {
+            body.property.bankname = bankname;
+        }
+        if (userDetails.property.ifsccode != ifsccode) {
+            body.property.ifsccode = ifsccode;
+        }
+        if (userDetails.property.accounttype != accounttype) {
+            body.property.accounttype = accounttype;
+        }
+        if (userDetails.property.accountnumber != accountnumber) {
+            body.property.accountnumber = accountnumber;
+        }
+        if (userDetails.property.repeataccountnumber != repeataccountnumber) {
+            body.property.repeataccountnumber = repeataccountnumber;
+        }
+        if (cancelcheque.change) {
+            body.property.cancelcheque = cancelcheque.url;
+        }
+        if (body.property) {
+            if (userDetails.property.nameofaccount != nameofaccount || userDetails.property.bankname != bankname || userDetails.property.ifsccode != ifsccode
+                || userDetails.property.accounttype != accounttype || userDetails.property.accountnumber != accountnumber
+                || userDetails.property.repeataccountnumber != repeataccountnumber || cancelcheque.change) {
+                try {
+                    await UserReviewService(body).then(response => {
+                        if (response.data != null && response.data != 'undefind' && response.status == 200) {
+                            setloading(false);
+                            if (Platform.OS === 'android') {
+                                ToastAndroid.show("Thank you your profile is been submitted for review", ToastAndroid.SHORT);
+                            } else {
+                                alert('Thank you your profile is been submitted for review');
+                            }
+                            props.navigation.navigate(SCREEN.MYPROFILESCREEN);
+                        }
+                    })
+                }
+                catch (error) {
+                    //  console.log(`error`, error);
+                    setloading(false);
+                    if (Platform.OS === 'android') {
+                        ToastAndroid.show("Your Information Not Update", ToastAndroid.SHORT);
+                    } else { alert('Your Information Not Update') }
+                }
+            }
         }
     }
 
@@ -269,11 +329,6 @@ const bankInfoScreen = (props) => {
             setaccounttype(type);
         }
     }
-
-    useEffect(() => {
-        checkPermission();
-        getUserDetails();
-    }, []);
 
     return (
         <SafeAreaView style={STYLE.Bankstyles.container}>
@@ -428,7 +483,7 @@ const bankInfoScreen = (props) => {
                             {
                                 cancelcheque ?
                                     <View>
-                                        <Image source={{ uri: cancelcheque }}
+                                        <Image source={{ uri: cancelcheque.url }}
                                             style={{ width: WIDTH - 60, height: 160, resizeMode: 'stretch' }} />
                                         <TouchableOpacity
                                             onPress={() => onChangePhoto('cancelcheque')}
@@ -451,10 +506,10 @@ const bankInfoScreen = (props) => {
                 </View>
                 <View style={{ marginBottom: 20 }}></View>
             </ScrollView>
-            { loading ? <Loader /> : null}
+            {loading ? <Loader /> : null}
         </SafeAreaView>
     )
 }
 
-export default bankInfoScreen
+export default bankInfoScreen;
 

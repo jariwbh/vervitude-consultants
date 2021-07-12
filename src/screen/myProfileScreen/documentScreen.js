@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, SafeAreaView, TouchableOpacity, TextInput, ScrollView, Dimensions, ToastAndroid, Platform } from 'react-native';
-import { UserPatchService, UserUpdateService } from "../../services/UserService/UserService";
+import { UserReviewService } from "../../services/UserService/UserService";
 import MyPermissionController from '../../helpers/appPermission';
 import AsyncStorage from '@react-native-community/async-storage';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -25,6 +25,15 @@ const documentScreen = (props) => {
     const [backaadharcard, setbackaadharcard] = useState(null);
     const secondTextInputRef = React.createRef();
 
+    useEffect(() => {
+        checkPermission();
+        getUserDetails();
+    }, []);
+
+    useEffect(() => {
+    }, [loading, pancardnumber, pancardimage, aadharcardnumber, frontaadharcard,
+        backaadharcard, aadharcardnumberError, pancardnumberError, userDetails])
+
     //get AsyncStorage current user Details
     const getUserDetails = async () => {
         //get AsyncStorage current user Details
@@ -37,16 +46,12 @@ const documentScreen = (props) => {
             var UserInfo = JSON.parse(getUser);
             setuserDetails(UserInfo);
             setpancardnumber(UserInfo.property.pancardnumber);
-            setpancardimage(UserInfo.property.pancardimage[0].attachment);
+            setpancardimage({ url: UserInfo.property.pancardimage[0].attachment, change: false });
             setaadharcardnumber(UserInfo.property.aadharcardnumber);
-            setfrontaadharcard(UserInfo.property.frontaadharcard[0].attachment);
-            setbackaadharcard(UserInfo.property.backaadharcard[0].attachment);
+            setfrontaadharcard({ url: UserInfo.property.frontaadharcard[0].attachment, change: false });
+            setbackaadharcard({ url: UserInfo.property.backaadharcard[0].attachment, change: false });
         }
     }
-
-    useEffect(() => {
-    }, [loading, pancardnumber, pancardimage, aadharcardnumber, frontaadharcard,
-        backaadharcard, aadharcardnumberError, pancardnumberError, userDetails])
 
     //REPLACE AND ADD LOCAL STORAGE FUNCTION
     const authenticateUser = (user) => {
@@ -84,14 +89,15 @@ const documentScreen = (props) => {
                 .then(data => {
                     setloading(false);
                     if (data && data.url) {
+                        let image = { url: data.url, change: true };
                         if (field === 'pancardnumberfont') {
-                            setpancardimage(data.url)
+                            setpancardimage(image)
                         } else if (field === 'aadharnumberfont') {
-                            setfrontaadharcard(data.url)
+                            setfrontaadharcard(image)
                         } else if (field === 'aadharnumberback') {
-                            setbackaadharcard(data.url)
+                            setbackaadharcard(image)
                         } else if (field === 'profilepic') {
-                            UpdateProfileService(data.url);
+                            UpdateProfileService(image);
                         }
                     }
                 }).catch(error => {
@@ -116,75 +122,113 @@ const documentScreen = (props) => {
 
     //UPDATE PROFILE PICTURE API CALL
     const UpdateProfileService = async (profilepic) => {
-        let user = userDetails;
-        user.profilepic = profilepic;
-        let userpic = { profilepic: profilepic }
-        try {
-            const response = await UserPatchService(userDetails._id, userpic);
-            if (response.data != null && response.data != 'undefind' && response.status == 200) {
-                authenticateUser(user);
-                getUserDetails();
-                if (Platform.OS === 'android') {
-                    ToastAndroid.show("Thank you your profile is been submitted for review", ToastAndroid.SHORT);
-                } else {
-                    alert('Thank you your profile is been submitted for review');
+        if (profilepic.change) {
+            let body = {
+                contextid: userDetails._id,
+                onModel: 'User',
+                formid: '6051da7ac49da515d8175b20',
+                property: {
+                    profilepic: profilepic.url
                 }
             }
-        }
-        catch (error) {
-            setloading(false);
-            if (Platform.OS === 'android') {
-                ToastAndroid.show("Your Profile Not Update!", ToastAndroid.SHORT);
-            } else { alert('Your Profile Not Update!') }
-        }
-    }
-
-    //UPDATE PROFILE INFOMATION API CALL
-    const UpdateUserInfo = async () => {
-        if (!pancardnumber || !pancardimage || !aadharcardnumber || !frontaadharcard || !backaadharcard) {
-            panCardNumberCheck(pancardnumber);
-            aadhraNumberCheck(aadharcardnumber);
-            if (!pancardimage) {
-                alert('Please Upload PanCard Photo');
-                return;
-            } else if (!frontaadharcard) {
-                alert('Please Upload Front AadharCard Photo');
-                return;
-            } else if (!backaadharcard) {
-                alert('Please Upload Back AadharCard Photo');
-                return;
-            }
-            return;
-        }
-
-        setloading(true);
-        let user = userDetails;
-        user.property.pancardnumber = pancardnumber;
-        user.property.pancardimage[0].attachment = pancardimage;
-        user.property.aadharcardnumber = aadharcardnumber;
-        user.property.frontaadharcard[0].attachment = frontaadharcard;
-        user.property.backaadharcard[0].attachment = backaadharcard;
-
-        console.log(`user`, user);
-        try {
-            await UserUpdateService(user).then(response => {
+            try {
+                const response = await UserReviewService(body);
                 if (response.data != null && response.data != 'undefind' && response.status == 200) {
-                    authenticateUser(user);
-                    setloading(false);
                     if (Platform.OS === 'android') {
                         ToastAndroid.show("Thank you your profile is been submitted for review", ToastAndroid.SHORT);
                     } else {
                         alert('Thank you your profile is been submitted for review');
                     }
-                    props.navigation.navigate(SCREEN.BANKINFOSCREEN);
                 }
-            })
-        }
-        catch (error) {
-            setloading(false);
+            }
+            catch (error) {
+                setloading(false);
+                if (Platform.OS === 'android') {
+                    ToastAndroid.show("Your Profile Not Update!", ToastAndroid.SHORT);
+                } else { alert('Your Profile Not Update!') }
+            }
+        } else {
             if (Platform.OS === 'android') {
-                ToastAndroid.show("Your Information Not Update", ToastAndroid.SHORT);
-            } else { alert('Your Information Not Update') }
+                ToastAndroid.show("Your Profile Not Update", ToastAndroid.SHORT);
+            } else { alert('Your Profile Not Update') }
+        }
+    }
+
+    //UPDATE PROFILE INFOMATION API CALL
+    const UpdateUserInfo = async () => {
+        try {
+            if (!pancardnumber || !pancardimage || !aadharcardnumber || !frontaadharcard || !backaadharcard) {
+                panCardNumberCheck(pancardnumber);
+                aadhraNumberCheck(aadharcardnumber);
+                if (!pancardimage) {
+                    alert('Please Upload PanCard Photo');
+                    return;
+                } else if (!frontaadharcard) {
+                    alert('Please Upload Front AadharCard Photo');
+                    return;
+                } else if (!backaadharcard) {
+                    alert('Please Upload Back AadharCard Photo');
+                    return;
+                }
+                return;
+            }
+            if (userDetails.property.pancardnumber != pancardnumber || userDetails.property.aadharcardnumber != aadharcardnumber
+                || pancardimage.change || frontaadharcard.change || backaadharcard.change) {
+                CheckAndUpdateUserInfo();
+            }
+        } catch (error) {
+            console.log(`error`, error);
+        }
+    }
+
+    //UPDATE PROFILE INFOMATION API CALL
+    const CheckAndUpdateUserInfo = async () => {
+        setloading(true);
+        let body = {
+            contextid: userDetails._id,
+            onModel: 'User',
+            formid: '6051da7ac49da515d8175b20',
+            property: {}
+        }
+
+        if (userDetails.property.pancardnumber != pancardnumber) {
+            body.property.pancardnumber = pancardnumber;
+        }
+        if (userDetails.property.aadharcardnumber != aadharcardnumber) {
+            body.property.aadharcardnumber = aadharcardnumber;
+        }
+        if (pancardimage.change) {
+            body.property.pancardimage = pancardimage.url;
+        }
+        if (frontaadharcard.change) {
+            body.property.frontaadharcard = frontaadharcard.url;
+        }
+        if (backaadharcard.change) {
+            body.property.backaadharcard = backaadharcard.url;
+        }
+        if (body.property) {
+            if (userDetails.property.pancardnumber != pancardnumber || userDetails.property.aadharcardnumber != aadharcardnumber
+                || pancardimage.change || frontaadharcard.change || backaadharcard.change) {
+                try {
+                    await UserReviewService(body).then(response => {
+                        if (response.data != null && response.data != 'undefind' && response.status == 200) {
+                            setloading(false);
+                            if (Platform.OS === 'android') {
+                                ToastAndroid.show("Thank you your profile is been submitted for review", ToastAndroid.SHORT);
+                            } else {
+                                alert('Thank you your profile is been submitted for review');
+                            }
+                            props.navigation.navigate(SCREEN.BANKINFOSCREEN);
+                        }
+                    })
+                }
+                catch (error) {
+                    setloading(false);
+                    if (Platform.OS === 'android') {
+                        ToastAndroid.show("Your Information Not Update", ToastAndroid.SHORT);
+                    } else { alert('Your Information Not Update') }
+                }
+            }
         }
     }
 
@@ -232,11 +276,6 @@ const documentScreen = (props) => {
             500
         );
     }
-
-    useEffect(() => {
-        checkPermission();
-        getUserDetails();
-    }, []);
 
     return (
         <SafeAreaView style={STYLE.Documentstyles.container}>
@@ -298,7 +337,7 @@ const documentScreen = (props) => {
                             {
                                 pancardimage ?
                                     <View>
-                                        <Image source={{ uri: pancardimage }}
+                                        <Image source={{ uri: pancardimage.url }}
                                             style={{ width: WIDTH - 60, height: 160, resizeMode: 'stretch' }} />
                                         <TouchableOpacity
                                             onPress={() => onChangePhoto('pancardnumberfont')}
@@ -337,7 +376,7 @@ const documentScreen = (props) => {
                             {
                                 frontaadharcard ?
                                     <View>
-                                        <Image source={{ uri: frontaadharcard }}
+                                        <Image source={{ uri: frontaadharcard.url }}
                                             style={{ width: WIDTH - 60, height: 160, resizeMode: 'stretch' }} />
                                         <TouchableOpacity
                                             onPress={() => onChangePhoto('aadharnumberfont')}
@@ -360,7 +399,7 @@ const documentScreen = (props) => {
                             {
                                 backaadharcard ?
                                     <View>
-                                        <Image source={{ uri: backaadharcard }}
+                                        <Image source={{ uri: backaadharcard.url }}
                                             style={{ width: WIDTH - 60, height: 160, resizeMode: 'stretch' }} />
                                         <TouchableOpacity
                                             onPress={() => onChangePhoto('aadharnumberback')}
@@ -389,7 +428,7 @@ const documentScreen = (props) => {
                 </View>
                 <View style={{ marginBottom: 20 }}></View>
             </ScrollView>
-            { loading ? <Loader /> : null}
+            {loading ? <Loader /> : null}
         </SafeAreaView>
     )
 }
