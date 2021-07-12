@@ -179,11 +179,30 @@ export const styles = StyleSheet.create({
         borderRadius: 5,
         marginBottom: 20
     },
+    modelInputViewError: {
+        flexDirection: 'row',
+        backgroundColor: '#F4F4F4',
+        borderWidth: 1,
+        borderColor: '#FF0000',
+        width: WIDTH - 120,
+        height: 40,
+        borderRadius: 5,
+        marginBottom: 20
+    },
     modelTextInput: {
         fontSize: 14,
         flex: 1,
         backgroundColor: '#F4F4F4',
         marginLeft: 5
+    },
+    modelTextAreainputViewError: {
+        flexDirection: 'row',
+        backgroundColor: '#F4F4F4',
+        borderWidth: 1,
+        borderColor: '#FF0000',
+        width: WIDTH - 120,
+        height: 100,
+        borderRadius: 5
     },
     modelTextAreainputView: {
         flexDirection: 'row',

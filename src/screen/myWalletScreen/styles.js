@@ -28,7 +28,7 @@ export const Transferstyles = StyleSheet.create({
         width: WIDTH - 20,
         backgroundColor: '#FFFFFF',
         borderRadius: 20,
-        marginTop: 20,
+        marginTop: 0,
         shadowOpacity: 0.5,
         shadowRadius: 1,
         elevation: 1,
@@ -36,6 +36,7 @@ export const Transferstyles = StyleSheet.create({
             height: 0,
             width: 0,
         },
+        marginBottom: 10
     },
     bankview: {
         height: 70,
@@ -79,19 +80,20 @@ export const Wallatestyles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         shadowOpacity: 0.5,
-        shadowRadius: 3,
+        shadowRadius: 1,
         shadowOffset: {
             height: 0,
             width: 0,
         },
-        elevation: 1
+        elevation: 1,
+        marginBottom: 10
     },
     bankview: {
         height: 70,
         width: WIDTH - 20,
         backgroundColor: '#FFFFFF',
         borderRadius: 20,
-        marginTop: 20,
+        marginTop: 0,
         shadowOpacity: 0.5,
         shadowRadius: 1,
         elevation: 2,
@@ -100,7 +102,7 @@ export const Wallatestyles = StyleSheet.create({
             width: 0,
         },
         justifyContent: 'center',
-        marginBottom: 10,
+        marginBottom: 10
     },
     wallatwbtn: {
         flexDirection: 'row',

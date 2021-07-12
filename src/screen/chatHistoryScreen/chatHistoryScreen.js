@@ -8,7 +8,6 @@ import * as SCREEN from '../../context/screen/screenName';
 import ChatMenu from '../../components/ChatMenu/ChatMenu';
 const HEIGHT = Dimensions.get('window').height;
 const WIDTH = Dimensions.get('window').width;
-
 import { AUTHUSER } from '../../context/actions/type';
 import AsyncStorage from '@react-native-community/async-storage';
 import { recentChatService } from '../../services/ChatService/ChatService';
@@ -22,15 +21,6 @@ function chatHistoryScreen(props) {
     const [refreshing, setrefreshing] = useState(false);
     const [currentUserId, setcurrentUserId] = useState(null);
     const [recentChat, setrecentChat] = useState([]);
-
-    // useEffect(() => {
-    //     AsyncStorage.getItem(AUTHUSER).then((res) => {
-    //         let currentUser = JSON.parse(res)._id;
-    //         setloading(true);
-    //         chatlist(currentUser);
-    //         setcurrentUserId(currentUser);
-    //     });
-    // }, [])
 
     useFocusEffect(
         React.useCallback(() => {
@@ -62,7 +52,6 @@ function chatHistoryScreen(props) {
         try {
             const response = await recentChatService(currentUser);
             if (response.data != null && response.data != 'undefind' && response.status == 200) {
-                console.log(`response.data`, response.data);
                 setrecentChat(response.data);
                 setloading(false);
             }

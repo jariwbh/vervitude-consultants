@@ -7,18 +7,23 @@ import { AUTHUSER } from '../../context/actions/type';
 import axiosConfig from '../../helpers/axiosConfig';
 import Loader from '../../components/loader';
 import * as STYLES from './styles';
+import HelpSupportService from '../../services/HelpSupportService/HelpSupportService';
 
 export default class loginScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: 'harshadjariwala1998@gmail.com',
+            username: null,
             usererror: null,
-            password: 'Pass@123',
+            password: null,
             passworderror: null,
             loading: false,
             showModalVisible: false,
-            showMessageModalVisible: false
+            showMessageModalVisible: false,
+            subject: null,
+            subjecterror: null,
+            description: null,
+            descriptionerror: null
         };
         this.setEmail = this.setEmail.bind(this);
         this.setPassword = this.setPassword.bind(this);
@@ -35,11 +40,6 @@ export default class loginScreen extends Component {
 
     showModalVisible = (visible) => {
         this.setState({ showModalVisible: visible });
-    }
-
-    showModalVisibleSubmit = (visible) => {
-        this.setState({ showModalVisible: visible });
-        this.showMessageModalVisible(true);
     }
 
     showMessageModalVisible = (visible) => {
@@ -60,13 +60,13 @@ export default class loginScreen extends Component {
 
     //check email validation
     setEmail(email) {
-        const re = /\S+@\S+\.\S+/;
+        //const re = /\S+@\S+\.\S+/;
         if (!email || email.length <= 0) {
             return this.setState({ usererror: 'Email Id can not be empty', username: null });
         }
-        if (!re.test(email)) {
-            return this.setState({ usererror: 'Ooops! We need a valid email address', username: null });
-        }
+        // if (!re.test(email)) {
+        //     return this.setState({ usererror: 'Ooops! We need a valid email address', username: null });
+        // }
         return this.setState({ username: email, usererror: null })
     }
 
@@ -76,6 +76,22 @@ export default class loginScreen extends Component {
             return this.setState({ passworderror: 'Password cannot be empty' });
         }
         return this.setState({ password: password, passworderror: null });
+    }
+
+    //check validation of subject
+    setSubject = (subject) => {
+        if (!subject || subject <= 0) {
+            return this.setState({ subjecterror: 'subject cannot be empty' });
+        }
+        return this.setState({ subject: subject, subjecterror: null });
+    }
+
+    //check validation of description
+    setDescription = (description) => {
+        if (!description || description <= 0) {
+            return this.setState({ descriptionerror: 'description cannot be empty' });
+        }
+        return this.setState({ description: description, descriptionerror: null });
     }
 
     //clear Field up data
@@ -100,6 +116,12 @@ export default class loginScreen extends Component {
         if (!username || !password) {
             this.setEmail(username);
             this.setPassword(password);
+            return;
+        }
+        const re = /\S+@\S+\.\S+/;
+        if (re.test(username)) {
+            this.resetScreen();
+            alert('Consultant will be logging Only Member ID');
             return;
         }
         const body = {
@@ -136,8 +158,45 @@ export default class loginScreen extends Component {
         };
     }
 
+    //help model pop up submit button touch to called
+    onModelSubmit = () => {
+        const { description, subject } = this.state;
+        if (!description || !subject) {
+            this.setSubject(subject);
+            this.setDescription(description);
+            return;
+        }
+        const body = {
+            'status': 'Requested',
+            'subject': subject,
+            'customerid': '5e899bb161eb802d6037c4d7',
+            'onModel': 'User',
+            'category': 'System Enhancements',
+            'content': description
+        }
+        this.setState({ loading: true });
+        try {
+            HelpSupportService(body).then(response => {
+                if (response.data != null && response.data != 'undefind' && response.status == 200) {
+                    this.setState({ loading: false, showModalVisible: false, subject: null, description: null, subjecterror: null, descriptionerror: null });
+                    this.showMessageModalVisible(true);
+                }
+            })
+        }
+        catch (error) {
+            console.log(`error`, error);
+            this.setState({ loading: false });
+            if (Platform.OS === 'android') {
+                ToastAndroid.show('Message Sending Failed!', ToastAndroid.SHORT);
+            } else {
+                alert('Message Sending Failed!');
+            }
+
+        }
+    }
+
     render() {
-        const { loading, showModalVisible, showMessageModalVisible, usererror, passworderror } = this.state;
+        const { loading, showModalVisible, showMessageModalVisible, usererror, passworderror, subject, subjecterror, description, descriptionerror } = this.state;
         return (
             <SafeAreaView style={STYLES.styles.container}>
                 <StatusBar backgroundColor='#80caff' hidden barStyle='light-content' />
@@ -162,8 +221,7 @@ export default class loginScreen extends Component {
                                     <View style={usererror == null ? STYLES.styles.inputView : STYLES.styles.inputViewError}>
                                         <TextInput
                                             style={STYLES.styles.TextInput}
-                                            placeholder='Email Address'
-                                            keyboardType='email-address'
+                                            placeholder='Member ID'
                                             type='clear'
                                             returnKeyType='next'
                                             defaultValue={this.state.username}
@@ -183,7 +241,7 @@ export default class loginScreen extends Component {
                                             secureTextEntry={true}
                                             returnKeyType='done'
                                             ref={this.secondTextInputRef}
-                                            onSubmitEditing={() => { this.onPressSubmit(), Keyboard.dismiss() }}
+                                            onSubmitEditing={() => Keyboard.dismiss()}
                                             onChangeText={(password) => this.setPassword(password)}
                                         />
                                     </View>
@@ -202,11 +260,11 @@ export default class loginScreen extends Component {
                         </View>
                         <View style={STYLES.styles.centeView} >
                             <TouchableOpacity onPress={() => { this.props.navigation.navigate(REGISTERSCREEN), this.resetScreen() }} >
-                                <Text style={STYLES.styles.createText}>Create An account</Text>
+                                <Text style={STYLES.styles.createText}>Join as Consultant</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <View style={{ marginVertical: 80 }} />
+                    <View style={{ marginVertical: 20 }} />
                 </ScrollView>
                 {loading ? <Loader /> : null}
                 {/* Help & Support model Pop */}
@@ -219,17 +277,20 @@ export default class loginScreen extends Component {
                     <View style={STYLES.styles.centerView}>
                         <View style={STYLES.styles.modalView}>
                             <View style={{ marginTop: 20 }}></View>
-                            <View style={STYLES.styles.modelInputView}>
+                            <View style={subjecterror == null ? STYLES.styles.modelInputView : STYLES.styles.modelInputViewError}>
                                 <TextInput
                                     style={STYLES.styles.modelTextInput}
                                     placeholder='Subject'
                                     type='clear'
                                     returnKeyType='next'
                                     placeholderTextColor='#999999'
+                                    defaultValue={subject}
+                                    blurOnSubmit={false}
+                                    onSubmitEditing={() => { this.secondTextInputRef.current.focus() }}
+                                    onChangeText={(email) => this.setSubject(email)}
                                 />
                             </View>
-
-                            <View style={STYLES.styles.modelTextAreainputView}>
+                            <View style={descriptionerror == null ? STYLES.styles.modelTextAreainputView : STYLES.styles.modelTextAreainputViewError}>
                                 <TextInput
                                     style={STYLES.styles.modelTextareaInput}
                                     placeholder='Write Your Descripation'
@@ -239,11 +300,15 @@ export default class loginScreen extends Component {
                                     blurOnSubmit={false}
                                     numberOfLines={3}
                                     multiline={true}
+                                    defaultValue={description}
+                                    ref={this.secondTextInputRef}
+                                    onSubmitEditing={() => Keyboard.dismiss()}
+                                    onChangeText={(password) => this.setDescription(password)}
                                 />
                             </View>
                         </View>
                         <View style={{ marginTop: 15, flexDirection: 'row' }}>
-                            <TouchableOpacity onPress={() => { this.showModalVisibleSubmit(!showModalVisible) }}
+                            <TouchableOpacity onPress={() => this.onModelSubmit()}
                                 style={STYLES.styles.savebtn}>
                                 <Text style={{ fontSize: 14, color: '#FFFFFF' }}>Submit</Text>
                             </TouchableOpacity>

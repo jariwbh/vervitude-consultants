@@ -162,8 +162,8 @@ function myEaringScreen(props) {
         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
           <View style={STYLE.Wallatestyles.balanceview}>
             <Text style={{ fontSize: 14, color: '#999999' }}>Available Balance</Text>
-            <Text style={{ fontSize: 26, color: '#04DE71', fontWeight: 'bold' }} > ₹
-            {walletBalance && walletBalance.wallet && walletBalance.wallet.balance ? walletBalance.wallet.balance : 0}
+            <Text style={{ fontSize: 26, color: '#04DE71', fontWeight: 'bold' }} >
+              {walletBalance && walletBalance.wallet && walletBalance.wallet.balance ? '₹ ' + walletBalance.wallet.balance : '₹ ' + 0}
             </Text>
           </View>
           {(walletList == null) || (walletList && walletList.length <= 0) ?
@@ -181,7 +181,7 @@ function myEaringScreen(props) {
 
 
       </ScrollView>
-      { loading ? <Loader /> : null}
+      {loading ? <Loader /> : null}
     </SafeAreaView>
   )
 }

@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { Text, View, ImageBackground, SafeAreaView, TouchableOpacity, Image, TextInput, ScrollView, ToastAndroid, StatusBar, Platform } from 'react-native';
+import {
+    Text, View, ImageBackground, SafeAreaView, TouchableOpacity, Image,
+    TextInput, ScrollView, ToastAndroid, StatusBar, Platform, Keyboard
+} from 'react-native';
 import RegisterService from '../../services/RegisterService/RegisterService';
 import { LOGINSCREEN } from '../../context/screen/screenName';
 import axiosConfig from '../../helpers/axiosConfig';
@@ -90,9 +93,9 @@ export default class registerScreen extends Component {
                 if (response.data != null && response.data != 'undefind' && response.status == 200) {
                     this.setState({ loading: false })
                     if (Platform.OS === 'android') {
-                        ToastAndroid.show('SignUp Success!', ToastAndroid.LONG);
+                        ToastAndroid.show('Request Submited', ToastAndroid.LONG);
                     } else {
-                        alert('SignUp Success!');
+                        alert('Request Submited');
                     }
                     this.props.navigation.navigate(LOGINSCREEN);
                 }
@@ -101,9 +104,9 @@ export default class registerScreen extends Component {
         catch (error) {
             this.setState({ loading: false })
             if (Platform.OS === 'android') {
-                ToastAndroid.show('SignUp Failed!', ToastAndroid.SHORT);
+                ToastAndroid.show('Request Submited Failed', ToastAndroid.SHORT);
             } else {
-                alert('SignUp Failed!');
+                alert('Request Submited Failed');
             }
         }
     }
@@ -169,7 +172,7 @@ export default class registerScreen extends Component {
                                             defaultValue={this.state.mobile_number}
                                             ref={this.thirdTextInputRef}
                                             blurOnSubmit={false}
-                                            onSubmitEditing={() => this.onPressSubmit()}
+                                            onSubmitEditing={() => Keyboard.dismiss()}
                                             onChangeText={(mobile_number) => this.setMobile_number(mobile_number)}
                                         />
                                     </View>
@@ -190,6 +193,7 @@ export default class registerScreen extends Component {
                             </View>
                         </View>
                     </View>
+                    <View style={{ marginVertical: 20 }} />
                 </ScrollView>
                 {loading ? <Loader /> : null}
             </SafeAreaView>
