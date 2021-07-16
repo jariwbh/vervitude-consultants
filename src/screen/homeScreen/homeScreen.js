@@ -21,6 +21,8 @@ import PushNotification from "react-native-push-notification";
 import { getDashboard, getDashboardFilter } from "../../services/HomeService/HomeService";
 import moment from 'moment';
 import { useFocusEffect } from '@react-navigation/native';
+import firebase from '@react-native-firebase/app';
+import messaging from '@react-native-firebase/messaging';
 
 const data = {
     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Sat', 'Sun'],
@@ -185,12 +187,18 @@ const homeScreen = (props) => {
     }
 
     //push notification function
-    const PushNotifications = () => {
+    const PushNotifications = async () => {
+        let fcmToken = await firebase.messaging().getToken();
+        if (fcmToken != undefined) {
+            console.log(`fcmToken`, fcmToken);
+            getFcmToken(fcmToken);
+        }
+
         PushNotification.configure({
             // (optional) Called when Token is generated (iOS and Android)
             onRegister: function (token) {
                 //console.log(`token.token`, token.token)
-                getFcmToken(token.token)
+                //getFcmToken(token.token)
             },
 
             // (required) Called when a remote is received or opened, or local notification is opened
@@ -229,6 +237,7 @@ const homeScreen = (props) => {
 
             // Should the initial notification be popped automatically
             // default: true
+            senderID: '909517140999',
             popInitialNotification: true,
 
             /**

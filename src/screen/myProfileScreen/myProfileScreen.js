@@ -205,7 +205,7 @@ const myProfileScreen = (props) => {
                     <View style={{ justifyContent: 'flex-end' }}>
                         <TouchableOpacity onPress={() => props.navigation.navigate(SCREEN.MYEARINGSCREEN)}
                             style={{ height: 40, width: 130, backgroundColor: '#FFFFFF', flexDirection: 'row', borderRadius: 20, alignItems: 'center', justifyContent: 'center', marginRight: 10 }}>
-                            <Text style={{ fontSize: 16, color: '#5AC8FA' }}>{walletBalance && walletBalance.wallet && walletBalance.wallet.balance ? walletBalance.wallet.balance : 0}</Text>
+                            <Text style={{ fontSize: 16, color: '#5AC8FA' }}>{walletBalance && walletBalance.wallet && walletBalance.wallet.balance ? (walletBalance.wallet.balance).toFixed(0) : 0}</Text>
                             <View style={{ width: 25, height: 25, backgroundColor: '#5AC8FA', alignItems: 'center', marginLeft: 15, borderRadius: 20, justifyContent: 'center' }}>
                                 <FontAwesome name='rupee' size={18} color='#FFFFFF' />
                             </View>

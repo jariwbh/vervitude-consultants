@@ -86,7 +86,7 @@ function chatHistoryScreen(props) {
                         <View style={{ justifyContent: 'flex-start', alignItems: 'flex-start', marginTop: 8 }}>
                             <Text style={{ fontSize: 22, fontWeight: 'bold', color: '#000000', textTransform: 'capitalize' }}>{item && item.contextid && item.contextid.fullname.split(' ')[0]}</Text>
                             {item.property && item.property.totalcost ?
-                                <Text style={{ fontSize: 14, color: '#04DE71', justifyContent: 'flex-start', alignItems: 'flex-start' }}>+ ₹ {item.property.totalcost}</Text>
+                                <Text style={{ fontSize: 14, color: '#04DE71', justifyContent: 'flex-start', alignItems: 'flex-start' }}>+ ₹ {(item.property.totalcost).toFixed(2)}</Text>
                                 :
                                 item.property.startat
                                     ?

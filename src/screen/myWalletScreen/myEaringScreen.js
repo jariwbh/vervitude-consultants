@@ -151,7 +151,7 @@ function myEaringScreen(props) {
             <TouchableOpacity
               onPress={() => props.navigation.navigate(SCREEN.MYEARINGSCREEN)}
               style={STYLE.Wallatestyles.wallatwbtn}>
-              <Text style={{ fontSize: 16, color: '#FFFFFF' }}>{walletBalance && walletBalance.wallet && walletBalance.wallet.balance ? walletBalance.wallet.balance : 0}</Text>
+              <Text style={{ fontSize: 16, color: '#FFFFFF' }}>{walletBalance && walletBalance.wallet && walletBalance.wallet.balance ? (walletBalance.wallet.balance).toFixed(0) : 0}</Text>
               <View style={{ width: 24, height: 24, backgroundColor: '#FFFFFF', alignItems: 'center', borderRadius: 100, justifyContent: 'center' }}>
                 <FontAwesome name='rupee' size={15} color='#04DE71' />
               </View>
@@ -163,7 +163,7 @@ function myEaringScreen(props) {
           <View style={STYLE.Wallatestyles.balanceview}>
             <Text style={{ fontSize: 14, color: '#999999' }}>Available Balance</Text>
             <Text style={{ fontSize: 26, color: '#04DE71', fontWeight: 'bold' }} >
-              {walletBalance && walletBalance.wallet && walletBalance.wallet.balance ? '₹ ' + walletBalance.wallet.balance : '₹ ' + 0}
+              {walletBalance && walletBalance.wallet && walletBalance.wallet.balance ? '₹ ' + (walletBalance.wallet.balance).toFixed(0) : '₹ ' + 0}
             </Text>
           </View>
           {(walletList == null) || (walletList && walletList.length <= 0) ?

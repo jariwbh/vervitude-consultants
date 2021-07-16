@@ -65,8 +65,8 @@ const notificationScreen = (props) => {
                             <FontAwesome name='rupee' size={25} color='#04DE71' />
                         </View>
                         <View style={{ flex: 1, marginLeft: 15 }}>
-                            <Text style={{ fontSize: 12, color: '#F67742' }} >#Transaction</Text>
-                            <Text style={{ fontSize: 14, color: '#000000' }}>{item.property.content}</Text>
+                            <Text style={{ fontSize: 12, color: '#F67742' }} >#{item.property.subject}</Text>
+                            <Text style={{ fontSize: 14, color: '#000000' }}>{item.property.message}</Text>
                         </View>
                     </View>
                 </View>
