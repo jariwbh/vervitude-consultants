@@ -221,7 +221,7 @@ export default class loginScreen extends Component {
                                     <View style={usererror == null ? STYLES.styles.inputView : STYLES.styles.inputViewError}>
                                         <TextInput
                                             style={STYLES.styles.TextInput}
-                                            placeholder='Member ID'
+                                            placeholder='Username'
                                             type='clear'
                                             returnKeyType='next'
                                             defaultValue={this.state.username}
