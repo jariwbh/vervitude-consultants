@@ -306,6 +306,7 @@ const myProfileScreen = (props) => {
                                     blurOnSubmit={false}
                                     ref={secondTextInputRef}
                                     onChangeText={(description) => setdescription(description)}
+                                    onSubmitEditing={() => Keyboard.dismiss()}
                                 />
                             </View>
                         </View>
