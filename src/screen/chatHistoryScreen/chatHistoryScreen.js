@@ -15,12 +15,14 @@ import Loader from '../../components/loader/index';
 import moment from 'moment';
 const defaultProfile = 'https://res.cloudinary.com/dnogrvbs2/image/upload/v1613538969/profile1_xspwoy.png';
 import { useFocusEffect } from '@react-navigation/native';
+//import firestore from '@react-native-firebase/firestore';
 
 function chatHistoryScreen(props) {
     const [loading, setloading] = useState(false);
     const [refreshing, setrefreshing] = useState(false);
     const [currentUserId, setcurrentUserId] = useState(null);
     const [recentChat, setrecentChat] = useState([]);
+    // let getChatId = firestore().collection('chat');
 
     useFocusEffect(
         React.useCallback(() => {
@@ -52,6 +54,11 @@ function chatHistoryScreen(props) {
         try {
             const response = await recentChatService(currentUser);
             if (response.data != null && response.data != 'undefind' && response.status == 200) {
+                // response.data.forEach(async (element) => {
+                //     let fire = await getChatId.doc(element.property.fierbasechatid).get();
+                //     element.read = fire._data.previewMessage.read;
+                // });
+                // console.log(`response.data`, response.data);
                 setrecentChat(response.data);
                 setloading(false);
             }
@@ -67,7 +74,7 @@ function chatHistoryScreen(props) {
 
     const renderChatUser = ({ item }) => (
         <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
-            <TouchableOpacity onPress={() => navigationhandler(item)} style={styles.chatview}>
+            <TouchableOpacity onPress={() => navigationhandler(item)} style={item.property.endat ? styles.chatview2 : styles.chatview}>
                 <View style={{ justifyContent: 'flex-end', flexDirection: 'row', marginTop: 5 }}>
                     {/* <Text style={{ color: '#5AC8FA', marginLeft: 15, fontSize: 10 }}>New</Text> */}
                     <Text style={{ color: '#999999', fontSize: 12, marginRight: 15 }}>
@@ -91,7 +98,7 @@ function chatHistoryScreen(props) {
                                 item.property.startat
                                     ?
                                     <Text style={{ fontSize: 14, color: '#04DE71', justifyContent: 'flex-start', alignItems: 'flex-start' }}>+ ₹
-                                        {((item.property.consultantid.property.chargespermin) * (moment.utc(moment(moment(), "HH:mm:ss").diff(moment(item.property.startat, "HH:mm:ss"))).format("mm")) / 2)}
+                                        {((item.property.consultantid.property.chargespermin) * ((moment.duration(moment().diff(item.property.startat))).asMinutes()) / 2).toFixed(0)}
                                     </Text>
                                     :
                                     <Text style={{ fontSize: 14, color: '#555555' }}>+ ₹ 0.00</Text>
@@ -99,13 +106,11 @@ function chatHistoryScreen(props) {
                         </View>
                     </View>
                 </View>
-
                 {/* <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop: -60 }}>
-                    <View style={{ marginRight: 25, width: 30, height: 30, marginTop: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 100, backgroundColor: '#0F74C8' }}>
-                        <Text style={{ color: '#FFFFFF' }}>5</Text>
-                    </View>
-                </View> */}
-
+                            <View style={{ marginRight: 25, width: 20, height: 20, marginTop: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 100, backgroundColor: '#0F74C8' }}>
+                                <Text style={{ color: '#FFFFFF' }}></Text>
+                            </View>
+                        </View> */}
             </TouchableOpacity>
         </View>
     )
@@ -158,6 +163,21 @@ const styles = StyleSheet.create({
         backgroundColor: '#EEEEEE'
     },
     chatview: {
+        width: WIDTH - 20,
+        backgroundColor: '#FFFFFF',
+        borderRadius: 10,
+        height: 100,
+        shadowOpacity: 0.5,
+        shadowRadius: 1,
+        shadowOffset: {
+            height: 0,
+            width: 0,
+        },
+        elevation: 1,
+    },
+    chatview2: {
+        borderColor: '#ff0000',
+        borderWidth: 1,
         width: WIDTH - 20,
         backgroundColor: '#FFFFFF',
         borderRadius: 10,
