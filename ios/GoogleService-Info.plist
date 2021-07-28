@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>909517140999-lrsh7u6mjoqm7vnu82vc7otria8hqhcp.apps.googleusercontent.com</string>
+	<string>79264411371-6uls8np74q57jelvbsrf7uum5d0n3s37.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.909517140999-lrsh7u6mjoqm7vnu82vc7otria8hqhcp</string>
+	<string>com.googleusercontent.apps.79264411371-6uls8np74q57jelvbsrf7uum5d0n3s37</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>909517140999-96sk5g9s0iu37oeob5sboon82kb7lur7.apps.googleusercontent.com</string>
+	<string>79264411371-glu05h1btrb9cg4d7jaolmkjoqsarde4.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyAQ0gA_QcRMJHYh7XyIPriOP6eNICnfLH0</string>
+	<string>AIzaSyCkLgQC4GWWD4tl7IS-hC-a34ORtJh_nbk</string>
 	<key>GCM_SENDER_ID</key>
-	<string>909517140999</string>
+	<string>79264411371</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.vervitudeconsultants</string>
 	<key>PROJECT_ID</key>
-	<string>membroz-vervitude</string>
+	<string>vervitude-redefined</string>
 	<key>STORAGE_BUCKET</key>
-	<string>membroz-vervitude.appspot.com</string>
+	<string>vervitude-redefined.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:909517140999:ios:e705c53f05a337992366a2</string>
+	<string>1:79264411371:ios:b7e686b96460e972add8ae</string>
 </dict>
 </plist>
