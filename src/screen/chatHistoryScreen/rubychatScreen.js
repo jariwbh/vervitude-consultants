@@ -123,7 +123,7 @@ const rubychatScreen = (props, { navigation }) => {
 			method: 'POST',
 			headers: {
 				"Content-Type": "application/json",
-				"Authorization": "key=AAAAEnSG7us:APA91bF_fsNvJ-RoDW56GfT8wyg4nYt78wBlcsyVb4Sa5kzqVWHLU-kWsueU9HcOoOX6qF8Esu9BoCHPNvTT6zntXmOd6UQ-ygrPxP42ldjwqDH0DzW5U2bf4UlPXL1NswPsLFaRNT3x",
+				"Authorization": "key=AAAAEnSG7us:APA91bF_fsNvJ-RoDW56GfT8wyg4nYt78wBlcsyVb4Sa5kzqVWHLU-kWsueU9HcOoOX6qF8Esu9BoCHPNvTT6zntXmOd6UQ-ygrPxP42ldjwqDH0DzW5U2bf4UlPXL1NswPsLFaRNT3x"
 			},
 			body: formData
 		})
