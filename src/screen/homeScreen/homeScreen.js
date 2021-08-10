@@ -127,8 +127,9 @@ const homeScreen = (props) => {
     const getDashboardView = async () => {
         try {
             const response = await getDashboard();
+            console.log(`response.data`, response.data)
             setDashboardView(response.data[0]);
-            setDashboardtopEarner(response.data[1].data);
+            setDashboardtopEarner(response.data[0].data[0].topearnings);
         } catch (error) {
             console.log(`error`, error);
         }
@@ -551,16 +552,16 @@ const homeScreen = (props) => {
                         <View>
                             <Text style={{ marginTop: 20, marginLeft: 40, fontWeight: 'bold', fontSize: 16, color: '#555555' }}>Top Earners Of the Week</Text>
                         </View>
-                        {(dashboardtopEarner == null) || (dashboardtopEarner && dashboardtopEarner.length < 0)
+                        {(dashboardtopEarner == null) || (dashboardtopEarner && dashboardtopEarner.length > 0)
                             ?
                             <FlatList
                                 showsVerticalScrollIndicator={false}
                                 renderItem={({ item, index }) => (
-                                    <>
+                                    <View>
                                         <View style={{ marginTop: 15, flexDirection: 'row' }}>
                                             <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
                                         </View>
-                                        <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center', marginLeft: -40, marginTop: 15 }}>
+                                        <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center', marginLeft: 0, marginTop: 15 }}>
                                             <View style={{ flexDirection: 'row' }}>
                                                 <View style={{ backgroundColor: '#5AC8FA', width: 22, height: 22, marginLeft: -40, marginRight: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 20 }}>
                                                     <Text style={{ fontSize: 14, color: '#FFFFFF' }}>{index + 1}</Text>
@@ -568,9 +569,9 @@ const homeScreen = (props) => {
                                                 <Text style={{ fontSize: 16, color: '#555555', textTransform: 'capitalize' }}>{item.fullname.split(' ')[0]}</Text>
                                             </View>
                                             {/* <Text style={{ fontSize: 16, color: '#5AC8FA' }}>+0%</Text> */}
-                                            <Text style={{ fontSize: 16, color: item.totalearnings == 0 ? '#555555' : '#04DE71' }}>₹ {item.totalearnings}+</Text>
+                                            <Text style={{ fontSize: 16, color: item.earning == 0 ? '#555555' : '#04DE71' }}>₹ {item.earning}+</Text>
                                         </View>
-                                    </>
+                                    </View>
                                 )}
                                 data={dashboardtopEarner}
                                 keyExtractor={(item, index) => index.toString()}
