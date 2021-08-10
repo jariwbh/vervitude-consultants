@@ -174,6 +174,7 @@ const styles = StyleSheet.create({
             width: 0,
         },
         elevation: 1,
+        marginBottom:10
     },
     chatview2: {
         borderColor: '#ff0000',
@@ -189,6 +190,7 @@ const styles = StyleSheet.create({
             width: 0,
         },
         elevation: 1,
+        marginBottom:10
     },
     categoryIcon: {
         marginLeft: 20,
