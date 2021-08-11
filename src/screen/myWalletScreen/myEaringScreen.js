@@ -7,7 +7,7 @@ import * as STYLE from './styles'
 import AsyncStorage from '@react-native-community/async-storage';
 import { AUTHUSER } from '../../context/actions/type';
 import Loader from '../../components/loader/index';
-import { WalletDetailService } from '../../services/WalletService/WalletService';
+import { WalletDetailService, WalletHistory } from '../../services/WalletService/WalletService';
 import moment from 'moment';
 
 function myEaringScreen(props) {
@@ -25,6 +25,7 @@ function myEaringScreen(props) {
     AsyncStorage.getItem(AUTHUSER).then(async (res) => {
       let id = JSON.parse(res)._id;
       getWalletBalance(id);
+      getWalletBalanceHistory(id);
       setUserID(id);
     });
   }, []);
@@ -33,8 +34,19 @@ function myEaringScreen(props) {
     try {
       const response = await WalletDetailService(id);
       if (response.data != null && response.data.length != 0 && response.data != 'undefind' && response.status == 200) {
-        setWalletList(response.data[0].wallettxns);
         setWalletBalance(response.data[0]);
+        setloading(false);
+      }
+    } catch (error) {
+      setloading(false);
+    }
+  }
+
+  const getWalletBalanceHistory = async (id) => {
+    try {
+      const response = await WalletHistory(id);
+      if (response.data != null && response.data.length != 0 && response.data != 'undefind' && response.status == 200) {
+        setWalletList(response.data);
         setloading(false);
       }
     } catch (error) {
@@ -51,6 +63,7 @@ function myEaringScreen(props) {
   const onRefresh = () => {
     setrefreshing(true);
     WalletDetailService(UserId);
+    getWalletBalanceHistory(UserId);
     wait(3000).then(() => setrefreshing(false));
   }
 
@@ -71,18 +84,18 @@ function myEaringScreen(props) {
   }
 
   const renderWalletList = ({ item, index }) => (
-    item.txntype == "Dr"
+    item
       ?
       item.selected == true ?
         <View style={STYLE.Transferstyles.gamountview}>
           <View style={{ marginLeft: 20, marginRight: 20 }}>
             <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 15 }}>
-              <Text style={{ fontSize: 14, marginLeft: 15 }}>Gross Amount</Text>
+              <Text style={{ fontSize: 14, marginLeft: 5 }}>Gross Amount</Text>
               <TouchableOpacity onPress={() => onPressToSelectWalletCard(item, index, false)}>
                 <Image source={require('../../assets/images/squarefilled.png')} style={{ height: 15, width: 15, marginRight: 5 }} />
               </TouchableOpacity>
             </View>
-            <Text style={{ fontSize: 26, fontWeight: 'bold', color: '#04DE71' }}> ₹ {item.settlement.settlement.amount}</Text>
+            <Text style={{ fontSize: 26, fontWeight: 'bold', color: '#04DE71' }}> ₹ {item.property.amount}</Text>
             <View style={{ marginTop: 15, flexDirection: 'row' }}>
               <View style={{ flex: 1, height: 1, backgroundColor: 'rgba(0, 0, 0, 0.2)' }}></View>
             </View>
@@ -95,20 +108,20 @@ function myEaringScreen(props) {
             </View>
             <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 5 }}>
               <Text style={{ fontSize: 12, marginLeft: 15, color: '#999999' }}>Net Earning</Text>
-              <Text style={{ fontSize: 12, color: '#04DE71', marginRight: 20 }}> ₹ {item.settlement.settlement.amount}</Text>
+              <Text style={{ fontSize: 12, color: '#04DE71', marginRight: 20 }}> ₹ {item.property.amount}</Text>
             </View>
             <View style={{ marginTop: 15, flexDirection: 'row' }}>
               <View style={{ flex: 1, height: 1, backgroundColor: 'rgba(0, 0, 0, 0.3)' }}></View>
             </View>
             <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 5 }}>
               <Text style={{ fontSize: 12, marginLeft: 15, color: '#999999' }}>Bank</Text>
-              <Text style={{ fontSize: 12, color: '#999999', marginRight: 20 }}>{item.settlement.settlement.bankname}</Text>
+              <Text style={{ fontSize: 12, color: '#999999', marginRight: 20 }}>{item.property.bankname}</Text>
             </View>
             <View style={{ flexDirection: 'row', marginTop: 20, alignItems: 'center' }}>
               <Image source={require('../../assets/images/image1.png')} style={{ height: 45, width: 45, borderRadius: 100 }} />
               <View>
-                <Text style={{ fontSize: 14, color: '#000000', marginLeft: 15 }}>{item.settlement.settlement.bankname}</Text>
-                <Text style={{ fontSize: 12, color: '#999999', marginLeft: 15 }}>{moment(item.settlement.txndate).format('DD/MM/YYYY') + ', ' + moment(item.settlement.txndate).format('LT')}</Text>
+                <Text style={{ fontSize: 14, color: '#000000', marginLeft: 15 }}>{item.property.bankname}</Text>
+                <Text style={{ fontSize: 12, color: '#999999', marginLeft: 15 }}>{item.property.date && moment(item.property.date).format('DD/MM/YYYY') + ', ' + moment(item.property.date).format('LT')}</Text>
               </View>
             </View>
           </View>
@@ -122,13 +135,13 @@ function myEaringScreen(props) {
               <Image source={require('../../assets/images/image1.png')} style={{ height: 45, width: 45, borderRadius: 100, marginLeft: 10 }} />
             </View>
 
-            <View style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginLeft: -50 }}>
-              <Text style={{ fontSize: 14, color: '#000000', marginLeft: 15 }}>{item.settlement.settlement.bankname}</Text>
-              <Text style={{ fontSize: 14, color: '#999999', marginLeft: 15 }}>{moment(item.settlement.txndate).format('DD/MM/YYYY') + ', ' + moment(item.settlement.txndate).format('LT')}</Text>
+            <View style={{ flexDirection: 'column', marginLeft: -50 }}>
+              <Text style={{ fontSize: 14, color: '#000000', marginLeft: 15 }}>{item.property.bankname}</Text>
+              <Text style={{ fontSize: 12, color: '#999999', marginLeft: 15 }}>{item.property.date && moment(item.property.date).format('DD/MM/YYYY') + ', ' + moment(item.property.date).format('LT')}</Text>
             </View>
 
             <View style={{ justifyContent: 'flex-end' }}>
-              <Text style={{ fontSize: 14, color: '#04DE71', marginTop: 5, marginRight: 30 }}> ₹ {item.settlement.settlement.amount}</Text>
+              <Text style={{ fontSize: 14, color: '#04DE71', marginTop: 5, marginRight: 30 }}> ₹ {item.property.amount}</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -151,8 +164,8 @@ function myEaringScreen(props) {
             <TouchableOpacity
               onPress={() => props.navigation.navigate(SCREEN.MYEARINGSCREEN)}
               style={STYLE.Wallatestyles.wallatwbtn}>
-              <Text style={{ fontSize: 16, color: '#FFFFFF' }}>{walletBalance && walletBalance.wallet && walletBalance.wallet.balance ? (walletBalance.wallet.balance).toFixed(0) : 0}</Text>
-              <View style={{ width: 24, height: 24, backgroundColor: '#FFFFFF', alignItems: 'center', borderRadius: 100, justifyContent: 'center' }}>
+              <Text style={{ fontSize: 16, color: '#FFFFFF', marginLeft: 10 }}>{walletBalance && walletBalance.wallet && walletBalance.wallet.balance ? (walletBalance.wallet.balance).toFixed(2) : 0}</Text>
+              <View style={{ width: 24, height: 24, backgroundColor: '#FFFFFF', alignItems: 'center', borderRadius: 100, justifyContent: 'center', marginLeft: 10, marginRight: 10, }}>
                 <FontAwesome name='rupee' size={15} color='#04DE71' />
               </View>
             </TouchableOpacity>
@@ -163,7 +176,7 @@ function myEaringScreen(props) {
           <View style={STYLE.Wallatestyles.balanceview}>
             <Text style={{ fontSize: 14, color: '#999999' }}>Available Balance</Text>
             <Text style={{ fontSize: 26, color: '#04DE71', fontWeight: 'bold' }} >
-              {walletBalance && walletBalance.wallet && walletBalance.wallet.balance ? '₹ ' + (walletBalance.wallet.balance).toFixed(0) : '₹ ' + 0}
+              {walletBalance && walletBalance.wallet && walletBalance.wallet.balance ? '₹ ' + (walletBalance.wallet.balance).toFixed(2) : '₹ ' + 0}
             </Text>
           </View>
           {(walletList == null) || (walletList && walletList.length <= 0) ?
@@ -178,8 +191,6 @@ function myEaringScreen(props) {
             />
           }
         </View>
-
-
       </ScrollView>
       {loading ? <Loader /> : null}
     </SafeAreaView>

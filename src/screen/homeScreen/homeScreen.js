@@ -127,7 +127,6 @@ const homeScreen = (props) => {
     const getDashboardView = async () => {
         try {
             const response = await getDashboard();
-            console.log(`response.data`, response.data)
             setDashboardView(response.data[0]);
             setDashboardtopEarner(response.data[0].data[0].topearnings);
         } catch (error) {
@@ -191,7 +190,7 @@ const homeScreen = (props) => {
     const PushNotifications = async () => {
         let fcmToken = await firebase.messaging().getToken();
         if (fcmToken != undefined) {
-            console.log(`fcmToken`, fcmToken);
+            //console.log(`fcmToken`, fcmToken);
             getFcmToken(fcmToken);
         }
 
@@ -508,14 +507,14 @@ const homeScreen = (props) => {
 
                 <View style={{ justifyContent: 'space-around', flexDirection: 'row', marginTop: 10 }}>
                     <View style={STYLES.styles.box1}>
-                        <Text style={STYLES.styles.boxtext}> {dashboardView && dashboardView.data[0].totalearning ? '₹' + dashboardView.data[0].totalearning : '--'}</Text>
+                        <Text style={STYLES.styles.boxtext}> {dashboardView && dashboardView.data[0].totalearning ? '₹' + (dashboardView.data[0].totalearning).toFixed(2) : '--'}</Text>
                         <Text style={STYLES.styles.boxtextsecond}>Total Earning</Text>
                     </View>
                     <View style={STYLES.styles.box2}>
                         <View>
                             <Text style={STYLES.styles.boxuppertext}>Hrs</Text>
                         </View>
-                        <Text style={STYLES.styles.boxtext}>{dashboardView && dashboardView.data[0].totalhours ? dashboardView.data[0].totalhours : '--'}</Text>
+                        <Text style={STYLES.styles.boxtext}>{dashboardView && dashboardView.data[0].totalhours ? (dashboardView.data[0].totalhours).toFixed(2) : '--'}</Text>
                         <Text style={STYLES.styles.boxtextsecond}>Total Hours</Text>
                     </View>
                 </View>
@@ -557,19 +556,22 @@ const homeScreen = (props) => {
                             <FlatList
                                 showsVerticalScrollIndicator={false}
                                 renderItem={({ item, index }) => (
-                                    <View>
+                                    <View style={{ width: screenWidth }}>
                                         <View style={{ marginTop: 15, flexDirection: 'row' }}>
                                             <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
                                         </View>
-                                        <View style={{ justifyContent: 'space-evenly', flexDirection: 'row', alignItems: 'center', marginLeft: 0, marginTop: 15 }}>
-                                            <View style={{ flexDirection: 'row' }}>
-                                                <View style={{ backgroundColor: '#5AC8FA', width: 22, height: 22, marginLeft: -40, marginRight: 20, alignItems: 'center', justifyContent: 'center', borderRadius: 20 }}>
+                                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                            <View style={{ justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', marginLeft: 0, marginTop: 15 }}>
+                                                <View style={{
+                                                    backgroundColor: '#5AC8FA', width: 22, height: 22, marginLeft: 20, marginRight: 20,
+                                                    alignItems: 'center', justifyContent: 'center', borderRadius: 20
+                                                }}>
                                                     <Text style={{ fontSize: 14, color: '#FFFFFF' }}>{index + 1}</Text>
                                                 </View>
-                                                <Text style={{ fontSize: 16, color: '#555555', textTransform: 'capitalize' }}>{item.fullname.split(' ')[0]}</Text>
+                                                {/* <Text style={{ fontSize: 16, color: '#5AC8FA' }}>+0%</Text> */}
+                                                <Text style={{ fontSize: 16, color: '#555555', textTransform: 'capitalize', width: 150, marginLeft: 10 }}>{item.fullname.split(' ')[0]}</Text>
+                                                <Text style={{ fontSize: 16, color: item.earning == 0 ? '#555555' : '#04DE71', marginLeft: 10 }}>₹ {(item.earning).toFixed(2)}+</Text>
                                             </View>
-                                            {/* <Text style={{ fontSize: 16, color: '#5AC8FA' }}>+0%</Text> */}
-                                            <Text style={{ fontSize: 16, color: item.earning == 0 ? '#555555' : '#04DE71' }}>₹ {item.earning}+</Text>
                                         </View>
                                     </View>
                                 )}
@@ -596,12 +598,14 @@ const homeScreen = (props) => {
                             <FlatList
                                 showsVerticalScrollIndicator={false}
                                 renderItem={({ item, index }) => (
-                                    <TouchableOpacity onPress={() => onTouchSelectFilterList(item, index)}>
-                                        <Text style={{ padding: 15, textAlign: 'center', color: item.selected == true ? '#5AC8FA' : '#000000', fontSize: 14, textTransform: "capitalize" }}>{item.name}</Text>
+                                    <>
+                                        <TouchableOpacity onPress={() => onTouchSelectFilterList(item, index)}>
+                                            <Text style={{ padding: 15, textAlign: 'center', color: item.selected == true ? '#5AC8FA' : '#000000', fontSize: 14, textTransform: "capitalize" }}>{item.name}</Text>
+                                        </TouchableOpacity>
                                         <View style={{ flexDirection: 'row' }}>
-                                            <View style={{ flex: 1, height: 1, backgroundColor: '#EEEEEE' }}></View>
+                                            <View style={{ height: 1, backgroundColor: '#EEEEEE', width: '100%' }}></View>
                                         </View>
-                                    </TouchableOpacity>
+                                    </>
                                 )}
                                 data={filterList}
                                 keyExtractor={(item, index) => index.toString()}

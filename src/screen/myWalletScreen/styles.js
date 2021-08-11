@@ -108,7 +108,6 @@ export const Wallatestyles = StyleSheet.create({
         flexDirection: 'row',
         marginRight: 15,
         height: 40,
-        width: 140,
         backgroundColor: '#04DE71',
         flexDirection: 'row',
         borderRadius: 100,
