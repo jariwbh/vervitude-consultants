@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-    View, Text, SafeAreaView, Dimensions, StyleSheet,
+    View, Text, SafeAreaView, Dimensions, StyleSheet, StatusBar,
     ScrollView, TouchableOpacity, Image, FlatList, RefreshControl
 } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -117,6 +117,7 @@ function chatHistoryScreen(props) {
 
     return (
         <SafeAreaView style={styles.container}>
+            <StatusBar backgroundColor='#EEEEEE' barStyle='dark-content' />
             <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 30 }}>
                 <View style={{ justifyContent: 'flex-start' }}>
                     <TouchableOpacity style={styles.categoryIcon} onPress={() => { props.navigation.goBack(null) }} >
@@ -174,7 +175,7 @@ const styles = StyleSheet.create({
             width: 0,
         },
         elevation: 1,
-        marginBottom:10
+        marginBottom: 10
     },
     chatview2: {
         borderColor: '#ff0000',
@@ -190,7 +191,7 @@ const styles = StyleSheet.create({
             width: 0,
         },
         elevation: 1,
-        marginBottom:10
+        marginBottom: 10
     },
     categoryIcon: {
         marginLeft: 20,

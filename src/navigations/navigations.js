@@ -24,7 +24,7 @@ const navigationsApp = () => {
         <NavigationContainer>
             <Stack.Navigator headerMode='none' initialRouteName={SPLASHSCREEN}>
                 <Stack.Screen name='splashScreen' component={SPLASHSCREEN} />
-                <Stack.Screen name='loginScreen' component={LOGINSCREEN} />
+                <Stack.Screen name='loginScreen' component={LOGINSCREEN} options={{ gestureEnabled: false }} />
                 <Stack.Screen name='registerScreen' component={REGISTERSCREEN} />
                 <Stack.Screen name='MainScreen' component={MainNavigation} />
             </Stack.Navigator>
@@ -36,7 +36,7 @@ const HomeStack = createStackNavigator();
 function MainNavigation() {
     return (
         <HomeStack.Navigator headerMode='none' initialRouteName='homeScreen'>
-            <HomeStack.Screen name='homeScreen' component={HOMESCREEN} />
+            <HomeStack.Screen name='homeScreen' component={HOMESCREEN} options={{ gestureEnabled: false }} />
             <HomeStack.Screen name='myProfileScreen' component={MYPROFILESCREEN} />
             <HomeStack.Screen name='myTransfersScreen' component={MYTRANSFERSSCREEN} />
             <HomeStack.Screen name='invitescreen' component={INVITESCREEN} />

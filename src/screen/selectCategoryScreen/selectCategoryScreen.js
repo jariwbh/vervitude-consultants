@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, Image, SafeAreaView, TouchableOpacity, ScrollView, FlatList, Platform, ToastAndroid } from 'react-native';
+import { View, Text, Image, SafeAreaView, TouchableOpacity, ScrollView, FlatList, StatusBar, ToastAndroid } from 'react-native';
 import CategoryService from '../../services/CategoryService/CategoryService';
 import { UserUpdateService } from '../../services/UserService/UserService';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -160,6 +160,7 @@ function selectCategoryScreen(props) {
 
     return (
         <SafeAreaView style={STYLE.styles.container}>
+            <StatusBar backgroundColor='#EEEEEE' barStyle='dark-content' />
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 30 }}>
 

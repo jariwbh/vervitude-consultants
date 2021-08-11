@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
     Text, View, Dimensions, SafeAreaView, Image, TouchableOpacity, ScrollView, Modal,
-    TextInput, ToastAndroid, Platform, Pressable, ActivityIndicator, StyleSheet, Keyboard
+    TextInput, ToastAndroid, Platform, Pressable, ActivityIndicator, StatusBar, Keyboard
 } from 'react-native';
 import HelpSupportService from '../../services/HelpSupportService/HelpSupportService'
 import MenuButton from '../../components/ProfileMenuButton/ProfileMenuButton';
@@ -189,6 +189,7 @@ const myProfileScreen = (props) => {
 
     return (
         <SafeAreaView style={STYLES.styles.container}>
+            <StatusBar backgroundColor='#5AC8FA' barStyle='dark-content' />
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={{ marginTop: 30, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }} >
                     <View style={{ justifyContent: 'flex-start', flexDirection: 'row' }}>

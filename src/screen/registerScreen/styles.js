@@ -93,7 +93,7 @@ export const styles = StyleSheet.create({
     loginText: {
         color: '#FFFFFF',
         fontSize: 16,
-        marginTop: 15,
+        marginTop: 20,
         fontWeight: '900'
     },
     supportText: {

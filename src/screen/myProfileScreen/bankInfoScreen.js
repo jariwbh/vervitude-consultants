@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, SafeAreaView, TouchableOpacity, TextInput, ScrollView, Dimensions, Keyboard, FlatList, ToastAndroid, Platform } from 'react-native'
+import {
+    View, Text, Image, SafeAreaView, TouchableOpacity, TextInput, ScrollView,
+    Dimensions, Keyboard, StatusBar, ToastAndroid, Platform
+} from 'react-native'
 import { UserReviewService } from "../../services/UserService/UserService";
 import AsyncStorage from '@react-native-community/async-storage';
 import MyPermissionController from '../../helpers/appPermission';
@@ -332,6 +335,7 @@ const bankInfoScreen = (props) => {
 
     return (
         <SafeAreaView style={STYLE.Bankstyles.container}>
+            <StatusBar backgroundColor='#5AC8FA' barStyle='dark-content' />
             <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={'always'}>
                 <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 30 }}>
                     <View style={{ justifyContent: 'flex-start' }}>

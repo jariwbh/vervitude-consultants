@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, SafeAreaView, TouchableOpacity, ScrollView, Image, FlatList, RefreshControl, Animated } from 'react-native';
+import { View, Text, SafeAreaView, TouchableOpacity, ScrollView, Image, FlatList, RefreshControl, StatusBar } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as STYLE from './styles';
@@ -119,6 +119,7 @@ const notificationScreen = (props) => {
 
     return (
         <SafeAreaView style={STYLE.styles.container}>
+            <StatusBar backgroundColor='#5AC8FA' barStyle='dark-content' />
             <ScrollView showsVerticalScrollIndicator={false}
                 nestedScrollEnabled={true}
                 refreshControl={<RefreshControl refreshing={refreshing} title="Pull to refresh" tintColor="#5AC8FA" titleColor="#5AC8FA" colors={["#5AC8FA"]} onRefresh={() => onRefresh()} />}>

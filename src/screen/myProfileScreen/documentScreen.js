@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, SafeAreaView, TouchableOpacity, TextInput, ScrollView, Dimensions, ToastAndroid, Platform } from 'react-native';
+import { View, Text, Image, SafeAreaView, TouchableOpacity, TextInput, ScrollView, Dimensions, StatusBar, ToastAndroid, Platform } from 'react-native';
 import { UserReviewService } from "../../services/UserService/UserService";
 import MyPermissionController from '../../helpers/appPermission';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -279,6 +279,7 @@ const documentScreen = (props) => {
 
     return (
         <SafeAreaView style={STYLE.Documentstyles.container}>
+            <StatusBar backgroundColor='#5AC8FA' barStyle='dark-content' />
             <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={'always'}>
                 <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 30 }}>
                     <View style={{ justifyContent: 'flex-start' }}>

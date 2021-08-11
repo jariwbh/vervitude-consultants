@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, SafeAreaView, TouchableOpacity, TextInput, ScrollView, Platform, ToastAndroid } from 'react-native';
+import { Text, View, SafeAreaView, TouchableOpacity, TextInput, ScrollView, Platform, ToastAndroid, StatusBar } from 'react-native';
 import RegisterService from '../../services/RegisterService/RegisterService';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as SCREEN from '../../context/screen/screenName';
@@ -119,6 +119,7 @@ const inviteScreen = (props) => {
 
     return (
         <SafeAreaView style={STYLES.styles.container}>
+            <StatusBar backgroundColor='#EEEEEE' barStyle='dark-content' />
             <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={'always'}>
                 <View style={{ justifyContent: 'flex-start', marginLeft: 20, marginTop: 30 }}>
                     <TouchableOpacity onPress={() => props.navigation.goBack(null)}>

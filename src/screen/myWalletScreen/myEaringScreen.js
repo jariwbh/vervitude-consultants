@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, Dimensions, SafeAreaView, TouchableOpacity, ScrollView, FlatList, RefreshControl } from 'react-native'
+import { View, Text, Image, Dimensions, SafeAreaView, TouchableOpacity, ScrollView, FlatList, RefreshControl, StatusBar } from 'react-native'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as SCREEN from '../../context/screen/screenName';
@@ -150,6 +150,7 @@ function myEaringScreen(props) {
 
   return (
     <SafeAreaView style={STYLE.Wallatestyles.container}>
+      <StatusBar backgroundColor='#EEEEEE' barStyle='dark-content' />
       <ScrollView showsVerticalScrollIndicator={false}
         nestedScrollEnabled={true}
         refreshControl={<RefreshControl refreshing={refreshing} title="Pull to refresh" tintColor="#5AC8FA" titleColor="#5AC8FA" colors={["#5AC8FA"]} onRefresh={() => onRefresh()} />}>

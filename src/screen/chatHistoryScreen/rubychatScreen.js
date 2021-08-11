@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useState } from 'react';
-import { View, Text, Dimensions, SafeAreaView, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
+import { View, Text, Dimensions, SafeAreaView, StyleSheet, ScrollView, TouchableOpacity, Image, StatusBar } from 'react-native';
 import * as SCREEN from '../../context/screen/screenName';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -164,6 +164,7 @@ const rubychatScreen = (props, { navigation }) => {
 
 	return (
 		<SafeAreaView style={styles.container}>
+			<StatusBar backgroundColor='#EEEEEE' barStyle='dark-content' />
 			<View
 				style={{ justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', marginTop: 30 }}>
 				<View style={{ justifyContent: 'flex-start', alignItems: 'center', flexDirection: 'row' }}>
@@ -181,7 +182,7 @@ const rubychatScreen = (props, { navigation }) => {
 							<FontAwesome name='circle' size={15} color='#EEEEEE' style={{ marginLeft: -20, marginTop: -40 }} />
 					}
 					<View style={{ justifyContent: 'flex-start', alignItems: 'flex-start', flexDirection: 'column', marginLeft: 15 }}>
-						<Text style={{ fontSize: 20, color: '#5AC8FA', textTransform: 'capitalize' }}>{User.contextid.property.first_name}</Text>
+						<Text style={{ fontSize: 20, color: '#5AC8FA', textTransform: 'capitalize' }}>{User.contextid.fullname.split(' ')[0]}</Text>
 						<Text style={{ fontSize: 10, color: '#000000' }}>{User.contextid.property.live ? 'Online' : 'Ofline'}</Text>
 					</View>
 				</View>

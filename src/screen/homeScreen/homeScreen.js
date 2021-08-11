@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
     Text, View, SafeAreaView, Dimensions, TouchableOpacity, ScrollView, BackHandler,
-    FlatList, Modal, Switch, Image, Platform, ToastAndroid, RefreshControl
+    FlatList, Modal, Switch, Image, Platform, StatusBar, RefreshControl
 } from 'react-native';
 import { MYPROFILESCREEN, CHATHISTORYSCREEN } from '../../context/screen/screenName';
 import { getCategory } from '../../services/HomeService/HomeService';
@@ -471,6 +471,7 @@ const homeScreen = (props) => {
 
     return (
         <SafeAreaView style={STYLES.styles.container}>
+            <StatusBar backgroundColor='#EEEEEE' barStyle='dark-content' />
             <ScrollView showsVerticalScrollIndicator={false}
                 refreshControl={<RefreshControl refreshing={refreshing} title="Pull to refresh" tintColor="#5AC8FA" titleColor="#5AC8FA" colors={["#5AC8FA"]} onRefresh={() => onRefresh()} />}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 30 }}>

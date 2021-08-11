@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-    View, Text, Image, SafeAreaView, TouchableOpacity, TextInput,
+    View, Text, Image, SafeAreaView, TouchableOpacity, TextInput, StatusBar,
     ScrollView, ToastAndroid, Platform, Keyboard, FlatList, Modal
 } from 'react-native';
 import { SendEmailService, SendSmsService } from '../../services/SendEmailandSmsService/SendEmailandSmsService';
@@ -568,6 +568,7 @@ const editScreen = (props) => {
 
     return (
         <SafeAreaView style={STYLE.Editstyles.container}>
+            <StatusBar backgroundColor='#5AC8FA' barStyle='dark-content' />
             <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={'always'}>
                 <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 30 }}>
                     <View style={{ justifyContent: 'flex-start' }}>

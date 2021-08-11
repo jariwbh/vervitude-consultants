@@ -115,7 +115,7 @@ export default class registerScreen extends Component {
         const { loading, usererror, mobile_numbererror, fullnameerror } = this.state;
         return (
             <SafeAreaView style={STYLES.styles.container}>
-                <StatusBar backgroundColor='#80caff' hidden barStyle='light-content' />
+                <StatusBar backgroundColor='tarferent' barStyle='light-content' translucent />
                 <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={'always'}>
                     <View style={STYLES.styles.circle}>
                         <Image source={require('../../assets/images/icon.png')} style={STYLES.styles.imageView} />

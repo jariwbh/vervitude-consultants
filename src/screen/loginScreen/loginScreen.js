@@ -199,7 +199,7 @@ export default class loginScreen extends Component {
         const { loading, showModalVisible, showMessageModalVisible, usererror, passworderror, subject, subjecterror, description, descriptionerror } = this.state;
         return (
             <SafeAreaView style={STYLES.styles.container}>
-                <StatusBar backgroundColor='#80caff' hidden barStyle='light-content' />
+                <StatusBar backgroundColor='transparent' barStyle='light-content' translucent={true} />
                 <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={'always'}>
                     <View style={STYLES.styles.circle}>
                         <Image source={require('../../assets/images/icon.png')} style={STYLES.styles.imageView} />
