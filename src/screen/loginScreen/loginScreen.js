@@ -124,8 +124,9 @@ export default class loginScreen extends Component {
             alert('Consultant will be logging Only Member ID');
             return;
         }
+        let user = username.trim();
         const body = {
-            username: username,
+            username: user.toUpperCase(),
             password: password
         }
         this.setState({ loading: true });
@@ -140,8 +141,6 @@ export default class loginScreen extends Component {
                         this.setState({ loading: false })
                         if (Platform.OS === 'android') {
                             ToastAndroid.show('SignIn Success!', ToastAndroid.LONG);
-                        } else {
-                            alert('SignIn Success!');
                         }
                         this.props.navigation.navigate(MAINSCREEN);
                         return;
@@ -184,12 +183,11 @@ export default class loginScreen extends Component {
             })
         }
         catch (error) {
-            console.log(`error`, error);
             this.setState({ loading: false });
             if (Platform.OS === 'android') {
-                ToastAndroid.show('Message Sending Failed!', ToastAndroid.SHORT);
+                ToastAndroid.show('Requested Sending Failed!', ToastAndroid.SHORT);
             } else {
-                alert('Message Sending Failed!');
+                alert('Requested Sending Failed!');
             }
 
         }

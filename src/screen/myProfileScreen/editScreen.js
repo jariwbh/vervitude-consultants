@@ -391,9 +391,9 @@ const editScreen = (props) => {
             mobilebody = {
                 "messagetype": "SMS",
                 "message": {
-                    "content": `${verifyOtpNum} is the OTP for accessing on E-Quest Counsulting Solutions Pvt. Ltd. Valid till 5 Minutes.Do not share this with anyone.`,
-                    "to": [mobile],
-                    "subject": "Profile Verification OTP"
+                    "content": `Dear User, Use this 4-digit OTP ${verifyOtpNum} to verify your mobile number with Vervitude app. Please note that this code is only valid for 2 minutes. A brand by E-QUEST CONSULTING SOLUTIONS.`,
+                    "to": mobile,
+                    "subject": "Profile OTP Verification E-QUEST CONSULTING"
                 }
             }
         }
@@ -402,9 +402,9 @@ const editScreen = (props) => {
             emailbody = {
                 "messagetype": "EMAIL",
                 "message": {
-                    "content": `${verifyOtpNum} is the OTP for accessing on E-Quest Counsulting Solutions Pvt. Ltd. Valid till 5 Minutes.Do not share this with anyone.`,
-                    "to": [primaryemail],
-                    "subject": "Profile Verification OTP"
+                    "content": `Dear User, Use this 4-digit OTP ${verifyOtpNum} to verify your mobile number with Vervitude app. Please note that this code is only valid for 2 minutes. A brand by E-QUEST CONSULTING SOLUTIONS.`,
+                    "to": primaryemail,
+                    "subject": "Profile OTP Verification E-QUEST CONSULTING"
                 }
             }
         }
@@ -413,11 +413,6 @@ const editScreen = (props) => {
             if (primaryemail) {
                 const response = await SendEmailService(emailbody);
                 if (response.data != 'undefind' && response.status == 200) {
-                    if (Platform.OS === 'android') {
-                        ToastAndroid.show('OTP Sending', ToastAndroid.LONG);
-                    } else {
-                        alert('OTP Sending');
-                    }
                     setBtnloading(false);
                 }
             }
@@ -425,13 +420,14 @@ const editScreen = (props) => {
             if (mobile) {
                 const response1 = await SendSmsService(mobilebody);
                 if (response1.data != 'undefind' && response1.status == 200) {
-                    if (Platform.OS === 'android') {
-                        ToastAndroid.show('OTP Sending', ToastAndroid.LONG);
-                    } else {
-                        alert('OTP Sending');
-                    }
                     setBtnloading(false);
                 }
+            }
+
+            if (Platform.OS === 'android') {
+                ToastAndroid.show('OTP Sending', ToastAndroid.LONG);
+            } else {
+                alert('OTP Sending');
             }
         }
         catch (error) {

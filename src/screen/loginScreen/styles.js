@@ -9,8 +9,8 @@ export const styles = StyleSheet.create({
     },
     imageView: {
         marginLeft: 70,
-        marginTop: 200,
-        height: 200,
+        marginTop: 265,
+        height: 50,
         width: 200,
     },
     backgroundImage: {

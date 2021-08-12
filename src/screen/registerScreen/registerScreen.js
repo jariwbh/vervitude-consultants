@@ -192,6 +192,11 @@ export default class registerScreen extends Component {
                                 </TouchableOpacity>
                             </View>
                         </View>
+                        <View style={STYLES.styles.centeView} >
+                            <TouchableOpacity onPress={() => { this.props.navigation.navigate(LOGINSCREEN), this.resetScreen() }} >
+                                <Text style={STYLES.styles.loginText}>{' ' + ' Go to Back Login'}</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                     <View style={{ marginVertical: 20 }} />
                 </ScrollView>
