@@ -49,8 +49,8 @@ export const styles = StyleSheet.create({
     TextInput: {
         flex: 1,
         fontSize: 14,
-        textAlign: 'center',
-        fontWeight: 'bold'
+        textAlign: 'center'
+        //fontWeight: 'bold'
     },
     centeView: {
         justifyContent: 'center',
@@ -81,6 +81,15 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         width: WIDTH / 2,
         backgroundColor: '#5AC8FA',
+        borderRadius: 50,
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    backBtn: {
+        flexDirection: 'row',
+        width: WIDTH / 3,
+        backgroundColor: '#FFFFFF',
         borderRadius: 50,
         height: 40,
         alignItems: 'center',

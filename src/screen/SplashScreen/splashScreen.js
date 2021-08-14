@@ -39,7 +39,7 @@ function SplashScreen(props) {
 
   return (
     <SafeAreaView style={{ flex: 1 }} >
-      <StatusBar backgroundColor='#EEEEEE' barStyle='dark-content' />
+      <StatusBar backgroundColor='#AAAAAA' barStyle='dark-content' />
     </SafeAreaView>
   );
 }

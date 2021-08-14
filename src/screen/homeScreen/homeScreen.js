@@ -23,6 +23,8 @@ import moment from 'moment';
 import { useFocusEffect } from '@react-navigation/native';
 import firebase from '@react-native-firebase/app';
 import messaging from '@react-native-firebase/messaging';
+import { NotificationService } from '../../services/NotificationService/NotificationService';
+import * as SCREEN from '../../context/screen/screenName';
 
 const data = {
     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Sat', 'Sun'],
@@ -85,6 +87,7 @@ const homeScreen = (props) => {
     const [dashboardView, setDashboardView] = useState(null);
     const [filterSelectValue, setfilterSelectValue] = useState(null);
     const [refreshing, setrefreshing] = useState(false);
+    const [notification, setNotification] = useState(0);
     let userID;
 
     useEffect(() => {
@@ -102,7 +105,7 @@ const homeScreen = (props) => {
 
     useEffect(() => {
     }, [selectedItem, userDetails, allCategorytoggle, loading, filterList, filterSelectValue,
-        selectCategory, online, dashboardView, refreshing, dashboardtopEarner]);
+        selectCategory, online, dashboardView, refreshing, dashboardtopEarner, notification]);
 
     useFocusEffect(
         React.useCallback(() => {
@@ -290,12 +293,15 @@ const homeScreen = (props) => {
             }, 3000);;
         } else {
             var UserInfo = JSON.parse(getUser);
+            //console.log(`UserInfo`, UserInfo);
             userID = UserInfo._id
             PushNotifications();
             await getByIdUser(UserInfo._id);
+            await getNotification(UserInfo._id);
             setuserDetails(UserInfo);
             setloading(false);
-            setOnlineUser(UserInfo.property && UserInfo.property.live == true ? true : false)
+            //console.log(`UserInfo.property`, UserInfo.property);
+            setOnlineUser(UserInfo.property && UserInfo.property.live === true ? true : false)
         }
     }
 
@@ -395,6 +401,7 @@ const homeScreen = (props) => {
         try {
             // const response = await LogoutService(user);
             const response = await UserUpdateService(user);
+            console.log(`response.data`, response.data);
             if (response.data != null && response.data != 'undefind' && response.status == 200) {
                 authenticateUser(user);
                 setOnlineUser(false);
@@ -458,6 +465,16 @@ const homeScreen = (props) => {
         };
     }
 
+    //get notification count
+    const getNotification = async (id) => {
+        try {
+            const response = await NotificationService(id);
+            setNotification(response.data.length);
+        } catch (error) {
+            console.log(`error`, error);
+        }
+    }
+
     //toggle switch rendom select to call function 
     const onTouchSelectFilterList = (item, index) => {
         const filteredlists = filterList.map((item) => {
@@ -471,12 +488,19 @@ const homeScreen = (props) => {
 
     return (
         <SafeAreaView style={STYLES.styles.container}>
-            <StatusBar backgroundColor='#EEEEEE' barStyle='dark-content' />
+            <StatusBar backgroundColor='#AAAAAA' barStyle='dark-content' />
             <ScrollView showsVerticalScrollIndicator={false}
                 refreshControl={<RefreshControl refreshing={refreshing} title="Pull to refresh" tintColor="#5AC8FA" titleColor="#5AC8FA" colors={["#5AC8FA"]} onRefresh={() => onRefresh()} />}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 30 }}>
                     <View style={{ justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center' }}>
                         <MenuButton onPress={() => { props.navigation.navigate(MYPROFILESCREEN) }} />
+                        <TouchableOpacity onPress={() => props.navigation.navigate(SCREEN.NOTIFICATIONSCREEN)}
+                            style={{ marginLeft: 10, marginTop: -10, justifyContent: 'center', alignItems: 'center' }}>
+                            <Image source={require('../../assets/images/notificationicon.png')} style={{ height: 25, width: 20 }} />
+                            <View style={{ marginLeft: 15, marginTop: -40, height: 22, width: 22, borderRadius: 100, justifyContent: 'center', alignItems: 'center', backgroundColor: '#EB5757' }}>
+                                <Text style={{ fontWeight: 'bold', fontSize: 12, color: '#FFFFFF' }}>{0}</Text>
+                            </View>
+                        </TouchableOpacity>
                         {online == true ?
                             <View style={{ marginLeft: 30 }}>
                                 <TouchableOpacity style={STYLES.styles.onlineswitchBtn} onPress={() => { setOnline(true) }} >

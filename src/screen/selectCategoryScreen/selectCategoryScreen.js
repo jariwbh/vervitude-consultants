@@ -27,9 +27,34 @@ function selectCategoryScreen(props) {
     const onLoadScreen = async () => {
         await getUserDetails();
         const response = await CategoryService();
+        //if (response.data) {
+        //   const groupedCategory = await groupBy(response.data, x => x.property.skillcategory);
+        //setCategoryList(groupedCategory);
+        //}
         setCategoryList(response.data);
         await setselectCategoryDefaultValue(response.data);
         setloading(false);
+    }
+
+    async function groupBy(list) {
+        var str1 = 'property';
+        var str2 = 'skillcategory';
+        var finallist = [], list2 = [];
+        var ind;
+        for (let i = 0; i < list.length; i++) {
+            let item = list[i]
+            ind = list2.findIndex(a => a == item[str1][str2]);
+            if (ind != null && ind != undefined) {
+                if (ind == -1) {
+                    finallist[item[str1][str2]] = [];
+                    finallist[item[str1][str2]].push(item);
+                    list2.push(item[str1][str2]);
+                } else {
+                    finallist[item[str1][str2]].push(item);
+                }
+            }
+        }
+        return finallist;
     }
 
     //first time screen open to call function
@@ -75,8 +100,8 @@ function selectCategoryScreen(props) {
 
     //render category 
     const renderCategory = ({ item }) => (
-        <View style={{ paddingHorizontal: 10, paddingVertical: 5 }}>
-            {item.property.skillcategory == 'COMING SOON' ?
+        <View style={{ padding: 10 }}>
+            {item.property.skillcategory == 'COMING SOON' || item.property.skillcategory == 'Coming Soon' ?
                 <View>
                     <TouchableOpacity disabled={true}>
                         <Image source={{ uri: item.property.image[0].attachment }}
@@ -90,7 +115,7 @@ function selectCategoryScreen(props) {
                         <Image source={{ uri: item.property.image[0].attachment }}
                             style={{ width: 70, height: 70, borderRadius: 10, borderWidth: 0.2, borderColor: '#555555' }} />
                     </TouchableOpacity>
-                    <Text style={{ fontSize: 12, textAlign: 'center', textTransform: 'uppercase', marginTop: 5, color: '#000000' }}>{item.property.skillcategory}</Text>
+                    <Text style={{ fontSize: 12, textAlign: 'center', textTransform: 'uppercase', marginTop: 5, color: '#000000', width: 70 }}>{item.property.skillcategory}</Text>
                 </View>
             }
         </View>
@@ -152,31 +177,26 @@ function selectCategoryScreen(props) {
         }
         catch (error) {
             setloading(false);
-            // if (Platform.OS === 'android') {
-            //     ToastAndroid.show("Your Category Not Update!", ToastAndroid.SHORT);
-            // } else { alert('Your Category Not Update!') }
+
         }
     }
 
     return (
         <SafeAreaView style={STYLE.styles.container}>
-            <StatusBar backgroundColor='#EEEEEE' barStyle='dark-content' />
+            <StatusBar backgroundColor='#AAAAAA' barStyle='dark-content' />
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 30 }}>
-
                     <View style={{ justifyContent: 'flex-start' }}>
                         <TouchableOpacity onPress={() => props.navigation.goBack(null)}>
                             <AntDesign name='arrowleft' color='#5AC8FA' size={24} style={{ marginLeft: 15 }} />
                         </TouchableOpacity>
                     </View>
-
                     <View style={{ justifyContent: 'flex-end' }}>
                         <TouchableOpacity onPress={() => onPressSubmit()}
                             style={STYLE.styles.submitbtn}>
                             <Text style={{ fontSize: 14, color: '#5AC8FA' }}>Submit</Text>
                         </TouchableOpacity>
                     </View>
-
                 </View>
 
                 <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 40 }}>
@@ -187,7 +207,7 @@ function selectCategoryScreen(props) {
                     />
                 </View>
 
-                <View style={{ marginTop: 20, justifyContent: 'center', alignItems: 'center' }}>
+                <View style={{ marginTop: 0 }}>
                     <FlatList
                         renderItem={renderCategory}
                         data={categoryList}

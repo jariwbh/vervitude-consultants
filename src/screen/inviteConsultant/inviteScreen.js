@@ -119,7 +119,7 @@ const inviteScreen = (props) => {
 
     return (
         <SafeAreaView style={STYLES.styles.container}>
-            <StatusBar backgroundColor='#EEEEEE' barStyle='dark-content' />
+            <StatusBar backgroundColor='#AAAAAA' barStyle='dark-content' />
             <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={'always'}>
                 <View style={{ justifyContent: 'flex-start', marginLeft: 20, marginTop: 30 }}>
                     <TouchableOpacity onPress={() => props.navigation.goBack(null)}>

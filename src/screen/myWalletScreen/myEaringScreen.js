@@ -150,7 +150,7 @@ function myEaringScreen(props) {
 
   return (
     <SafeAreaView style={STYLE.Wallatestyles.container}>
-      <StatusBar backgroundColor='#EEEEEE' barStyle='dark-content' />
+      <StatusBar backgroundColor='#AAAAAA' barStyle='dark-content' />
       <ScrollView showsVerticalScrollIndicator={false}
         nestedScrollEnabled={true}
         refreshControl={<RefreshControl refreshing={refreshing} title="Pull to refresh" tintColor="#5AC8FA" titleColor="#5AC8FA" colors={["#5AC8FA"]} onRefresh={() => onRefresh()} />}>

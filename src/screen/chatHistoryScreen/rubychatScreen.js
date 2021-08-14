@@ -164,7 +164,7 @@ const rubychatScreen = (props, { navigation }) => {
 
 	return (
 		<SafeAreaView style={styles.container}>
-			<StatusBar backgroundColor='#EEEEEE' barStyle='dark-content' />
+			<StatusBar backgroundColor='#AAAAAA' barStyle='dark-content' />
 			<View
 				style={{ justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', marginTop: 30 }}>
 				<View style={{ justifyContent: 'flex-start', alignItems: 'center', flexDirection: 'row' }}>

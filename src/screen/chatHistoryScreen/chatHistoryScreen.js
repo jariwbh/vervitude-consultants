@@ -117,7 +117,7 @@ function chatHistoryScreen(props) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <StatusBar backgroundColor='#EEEEEE' barStyle='dark-content' />
+            <StatusBar backgroundColor='#AAAAAA' barStyle='dark-content' />
             <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 30 }}>
                 <View style={{ justifyContent: 'flex-start' }}>
                     <TouchableOpacity style={styles.categoryIcon} onPress={() => { props.navigation.goBack(null) }} >

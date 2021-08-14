@@ -36,6 +36,8 @@ const editScreen = (props) => {
     const [usertagError, setusertagError] = useState(null);
     const [location, setlocation] = useState(null);
     const [locationError, setlocationError] = useState(null);
+    const [careerstart, setcareerstart] = useState(null);
+    const [careerstartError, setcareerstartError] = useState(null);
     const [about, setabout] = useState(null);
     const [aboutError, setaboutError] = useState(null);
     const [brand, setbrand] = useState([]);
@@ -57,11 +59,12 @@ const editScreen = (props) => {
     const fifthTextInputRef = React.createRef();
     const sixTextInputRef = React.createRef();
     const sevenTextInputRef = React.createRef();
+    const eightTextInputRef = React.createRef();
 
     useEffect(() => {
     }, [loading, first_name, last_name, mobile, first_nameError, last_nameError, mobileError, primaryemailError,
         locationError, aboutError, primaryemail, usertag, usertagError, location, about, brand, userDetails, btnloading,
-        verifyOtpNumber, inputOtpNumber, showModel, verifyloading, inputOtpNumberError])
+        verifyOtpNumber, inputOtpNumber, showModel, verifyloading, inputOtpNumberError, careerstart, careerstartError])
 
     //check first name validation
     const first_nameCheck = (first_name) => {
@@ -139,6 +142,17 @@ const editScreen = (props) => {
         return;
     }
 
+    //check location validation
+    const careerstartCheck = (careerstart) => {
+        if (!careerstart || careerstart <= 0) {
+            setcareerstartError('Year of experience cannot be empty');
+            return;
+        }
+        setcareerstart(careerstart);
+        setlocationError(null);
+        return;
+    }
+
     //check aboout validation
     const aboutCheck = (about) => {
         if (!about || about <= 0) {
@@ -171,6 +185,7 @@ const editScreen = (props) => {
             setbrand([...UserInfo.property.add_brand, { add: true, change: false }]);
             setOldEmail(UserInfo.property.primaryemail);
             setOldMobile(UserInfo.property.mobile);
+            setcareerstart(UserInfo.property.careerstart);
         }
     }
 
@@ -340,13 +355,14 @@ const editScreen = (props) => {
     //UPDATE PROFILE INFOMATION API CALL
     const UpdateUserInfo = async () => {
         try {
-            if (!first_name || !last_name || !mobile || !primaryemail || !usertag || !location || !about) {
+            if (!first_name || !last_name || !mobile || !primaryemail || !usertag || !location || !about || !careerstart) {
                 setfirst_name(first_name);
                 setlast_name(last_name);
                 setmobile(mobile);
                 setprimaryemail(primaryemail);
                 setusertag(usertag);
                 setlocation(location);
+                setcareerstart(careerstart);
                 about(about);
                 return;
             }
@@ -373,7 +389,7 @@ const editScreen = (props) => {
 
             if (userDetails.property.first_name != first_name || userDetails.property.last_name != last_name || userDetails.property.mobile != mobile
                 || userDetails.property.primaryemail != primaryemail || userDetails.property.usertag != usertag || userDetails.property.location != location
-                || userDetails.property.about != about || filtercheck && filtercheck.length != 0) {
+                || userDetails.property.careerstart != careerstart || userDetails.property.about != about || filtercheck && filtercheck.length != 0) {
                 CheckAndUpdateUserInfo();
             }
         } catch (error) {
@@ -520,6 +536,9 @@ const editScreen = (props) => {
         if (userDetails.property.location != location) {
             body.property.location = location;
         }
+        if (userDetails.property.careerstart != careerstart) {
+            body.property.careerstart = careerstart;
+        }
         if (userDetails.property.about != about) {
             body.property.about = about;
         }
@@ -533,7 +552,7 @@ const editScreen = (props) => {
         if (body.property) {
             if (userDetails.property.first_name != first_name || userDetails.property.last_name != last_name || userDetails.property.mobile != mobile
                 || userDetails.property.primaryemail != primaryemail || userDetails.property.usertag != usertag || userDetails.property.location != location
-                || userDetails.property.about != about || filtercheck && filtercheck.length != 0) {
+                || userDetails.property.careerstart != careerstart || userDetails.property.about != about || filtercheck && filtercheck.length != 0) {
                 try {
                     await UserReviewService(body).then(response => {
                         if (response.data != null && response.data != 'undefind' && response.status == 200) {
@@ -552,7 +571,6 @@ const editScreen = (props) => {
                     })
                 }
                 catch (error) {
-                    console.log(`error`, error);
                     setloading(false);
                     if (Platform.OS === 'android') {
                         ToastAndroid.show("Your Information Not Update", ToastAndroid.SHORT);
@@ -713,6 +731,25 @@ const editScreen = (props) => {
                         </View>
 
                         <View style={{ marginLeft: 10, marginTop: 5 }}>
+                            <Text style={{ fontSize: 12 }}>Years of Experience</Text>
+                        </View>
+                        <View style={careerstartError == null ? STYLE.Editstyles.inputView : STYLE.Editstyles.inputViewError}>
+                            <TextInput
+                                style={STYLE.Editstyles.TextInput}
+                                placeholder='Years of Experience'
+                                type='clear'
+                                returnKeyType='next'
+                                placeholderTextColor='#000000'
+                                blurOnSubmit={false}
+                                defaultValue={careerstart}
+                                keyboardType='number-pad'
+                                ref={sevenTextInputRef}
+                                onSubmitEditing={() => eightTextInputRef.current.focus()}
+                                onChangeText={(careerstart) => careerstartCheck(careerstart)}
+                            />
+                        </View>
+
+                        <View style={{ marginLeft: 10, marginTop: 5 }}>
                             <Text style={{ fontSize: 12 }}>About</Text>
                         </View>
                         <View style={aboutError == null ? STYLE.Editstyles.textAreainputView : STYLE.Editstyles.textAreainputViewError}>
@@ -727,7 +764,7 @@ const editScreen = (props) => {
                                 multiline={true}
                                 defaultValue={about}
                                 autoCapitalize='none'
-                                ref={sevenTextInputRef}
+                                ref={eightTextInputRef}
                                 onSubmitEditing={() => Keyboard.dismiss()}
                                 onChangeText={(about) => aboutCheck(about)}
                             />

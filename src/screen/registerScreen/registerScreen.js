@@ -115,7 +115,7 @@ export default class registerScreen extends Component {
         const { loading, usererror, mobile_numbererror, fullnameerror } = this.state;
         return (
             <SafeAreaView style={STYLES.styles.container}>
-                <StatusBar backgroundColor='tarferent' barStyle='light-content' translucent />
+                <StatusBar backgroundColor='transparent' barStyle='light-content' translucent={true} />
                 <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={'always'}>
                     <View style={STYLES.styles.circle}>
                         <Image source={require('../../assets/images/icon.png')} style={STYLES.styles.imageView} />
@@ -140,7 +140,7 @@ export default class registerScreen extends Component {
                                             placeholder='Full Name'
                                             type='clear'
                                             returnKeyType='next'
-                                            placeholderTextColor='#000000'
+                                            placeholderTextColor='#AAAAAA'
                                             defaultValue={this.state.fullname}
                                             blurOnSubmit={false}
                                             onSubmitEditing={() => { this.secondTextInputRef.current.focus() }}
@@ -153,7 +153,7 @@ export default class registerScreen extends Component {
                                             placeholder='Email Address'
                                             type='clear'
                                             returnKeyType='next'
-                                            placeholderTextColor='#000000'
+                                            placeholderTextColor='#AAAAAA'
                                             defaultValue={this.state.username}
                                             ref={this.secondTextInputRef}
                                             blurOnSubmit={false}
@@ -168,7 +168,7 @@ export default class registerScreen extends Component {
                                             type='clear'
                                             keyboardType='number-pad'
                                             returnKeyType='done'
-                                            placeholderTextColor='#000000'
+                                            placeholderTextColor='#AAAAAA'
                                             defaultValue={this.state.mobile_number}
                                             ref={this.thirdTextInputRef}
                                             blurOnSubmit={false}
@@ -192,9 +192,9 @@ export default class registerScreen extends Component {
                                 </TouchableOpacity>
                             </View>
                         </View>
-                        <View style={STYLES.styles.centeView} >
-                            <TouchableOpacity onPress={() => { this.props.navigation.navigate(LOGINSCREEN), this.resetScreen() }} >
-                                <Text style={STYLES.styles.loginText}>{' ' + ' Go to Back Login'}</Text>
+                        <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 15 }}>
+                            <TouchableOpacity style={STYLES.styles.backBtn} onPress={() => { this.props.navigation.navigate(LOGINSCREEN), this.resetScreen() }} >
+                                <Text style={{ color: '#5AC8FA', fontSize: 14 }}>Back</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

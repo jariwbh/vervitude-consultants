@@ -223,8 +223,8 @@ export default class loginScreen extends Component {
                                             type='clear'
                                             returnKeyType='next'
                                             defaultValue={this.state.username}
-                                            placeholderTextColor='#000000'
                                             blurOnSubmit={false}
+                                            placeholderTextColor="#AAAAAA"
                                             onSubmitEditing={() => { this.secondTextInputRef.current.focus() }}
                                             onChangeText={(email) => this.setEmail(email)}
                                         />
@@ -235,7 +235,7 @@ export default class loginScreen extends Component {
                                             placeholder='Password'
                                             type='clear'
                                             defaultValue={this.state.password}
-                                            placeholderTextColor='#000000'
+                                            placeholderTextColor='#AAAAAA'
                                             secureTextEntry={true}
                                             returnKeyType='done'
                                             ref={this.secondTextInputRef}
@@ -264,6 +264,7 @@ export default class loginScreen extends Component {
                     </View>
                     <View style={{ marginVertical: 20 }} />
                 </ScrollView>
+
                 {loading ? <Loader /> : null}
                 {/* Help & Support model Pop */}
                 <Modal
@@ -272,48 +273,50 @@ export default class loginScreen extends Component {
                     visible={showModalVisible}
                     onRequestClose={() => { this.showModalVisible(!showModalVisible) }}
                 >
-                    <View style={STYLES.styles.centerView}>
-                        <View style={STYLES.styles.modalView}>
-                            <View style={{ marginTop: 20 }}></View>
-                            <View style={subjecterror == null ? STYLES.styles.modelInputView : STYLES.styles.modelInputViewError}>
-                                <TextInput
-                                    style={STYLES.styles.modelTextInput}
-                                    placeholder='Subject'
-                                    type='clear'
-                                    returnKeyType='next'
-                                    placeholderTextColor='#999999'
-                                    defaultValue={subject}
-                                    blurOnSubmit={false}
-                                    onSubmitEditing={() => { this.secondTextInputRef.current.focus() }}
-                                    onChangeText={(email) => this.setSubject(email)}
-                                />
+                    <View style={{ alignItems: 'center', flex: 1 }}>
+                        <View style={{ position: 'absolute', bottom: 20 }}>
+                            <View style={STYLES.styles.modalView}>
+                                <View style={{ marginTop: 20 }}></View>
+                                <View style={subjecterror == null ? STYLES.styles.modelInputView : STYLES.styles.modelInputViewError}>
+                                    <TextInput
+                                        style={STYLES.styles.modelTextInput}
+                                        placeholder='Subject'
+                                        type='clear'
+                                        returnKeyType='next'
+                                        placeholderTextColor='#999999'
+                                        defaultValue={subject}
+                                        blurOnSubmit={false}
+                                        onSubmitEditing={() => { this.secondTextInputRef.current.focus() }}
+                                        onChangeText={(email) => this.setSubject(email)}
+                                    />
+                                </View>
+                                <View style={descriptionerror == null ? STYLES.styles.modelTextAreainputView : STYLES.styles.modelTextAreainputViewError}>
+                                    <TextInput
+                                        style={STYLES.styles.modelTextareaInput}
+                                        placeholder='Write Your Descripation'
+                                        type='clear'
+                                        returnKeyType='done'
+                                        placeholderTextColor='#999999'
+                                        blurOnSubmit={false}
+                                        numberOfLines={3}
+                                        multiline={true}
+                                        defaultValue={description}
+                                        ref={this.secondTextInputRef}
+                                        onSubmitEditing={() => Keyboard.dismiss()}
+                                        onChangeText={(password) => this.setDescription(password)}
+                                    />
+                                </View>
                             </View>
-                            <View style={descriptionerror == null ? STYLES.styles.modelTextAreainputView : STYLES.styles.modelTextAreainputViewError}>
-                                <TextInput
-                                    style={STYLES.styles.modelTextareaInput}
-                                    placeholder='Write Your Descripation'
-                                    type='clear'
-                                    returnKeyType='done'
-                                    placeholderTextColor='#999999'
-                                    blurOnSubmit={false}
-                                    numberOfLines={3}
-                                    multiline={true}
-                                    defaultValue={description}
-                                    ref={this.secondTextInputRef}
-                                    onSubmitEditing={() => Keyboard.dismiss()}
-                                    onChangeText={(password) => this.setDescription(password)}
-                                />
+                            <View style={{ marginTop: 15, flexDirection: 'row' }}>
+                                <TouchableOpacity onPress={() => this.onModelSubmit()}
+                                    style={STYLES.styles.savebtn}>
+                                    <Text style={{ fontSize: 14, color: '#FFFFFF' }}>Submit</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => { this.showModalVisible(!showModalVisible) }}
+                                    style={STYLES.styles.cancelbtn}>
+                                    <Text style={{ fontSize: 14, color: '#000000' }}>Cancel</Text>
+                                </TouchableOpacity>
                             </View>
-                        </View>
-                        <View style={{ marginTop: 15, flexDirection: 'row' }}>
-                            <TouchableOpacity onPress={() => this.onModelSubmit()}
-                                style={STYLES.styles.savebtn}>
-                                <Text style={{ fontSize: 14, color: '#FFFFFF' }}>Submit</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => { this.showModalVisible(!showModalVisible) }}
-                                style={STYLES.styles.cancelbtn}>
-                                <Text style={{ fontSize: 14, color: '#000000' }}>Cancel</Text>
-                            </TouchableOpacity>
                         </View>
                     </View>
                 </Modal>
@@ -325,17 +328,19 @@ export default class loginScreen extends Component {
                     visible={showMessageModalVisible}
                     onRequestClose={() => { this.showMessageModalVisible(!showMessageModalVisible) }}
                 >
-                    <View style={STYLES.styles.centerView}>
-                        <View style={STYLES.styles.msgModalView}>
-                            <Image source={require('../../assets/images/smileicon.png')} style={{ marginTop: 15, height: 40, width: 40 }} />
-                            <Text style={{ fontSize: 14, color: '#000000', marginTop: 15 }}>Thank you for your Feedback</Text>
-                            <Text style={{ fontSize: 14, color: '#000000' }}>We will get back you shortly</Text>
-                        </View>
-                        <View style={{ justifyContent: 'center', flexDirection: 'row', marginTop: 15 }}>
-                            <TouchableOpacity onPress={() => { this.showMessageModalVisible(!showMessageModalVisible) }}
-                                style={STYLES.styles.cancelbtn}>
-                                <Text style={{ fontSize: 14, color: '#000000' }}>Ok</Text>
-                            </TouchableOpacity>
+                    <View style={{ alignItems: 'center', flex: 1 }}>
+                        <View style={{ position: 'absolute', bottom: 20 }}>
+                            <View style={STYLES.styles.msgModalView}>
+                                <Image source={require('../../assets/images/smileicon.png')} style={{ marginTop: 35, height: 40, width: 40 }} />
+                                <Text style={{ fontSize: 14, color: '#000000', marginTop: 15 }}>Thank you for your Feedback</Text>
+                                <Text style={{ fontSize: 14, color: '#000000' }}>We will get back you shortly</Text>
+                            </View>
+                            <View style={{ justifyContent: 'center', flexDirection: 'row', marginTop: 15 }}>
+                                <TouchableOpacity onPress={() => { this.showMessageModalVisible(!showMessageModalVisible) }}
+                                    style={STYLES.styles.cancelbtn}>
+                                    <Text style={{ fontSize: 14, color: '#000000' }}>Ok</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     </View>
                 </Modal>

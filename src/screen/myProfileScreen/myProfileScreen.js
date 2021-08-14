@@ -11,7 +11,7 @@ import * as SCREEN from '../../context/screen/screenName';
 import { AUTHUSER } from '../../context/actions/type'
 import Loader from '../../components/loader/index';
 import * as STYLES from './styles';
-import { getByIdUserService } from '../../services/UserService/UserService';
+import { getByIdUserService, UserUpdateService } from '../../services/UserService/UserService';
 import { WalletDetailService } from '../../services/WalletService/WalletService';
 import { NotificationService } from '../../services/NotificationService/NotificationService';
 const HEIGHT = Dimensions.get('window').height;
@@ -99,14 +99,18 @@ const myProfileScreen = (props) => {
     }
 
     //LogOut Button click to call 
-    const onPressLogout = () => {
-        AsyncStorage.removeItem(AUTHUSER);
-        if (Platform.OS === 'android') {
-            ToastAndroid.show('Log Out Success!', ToastAndroid.SHORT);
-        } else {
-            alert('Log Out Success!');
+    const onPressLogout = async () => {
+        userDetails.property.livechat = [];
+        userDetails.property.live = false;
+        const response = await UserUpdateService(userDetails);
+        console.log(`response.data`, response.data);
+        if (response.data != null && response.data != 'undefind' && response.status == 200) {
+            AsyncStorage.removeItem(AUTHUSER);
+            if (Platform.OS === 'android') {
+                ToastAndroid.show('Log Out Success', ToastAndroid.SHORT);
+            }
+            props.navigation.replace(SCREEN.LOGINSCREEN);
         }
-        props.navigation.replace(SCREEN.LOGINSCREEN);
     }
 
     //check validation of subject
