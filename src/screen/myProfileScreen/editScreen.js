@@ -11,13 +11,15 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as SCREEN from '../../context/screen/screenName';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Feather from 'react-native-vector-icons/Feather';
-import { AUTHUSER } from '../../context/actions/type';
+import { AUTHUSER, UPLOAD_PRESET, CLOUD_URL } from '../../context/actions/type';
 import Loading from '../../components/loader/Loading';
 import ImagePicker from 'react-native-image-picker';
 import Loader from '../../components/loader/index';
 import RNFetchBlob from 'rn-fetch-blob';
 import * as STYLE from './styles';
 import OtpInputs from 'react-native-otp-inputs';
+import GeneralStatusBarColor from '../../components/StatusBarStyle/GeneralStatusBarColor';
+import crashlytics, { firebase } from "@react-native-firebase/crashlytics";
 
 const editScreen = (props) => {
     const [loading, setloading] = useState(false);
@@ -215,15 +217,19 @@ const editScreen = (props) => {
     const handlePicker = (field) => {
         ImagePicker.showImagePicker({}, (response) => {
             if (response.didCancel) {
+                firebase.crashlytics().recordError(response);
                 setloading(false);
-                console.log('User cancelled image picker');
+                //console.log('User cancelled image picker');
             } else if (response.error) {
                 setloading(false);
-                console.log('ImagePicker Error: ', response.error);
+                firebase.crashlytics().recordError(response);
+                //console.log('ImagePicker Error: ', response.error);
             } else if (response.customButton) {
                 setloading(false);
-                console.log('User tapped custom button: ', response.customButton);
+                firebase.crashlytics().recordError(response);
+                //console.log('User tapped custom button: ', response.customButton);
             } else {
+                firebase.crashlytics().recordError(response);
                 setloading(true);
                 onPressUploadFile(field, response);
             }
@@ -234,9 +240,9 @@ const editScreen = (props) => {
     const onPressUploadFile = async (field, fileObj) => {
         if (fileObj != null) {
             const realPath = Platform.OS === 'ios' ? fileObj.uri.replace('file://', '') : fileObj.uri;
-            await RNFetchBlob.fetch('POST', 'https://api.cloudinary.com/v1_1/dlopjt9le/upload', { 'Content-Type': 'multipart/form-data' },
+            await RNFetchBlob.fetch('POST', CLOUD_URL, { 'Content-Type': 'multipart/form-data' },
                 [{ name: 'file', filename: Platform.OS === 'ios' ? fileObj.fileSize : fileObj.fileName, type: fileObj.type, data: RNFetchBlob.wrap(decodeURIComponent(realPath)) },
-                { name: 'upload_preset', data: 'gs95u3um' }])
+                { name: 'upload_preset', data: UPLOAD_PRESET }])
                 .then(response => response.json())
                 .then(data => {
                     setloading(false);
@@ -260,6 +266,7 @@ const editScreen = (props) => {
                         }
                     }
                 }).catch(error => {
+                    firebase.crashlytics().recordError(error);
                     setloading(false);
                     alert("Uploading Failed!");
                 })
@@ -302,6 +309,7 @@ const editScreen = (props) => {
                 })
             }
             catch (error) {
+                firebase.crashlytics().recordError(error);
                 // console.log(`error`, error);
                 setloading(false);
                 if (Platform.OS === 'android') {
@@ -393,7 +401,8 @@ const editScreen = (props) => {
                 CheckAndUpdateUserInfo();
             }
         } catch (error) {
-            console.log(`error`, error);
+            firebase.crashlytics().recordError(error);
+            //console.log(`error`, error);
         }
     }
 
@@ -447,7 +456,8 @@ const editScreen = (props) => {
             }
         }
         catch (error) {
-            console.log(`error`, error);
+            firebase.crashlytics().recordError(error);
+            //console.log(`error`, error);
             setBtnloading(false);
             if (Platform.OS === 'android') {
                 ToastAndroid.show('OTP Sending Problem', ToastAndroid.LONG);
@@ -491,6 +501,7 @@ const editScreen = (props) => {
             }
         }
         catch (error) {
+            firebase.crashlytics().recordError(error);
             setVerifyloading(false);
             if (Platform.OS === 'android') {
                 ToastAndroid.show('OTP not Match!', ToastAndroid.LONG);
@@ -571,6 +582,7 @@ const editScreen = (props) => {
                     })
                 }
                 catch (error) {
+                    firebase.crashlytics().recordError(error);
                     setloading(false);
                     if (Platform.OS === 'android') {
                         ToastAndroid.show("Your Information Not Update", ToastAndroid.SHORT);
@@ -582,7 +594,7 @@ const editScreen = (props) => {
 
     return (
         <SafeAreaView style={STYLE.Editstyles.container}>
-            <StatusBar backgroundColor='#5AC8FA' barStyle='dark-content' />
+            <GeneralStatusBarColor hidden={false} translucent={true} backgroundColor="transparent" barStyle="dark-content" />
             <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={'always'}>
                 <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 30 }}>
                     <View style={{ justifyContent: 'flex-start' }}>

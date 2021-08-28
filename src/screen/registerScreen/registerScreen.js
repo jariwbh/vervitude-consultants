@@ -8,6 +8,8 @@ import { LOGINSCREEN } from '../../context/screen/screenName';
 import axiosConfig from '../../helpers/axiosConfig';
 import Loader from '../../components/loader';
 import * as STYLES from './styles';
+import GeneralStatusBarColor from '../../components/StatusBarStyle/GeneralStatusBarColor';
+import crashlytics, { firebase } from "@react-native-firebase/crashlytics";
 
 export default class registerScreen extends Component {
     constructor(props) {
@@ -103,6 +105,7 @@ export default class registerScreen extends Component {
         }
         catch (error) {
             this.setState({ loading: false })
+            firebase.crashlytics().recordError(error);
             if (Platform.OS === 'android') {
                 ToastAndroid.show('Request Submited Failed', ToastAndroid.SHORT);
             } else {
@@ -115,7 +118,7 @@ export default class registerScreen extends Component {
         const { loading, usererror, mobile_numbererror, fullnameerror } = this.state;
         return (
             <SafeAreaView style={STYLES.styles.container}>
-                <StatusBar backgroundColor='transparent' barStyle='light-content' translucent={true} />
+                <GeneralStatusBarColor hidden={false} translucent={true} backgroundColor="transparent" barStyle="dark-content" />
                 <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={'always'}>
                     <View style={STYLES.styles.circle}>
                         <Image source={require('../../assets/images/icon.png')} style={STYLES.styles.imageView} />

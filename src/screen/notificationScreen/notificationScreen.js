@@ -8,6 +8,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { AUTHUSER } from '../../context/actions/type';
 import { getByIdNotificationDeleteService, NotificationService, deleteAllNotificationService } from '../../services/NotificationService/NotificationService';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
+import GeneralStatusBarColor from '../../components/StatusBarStyle/GeneralStatusBarColor';
+import crashlytics, { firebase } from "@react-native-firebase/crashlytics";
 
 const notificationScreen = (props) => {
     const [loading, setloading] = useState(false);
@@ -48,7 +50,8 @@ const notificationScreen = (props) => {
             setNotification(response.data.length)
             setNotificationList(response.data)
         } catch (error) {
-            console.log(`error`, error);
+            firebase.crashlytics().recordError(error);
+            //console.log(`error`, error);
         }
     }
 
@@ -81,7 +84,8 @@ const notificationScreen = (props) => {
             if (response.data != null && response.data != undefined && response.status == 200)
                 getNotification(UserId);
         } catch (error) {
-            console.log(`error`, error);
+            firebase.crashlytics().recordError(error);
+            //console.log(`error`, error);
         }
     }
 
@@ -97,7 +101,8 @@ const notificationScreen = (props) => {
                 getNotification(UserId);
             }
         } catch (error) {
-            console.log(`error`, error);
+            firebase.crashlytics().recordError(error);
+            //console.log(`error`, error);
         }
     }
 
@@ -119,7 +124,7 @@ const notificationScreen = (props) => {
 
     return (
         <SafeAreaView style={STYLE.styles.container}>
-            <StatusBar backgroundColor='#5AC8FA' barStyle='dark-content' />
+            <GeneralStatusBarColor hidden={false} translucent={true} backgroundColor="transparent" barStyle="dark-content" />
             <ScrollView showsVerticalScrollIndicator={false}
                 nestedScrollEnabled={true}
                 refreshControl={<RefreshControl refreshing={refreshing} title="Pull to refresh" tintColor="#5AC8FA" titleColor="#5AC8FA" colors={["#5AC8FA"]} onRefresh={() => onRefresh()} />}>

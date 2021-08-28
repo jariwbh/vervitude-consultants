@@ -25,6 +25,8 @@ import firebase from '@react-native-firebase/app';
 import messaging from '@react-native-firebase/messaging';
 import { NotificationService } from '../../services/NotificationService/NotificationService';
 import * as SCREEN from '../../context/screen/screenName';
+import GeneralStatusBarColor from '../../components/StatusBarStyle/GeneralStatusBarColor';
+import crashlytics from "@react-native-firebase/crashlytics";
 
 const data = {
     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Sat', 'Sun'],
@@ -133,7 +135,8 @@ const homeScreen = (props) => {
             setDashboardView(response.data[0]);
             setDashboardtopEarner(response.data[0].data[0].topearnings);
         } catch (error) {
-            console.log(`error`, error);
+            firebase.crashlytics().recordError(error);
+            //console.log(`error`, error);
         }
     }
 
@@ -142,26 +145,26 @@ const homeScreen = (props) => {
         let sDate, eDate;
 
         if (filterSelectValue === 'all') {
-            console.log(`all`);
+            //console.log(`all`);
             sDate = moment('1990-01-01').format();
             eDate = moment().format();
         } else if (filterSelectValue === 'yearly') {
-            console.log(`yearly`);
+            //console.log(`yearly`);
             sDate = moment().format();
             eDate = moment().subtract(1, 'years')
             eDate = moment(eDate).format();
         } else if (filterSelectValue === 'weekly') {
-            console.log(`weekly`);
+            ///console.log(`weekly`);
             sDate = moment().format();
             eDate = moment().subtract(1, 'weeks')
             eDate = moment(eDate).format();
         } else if (filterSelectValue === 'montly') {
-            console.log(`montly`);
+            //console.log(`montly`);
             sDate = moment().format();
             eDate = moment().subtract(1, 'months')
             eDate = moment(eDate).format();
         } else if (filterSelectValue === 'today') {
-            console.log(`today`);
+            //console.log(`today`);
             sDate = moment().format();
             eDate = moment().format();
         }
@@ -170,7 +173,8 @@ const homeScreen = (props) => {
             const response = await getDashboardFilter(sDate, eDate);
             setDashboardView(response.data[0]);
         } catch (error) {
-            console.log(`error`, error);
+            firebase.crashlytics().recordError(error);
+            //console.log(`error`, error);
         }
     }
 
@@ -184,6 +188,7 @@ const homeScreen = (props) => {
             }
         }
         catch (error) {
+            firebase.crashlytics().recordError(error);
             //  console.log(`error`, error);
             setloading(false);
         }
@@ -314,6 +319,7 @@ const homeScreen = (props) => {
             }
         } catch (error) {
             setloading(false);
+            firebase.crashlytics().recordError(error);
         }
     }
 
@@ -362,7 +368,8 @@ const homeScreen = (props) => {
                 setSelectCategory(response.data.data);
             }
         } catch (error) {
-            console.log(`error`, error);
+            firebase.crashlytics().recordError(error);
+            //console.log(`error`, error);
         }
     }
 
@@ -401,13 +408,14 @@ const homeScreen = (props) => {
         try {
             // const response = await LogoutService(user);
             const response = await UserUpdateService(user);
-            console.log(`response.data`, response.data);
+            //console.log(`response.data`, response.data);
             if (response.data != null && response.data != 'undefind' && response.status == 200) {
                 authenticateUser(user);
                 setOnlineUser(false);
             }
         } catch (error) {
-            console.log(`error`, error);
+            firebase.crashlytics().recordError(error);
+            //console.log(`error`, error);
         }
     }
 
@@ -461,7 +469,8 @@ const homeScreen = (props) => {
                 authenticateUser(user);
             }
         } catch (error) {
-            console.log(`error`, error);
+            firebase.crashlytics().recordError(error);
+            //console.log(`error`, error);
         };
     }
 
@@ -471,7 +480,8 @@ const homeScreen = (props) => {
             const response = await NotificationService(id);
             setNotification(response.data.length);
         } catch (error) {
-            console.log(`error`, error);
+            firebase.crashlytics().recordError(error);
+            //console.log(`error`, error);
         }
     }
 
@@ -488,7 +498,7 @@ const homeScreen = (props) => {
 
     return (
         <SafeAreaView style={STYLES.styles.container}>
-            <StatusBar backgroundColor='#AAAAAA' barStyle='dark-content' />
+            <GeneralStatusBarColor hidden={false} translucent={true} backgroundColor="transparent" barStyle="dark-content" />
             <ScrollView showsVerticalScrollIndicator={false}
                 refreshControl={<RefreshControl refreshing={refreshing} title="Pull to refresh" tintColor="#5AC8FA" titleColor="#5AC8FA" colors={["#5AC8FA"]} onRefresh={() => onRefresh()} />}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 30 }}>
@@ -532,26 +542,26 @@ const homeScreen = (props) => {
 
                 <View style={{ justifyContent: 'space-around', flexDirection: 'row', marginTop: 10 }}>
                     <View style={STYLES.styles.box1}>
-                        <Text style={STYLES.styles.boxtext}> {dashboardView && dashboardView.data[0].totalearning ? '₹' + (dashboardView.data[0].totalearning).toFixed(2) : '--'}</Text>
+                        <Text style={STYLES.styles.boxtext}> {dashboardView?.data[0]?.totalearning ? '₹' + (dashboardView.data[0].totalearning).toFixed(2) : '--'}</Text>
                         <Text style={STYLES.styles.boxtextsecond}>Total Earning</Text>
                     </View>
                     <View style={STYLES.styles.box2}>
                         <View>
                             <Text style={STYLES.styles.boxuppertext}>Hrs</Text>
                         </View>
-                        <Text style={STYLES.styles.boxtext}>{dashboardView && dashboardView.data[0].totalhours ? (dashboardView.data[0].totalhours).toFixed(2) : '--'}</Text>
+                        <Text style={STYLES.styles.boxtext}>{dashboardView?.data[0]?.totalhours ? (dashboardView.data[0].totalhours).toFixed(2) : '--'}</Text>
                         <Text style={STYLES.styles.boxtextsecond}>Total Hours</Text>
                     </View>
                 </View>
                 <View style={{ justifyContent: 'space-around', flexDirection: 'row', marginTop: 10 }}>
                     <View style={STYLES.styles.box3}>
                         <Text style={STYLES.styles.boxuppertext}>Users</Text>
-                        <Text style={STYLES.styles.boxtext}>{dashboardView && dashboardView.data[0].totalusers ? dashboardView.data[0].totalusers : '--'}</Text>
+                        <Text style={STYLES.styles.boxtext}>{dashboardView?.data[0]?.totalusers ? dashboardView.data[0].totalusers : '--'}</Text>
                         <Text style={STYLES.styles.boxtextsecond}>Total Users</Text>
                     </View>
                     <View style={STYLES.styles.box4}>
                         <Text style={STYLES.styles.boxuppertext}>Rating</Text>
-                        <Text style={STYLES.styles.boxtext}>{dashboardView && dashboardView.data[0].totalratings ? dashboardView.data[0].totalratings : '--'}</Text>
+                        <Text style={STYLES.styles.boxtext}>{dashboardView?.data[0]?.totalratings ? dashboardView.data[0].totalratings : '--'}</Text>
                         <Text style={STYLES.styles.boxtextsecond}>Total Rating</Text>
                     </View>
                 </View>
@@ -595,7 +605,7 @@ const homeScreen = (props) => {
                                                 </View>
                                                 {/* <Text style={{ fontSize: 16, color: '#5AC8FA' }}>+0%</Text> */}
                                                 <Text style={{ fontSize: 16, color: '#555555', textTransform: 'capitalize', width: 150, marginLeft: 10 }}>{item.fullname.split(' ')[0]}</Text>
-                                                <Text style={{ fontSize: 16, color: item.earning == 0 ? '#555555' : '#04DE71', marginLeft: 10 }}>₹ {(item.earning).toFixed(2)}+</Text>
+                                                <Text style={{ fontSize: 16, color: item.earning == 0 ? '#555555' : '#04DE71', marginLeft: 10 }}>₹ {item.earning ? (item.earning).toFixed(2) : '0'}+</Text>
                                             </View>
                                         </View>
                                     </View>

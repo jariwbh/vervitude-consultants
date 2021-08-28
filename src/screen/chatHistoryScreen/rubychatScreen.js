@@ -16,7 +16,9 @@ import firestore from '@react-native-firebase/firestore';
 //
 import Loader from '../../components/loader/index';
 import moment from 'moment';
+import GeneralStatusBarColor from '../../components/StatusBarStyle/GeneralStatusBarColor';
 const defaultProfile = 'https://res.cloudinary.com/dnogrvbs2/image/upload/v1613538969/profile1_xspwoy.png';
+import crashlytics, { firebase } from "@react-native-firebase/crashlytics";
 
 const rubychatScreen = (props, { navigation }) => {
 	const [loading, setloading] = useState(false);
@@ -36,7 +38,16 @@ const rubychatScreen = (props, { navigation }) => {
 				if (User && User.property.endat != null) {
 					setHideInput(true);
 				} else {
-					setHideInput(false);
+					if (User && User.property.startat) {
+						if (!User.property.consultantid.property.live) {
+							setHideInput(true);
+						} else {
+							setHideInput(false);
+						}
+					}
+				}
+				if (!User.property.consultantid.property.live) {
+					setHideInput(true);
 				}
 				newChat(sender, User.contextid._id).then((id) => {
 					setchatId(id);
@@ -102,10 +113,16 @@ const rubychatScreen = (props, { navigation }) => {
 	});
 
 	const EndChat = () => (
-		<View style={{ alignItems: 'center', margin: 5 }}>
-			<Text style={{ fontSize: 14, color: '#000000' }}>{`Your Chat is close in this Date ${User && moment(User.property.endat).format("MMM Do YYYY")}`}</Text>
-			<Text style={{ fontSize: 14, color: '#000000' }}>{`and time ${User && moment(User.property.endat).format('LTS')}`}</Text>
-		</View>
+		User.property.endat ?
+			<View style={{ alignItems: 'center', margin: 5 }}>
+				<Text style={{ fontSize: 14, color: '#000000' }}>{`Your Chat is close in this Date ${User && moment(User.property.endat).format("MMM Do YYYY")}`}</Text>
+				<Text style={{ fontSize: 14, color: '#000000' }}>{`and time ${User && moment(User.property.endat).format('LTS')}`}</Text>
+			</View>
+			:
+			<View style={{ alignItems: 'center', margin: 5 }}>
+				<Text style={{ fontSize: 14, color: '#000000', textAlign: 'center' }}>{`Consultant Currently Offline Dose `}</Text>
+				<Text style={{ fontSize: 14, color: '#000000', textAlign: 'center' }}>{`not allowed chat`}</Text>
+			</View>
 	)
 
 	async function sendpushalert(registrationid, message, subject) {
@@ -132,6 +149,7 @@ const rubychatScreen = (props, { navigation }) => {
 				//console.log('responseData', responseData);
 			})
 			.catch(error => {
+				firebase.crashlytics().recordError(error);
 				//this.setState({ errorMessage: error });
 				console.error('There was an error!', error);
 			});
@@ -164,7 +182,7 @@ const rubychatScreen = (props, { navigation }) => {
 
 	return (
 		<SafeAreaView style={styles.container}>
-			<StatusBar backgroundColor='#AAAAAA' barStyle='dark-content' />
+			<GeneralStatusBarColor hidden={false} translucent={true} backgroundColor="transparent" barStyle="dark-content" />
 			<View
 				style={{ justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row', marginTop: 30 }}>
 				<View style={{ justifyContent: 'flex-start', alignItems: 'center', flexDirection: 'row' }}>

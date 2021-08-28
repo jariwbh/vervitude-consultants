@@ -17,6 +17,8 @@ import { NotificationService } from '../../services/NotificationService/Notifica
 const HEIGHT = Dimensions.get('window').height;
 const WIDTH = Dimensions.get('window').width;
 import { useFocusEffect } from '@react-navigation/native';
+import GeneralStatusBarColor from '../../components/StatusBarStyle/GeneralStatusBarColor';
+import crashlytics, { firebase } from "@react-native-firebase/crashlytics";
 
 const myProfileScreen = (props) => {
     const [loading, setloading] = useState(false);
@@ -64,7 +66,8 @@ const myProfileScreen = (props) => {
             const response = await NotificationService(id);
             setNotification(response.data.length);
         } catch (error) {
-            console.log(`error`, error);
+            firebase.crashlytics().recordError(error);
+            //console.log(`error`, error);
         }
     }
 
@@ -76,7 +79,8 @@ const myProfileScreen = (props) => {
                 setWalletBalance(response.data[0]);
             }
         } catch (error) {
-            console.log(`error`, error);
+            firebase.crashlytics().recordError(error);
+            //console.log(`error`, error);
         }
     }
 
@@ -90,6 +94,7 @@ const myProfileScreen = (props) => {
             }
         } catch (error) {
             setloading(false);
+            firebase.crashlytics().recordError(error);
         }
     }
 
@@ -103,7 +108,7 @@ const myProfileScreen = (props) => {
         userDetails.property.livechat = [];
         userDetails.property.live = false;
         const response = await UserUpdateService(userDetails);
-        console.log(`response.data`, response.data);
+        //console.log(`response.data`, response.data);
         if (response.data != null && response.data != 'undefind' && response.status == 200) {
             AsyncStorage.removeItem(AUTHUSER);
             if (Platform.OS === 'android') {
@@ -165,7 +170,8 @@ const myProfileScreen = (props) => {
             })
         }
         catch (error) {
-            console.log(`error`, error);
+            //console.log(`error`, error);
+            firebase.crashlytics().recordError(error);
             setloading(false);
             if (Platform.OS === 'android') {
                 ToastAndroid.show('Message Sending Failed!', ToastAndroid.SHORT);
@@ -193,7 +199,7 @@ const myProfileScreen = (props) => {
 
     return (
         <SafeAreaView style={STYLES.styles.container}>
-            <StatusBar backgroundColor='#5AC8FA' barStyle='dark-content' />
+            <GeneralStatusBarColor hidden={false} translucent={true} backgroundColor="transparent" barStyle="dark-content" />
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={{ marginTop: 30, justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }} >
                     <View style={{ justifyContent: 'flex-start', flexDirection: 'row' }}>
@@ -223,7 +229,7 @@ const myProfileScreen = (props) => {
                         <View style={{ justifyContent: 'space-around', flexDirection: 'row', marginTop: 20 }}>
                             <View >
                                 <Text style={{ fontWeight: 'bold', fontSize: 20, textTransform: 'capitalize' }}>{userDetails ? userDetails.fullname : null}</Text>
-                                <Text style={{ fontSize: 14, textTransform: 'capitalize' }}>{userDetails ? userDetails.property.usertag && userDetails.property.usertag : null}</Text>
+                                <Text style={{ fontSize: 14, textTransform: 'capitalize' }}>{userDetails?.property?.usertag}</Text>
                             </View>
                             <Pressable onPress={() => onTouchViewProfile()}
                                 style={STYLES.styles.profileImageView}>

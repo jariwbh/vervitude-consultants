@@ -8,6 +8,8 @@ import axiosConfig from '../../helpers/axiosConfig';
 import Loader from '../../components/loader';
 import * as STYLES from './styles';
 import HelpSupportService from '../../services/HelpSupportService/HelpSupportService';
+import GeneralStatusBarColor from '../../components/StatusBarStyle/GeneralStatusBarColor';
+import crashlytics, { firebase } from "@react-native-firebase/crashlytics";
 
 export default class loginScreen extends Component {
     constructor(props) {
@@ -127,12 +129,25 @@ export default class loginScreen extends Component {
         let user = username.trim();
         const body = {
             username: user.toUpperCase(),
-            password: password
+            password: password,
+            "search": [
+                { "searchfield": "role", "searchvalue": "5f6b3b6599e17f1ccc76318c", "datatype": "ObjectId", "criteria": "eq" },
+                {
+                    "searchfield": "status",
+                    "searchvalue": [
+                        "active",
+                        "suspend"
+                    ],
+                    "datatype": "array",
+                    "criteria": "in"
+                }
+            ]
         }
         this.setState({ loading: true });
         try {
             await LoginService(body)
                 .then(response => {
+                    console.log(`response`, response);
                     if (response.data != null && response.data != 'undefind' && response.status == 200) {
                         let token = response.data.user._id;
                         //set header auth user key
@@ -140,13 +155,15 @@ export default class loginScreen extends Component {
                         this.authenticateUser(response.data.user);
                         this.setState({ loading: false })
                         if (Platform.OS === 'android') {
-                            ToastAndroid.show('SignIn Success!', ToastAndroid.LONG);
+                            ToastAndroid.show('SignIn Success', ToastAndroid.LONG);
                         }
                         this.props.navigation.navigate(MAINSCREEN);
                         return;
                     }
                 })
-        } catch (e) {
+        } catch (error) {
+            //console.log(`error`, error);
+            firebase.crashlytics().recordError(error);
             this.setState({ loading: false });
             this.resetScreen();
             if (Platform.OS === 'android') {
@@ -183,6 +200,7 @@ export default class loginScreen extends Component {
             })
         }
         catch (error) {
+            firebase.crashlytics().recordError(error);
             this.setState({ loading: false });
             if (Platform.OS === 'android') {
                 ToastAndroid.show('Requested Sending Failed!', ToastAndroid.SHORT);
@@ -197,7 +215,7 @@ export default class loginScreen extends Component {
         const { loading, showModalVisible, showMessageModalVisible, usererror, passworderror, subject, subjecterror, description, descriptionerror } = this.state;
         return (
             <SafeAreaView style={STYLES.styles.container}>
-                <StatusBar backgroundColor='transparent' barStyle='light-content' translucent={true} />
+                <GeneralStatusBarColor hidden={false} translucent={true} backgroundColor="transparent" barStyle="dark-content" />
                 <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={'always'}>
                     <View style={STYLES.styles.circle}>
                         <Image source={require('../../assets/images/icon.png')} style={STYLES.styles.imageView} />

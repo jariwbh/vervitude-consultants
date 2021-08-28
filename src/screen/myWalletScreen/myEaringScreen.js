@@ -9,6 +9,8 @@ import { AUTHUSER } from '../../context/actions/type';
 import Loader from '../../components/loader/index';
 import { WalletDetailService, WalletHistory } from '../../services/WalletService/WalletService';
 import moment from 'moment';
+import GeneralStatusBarColor from '../../components/StatusBarStyle/GeneralStatusBarColor';
+import crashlytics, { firebase } from "@react-native-firebase/crashlytics";
 
 function myEaringScreen(props) {
   const [loading, setloading] = useState(false);
@@ -39,6 +41,7 @@ function myEaringScreen(props) {
       }
     } catch (error) {
       setloading(false);
+      firebase.crashlytics().recordError(error);
     }
   }
 
@@ -51,6 +54,7 @@ function myEaringScreen(props) {
       }
     } catch (error) {
       setloading(false);
+      firebase.crashlytics().recordError(error);
     }
   }
 
@@ -150,7 +154,7 @@ function myEaringScreen(props) {
 
   return (
     <SafeAreaView style={STYLE.Wallatestyles.container}>
-      <StatusBar backgroundColor='#AAAAAA' barStyle='dark-content' />
+      <GeneralStatusBarColor hidden={false} translucent={true} backgroundColor="transparent" barStyle="dark-content" />
       <ScrollView showsVerticalScrollIndicator={false}
         nestedScrollEnabled={true}
         refreshControl={<RefreshControl refreshing={refreshing} title="Pull to refresh" tintColor="#5AC8FA" titleColor="#5AC8FA" colors={["#5AC8FA"]} onRefresh={() => onRefresh()} />}>

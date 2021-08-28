@@ -15,6 +15,8 @@ import Loader from '../../components/loader/index';
 import moment from 'moment';
 const defaultProfile = 'https://res.cloudinary.com/dnogrvbs2/image/upload/v1613538969/profile1_xspwoy.png';
 import { useFocusEffect } from '@react-navigation/native';
+import GeneralStatusBarColor from '../../components/StatusBarStyle/GeneralStatusBarColor';
+import crashlytics, { firebase } from "@react-native-firebase/crashlytics";
 //import firestore from '@react-native-firebase/firestore';
 
 function chatHistoryScreen(props) {
@@ -64,7 +66,8 @@ function chatHistoryScreen(props) {
             }
         }
         catch (error) {
-            console.log(`error`, error);
+            firebase.crashlytics().recordError(error);
+            //console.log(`error`, error);
         }
     }
 
@@ -117,7 +120,7 @@ function chatHistoryScreen(props) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <StatusBar backgroundColor='#AAAAAA' barStyle='dark-content' />
+            <GeneralStatusBarColor hidden={false} translucent={true} backgroundColor="transparent" barStyle="dark-content" />
             <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 30 }}>
                 <View style={{ justifyContent: 'flex-start' }}>
                     <TouchableOpacity style={styles.categoryIcon} onPress={() => { props.navigation.goBack(null) }} >

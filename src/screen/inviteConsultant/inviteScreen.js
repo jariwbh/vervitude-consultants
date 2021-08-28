@@ -5,6 +5,8 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as SCREEN from '../../context/screen/screenName';
 import Loader from '../../components/loader/index';
 import * as STYLES from './styles';
+import GeneralStatusBarColor from '../../components/StatusBarStyle/GeneralStatusBarColor';
+import crashlytics, { firebase } from "@react-native-firebase/crashlytics";
 
 const inviteScreen = (props) => {
     const [fullname, setfullname] = useState(null);
@@ -108,6 +110,7 @@ const inviteScreen = (props) => {
         }
         catch (error) {
             setloading(false);
+            firebase.crashlytics().recordError(error);
             if (Platform.OS === 'android') {
                 ToastAndroid.show('invited Failed!', ToastAndroid.SHORT);
             } else {
@@ -119,7 +122,7 @@ const inviteScreen = (props) => {
 
     return (
         <SafeAreaView style={STYLES.styles.container}>
-            <StatusBar backgroundColor='#AAAAAA' barStyle='dark-content' />
+            <GeneralStatusBarColor hidden={false} translucent={true} backgroundColor="transparent" barStyle="dark-content" />
             <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={'always'}>
                 <View style={{ justifyContent: 'flex-start', marginLeft: 20, marginTop: 30 }}>
                     <TouchableOpacity onPress={() => props.navigation.goBack(null)}>

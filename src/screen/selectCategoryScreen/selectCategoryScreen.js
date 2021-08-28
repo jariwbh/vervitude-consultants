@@ -8,6 +8,8 @@ import * as SCREEN from '../../context/screen/screenName';
 import { AUTHUSER } from '../../context/actions/type';
 import Loader from '../../components/loader/index';
 import * as STYLE from './styles';
+import GeneralStatusBarColor from '../../components/StatusBarStyle/GeneralStatusBarColor';
+import crashlytics, { firebase } from "@react-native-firebase/crashlytics";
 
 function selectCategoryScreen(props) {
     const [categoryList, setCategoryList] = useState([]);
@@ -177,13 +179,14 @@ function selectCategoryScreen(props) {
         }
         catch (error) {
             setloading(false);
+            firebase.crashlytics().recordError(error);
 
         }
     }
 
     return (
         <SafeAreaView style={STYLE.styles.container}>
-            <StatusBar backgroundColor='#AAAAAA' barStyle='dark-content' />
+            <GeneralStatusBarColor hidden={false} translucent={true} backgroundColor="transparent" barStyle="dark-content" />
             <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 30 }}>
                     <View style={{ justifyContent: 'flex-start' }}>

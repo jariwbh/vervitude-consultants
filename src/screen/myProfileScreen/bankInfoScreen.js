@@ -9,11 +9,14 @@ import MyPermissionController from '../../helpers/appPermission';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as SCREEN from '../../context/screen/screenName';
 import Feather from 'react-native-vector-icons/Feather';
+import * as UPLOADKEY from '../../context/actions/type';
 import { AUTHUSER } from '../../context/actions/type';
 import ImagePicker from 'react-native-image-picker';
 import Loader from "../../components/loader/index";
 import RNFetchBlob from 'rn-fetch-blob';
 import * as STYLE from './styles';
+import GeneralStatusBarColor from '../../components/StatusBarStyle/GeneralStatusBarColor';
+import crashlytics, { firebase } from "@react-native-firebase/crashlytics";
 const WIDTH = Dimensions.get('window').width;
 
 const bankInfoScreen = (props) => {
@@ -145,14 +148,18 @@ const bankInfoScreen = (props) => {
         ImagePicker.showImagePicker({}, (response) => {
             if (response.didCancel) {
                 setloading(false);
-                console.log('User cancelled image picker');
+                firebase.crashlytics().recordError(response);
+                // console.log('User cancelled image picker');
             } else if (response.error) {
+                firebase.crashlytics().recordError(response);
                 setloading(false);
-                console.log('ImagePicker Error: ', response.error);
+                // console.log('ImagePicker Error: ', response.error);
             } else if (response.customButton) {
+                firebase.crashlytics().recordError(response);
                 setloading(false);
-                console.log('User tapped custom button: ', response.customButton);
+                // console.log('User tapped custom button: ', response.customButton);
             } else {
+                firebase.crashlytics().recordError(response);
                 setloading(true);
                 onPressUploadFile(field, response);
             }
@@ -163,9 +170,9 @@ const bankInfoScreen = (props) => {
     const onPressUploadFile = async (field, fileObj) => {
         if (fileObj != null) {
             const realPath = Platform.OS === 'ios' ? fileObj.uri.replace('file://', '') : fileObj.uri;
-            await RNFetchBlob.fetch('POST', 'https://api.cloudinary.com/v1_1/dlopjt9le/upload', { 'Content-Type': 'multipart/form-data' },
+            await RNFetchBlob.fetch('POST', UPLOADKEY.CLOUD_URL, { 'Content-Type': 'multipart/form-data' },
                 [{ name: 'file', filename: Platform.OS === 'ios' ? fileObj.fileSize : fileObj.fileName, type: fileObj.type, data: RNFetchBlob.wrap(decodeURIComponent(realPath)) },
-                { name: 'upload_preset', data: 'gs95u3um' }])
+                { name: 'upload_preset', data: UPLOADKEY.UPLOAD_PRESET }])
                 .then(response => response.json())
                 .then(data => {
                     setloading(false);
@@ -178,6 +185,7 @@ const bankInfoScreen = (props) => {
                         }
                     }
                 }).catch(error => {
+                    firebase.crashlytics().recordError(error);
                     setloading(false);
                     alert("Uploading Failed!");
                 })
@@ -220,6 +228,7 @@ const bankInfoScreen = (props) => {
                 })
             }
             catch (error) {
+                firebase.crashlytics().recordError(error);
                 // console.log(`error`, error);
                 setloading(false);
                 if (Platform.OS === 'android') {
@@ -259,6 +268,7 @@ const bankInfoScreen = (props) => {
             }
         }
         catch (error) {
+            firebase.crashlytics().recordError(error);
             setloading(false);
             if (Platform.OS === 'android') {
                 ToastAndroid.show("Your Information Not Update", ToastAndroid.SHORT);
@@ -315,6 +325,7 @@ const bankInfoScreen = (props) => {
                     })
                 }
                 catch (error) {
+                    firebase.crashlytics().recordError(error);
                     //  console.log(`error`, error);
                     setloading(false);
                     if (Platform.OS === 'android') {
@@ -335,7 +346,7 @@ const bankInfoScreen = (props) => {
 
     return (
         <SafeAreaView style={STYLE.Bankstyles.container}>
-            <StatusBar backgroundColor='#5AC8FA' barStyle='dark-content' />
+            <GeneralStatusBarColor hidden={false} translucent={true} backgroundColor="transparent" barStyle="dark-content" />
             <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={'always'}>
                 <View style={{ justifyContent: 'space-between', flexDirection: 'row', marginTop: 30 }}>
                     <View style={{ justifyContent: 'flex-start' }}>
